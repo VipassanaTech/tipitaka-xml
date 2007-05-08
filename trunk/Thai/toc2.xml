@@ -1,0 +1,68 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!--  อฎฺฐกถา//-->
+	<tree text="วีนย ปีฎก (อฎฺฐกถา)">
+		<tree text="ปาราชีกกณฺฑ-อฎฺฐกถา" src="./cscd/VIN01A.ATT.toc.xml"/>
+		<tree text="ปาจีตฺตีย-อฎฺฐกถา" src="./cscd/VIN02A1.ATT.toc.xml"/>
+		<tree text="มหาวคฺค-อฎฺฐกถา" src="./cscd/VIN02A2.ATT.toc.xml"/>
+		<tree text="จูฬวคฺค-อฎฺฐกถา" src="./cscd/VIN02A3.ATT.toc.xml"/>
+		<tree text="ปรีวาร-อฎฺฐกถา" src="./cscd/VIN02A4.ATT.toc.xml"/>
+	</tree>
+	<tree text="สุตฺต ปีฎก (อฎฺฐกถา)">
+		<tree text="ทืฆ นีกาย (อฎฺฐกถา)">
+			<tree text="สืลกฺขนฺธวคฺค-อฎฺฐกถา" src="./cscd/S0101A.ATT.toc.xml"/>
+			<tree text="มหาวคฺค-อฎฺฐกถา" src="./cscd/S0102A.ATT.toc.xml"/>
+			<tree text="ปาถีกวคฺค-อฎฺฐกถา" src="./cscd/S0103A.ATT.toc.xml"/>
+		</tree>
+		<tree text="มชฺฌีม นีกาย (อฎฺฐกถา)">
+			<tree text="มูลปณฺณาส-อฎฺฐกถา" src="./cscd/S0201A.ATT.toc.xml"/>
+			<tree text="มชฺฌีมปณฺณาส-อฎฺฐกถา" src="./cscd/S0202A.ATT.toc.xml"/>
+			<tree text="อุปรีปณฺณาส-อฎฺฐกถา" src="./cscd/S0203A.ATT.toc.xml"/>
+		</tree>
+		<tree text="สํยุตฺต นีกาย (อฎฺฐกถา)">
+			<tree text="สคาถาวคฺค-อฎฺฐกถา" src="./cscd/S0301A.ATT.toc.xml"/>
+			<tree text="นีทานวคฺค-อฎฺฐกถา" src="./cscd/S0302A.ATT.toc.xml"/>
+			<tree text="ขนฺธวคฺค-อฎฺฐกถา" src="./cscd/S0303A.ATT.toc.xml"/>
+			<tree text="สฬายตนวคฺค-อฎฺฐกถา" src="./cscd/S0304A.ATT.toc.xml"/>
+			<tree text="มหาวคฺค-อฎฺฐกถา" src="./cscd/S0305A.ATT.toc.xml"/>
+		</tree>
+		<tree text="องฺคุตฺตร นีกาย (อฎฺฐกถา)">
+			<tree text="เอกกนีปาต-อฎฺฐกถา" src="./cscd/S0401A.ATT.toc.xml"/>
+			<tree text="ทุก-ตีก-จตุกฺกนีปาต-อฎฺฐกถา" src="./cscd/S0402A.ATT.toc.xml"/>
+			<tree text="ปญฺจก-ฉกฺก-สตฺตกนีปาต-อฎฺฐกถา" src="./cscd/S0403A.ATT.toc.xml"/>
+			<tree text="อฎฺฐกาทีนีปาต-อฎฺฐกถา" src="./cscd/S0404A.ATT.toc.xml"/>
+		</tree>
+		<tree text="ขุทฺทก นีกาย (อฎฺฐกถา)">
+			<tree text="ขุทฺทกปาฐ-อฎฺฐกถา" src="./cscd/S0501A.ATT.toc.xml"/>
+			<tree text="ธมฺมปท-อฎฺฐกถา" src="./cscd/S0502A.ATT.toc.xml"/>
+			<tree text="อุทาน-อฎฺฐกถา" src="./cscd/S0503A.ATT.toc.xml"/>
+			<tree text="อีตีวุตฺตก-อฎฺฐกถา" src="./cscd/S0504A.ATT.toc.xml"/>
+			<tree text="สุตฺตนีปาต-อฎฺฐกถา" src="./cscd/S0505A.ATT.toc.xml"/>
+			<tree text="วีมานวตฺถุ-อฎฺฐกถา" src="./cscd/S0506A.ATT.toc.xml"/>
+			<tree text="เปตวตฺถุ-อฎฺฐกถา" src="./cscd/S0507A.ATT.toc.xml"/>
+			<tree text="เถรคาถา-อฎฺฐกถา-๑" src="./cscd/S0508a1.ATT.toc.xml"/>
+			<tree text="เถรคาถา-อฎฺฐกถา-๒" src="./cscd/S0508a2.ATT.toc.xml"/>
+			<tree text="เถรืคาถา-อฎฺฐกถา" src="./cscd/S0509A.ATT.toc.xml"/>
+			<tree text="อปทาน-อฎฺฐกถา" src="./cscd/S0510A.ATT.toc.xml"/>
+			<tree text="พุทฺธวํส-อฎฺฐกถา" src="./cscd/S0511A.ATT.toc.xml"/>
+			<tree text="จรียาปีฎก-อฎฺฐกถา" src="./cscd/S0512A.ATT.toc.xml"/>
+			<tree text="ชาตก-อฎฺฐกถา-๑" src="./cscd/S0513A1.ATT.toc.xml"/>
+			<tree text="ชาตก-อฎฺฐกถา-๒" src="./cscd/S0513A2.ATT.toc.xml"/>
+			<tree text="ชาตก-อฎฺฐกถา-๓" src="./cscd/S0513A3.ATT.toc.xml"/>
+			<tree text="ชาตก-อฎฺฐกถา-๔" src="./cscd/S0513A4.ATT.toc.xml"/>
+			<tree text="ชาตก-อฎฺฐกถา-๕" src="./cscd/S0514a1.ATT.toc.xml"/>
+			<tree text="ชาตก-อฎฺฐกถา-๖" src="./cscd/S0514a2.ATT.toc.xml"/>
+			<tree text="ชาตก-อฎฺฐกถา-๗" src="./cscd/S0514a3.ATT.toc.xml"/>
+			<tree text="มหานีเทฺทส-อฎฺฐกถา" src="./cscd/S0515A.ATT.toc.xml"/>
+			<tree text="จูฬนีเทฺทส-อฎฺฐกถา" src="./cscd/S0516A.ATT.toc.xml"/>
+			<tree text="ปฎีสมฺภีทามคฺค-อฎฺฐกถา" src="./cscd/S0517A.ATT.toc.xml"/>
+			<tree text="เนตฺตีปฺปกรณ-อฎฺฐกถา" src="./cscd/S0519A.ATT.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="อภีธมฺม ปีฎก (อฎฺฐกถา)">
+		<tree text="ธมฺมสงฺคณี-อฎฺฐกถา" src="./cscd/ABH01A.ATT.toc.xml"/>
+		<tree text="สโมฺมหวีโนทนื-อฎฺฐกถา" src="./cscd/ABH02A.ATT.toc.xml"/>
+		<tree text="ปญฺจปกรณ-อฎฺฐกถา" src="./cscd/ABH03A.ATT.toc.xml"/>
+	</tree>
+
+</tree>

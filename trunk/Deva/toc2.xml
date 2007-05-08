@@ -1,0 +1,68 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!--  अट्ठकथा//-->
+	<tree text="विनय पिटक (अट्ठकथा)">
+		<tree text="पाराजिककण्ड-अट्ठकथा" src="./cscd/VIN01A.ATT.toc.xml"/>
+		<tree text="पाचित्तिय-अट्ठकथा" src="./cscd/VIN02A1.ATT.toc.xml"/>
+		<tree text="महावग्ग-अट्ठकथा" src="./cscd/VIN02A2.ATT.toc.xml"/>
+		<tree text="चूळवग्ग-अट्ठकथा" src="./cscd/VIN02A3.ATT.toc.xml"/>
+		<tree text="परिवार-अट्ठकथा" src="./cscd/VIN02A4.ATT.toc.xml"/>
+	</tree>
+	<tree text="सुत्त पिटक (अट्ठकथा)">
+		<tree text="दीघ निकाय (अट्ठकथा)">
+			<tree text="सीलक्खन्धवग्ग-अट्ठकथा" src="./cscd/S0101A.ATT.toc.xml"/>
+			<tree text="महावग्ग-अट्ठकथा" src="./cscd/S0102A.ATT.toc.xml"/>
+			<tree text="पाथिकवग्ग-अट्ठकथा" src="./cscd/S0103A.ATT.toc.xml"/>
+		</tree>
+		<tree text="मज्झिम निकाय (अट्ठकथा)">
+			<tree text="मूलपण्णास-अट्ठकथा" src="./cscd/S0201A.ATT.toc.xml"/>
+			<tree text="मज्झिमपण्णास-अट्ठकथा" src="./cscd/S0202A.ATT.toc.xml"/>
+			<tree text="उपरिपण्णास-अट्ठकथा" src="./cscd/S0203A.ATT.toc.xml"/>
+		</tree>
+		<tree text="संयुत्त निकाय (अट्ठकथा)">
+			<tree text="सगाथावग्ग-अट्ठकथा" src="./cscd/S0301A.ATT.toc.xml"/>
+			<tree text="निदानवग्ग-अट्ठकथा" src="./cscd/S0302A.ATT.toc.xml"/>
+			<tree text="खन्धवग्ग-अट्ठकथा" src="./cscd/S0303A.ATT.toc.xml"/>
+			<tree text="सळायतनवग्ग-अट्ठकथा" src="./cscd/S0304A.ATT.toc.xml"/>
+			<tree text="महावग्ग-अट्ठकथा" src="./cscd/S0305A.ATT.toc.xml"/>
+		</tree>
+		<tree text="अङ्गुत्तर निकाय (अट्ठकथा)">
+			<tree text="एककनिपात-अट्ठकथा" src="./cscd/S0401A.ATT.toc.xml"/>
+			<tree text="दुक-तिक-चतुक्कनिपात-अट्ठकथा" src="./cscd/S0402A.ATT.toc.xml"/>
+			<tree text="पञ्चक-छक्क-सत्तकनिपात-अट्ठकथा" src="./cscd/S0403A.ATT.toc.xml"/>
+			<tree text="अट्ठकादिनिपात-अट्ठकथा" src="./cscd/S0404A.ATT.toc.xml"/>
+		</tree>
+		<tree text="खुद्दक निकाय (अट्ठकथा)">
+			<tree text="खुद्दकपाठ-अट्ठकथा" src="./cscd/S0501A.ATT.toc.xml"/>
+			<tree text="धम्मपद-अट्ठकथा" src="./cscd/S0502A.ATT.toc.xml"/>
+			<tree text="उदान-अट्ठकथा" src="./cscd/S0503A.ATT.toc.xml"/>
+			<tree text="इतिवुत्तक-अट्ठकथा" src="./cscd/S0504A.ATT.toc.xml"/>
+			<tree text="सुत्तनिपात-अट्ठकथा" src="./cscd/S0505A.ATT.toc.xml"/>
+			<tree text="विमानवत्थु-अट्ठकथा" src="./cscd/S0506A.ATT.toc.xml"/>
+			<tree text="पेतवत्थु-अट्ठकथा" src="./cscd/S0507A.ATT.toc.xml"/>
+			<tree text="थेरगाथा-अट्ठकथा-१" src="./cscd/S0508a1.ATT.toc.xml"/>
+			<tree text="थेरगाथा-अट्ठकथा-२" src="./cscd/S0508a2.ATT.toc.xml"/>
+			<tree text="थेरीगाथा-अट्ठकथा" src="./cscd/S0509A.ATT.toc.xml"/>
+			<tree text="अपदान-अट्ठकथा" src="./cscd/S0510A.ATT.toc.xml"/>
+			<tree text="बुद्धवंस-अट्ठकथा" src="./cscd/S0511A.ATT.toc.xml"/>
+			<tree text="चरियापिटक-अट्ठकथा" src="./cscd/S0512A.ATT.toc.xml"/>
+			<tree text="जातक-अट्ठकथा-१" src="./cscd/S0513A1.ATT.toc.xml"/>
+			<tree text="जातक-अट्ठकथा-२" src="./cscd/S0513A2.ATT.toc.xml"/>
+			<tree text="जातक-अट्ठकथा-३" src="./cscd/S0513A3.ATT.toc.xml"/>
+			<tree text="जातक-अट्ठकथा-४" src="./cscd/S0513A4.ATT.toc.xml"/>
+			<tree text="जातक-अट्ठकथा-५" src="./cscd/S0514a1.ATT.toc.xml"/>
+			<tree text="जातक-अट्ठकथा-६" src="./cscd/S0514a2.ATT.toc.xml"/>
+			<tree text="जातक-अट्ठकथा-७" src="./cscd/S0514a3.ATT.toc.xml"/>
+			<tree text="महानिद्देस-अट्ठकथा" src="./cscd/S0515A.ATT.toc.xml"/>
+			<tree text="चूळनिद्देस-अट्ठकथा" src="./cscd/S0516A.ATT.toc.xml"/>
+			<tree text="पटिसम्भिदामग्ग-अट्ठकथा" src="./cscd/S0517A.ATT.toc.xml"/>
+			<tree text="नेत्तिप्पकरण-अट्ठकथा" src="./cscd/S0519A.ATT.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="अभिधम्म पिटक (अट्ठकथा)">
+		<tree text="धम्मसङ्गणि-अट्ठकथा" src="./cscd/ABH01A.ATT.toc.xml"/>
+		<tree text="सम्मोहविनोदनी-अट्ठकथा" src="./cscd/ABH02A.ATT.toc.xml"/>
+		<tree text="पञ्चपकरण-अट्ठकथा" src="./cscd/ABH03A.ATT.toc.xml"/>
+	</tree>
+
+</tree>

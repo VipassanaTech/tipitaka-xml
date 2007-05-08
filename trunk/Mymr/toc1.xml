@@ -1,0 +1,81 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!--  တိပိဋက (မူလ)  //-->
+	<tree text="ဝိနယ ပိဋက">
+		<tree text="ပာရာဇိကပာဠိ" src="./cscd/VIN01M.MUL.toc.xml"/>
+		<tree text="ပာစိတ္တိယပာဠိ" src="./cscd/VIN02M1.MUL.toc.xml"/>
+		<tree text="မဟာဝဂ္ဂပာဠိ" src="./cscd/VIN02M2.MUL.toc.xml"/>
+		<tree text="စူဠဝဂ္ဂပာဠိ" src="./cscd/VIN02M3.MUL.toc.xml"/>
+		<tree text="ပရိဝာရပာဠိ" src="./cscd/VIN02M4.MUL.toc.xml"/>
+	</tree>
+	<tree text="သုတ္တ ပိဋက">
+		<tree text="ဒီဃ နိကာယ">
+			<tree text="သီလက္ခန္ဓဝဂ္ဂပာဠိ" src="./cscd/S0101M.MUL.toc.xml"/>
+			<tree text="မဟာဝဂ္ဂပာဠိ" src="./cscd/S0102M.MUL.toc.xml"/>
+			<tree text="ပာထိကဝဂ္ဂပာဠိ" src="./cscd/S0103M.MUL.toc.xml"/>
+		</tree>
+		<tree text="မဇ္ဈိမ နိကာယ">
+			<tree text="မူလပဏ္ဏာသပာဠိ" src="./cscd/S0201M.MUL.toc.xml"/>
+			<tree text="မဇ္ဈိမပဏ္ဏာသပာဠိ" src="./cscd/S0202M.MUL.toc.xml"/>
+			<tree text="ဥပရိပဏ္ဏာသပာဠိ" src="./cscd/S0203M.MUL.toc.xml"/>
+		</tree>
+		<tree text="သံယုတ္တ နိကာယ">
+			<tree text="သဂာထာဝဂ္ဂပာဠိ" src="./cscd/S0301M.MUL.toc.xml"/>
+			<tree text="နိဒာနဝဂ္ဂပာဠိ" src="./cscd/S0302M.MUL.toc.xml"/>
+			<tree text="ခန္ဓဝဂ္ဂပာဠိ" src="./cscd/S0303M.MUL.toc.xml"/>
+			<tree text="သဠာယတနဝဂ္ဂပာဠိ" src="./cscd/S0304M.MUL.toc.xml"/>
+			<tree text="မဟာဝဂ္ဂပာဠိ" src="./cscd/S0305M.MUL.toc.xml"/>
+		</tree>
+		<tree text="အင္ဂုတ္တရ နိကာယ">
+			<tree text="ဧကကနိပာတပာဠိ" src="./cscd/S0401M.MUL.toc.xml"/>
+			<tree text="ဒုကနိပာတပာဠိ" src="./cscd/S0402M1.MUL.toc.xml"/>
+			<tree text="တိကနိပာတပာဠိ" src="./cscd/S0402M2.MUL.toc.xml"/>
+			<tree text="စတုက္ကနိပာတပာဠိ" src="./cscd/S0402M3.MUL.toc.xml"/>
+			<tree text="ပဉ္စကနိပာတပာဠိ" src="./cscd/S0403M1.MUL.toc.xml"/>
+			<tree text="ဆက္ကနိပာတပာဠိ" src="./cscd/S0403M2.MUL.toc.xml"/>
+			<tree text="သတ္တကနိပာတပာဠိ" src="./cscd/S0403M3.MUL.toc.xml"/>
+			<tree text="အဋ္ဌကာဒိနိပာတပာဠိ" src="./cscd/S0404M1.MUL.toc.xml"/>
+			<tree text="နဝကနိပာတပာဠိ" src="./cscd/S0404M2.MUL.toc.xml"/>
+			<tree text="ဒသကနိပာတပာဠိ" src="./cscd/S0404M3.MUL.toc.xml"/>
+			<tree text="ဧကာဒသကနိပာတပာဠိ" src="./cscd/S0404M4.MUL.toc.xml"/>
+		</tree>
+		<tree text="ခုဒ္ဒက နိကာယ">
+			<tree text="ခုဒ္ဒကပာဌပာဠိ" src="./cscd/S0501M.MUL.toc.xml"/>
+			<tree text="ဓမ္မပဒပာဠိ" src="./cscd/S0502M.MUL.toc.xml"/>
+			<tree text="ဥဒာနပာဠိ" src="./cscd/S0503M.MUL.toc.xml"/>
+			<tree text="ဣတိဝုတ္တကပာဠိ" src="./cscd/S0504M.MUL.toc.xml"/>
+			<tree text="သုတ္တနိပာတပာဠိ" src="./cscd/S0505M.MUL.toc.xml"/>
+			<tree text="ဝိမာနဝတ္ထုပာဠိ" src="./cscd/S0506M.MUL.toc.xml"/>
+			<tree text="ပေတဝတ္ထုပာဠိ" src="./cscd/S0507M.MUL.toc.xml"/>
+			<tree text="ထေရဂာထာပာဠိ" src="./cscd/S0508M.MUL.toc.xml"/>
+			<tree text="ထေရီဂာထာပာဠိ" src="./cscd/S0509M.MUL.toc.xml"/>
+			<tree text="အပဒာနပာဠိ-၁" src="./cscd/S0510m1.MUL.toc.xml"/>
+			<tree text="အပဒာနပာဠိ-၂" src="./cscd/S0510m2.MUL.toc.xml"/>
+			<tree text="ဗုဒ္ဓဝံသပာဠိ" src="./cscd/S0511M.MUL.toc.xml"/>
+			<tree text="စရိယာပိဋကပာဠိ" src="./cscd/S0512M.MUL.toc.xml"/>
+			<tree text="ဇာတကပာဠိ-၁" src="./cscd/S0513M.MUL.toc.xml"/>
+			<tree text="ဇာတကပာဠိ-၂" src="./cscd/S0514M.MUL.toc.xml"/>
+			<tree text="မဟာနိဒ္ဒေသပာဠိ" src="./cscd/S0515M.MUL.toc.xml"/>
+			<tree text="စူဠနိဒ္ဒေသပာဠိ" src="./cscd/S0516M.MUL.toc.xml"/>
+			<tree text="ပဋိသမ္ဘိဒာမဂ္ဂပာဠိ" src="./cscd/S0517M.MUL.toc.xml"/>
+			<tree text="နေတ္တိပ္ပကရဏပာဠိ" src="./cscd/S0519M.MUL.toc.xml"/>
+			<tree text="မိလိန္ဒပဉ္ဟပာဠိ" src="./cscd/S0518M.NRF.toc.xml"/>
+			<tree text="ပေဋကောပဒေသပာဠိ" src="./cscd/S0520M.NRF.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="အဘိဓမ္မ ပိဋက">
+		<tree text="ဓမ္မသင္ဂဏီပာဠိ" src="./cscd/ABH01M.MUL.toc.xml"/>
+		<tree text="ဝိဘင္ဂပာဠိ" src="./cscd/ABH02M.MUL.toc.xml"/>
+		<tree text="ဓာတုကထာပာဠိ" src="./cscd/ABH03M1.MUL.toc.xml"/>
+		<tree text="ပုဂ္ဂလပညတ္တိပာဠိ" src="./cscd/ABH03M2.MUL.toc.xml"/>
+		<tree text="ကထာဝတ္ထုပာဠိ" src="./cscd/ABH03M3.MUL.toc.xml"/>
+		<tree text="ယမကပာဠိ-၁" src="./cscd/ABH03M4.MUL.toc.xml"/>
+		<tree text="ယမကပာဠိ-၂" src="./cscd/ABH03M5.MUL.toc.xml"/>
+		<tree text="ယမကပာဠိ-၃" src="./cscd/ABH03M6.MUL.toc.xml"/>
+		<tree text="ပဋ္ဌာနပာဠိ-၁" src="./cscd/ABH03M7.MUL.toc.xml"/>
+		<tree text="ပဋ္ဌာနပာဠိ-၂" src="./cscd/ABH03M8.MUL.toc.xml"/>
+		<tree text="ပဋ္ဌာနပာဠိ-၃" src="./cscd/ABH03M9.MUL.toc.xml"/>
+		<tree text="ပဋ္ဌာနပာဠိ-၄" src="./cscd/ABH03M10.MUL.toc.xml"/>
+		<tree text="ပဋ္ဌာနပာဠိ-၅" src="./cscd/ABH03M11.MUL.toc.xml"/>
+	</tree>
+</tree>

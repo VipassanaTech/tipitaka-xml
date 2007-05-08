@@ -1,0 +1,68 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!--  အဋ္ဌကထာ//-->
+	<tree text="ဝိနယ ပိဋက (အဋ္ဌကထာ)">
+		<tree text="ပာရာဇိကကဏ္ဍ-အဋ္ဌကထာ" src="./cscd/VIN01A.ATT.toc.xml"/>
+		<tree text="ပာစိတ္တိယ-အဋ္ဌကထာ" src="./cscd/VIN02A1.ATT.toc.xml"/>
+		<tree text="မဟာဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/VIN02A2.ATT.toc.xml"/>
+		<tree text="စူဠဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/VIN02A3.ATT.toc.xml"/>
+		<tree text="ပရိဝာရ-အဋ္ဌကထာ" src="./cscd/VIN02A4.ATT.toc.xml"/>
+	</tree>
+	<tree text="သုတ္တ ပိဋက (အဋ္ဌကထာ)">
+		<tree text="ဒီဃ နိကာယ (အဋ္ဌကထာ)">
+			<tree text="သီလက္ခန္ဓဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/S0101A.ATT.toc.xml"/>
+			<tree text="မဟာဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/S0102A.ATT.toc.xml"/>
+			<tree text="ပာထိကဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/S0103A.ATT.toc.xml"/>
+		</tree>
+		<tree text="မဇ္ဈိမ နိကာယ (အဋ္ဌကထာ)">
+			<tree text="မူလပဏ္ဏာသ-အဋ္ဌကထာ" src="./cscd/S0201A.ATT.toc.xml"/>
+			<tree text="မဇ္ဈိမပဏ္ဏာသ-အဋ္ဌကထာ" src="./cscd/S0202A.ATT.toc.xml"/>
+			<tree text="ဥပရိပဏ္ဏာသ-အဋ္ဌကထာ" src="./cscd/S0203A.ATT.toc.xml"/>
+		</tree>
+		<tree text="သံယုတ္တ နိကာယ (အဋ္ဌကထာ)">
+			<tree text="သဂာထာဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/S0301A.ATT.toc.xml"/>
+			<tree text="နိဒာနဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/S0302A.ATT.toc.xml"/>
+			<tree text="ခန္ဓဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/S0303A.ATT.toc.xml"/>
+			<tree text="သဠာယတနဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/S0304A.ATT.toc.xml"/>
+			<tree text="မဟာဝဂ္ဂ-အဋ္ဌကထာ" src="./cscd/S0305A.ATT.toc.xml"/>
+		</tree>
+		<tree text="အင္ဂုတ္တရ နိကာယ (အဋ္ဌကထာ)">
+			<tree text="ဧကကနိပာတ-အဋ္ဌကထာ" src="./cscd/S0401A.ATT.toc.xml"/>
+			<tree text="ဒုက-တိက-စတုက္ကနိပာတ-အဋ္ဌကထာ" src="./cscd/S0402A.ATT.toc.xml"/>
+			<tree text="ပဉ္စက-ဆက္က-သတ္တကနိပာတ-အဋ္ဌကထာ" src="./cscd/S0403A.ATT.toc.xml"/>
+			<tree text="အဋ္ဌကာဒိနိပာတ-အဋ္ဌကထာ" src="./cscd/S0404A.ATT.toc.xml"/>
+		</tree>
+		<tree text="ခုဒ္ဒက နိကာယ (အဋ္ဌကထာ)">
+			<tree text="ခုဒ္ဒကပာဌ-အဋ္ဌကထာ" src="./cscd/S0501A.ATT.toc.xml"/>
+			<tree text="ဓမ္မပဒ-အဋ္ဌကထာ" src="./cscd/S0502A.ATT.toc.xml"/>
+			<tree text="ဥဒာန-အဋ္ဌကထာ" src="./cscd/S0503A.ATT.toc.xml"/>
+			<tree text="ဣတိဝုတ္တက-အဋ္ဌကထာ" src="./cscd/S0504A.ATT.toc.xml"/>
+			<tree text="သုတ္တနိပာတ-အဋ္ဌကထာ" src="./cscd/S0505A.ATT.toc.xml"/>
+			<tree text="ဝိမာနဝတ္ထု-အဋ္ဌကထာ" src="./cscd/S0506A.ATT.toc.xml"/>
+			<tree text="ပေတဝတ္ထု-အဋ္ဌကထာ" src="./cscd/S0507A.ATT.toc.xml"/>
+			<tree text="ထေရဂာထာ-အဋ္ဌကထာ-၁" src="./cscd/S0508a1.ATT.toc.xml"/>
+			<tree text="ထေရဂာထာ-အဋ္ဌကထာ-၂" src="./cscd/S0508a2.ATT.toc.xml"/>
+			<tree text="ထေရီဂာထာ-အဋ္ဌကထာ" src="./cscd/S0509A.ATT.toc.xml"/>
+			<tree text="အပဒာန-အဋ္ဌကထာ" src="./cscd/S0510A.ATT.toc.xml"/>
+			<tree text="ဗုဒ္ဓဝံသ-အဋ္ဌကထာ" src="./cscd/S0511A.ATT.toc.xml"/>
+			<tree text="စရိယာပိဋက-အဋ္ဌကထာ" src="./cscd/S0512A.ATT.toc.xml"/>
+			<tree text="ဇာတက-အဋ္ဌကထာ-၁" src="./cscd/S0513A1.ATT.toc.xml"/>
+			<tree text="ဇာတက-အဋ္ဌကထာ-၂" src="./cscd/S0513A2.ATT.toc.xml"/>
+			<tree text="ဇာတက-အဋ္ဌကထာ-၃" src="./cscd/S0513A3.ATT.toc.xml"/>
+			<tree text="ဇာတက-အဋ္ဌကထာ-၄" src="./cscd/S0513A4.ATT.toc.xml"/>
+			<tree text="ဇာတက-အဋ္ဌကထာ-၅" src="./cscd/S0514a1.ATT.toc.xml"/>
+			<tree text="ဇာတက-အဋ္ဌကထာ-၆" src="./cscd/S0514a2.ATT.toc.xml"/>
+			<tree text="ဇာတက-အဋ္ဌကထာ-၇" src="./cscd/S0514a3.ATT.toc.xml"/>
+			<tree text="မဟာနိဒ္ဒေသ-အဋ္ဌကထာ" src="./cscd/S0515A.ATT.toc.xml"/>
+			<tree text="စူဠနိဒ္ဒေသ-အဋ္ဌကထာ" src="./cscd/S0516A.ATT.toc.xml"/>
+			<tree text="ပဋိသမ္ဘိဒာမဂ္ဂ-အဋ္ဌကထာ" src="./cscd/S0517A.ATT.toc.xml"/>
+			<tree text="နေတ္တိပ္ပကရဏ-အဋ္ဌကထာ" src="./cscd/S0519A.ATT.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="အဘိဓမ္မ ပိဋက (အဋ္ဌကထာ)">
+		<tree text="ဓမ္မသင္ဂဏိ-အဋ္ဌကထာ" src="./cscd/ABH01A.ATT.toc.xml"/>
+		<tree text="သမ္မောဟဝိနောဒနီ-အဋ္ဌကထာ" src="./cscd/ABH02A.ATT.toc.xml"/>
+		<tree text="ပဉ္စပကရဏ-အဋ္ဌကထာ" src="./cscd/ABH03A.ATT.toc.xml"/>
+	</tree>
+
+</tree>

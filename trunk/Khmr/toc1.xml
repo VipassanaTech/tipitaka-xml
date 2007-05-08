@@ -1,0 +1,81 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!--  តិបិដក (មូល)  //-->
+	<tree text="វិនយ បិដក">
+		<tree text="បារាជិកបាឡិ" src="./cscd/VIN01M.MUL.toc.xml"/>
+		<tree text="បាចិត្តិយបាឡិ" src="./cscd/VIN02M1.MUL.toc.xml"/>
+		<tree text="មហាវគ្គបាឡិ" src="./cscd/VIN02M2.MUL.toc.xml"/>
+		<tree text="ចូឡវគ្គបាឡិ" src="./cscd/VIN02M3.MUL.toc.xml"/>
+		<tree text="បរិវារបាឡិ" src="./cscd/VIN02M4.MUL.toc.xml"/>
+	</tree>
+	<tree text="សុត្ត បិដក">
+		<tree text="ទីឃ និកាយ">
+			<tree text="សីលក្ខន្ធវគ្គបាឡិ" src="./cscd/S0101M.MUL.toc.xml"/>
+			<tree text="មហាវគ្គបាឡិ" src="./cscd/S0102M.MUL.toc.xml"/>
+			<tree text="បាថិកវគ្គបាឡិ" src="./cscd/S0103M.MUL.toc.xml"/>
+		</tree>
+		<tree text="មជ្ឈិម និកាយ">
+			<tree text="មូលបណ្ណាសបាឡិ" src="./cscd/S0201M.MUL.toc.xml"/>
+			<tree text="មជ្ឈិមបណ្ណាសបាឡិ" src="./cscd/S0202M.MUL.toc.xml"/>
+			<tree text="ឧបរិបណ្ណាសបាឡិ" src="./cscd/S0203M.MUL.toc.xml"/>
+		</tree>
+		<tree text="សំយុត្ត និកាយ">
+			<tree text="សគាថាវគ្គបាឡិ" src="./cscd/S0301M.MUL.toc.xml"/>
+			<tree text="និទានវគ្គបាឡិ" src="./cscd/S0302M.MUL.toc.xml"/>
+			<tree text="ខន្ធវគ្គបាឡិ" src="./cscd/S0303M.MUL.toc.xml"/>
+			<tree text="សឡាយតនវគ្គបាឡិ" src="./cscd/S0304M.MUL.toc.xml"/>
+			<tree text="មហាវគ្គបាឡិ" src="./cscd/S0305M.MUL.toc.xml"/>
+		</tree>
+		<tree text="អង្គុត្តរ និកាយ">
+			<tree text="ឯកកនិបាតបាឡិ" src="./cscd/S0401M.MUL.toc.xml"/>
+			<tree text="ទុកនិបាតបាឡិ" src="./cscd/S0402M1.MUL.toc.xml"/>
+			<tree text="តិកនិបាតបាឡិ" src="./cscd/S0402M2.MUL.toc.xml"/>
+			<tree text="ចតុក្កនិបាតបាឡិ" src="./cscd/S0402M3.MUL.toc.xml"/>
+			<tree text="បញ្ចកនិបាតបាឡិ" src="./cscd/S0403M1.MUL.toc.xml"/>
+			<tree text="ឆក្កនិបាតបាឡិ" src="./cscd/S0403M2.MUL.toc.xml"/>
+			<tree text="សត្តកនិបាតបាឡិ" src="./cscd/S0403M3.MUL.toc.xml"/>
+			<tree text="អដ្ឋកាទិនិបាតបាឡិ" src="./cscd/S0404M1.MUL.toc.xml"/>
+			<tree text="នវកនិបាតបាឡិ" src="./cscd/S0404M2.MUL.toc.xml"/>
+			<tree text="ទសកនិបាតបាឡិ" src="./cscd/S0404M3.MUL.toc.xml"/>
+			<tree text="ឯកាទសកនិបាតបាឡិ" src="./cscd/S0404M4.MUL.toc.xml"/>
+		</tree>
+		<tree text="ខុទ្ទក និកាយ">
+			<tree text="ខុទ្ទកបាឋបាឡិ" src="./cscd/S0501M.MUL.toc.xml"/>
+			<tree text="ធម្មបទបាឡិ" src="./cscd/S0502M.MUL.toc.xml"/>
+			<tree text="ឧទានបាឡិ" src="./cscd/S0503M.MUL.toc.xml"/>
+			<tree text="ឥតិវុត្តកបាឡិ" src="./cscd/S0504M.MUL.toc.xml"/>
+			<tree text="សុត្តនិបាតបាឡិ" src="./cscd/S0505M.MUL.toc.xml"/>
+			<tree text="វិមានវត្ថុបាឡិ" src="./cscd/S0506M.MUL.toc.xml"/>
+			<tree text="បេតវត្ថុបាឡិ" src="./cscd/S0507M.MUL.toc.xml"/>
+			<tree text="ថេរគាថាបាឡិ" src="./cscd/S0508M.MUL.toc.xml"/>
+			<tree text="ថេរីគាថាបាឡិ" src="./cscd/S0509M.MUL.toc.xml"/>
+			<tree text="អបទានបាឡិ-១" src="./cscd/S0510m1.MUL.toc.xml"/>
+			<tree text="អបទានបាឡិ-២" src="./cscd/S0510m2.MUL.toc.xml"/>
+			<tree text="ពុទ្ធវំសបាឡិ" src="./cscd/S0511M.MUL.toc.xml"/>
+			<tree text="ចរិយាបិដកបាឡិ" src="./cscd/S0512M.MUL.toc.xml"/>
+			<tree text="ជាតកបាឡិ-១" src="./cscd/S0513M.MUL.toc.xml"/>
+			<tree text="ជាតកបាឡិ-២" src="./cscd/S0514M.MUL.toc.xml"/>
+			<tree text="មហានិទ្ទេសបាឡិ" src="./cscd/S0515M.MUL.toc.xml"/>
+			<tree text="ចូឡនិទ្ទេសបាឡិ" src="./cscd/S0516M.MUL.toc.xml"/>
+			<tree text="បដិសម្ភិទាមគ្គបាឡិ" src="./cscd/S0517M.MUL.toc.xml"/>
+			<tree text="នេត្តិប្បករណបាឡិ" src="./cscd/S0519M.MUL.toc.xml"/>
+			<tree text="មិលិន្ទបញ្ហបាឡិ" src="./cscd/S0518M.NRF.toc.xml"/>
+			<tree text="បេដកោបទេសបាឡិ" src="./cscd/S0520M.NRF.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="អភិធម្ម បិដក">
+		<tree text="ធម្មសង្គណីបាឡិ" src="./cscd/ABH01M.MUL.toc.xml"/>
+		<tree text="វិភង្គបាឡិ" src="./cscd/ABH02M.MUL.toc.xml"/>
+		<tree text="ធាតុកថាបាឡិ" src="./cscd/ABH03M1.MUL.toc.xml"/>
+		<tree text="បុគ្គលបញ្ញត្តិបាឡិ" src="./cscd/ABH03M2.MUL.toc.xml"/>
+		<tree text="កថាវត្ថុបាឡិ" src="./cscd/ABH03M3.MUL.toc.xml"/>
+		<tree text="យមកបាឡិ-១" src="./cscd/ABH03M4.MUL.toc.xml"/>
+		<tree text="យមកបាឡិ-២" src="./cscd/ABH03M5.MUL.toc.xml"/>
+		<tree text="យមកបាឡិ-៣" src="./cscd/ABH03M6.MUL.toc.xml"/>
+		<tree text="បដ្ឋានបាឡិ-១" src="./cscd/ABH03M7.MUL.toc.xml"/>
+		<tree text="បដ្ឋានបាឡិ-២" src="./cscd/ABH03M8.MUL.toc.xml"/>
+		<tree text="បដ្ឋានបាឡិ-៣" src="./cscd/ABH03M9.MUL.toc.xml"/>
+		<tree text="បដ្ឋានបាឡិ-៤" src="./cscd/ABH03M10.MUL.toc.xml"/>
+		<tree text="បដ្ឋានបាឡិ-៥" src="./cscd/ABH03M11.MUL.toc.xml"/>
+	</tree>
+</tree>

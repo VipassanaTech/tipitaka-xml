@@ -1,0 +1,81 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!--  д̇ибидага (муула)  //-->
+	<tree text="винаяа бидага">
+		<tree text="баарааж̇игабаал̣и" src="./cscd/VIN01M.MUL.toc.xml"/>
+		<tree text="баажид̇д̇ияабаал̣и" src="./cscd/VIN02M1.MUL.toc.xml"/>
+		<tree text="махааваг̇г̇абаал̣и" src="./cscd/VIN02M2.MUL.toc.xml"/>
+		<tree text="жуул̣аваг̇г̇абаал̣и" src="./cscd/VIN02M3.MUL.toc.xml"/>
+		<tree text="бариваарабаал̣и" src="./cscd/VIN02M4.MUL.toc.xml"/>
+	</tree>
+	<tree text="суд̇д̇а бидага">
+		<tree text="д̣̇ийгха нигааяа">
+			<tree text="сийлагканд̇хаваг̇г̇абаал̣и" src="./cscd/S0101M.MUL.toc.xml"/>
+			<tree text="махааваг̇г̇абаал̣и" src="./cscd/S0102M.MUL.toc.xml"/>
+			<tree text="баат̇игаваг̇г̇абаал̣и" src="./cscd/S0103M.MUL.toc.xml"/>
+		</tree>
+		<tree text="маж̇жхима нигааяа">
+			<tree text="муулабан̣н̣аасабаал̣и" src="./cscd/S0201M.MUL.toc.xml"/>
+			<tree text="маж̇жхимабан̣н̣аасабаал̣и" src="./cscd/S0202M.MUL.toc.xml"/>
+			<tree text="убарибан̣н̣аасабаал̣и" src="./cscd/S0203M.MUL.toc.xml"/>
+		</tree>
+		<tree text="сам̣яуд̇д̇а нигааяа">
+			<tree text="саг̇аат̇ааваг̇г̇абаал̣и" src="./cscd/S0301M.MUL.toc.xml"/>
+			<tree text="нид̣̇аанаваг̇г̇абаал̣и" src="./cscd/S0302M.MUL.toc.xml"/>
+			<tree text="канд̇хаваг̇г̇абаал̣и" src="./cscd/S0303M.MUL.toc.xml"/>
+			<tree text="сал̣ааяад̇анаваг̇г̇абаал̣и" src="./cscd/S0304M.MUL.toc.xml"/>
+			<tree text="махааваг̇г̇абаал̣и" src="./cscd/S0305M.MUL.toc.xml"/>
+		</tree>
+		<tree text="ан̇г̇уд̇д̇ара нигааяа">
+			<tree text="згаганибаад̇абаал̣и" src="./cscd/S0401M.MUL.toc.xml"/>
+			<tree text="д̣̇уганибаад̇абаал̣и" src="./cscd/S0402M1.MUL.toc.xml"/>
+			<tree text="д̇иганибаад̇абаал̣и" src="./cscd/S0402M2.MUL.toc.xml"/>
+			<tree text="жад̇угганибаад̇абаал̣и" src="./cscd/S0402M3.MUL.toc.xml"/>
+			<tree text="бан̃жаганибаад̇абаал̣и" src="./cscd/S0403M1.MUL.toc.xml"/>
+			<tree text="чагганибаад̇абаал̣и" src="./cscd/S0403M2.MUL.toc.xml"/>
+			<tree text="сад̇д̇аганибаад̇абаал̣и" src="./cscd/S0403M3.MUL.toc.xml"/>
+			<tree text="адтагаад̣̇инибаад̇абаал̣и" src="./cscd/S0404M1.MUL.toc.xml"/>
+			<tree text="наваганибаад̇абаал̣и" src="./cscd/S0404M2.MUL.toc.xml"/>
+			<tree text="д̣̇асаганибаад̇абаал̣и" src="./cscd/S0404M3.MUL.toc.xml"/>
+			<tree text="згаад̣̇асаганибаад̇абаал̣и" src="./cscd/S0404M4.MUL.toc.xml"/>
+		</tree>
+		<tree text="куд̣̇д̣̇ага нигааяа">
+			<tree text="куд̣̇д̣̇агабаатабаал̣и" src="./cscd/S0501M.MUL.toc.xml"/>
+			<tree text="д̇хаммабад̣̇абаал̣и" src="./cscd/S0502M.MUL.toc.xml"/>
+			<tree text="уд̣̇аанабаал̣и" src="./cscd/S0503M.MUL.toc.xml"/>
+			<tree text="ид̇ивуд̇д̇агабаал̣и" src="./cscd/S0504M.MUL.toc.xml"/>
+			<tree text="суд̇д̇анибаад̇абаал̣и" src="./cscd/S0505M.MUL.toc.xml"/>
+			<tree text="вимаанавад̇т̇убаал̣и" src="./cscd/S0506M.MUL.toc.xml"/>
+			<tree text="бзд̇авад̇т̇убаал̣и" src="./cscd/S0507M.MUL.toc.xml"/>
+			<tree text="т̇зраг̇аат̇аабаал̣и" src="./cscd/S0508M.MUL.toc.xml"/>
+			<tree text="т̇зрийг̇аат̇аабаал̣и" src="./cscd/S0509M.MUL.toc.xml"/>
+			<tree text="абад̣̇аанабаал̣и-1" src="./cscd/S0510m1.MUL.toc.xml"/>
+			<tree text="абад̣̇аанабаал̣и-2" src="./cscd/S0510m2.MUL.toc.xml"/>
+			<tree text="б̣уд̣̇д̇хавам̣сабаал̣и" src="./cscd/S0511M.MUL.toc.xml"/>
+			<tree text="жарияаабидагабаал̣и" src="./cscd/S0512M.MUL.toc.xml"/>
+			<tree text="ж̇аад̇агабаал̣и-1" src="./cscd/S0513M.MUL.toc.xml"/>
+			<tree text="ж̇аад̇агабаал̣и-2" src="./cscd/S0514M.MUL.toc.xml"/>
+			<tree text="махаанид̣̇д̣̇зсабаал̣и" src="./cscd/S0515M.MUL.toc.xml"/>
+			<tree text="жуул̣анид̣̇д̣̇зсабаал̣и" src="./cscd/S0516M.MUL.toc.xml"/>
+			<tree text="бадисамбхид̣̇аамаг̇г̇абаал̣и" src="./cscd/S0517M.MUL.toc.xml"/>
+			<tree text="нзд̇д̇иббагаран̣абаал̣и" src="./cscd/S0519M.MUL.toc.xml"/>
+			<tree text="милинд̣̇абан̃хабаал̣и" src="./cscd/S0518M.NRF.toc.xml"/>
+			<tree text="бздагобад̣̇зсабаал̣и" src="./cscd/S0520M.NRF.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="абхид̇хамма бидага">
+		<tree text="д̇хаммасан̇г̇ан̣ийбаал̣и" src="./cscd/ABH01M.MUL.toc.xml"/>
+		<tree text="вибхан̇г̇абаал̣и" src="./cscd/ABH02M.MUL.toc.xml"/>
+		<tree text="д̇хаад̇угат̇аабаал̣и" src="./cscd/ABH03M1.MUL.toc.xml"/>
+		<tree text="буг̇г̇алабан̃н̃ад̇д̇ибаал̣и" src="./cscd/ABH03M2.MUL.toc.xml"/>
+		<tree text="гат̇аавад̇т̇убаал̣и" src="./cscd/ABH03M3.MUL.toc.xml"/>
+		<tree text="яамагабаал̣и-1" src="./cscd/ABH03M4.MUL.toc.xml"/>
+		<tree text="яамагабаал̣и-2" src="./cscd/ABH03M5.MUL.toc.xml"/>
+		<tree text="яамагабаал̣и-3" src="./cscd/ABH03M6.MUL.toc.xml"/>
+		<tree text="бадтаанабаал̣и-1" src="./cscd/ABH03M7.MUL.toc.xml"/>
+		<tree text="бадтаанабаал̣и-2" src="./cscd/ABH03M8.MUL.toc.xml"/>
+		<tree text="бадтаанабаал̣и-3" src="./cscd/ABH03M9.MUL.toc.xml"/>
+		<tree text="бадтаанабаал̣и-4" src="./cscd/ABH03M10.MUL.toc.xml"/>
+		<tree text="бадтаанабаал̣и-5" src="./cscd/ABH03M11.MUL.toc.xml"/>
+	</tree>
+</tree>

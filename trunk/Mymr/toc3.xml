@@ -1,0 +1,61 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!-- "ဋီကာ" //-->
+	<tree text="ဝိနယ ပိဋက (ဋီကာ)">
+		<tree text="သာရတ္ထဒီပနီ-ဋီကာ-၁" src="./cscd/VIN01T1.TIK.toc.xml"/>
+		<tree text="သာရတ္ထဒီပနီ-ဋီကာ-၂" src="./cscd/VIN01T2.TIK.toc.xml"/>
+		<tree text="သာရတ္ထဒီပနီ-ဋီကာ-၃" src="./cscd/VIN02T.TIK.toc.xml"/>
+		<tree text="ဒ္ဝေမာတိကာပာဠိ" src="./cscd/VIN04T.NRF.toc.xml"/>
+		<tree text="ဝိနယသင္ဂဟ-အဋ္ဌကထာ" src="./cscd/VIN05T.NRF.toc.xml"/>
+		<tree text="ဝဇိရဗုဒ္ဓိ-ဋီကာ" src="./cscd/VIN06T.NRF.toc.xml"/>
+		<tree text="ဝိမတိဝိနောဒနီ-ဋီကာ" src="./cscd/VIN07T.NRF.toc.xml"/>
+		<tree text="ဝိနယာလင္ကာရ-ဋီကာ" src="./cscd/VIN08T.NRF.toc.xml"/>
+		<tree text="ကင္ခာဝိတရဏီပုရာဏ-ဋီကာ" src="./cscd/VIN09T.NRF.toc.xml"/>
+		<tree text="ဝိနယဝိနိစ္ဆယ-ဥတ္တရဝိနိစ္ဆယ" src="./cscd/VIN10T.NRF.toc.xml"/>
+		<tree text="ဝိနယဝိနိစ္ဆယ-ဋီကာ" src="./cscd/VIN11T.NRF.toc.xml"/>
+		<tree text="ပာစိတ္ယာဒိယောဇနာပာဠိ" src="./cscd/VIN12T.NRF.toc.xml"/>
+		<tree text="ခုဒ္ဒသိက္ခာ-မူလသိက္ခာ" src="./cscd/VIN13T.NRF.toc.xml"/>
+	</tree>
+	<tree text="သုတ္တ ပိဋက (ဋီကာ)">
+		<tree text="ဒီဃ နိကာယ (ဋီကာ)">
+			<tree text="သီလက္ခန္ဓဝဂ္ဂ-ဋီကာ" src="./cscd/S0101T.TIK.toc.xml"/>
+			<tree text="မဟာဝဂ္ဂ-ဋီကာ" src="./cscd/S0102T.TIK.toc.xml"/>
+			<tree text="ပာထိကဝဂ္ဂ-ဋီကာ" src="./cscd/S0103T.TIK.toc.xml"/>
+			<tree text="သီလက္ခန္ဓဝဂ္ဂ-အဘိနဝဋီကာ-၁" src="./cscd/S0104T.NRF.toc.xml"/>
+			<tree text="သီလက္ခန္ဓဝဂ္ဂ-အဘိနဝဋီကာ-၂" src="./cscd/S0105T.NRF.toc.xml"/>
+		</tree>
+		<tree text="မဇ္ဈိမ နိကာယ (ဋီကာ)">
+			<tree text="မူလပဏ္ဏာသ-ဋီကာ" src="./cscd/S0201T.TIK.toc.xml"/>
+			<tree text="မဇ္ဈိမပဏ္ဏာသ-ဋီကာ" src="./cscd/S0202T.TIK.toc.xml"/>
+			<tree text="ဥပရိပဏ္ဏာသ-ဋီကာ" src="./cscd/S0203T.TIK.toc.xml"/>
+		</tree>
+		<tree text="သံယုတ္တ နိကာယ (ဋီကာ)">
+			<tree text="သဂာထာဝဂ္ဂ-ဋီကာ" src="./cscd/S0301T.TIK.toc.xml"/>
+			<tree text="နိဒာနဝဂ္ဂ-ဋီကာ" src="./cscd/S0302T.TIK.toc.xml"/>
+			<tree text="ခန္ဓဝဂ္ဂ-ဋီကာ" src="./cscd/S0303T.TIK.toc.xml"/>
+			<tree text="သဠာယတနဝဂ္ဂ-ဋီကာ" src="./cscd/S0304T.TIK.toc.xml"/>
+			<tree text="မဟာဝဂ္ဂ-ဋီကာ" src="./cscd/S0305T.TIK.toc.xml"/>
+		</tree>
+		<tree text="အင္ဂုတ္တရ နိကာယ (ဋီကာ)">
+			<tree text="ဧကကနိပာတ-ဋီကာ" src="./cscd/S0401T.TIK.toc.xml"/>
+			<tree text="ဒုက-တိက-စတုက္ကနိပာတ-ဋီကာ" src="./cscd/S0402T.TIK.toc.xml"/>
+			<tree text="ပဉ္စက-ဆက္က-သတ္တကနိပာတ-ဋီကာ" src="./cscd/S0403T.TIK.toc.xml"/>
+			<tree text="အဋ္ဌကာဒိနိပာတ-ဋီကာ" src="./cscd/S0404T.TIK.toc.xml"/>
+		</tree>
+		<tree text="ခုဒ္ဒက နိကာယ (ဋီကာ)">
+			<tree text="နေတ္တိပ္ပကရဏ-ဋီကာ" src="./cscd/S0519T.TIK.toc.xml"/>
+			<tree text="နေတ္တိဝိဘာဝိနီ" src="./cscd/S0501T.NRF.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="အဘိဓမ္မ ပိဋက (ဋီကာ)">
+		<tree text="ဓမ္မသင္ဂဏီ-မူလဋီကာ" src="./cscd/ABH01T.TIK.toc.xml"/>
+		<tree text="ဝိဘင္ဂ-မူလဋီကာ" src="./cscd/ABH02T.TIK.toc.xml"/>
+		<tree text="ပဉ္စပကရဏ-မူလဋီကာ" src="./cscd/ABH03T.TIK.toc.xml"/>
+		<tree text="ဓမ္မသင္ဂဏီ-အနုဋီကာ" src="./cscd/ABH04T.NRF.toc.xml"/>
+		<tree text="ပဉ္စပကရဏ-အနုဋီကာ" src="./cscd/ABH05T.NRF.toc.xml"/>
+		<tree text="အဘိဓမ္မာဝတာရော" src="./cscd/ABH06T.NRF.toc.xml"/>
+		<tree text="အဘိဓမ္မတ္ထသင္ဂဟော" src="./cscd/ABH07T.NRF.toc.xml"/>
+		<tree text="အဘိဓမ္မာဝတာရ-ပုရာဏဋီကာ" src="./cscd/ABH08T.NRF.toc.xml"/>
+		<tree text="အဘိဓမ္မမာတိကာပာဠိ" src="./cscd/ABH09T.NRF.toc.xml"/>
+	</tree>
+</tree>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!--  ตีปีฎก (มูล)  //-->
+	<tree text="วีนย ปีฎก">
+		<tree text="ปาราชีกปาฬี" src="./cscd/VIN01M.MUL.toc.xml"/>
+		<tree text="ปาจีตฺตียปาฬี" src="./cscd/VIN02M1.MUL.toc.xml"/>
+		<tree text="มหาวคฺคปาฬี" src="./cscd/VIN02M2.MUL.toc.xml"/>
+		<tree text="จูฬวคฺคปาฬี" src="./cscd/VIN02M3.MUL.toc.xml"/>
+		<tree text="ปรีวารปาฬี" src="./cscd/VIN02M4.MUL.toc.xml"/>
+	</tree>
+	<tree text="สุตฺต ปีฎก">
+		<tree text="ทืฆ นีกาย">
+			<tree text="สืลกฺขนฺธวคฺคปาฬี" src="./cscd/S0101M.MUL.toc.xml"/>
+			<tree text="มหาวคฺคปาฬี" src="./cscd/S0102M.MUL.toc.xml"/>
+			<tree text="ปาถีกวคฺคปาฬี" src="./cscd/S0103M.MUL.toc.xml"/>
+		</tree>
+		<tree text="มชฺฌีม นีกาย">
+			<tree text="มูลปณฺณาสปาฬี" src="./cscd/S0201M.MUL.toc.xml"/>
+			<tree text="มชฺฌีมปณฺณาสปาฬี" src="./cscd/S0202M.MUL.toc.xml"/>
+			<tree text="อุปรีปณฺณาสปาฬี" src="./cscd/S0203M.MUL.toc.xml"/>
+		</tree>
+		<tree text="สํยุตฺต นีกาย">
+			<tree text="สคาถาวคฺคปาฬี" src="./cscd/S0301M.MUL.toc.xml"/>
+			<tree text="นีทานวคฺคปาฬี" src="./cscd/S0302M.MUL.toc.xml"/>
+			<tree text="ขนฺธวคฺคปาฬี" src="./cscd/S0303M.MUL.toc.xml"/>
+			<tree text="สฬายตนวคฺคปาฬี" src="./cscd/S0304M.MUL.toc.xml"/>
+			<tree text="มหาวคฺคปาฬี" src="./cscd/S0305M.MUL.toc.xml"/>
+		</tree>
+		<tree text="องฺคุตฺตร นีกาย">
+			<tree text="เอกกนีปาตปาฬี" src="./cscd/S0401M.MUL.toc.xml"/>
+			<tree text="ทุกนีปาตปาฬี" src="./cscd/S0402M1.MUL.toc.xml"/>
+			<tree text="ตีกนีปาตปาฬี" src="./cscd/S0402M2.MUL.toc.xml"/>
+			<tree text="จตุกฺกนีปาตปาฬี" src="./cscd/S0402M3.MUL.toc.xml"/>
+			<tree text="ปญฺจกนีปาตปาฬี" src="./cscd/S0403M1.MUL.toc.xml"/>
+			<tree text="ฉกฺกนีปาตปาฬี" src="./cscd/S0403M2.MUL.toc.xml"/>
+			<tree text="สตฺตกนีปาตปาฬี" src="./cscd/S0403M3.MUL.toc.xml"/>
+			<tree text="อฎฺฐกาทีนีปาตปาฬี" src="./cscd/S0404M1.MUL.toc.xml"/>
+			<tree text="นวกนีปาตปาฬี" src="./cscd/S0404M2.MUL.toc.xml"/>
+			<tree text="ทสกนีปาตปาฬี" src="./cscd/S0404M3.MUL.toc.xml"/>
+			<tree text="เอกาทสกนีปาตปาฬี" src="./cscd/S0404M4.MUL.toc.xml"/>
+		</tree>
+		<tree text="ขุทฺทก นีกาย">
+			<tree text="ขุทฺทกปาฐปาฬี" src="./cscd/S0501M.MUL.toc.xml"/>
+			<tree text="ธมฺมปทปาฬี" src="./cscd/S0502M.MUL.toc.xml"/>
+			<tree text="อุทานปาฬี" src="./cscd/S0503M.MUL.toc.xml"/>
+			<tree text="อีตีวุตฺตกปาฬี" src="./cscd/S0504M.MUL.toc.xml"/>
+			<tree text="สุตฺตนีปาตปาฬี" src="./cscd/S0505M.MUL.toc.xml"/>
+			<tree text="วีมานวตฺถุปาฬี" src="./cscd/S0506M.MUL.toc.xml"/>
+			<tree text="เปตวตฺถุปาฬี" src="./cscd/S0507M.MUL.toc.xml"/>
+			<tree text="เถรคาถาปาฬี" src="./cscd/S0508M.MUL.toc.xml"/>
+			<tree text="เถรืคาถาปาฬี" src="./cscd/S0509M.MUL.toc.xml"/>
+			<tree text="อปทานปาฬี-๑" src="./cscd/S0510m1.MUL.toc.xml"/>
+			<tree text="อปทานปาฬี-๒" src="./cscd/S0510m2.MUL.toc.xml"/>
+			<tree text="พุทฺธวํสปาฬี" src="./cscd/S0511M.MUL.toc.xml"/>
+			<tree text="จรียาปีฎกปาฬี" src="./cscd/S0512M.MUL.toc.xml"/>
+			<tree text="ชาตกปาฬี-๑" src="./cscd/S0513M.MUL.toc.xml"/>
+			<tree text="ชาตกปาฬี-๒" src="./cscd/S0514M.MUL.toc.xml"/>
+			<tree text="มหานีเทฺทสปาฬี" src="./cscd/S0515M.MUL.toc.xml"/>
+			<tree text="จูฬนีเทฺทสปาฬี" src="./cscd/S0516M.MUL.toc.xml"/>
+			<tree text="ปฎีสมฺภีทามคฺคปาฬี" src="./cscd/S0517M.MUL.toc.xml"/>
+			<tree text="เนตฺตีปฺปกรณปาฬี" src="./cscd/S0519M.MUL.toc.xml"/>
+			<tree text="มีลีนฺทปญฺหปาฬี" src="./cscd/S0518M.NRF.toc.xml"/>
+			<tree text="เปฎโกปเทสปาฬี" src="./cscd/S0520M.NRF.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="อภีธมฺม ปีฎก">
+		<tree text="ธมฺมสงฺคณืปาฬี" src="./cscd/ABH01M.MUL.toc.xml"/>
+		<tree text="วีภงฺคปาฬี" src="./cscd/ABH02M.MUL.toc.xml"/>
+		<tree text="ธาตุกถาปาฬี" src="./cscd/ABH03M1.MUL.toc.xml"/>
+		<tree text="ปุคฺคลปญฺญตฺตีปาฬี" src="./cscd/ABH03M2.MUL.toc.xml"/>
+		<tree text="กถาวตฺถุปาฬี" src="./cscd/ABH03M3.MUL.toc.xml"/>
+		<tree text="ยมกปาฬี-๑" src="./cscd/ABH03M4.MUL.toc.xml"/>
+		<tree text="ยมกปาฬี-๒" src="./cscd/ABH03M5.MUL.toc.xml"/>
+		<tree text="ยมกปาฬี-๓" src="./cscd/ABH03M6.MUL.toc.xml"/>
+		<tree text="ปฎฺฐานปาฬี-๑" src="./cscd/ABH03M7.MUL.toc.xml"/>
+		<tree text="ปฎฺฐานปาฬี-๒" src="./cscd/ABH03M8.MUL.toc.xml"/>
+		<tree text="ปฎฺฐานปาฬี-๓" src="./cscd/ABH03M9.MUL.toc.xml"/>
+		<tree text="ปฎฺฐานปาฬี-๔" src="./cscd/ABH03M10.MUL.toc.xml"/>
+		<tree text="ปฎฺฐานปาฬี-๕" src="./cscd/ABH03M11.MUL.toc.xml"/>
+	</tree>
+</tree>

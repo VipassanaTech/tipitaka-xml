@@ -1,0 +1,81 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!--  tipiṭaka (mūla)  //-->
+	<tree text="Vinaya Piṭaka">
+		<tree text="Pārājikapāḷi" src="./cscd/VIN01M.MUL.toc.xml"/>
+		<tree text="Pācittiyapāḷi" src="./cscd/VIN02M1.MUL.toc.xml"/>
+		<tree text="Mahāvaggapāḷi" src="./cscd/VIN02M2.MUL.toc.xml"/>
+		<tree text="Cūḷavaggapāḷi" src="./cscd/VIN02M3.MUL.toc.xml"/>
+		<tree text="Parivārapāḷi" src="./cscd/VIN02M4.MUL.toc.xml"/>
+	</tree>
+	<tree text="Sutta Piṭaka">
+		<tree text="Dīgha Nikāya">
+			<tree text="Sīlakkhandhavaggapāḷi" src="./cscd/S0101M.MUL.toc.xml"/>
+			<tree text="Mahāvaggapāḷi" src="./cscd/S0102M.MUL.toc.xml"/>
+			<tree text="Pāthikavaggapāḷi" src="./cscd/S0103M.MUL.toc.xml"/>
+		</tree>
+		<tree text="Majjhima Nikāya">
+			<tree text="Mūlapaṇṇāsapāḷi" src="./cscd/S0201M.MUL.toc.xml"/>
+			<tree text="Majjhimapaṇṇāsapāḷi" src="./cscd/S0202M.MUL.toc.xml"/>
+			<tree text="Uparipaṇṇāsapāḷi" src="./cscd/S0203M.MUL.toc.xml"/>
+		</tree>
+		<tree text="Saṃyutta Nikāya">
+			<tree text="Sagāthāvaggapāḷi" src="./cscd/S0301M.MUL.toc.xml"/>
+			<tree text="Nidānavaggapāḷi" src="./cscd/S0302M.MUL.toc.xml"/>
+			<tree text="Khandhavaggapāḷi" src="./cscd/S0303M.MUL.toc.xml"/>
+			<tree text="Saḷāyatanavaggapāḷi" src="./cscd/S0304M.MUL.toc.xml"/>
+			<tree text="Mahāvaggapāḷi" src="./cscd/S0305M.MUL.toc.xml"/>
+		</tree>
+		<tree text="Aṅguttara Nikāya">
+			<tree text="Ekakanipātapāḷi" src="./cscd/S0401M.MUL.toc.xml"/>
+			<tree text="Dukanipātapāḷi" src="./cscd/S0402M1.MUL.toc.xml"/>
+			<tree text="Tikanipātapāḷi" src="./cscd/S0402M2.MUL.toc.xml"/>
+			<tree text="Catukkanipātapāḷi" src="./cscd/S0402M3.MUL.toc.xml"/>
+			<tree text="Pañcakanipātapāḷi" src="./cscd/S0403M1.MUL.toc.xml"/>
+			<tree text="Chakkanipātapāḷi" src="./cscd/S0403M2.MUL.toc.xml"/>
+			<tree text="Sattakanipātapāḷi" src="./cscd/S0403M3.MUL.toc.xml"/>
+			<tree text="Aṭṭhakādinipātapāḷi" src="./cscd/S0404M1.MUL.toc.xml"/>
+			<tree text="Navakanipātapāḷi" src="./cscd/S0404M2.MUL.toc.xml"/>
+			<tree text="Dasakanipātapāḷi" src="./cscd/S0404M3.MUL.toc.xml"/>
+			<tree text="Ekādasakanipātapāḷi" src="./cscd/S0404M4.MUL.toc.xml"/>
+		</tree>
+		<tree text="Khuddaka Nikāya">
+			<tree text="Khuddakapāṭhapāḷi" src="./cscd/S0501M.MUL.toc.xml"/>
+			<tree text="Dhammapadapāḷi" src="./cscd/S0502M.MUL.toc.xml"/>
+			<tree text="Udānapāḷi" src="./cscd/S0503M.MUL.toc.xml"/>
+			<tree text="Itivuttakapāḷi" src="./cscd/S0504M.MUL.toc.xml"/>
+			<tree text="Suttanipātapāḷi" src="./cscd/S0505M.MUL.toc.xml"/>
+			<tree text="Vimānavatthupāḷi" src="./cscd/S0506M.MUL.toc.xml"/>
+			<tree text="Petavatthupāḷi" src="./cscd/S0507M.MUL.toc.xml"/>
+			<tree text="Theragāthāpāḷi" src="./cscd/S0508M.MUL.toc.xml"/>
+			<tree text="Therīgāthāpāḷi" src="./cscd/S0509M.MUL.toc.xml"/>
+			<tree text="Apadānapāḷi-1" src="./cscd/S0510m1.MUL.toc.xml"/>
+			<tree text="Apadānapāḷi-2" src="./cscd/S0510m2.MUL.toc.xml"/>
+			<tree text="Buddhavaṃsapāḷi" src="./cscd/S0511M.MUL.toc.xml"/>
+			<tree text="Cariyāpiṭakapāḷi" src="./cscd/S0512M.MUL.toc.xml"/>
+			<tree text="Jātakapāḷi-1" src="./cscd/S0513M.MUL.toc.xml"/>
+			<tree text="Jātakapāḷi-2" src="./cscd/S0514M.MUL.toc.xml"/>
+			<tree text="Mahāniddesapāḷi" src="./cscd/S0515M.MUL.toc.xml"/>
+			<tree text="Cūḷaniddesapāḷi" src="./cscd/S0516M.MUL.toc.xml"/>
+			<tree text="Paṭisambhidāmaggapāḷi" src="./cscd/S0517M.MUL.toc.xml"/>
+			<tree text="Nettippakaraṇapāḷi" src="./cscd/S0519M.MUL.toc.xml"/>
+			<tree text="Milindapañhapāḷi" src="./cscd/S0518M.NRF.toc.xml"/>
+			<tree text="Peṭakopadesapāḷi" src="./cscd/S0520M.NRF.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="Abhidhamma Piṭaka">
+		<tree text="Dhammasaṅgaṇīpāḷi" src="./cscd/ABH01M.MUL.toc.xml"/>
+		<tree text="Vibhaṅgapāḷi" src="./cscd/ABH02M.MUL.toc.xml"/>
+		<tree text="Dhātukathāpāḷi" src="./cscd/ABH03M1.MUL.toc.xml"/>
+		<tree text="Puggalapaññattipāḷi" src="./cscd/ABH03M2.MUL.toc.xml"/>
+		<tree text="Kathāvatthupāḷi" src="./cscd/ABH03M3.MUL.toc.xml"/>
+		<tree text="Yamakapāḷi-1" src="./cscd/ABH03M4.MUL.toc.xml"/>
+		<tree text="Yamakapāḷi-2" src="./cscd/ABH03M5.MUL.toc.xml"/>
+		<tree text="Yamakapāḷi-3" src="./cscd/ABH03M6.MUL.toc.xml"/>
+		<tree text="Paṭṭhānapāḷi-1" src="./cscd/ABH03M7.MUL.toc.xml"/>
+		<tree text="Paṭṭhānapāḷi-2" src="./cscd/ABH03M8.MUL.toc.xml"/>
+		<tree text="Paṭṭhānapāḷi-3" src="./cscd/ABH03M9.MUL.toc.xml"/>
+		<tree text="Paṭṭhānapāḷi-4" src="./cscd/ABH03M10.MUL.toc.xml"/>
+		<tree text="Paṭṭhānapāḷi-5" src="./cscd/ABH03M11.MUL.toc.xml"/>
+	</tree>
+</tree>

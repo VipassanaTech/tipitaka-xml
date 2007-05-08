@@ -1,0 +1,8 @@
+﻿<?xml version = '1.0'?>
+<tree>
+<link rel="stylesheet" href="tipitaka-mya.css"/>
+  <tree src="toc1.xml" text="တိပိဋက (မူလ)" />
+  <tree src="toc2.xml" text="အဋ္ဌကထာ" />
+  <tree src="toc3.xml" text="ဋီကာ" />
+  <tree src="toc4.xml" text="အန္ယ" />
+</tree>

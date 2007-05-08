@@ -1,0 +1,7 @@
+﻿<?xml version = '1.0'?>
+<tree>
+  <tree src="toc1.xml" text="ตีปีฎก (มูล)" />
+  <tree src="toc2.xml" text="อฎฺฐกถา" />
+  <tree src="toc3.xml" text="ฎืกา" />
+  <tree src="toc4.xml" text="อนฺย" />
+</tree>
