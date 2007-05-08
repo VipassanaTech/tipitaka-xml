@@ -223,6 +223,14 @@ namespace Pitaka2Xml
                 para.text = Regex.Replace(para.text, "[$#@&][\x0966-\x096F]\\.[\x0966-\x096F]{4}",
                     new MatchEvaluator(this.FormatPageRefs));
 
+                if (para.format == 3)
+                {
+                    // Put the <paranum> tag around paragraph numbers.
+                    // Looking for Devanagari digits or a hyphen for number ranges, e.g. 26-27
+                    para.text = Regex.Replace(para.text, "([\x0966-\x096F\\-]+)", "<paranum>$1</paranum>");
+                    int i = 0;
+                }
+
                 string tag = (string)xmlParaTags[para.format];
                 if (tag == null)
                 {
