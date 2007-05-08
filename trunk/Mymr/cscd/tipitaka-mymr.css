@@ -10,6 +10,7 @@ body {
 span {}
 .fnote {color: blue}
 .bld {font-weight: bold; }
+.paranum {font-weight: bold; }
 
 p {
   border-top: 0in; border-bottom: 0in;

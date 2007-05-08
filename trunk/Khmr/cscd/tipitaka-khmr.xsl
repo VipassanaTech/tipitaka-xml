@@ -32,6 +32,12 @@
 </span>
 </xsl:template>
 
+<xsl:template match="paranum">
+<sclass="paranum">
+<xsl:apply-templates/>
+</span>
+</xsl:template>
+
 <xsl:template match="dot">
 <xsl:apply-templates/>
 </xsl:template>
