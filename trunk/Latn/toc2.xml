@@ -40,8 +40,8 @@
 			<tree text="suttanipāta-aṭṭhakathā" src="./cscd/S0505A.ATT.toc.xml"/>
 			<tree text="vimānavatthu-aṭṭhakathā" src="./cscd/S0506A.ATT.toc.xml"/>
 			<tree text="petavatthu-aṭṭhakathā" src="./cscd/S0507A.ATT.toc.xml"/>
-			<tree text="theragāthā-aṭṭhakathā-1" src="./cscd/S0508a1.ATT.toc.xml"/>
-			<tree text="theragāthā-aṭṭhakathā-2" src="./cscd/S0508a2.ATT.toc.xml"/>
+			<tree text="theragāthā-aṭṭhakathā-1" src="./cscd/S0508A1.ATT.toc.xml"/>
+			<tree text="theragāthā-aṭṭhakathā-2" src="./cscd/S0508A2.ATT.toc.xml"/>
 			<tree text="therīgāthā-aṭṭhakathā" src="./cscd/S0509A.ATT.toc.xml"/>
 			<tree text="apadāna-aṭṭhakathā" src="./cscd/S0510A.ATT.toc.xml"/>
 			<tree text="buddhavaṃsa-aṭṭhakathā" src="./cscd/S0511A.ATT.toc.xml"/>
@@ -50,9 +50,9 @@
 			<tree text="jātaka-aṭṭhakathā-2" src="./cscd/S0513A2.ATT.toc.xml"/>
 			<tree text="jātaka-aṭṭhakathā-3" src="./cscd/S0513A3.ATT.toc.xml"/>
 			<tree text="jātaka-aṭṭhakathā-4" src="./cscd/S0513A4.ATT.toc.xml"/>
-			<tree text="jātaka-aṭṭhakathā-5" src="./cscd/S0514a1.ATT.toc.xml"/>
-			<tree text="jātaka-aṭṭhakathā-6" src="./cscd/S0514a2.ATT.toc.xml"/>
-			<tree text="jātaka-aṭṭhakathā-7" src="./cscd/S0514a3.ATT.toc.xml"/>
+			<tree text="jātaka-aṭṭhakathā-5" src="./cscd/S0514A1.ATT.toc.xml"/>
+			<tree text="jātaka-aṭṭhakathā-6" src="./cscd/S0514A2.ATT.toc.xml"/>
+			<tree text="jātaka-aṭṭhakathā-7" src="./cscd/S0514A3.ATT.toc.xml"/>
 			<tree text="mahāniddesa-aṭṭhakathā" src="./cscd/S0515A.ATT.toc.xml"/>
 			<tree text="cūḷaniddesa-aṭṭhakathā" src="./cscd/S0516A.ATT.toc.xml"/>
 			<tree text="paṭisambhidāmagga-aṭṭhakathā" src="./cscd/S0517A.ATT.toc.xml"/>
