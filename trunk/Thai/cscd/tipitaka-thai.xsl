@@ -79,27 +79,27 @@
 </xsl:template>
 
 <xsl:template match="gatha1">
-<p class="gatha1">
+<blockquote><p class="gatha1">
 <xsl:apply-templates/>
-</p>
+</p></blockquote>
 </xsl:template>
 
 <xsl:template match="gatha2">
-<p class="gatha2">
+<blockquote><p class="gatha2">
 <xsl:apply-templates/>
-</p>
+</p></blockquote>
 </xsl:template>
 
 <xsl:template match="gatha3">
-<p class="gatha3">
+<blockquote><p class="gatha3">
 <xsl:apply-templates/>
-</p>
+</p></blockquote>
 </xsl:template>
 
 <xsl:template match="gathalast">
-<p class="gathalast">
+<blockquote><p class="gathalast">
 <xsl:apply-templates/>
-</p>
+</p></blockquote>
 </xsl:template>
 
 <xsl:template match="indent">

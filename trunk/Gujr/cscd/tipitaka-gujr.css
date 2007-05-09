@@ -41,13 +41,13 @@ p {
 .subhead { font-size: 12pt; text-align:center; font-weight: bold;}
 
 /* Gatha line 1 */
-.gatha1 { font-size: 12pt; text-indent: 4em; margin-bottom: 0em;}
+.gatha1 { font-size: 12pt; margin-bottom: 0em;}
 
 /* Gatha line 2 */
-.gatha2 { font-size: 12pt; text-indent: 7em; margin-bottom: 0em;}
+.gatha2 { font-size: 12pt; margin-bottom: 0em;}
 
 /* Gatha line 3 */
-.gatha3 { font-size: 12pt; text-indent: 4em; margin-bottom: 0em;}
+.gatha3 { font-size: 12pt; margin-bottom: 0em;}
 
 /* Gatha last line */
-.gathalast { font-size: 12pt; text-indent: 7em; margin-bottom: 0.5cm;}
+.gathalast { font-size: 12pt; margin-bottom: 0.5cm;}
