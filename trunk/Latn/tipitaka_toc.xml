@@ -1,7 +1,0 @@
-﻿<?xml version = '1.0'?>
-<tree>
-  <tree src="toc1.xml" text="tipiṭaka (mūla)" />
-  <tree src="toc2.xml" text="aṭṭhakathā" />
-  <tree src="toc3.xml" text="ṭīkā" />
-  <tree src="toc4.xml" text="anya" />
-</tree>
