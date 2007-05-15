@@ -221,6 +221,15 @@ namespace Pitaka2Xml
                 // replace two hyphens with an en-dash
                 para.text = para.text.Replace("--", "\x2013");
 
+                // replace two dandas with the Devanagari double danda character
+                para.text = para.text.Replace("\x0964\x0964", "\x0965");
+
+                // replace three dots with an ellipsis
+                para.text = para.text.Replace("...", "\x2026");
+
+                // replace a zero after a Dev. letter with the Devanagari abbreviation sign
+                para.text = Regex.Replace(para.text, "([\x0901-\x0963])\x0966", "$1\x0970");
+
                 para.text = Regex.Replace(para.text, "[$#@&][\x0966-\x096F]\\.[\x0966-\x096F]{4}",
                     new MatchEvaluator(this.FormatPageRefs));
 
