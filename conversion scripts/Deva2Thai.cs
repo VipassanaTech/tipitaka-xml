@@ -5,9 +5,9 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Dev2Thai
+namespace VRI.CSCD.Conversion
 {
-    class Dev2Thai
+    class Deva2Thai
     {
         static void Main(string[] args)
         {
@@ -41,7 +41,7 @@ namespace Dev2Thai
                     }
                 }
 
-                Dev2Thai d2 = new Dev2Thai();
+                Deva2Thai d2 = new Deva2Thai();
                 d2.InputFilePath = args[0];
                 d2.OutputFilePath = di.FullName + "\\" + fi.Name;
                 d2.Convert();
@@ -54,16 +54,16 @@ namespace Dev2Thai
 
         static void PrintUsage()
         {
-            Console.WriteLine("Unicode Devanagari to Unicode Thai, Pali characters conversion");
+            Console.WriteLine("Transliterates Unicode Devanagari to Unicode Thai script");
             Console.WriteLine("syntax:");
-            Console.WriteLine("dev2tha input [output]");
+            Console.WriteLine("deva2thai input [output]");
         }
         // end static methods
 
 
         private Hashtable dev2Thai;
 
-        public Dev2Thai()
+        public Deva2Thai()
         {
             dev2Thai = new Hashtable();
 
@@ -145,6 +145,7 @@ namespace Dev2Thai
             // other
             dev2Thai['\x0902'] = '\x0E4D'; // niggahita
             dev2Thai['\x094D'] = '\x0E3A'; // virama
+            dev2Thai['\x0970'] = '.'; // Dev. abbreviation sign
             dev2Thai['\x200C'] = ""; // ZWNJ (ignore)
             dev2Thai['\x200D'] = ""; // ZWJ (ignore)
         }
@@ -168,12 +169,26 @@ namespace Dev2Thai
         {
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
+            sr.Close();
+
+            // change name of stylesheet for Thai
+            devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-thai.xsl");
+
+            string str = Convert(devStr);
+
+            str = ConvertDandas(str);
+            str = CleanupPunctuation(str);
 
             StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
+            sw.Flush();
+            sw.Close();
+        }
 
-            // zap the double danda around "namo tassa..."
-            devStr = devStr.Replace("\x0964\x0964", "");
-
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
             // pre-processing step for Thai: put the e vowel before its consonants
             devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
             devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
@@ -186,22 +201,59 @@ namespace Dev2Thai
             devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939])\x094B", "\x0E42$1");
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])\x094B", "\x0E42$1");
 
-            // change name of stylesheet for Thai
-            devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-thai.xsl");
-
-            char[] dev = devStr.ToCharArray();
-
-            foreach (char c in dev)
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
             {
                 if (dev2Thai.ContainsKey(c))
-                    sw.Write(dev2Thai[c]);
+                    sb.Append(dev2Thai[c]);
                 else
-                    sw.Write(c);
+                    sb.Append(c);
             }
 
-            sw.Flush();
-            sw.Close();
-            sr.Close();
+            return sb.ToString();
+        }
+
+        public string ConvertDandas(string str)
+        {
+            // in gathas, single dandas convert to semicolon, double to period
+            str = Regex.Replace(str, "<gatha[a-z0-9]*>[^<]+</gatha[a-z0-9]*>",
+                new MatchEvaluator(this.ConvertGathaDandas));
+
+            // remove double dandas around namo tassa
+            str = Regex.Replace(str, "<centre>[^<]+</centre>",
+                new MatchEvaluator(this.RemoveNamoTassaDandas));
+
+            // convert all others to period
+            str = str.Replace("\x0964", ".");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string ConvertGathaDandas(Match m)
+        {
+            string str = m.Value;
+            str = str.Replace("\x0964", ";");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string RemoveNamoTassaDandas(Match m)
+        {
+            string str = m.Value;
+            return str.Replace("\x0965", "");
+        }
+
+        // There should be no spaces before these
+        // punctuation marks. 
+        public string CleanupPunctuation(string str)
+        {
+            str = str.Replace(" ,", ",");
+            str = str.Replace(" ?", "?");
+            str = str.Replace(" !", "!");
+            str = str.Replace(" ;", ";");
+            // does not affect peyyalas because they have ellipses now
+            str = str.Replace(" .", ".");
+            return str;
         }
     }
 }

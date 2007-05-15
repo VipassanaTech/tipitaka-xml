@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Deva2Cyrl
+namespace VRI.CSCD.Conversion
 {
     class Deva2Cyrl
     {
@@ -150,9 +150,12 @@ namespace Deva2Cyrl
             deva2Cyrl['\x096F'] = '9';
 
             // other
-            deva2Cyrl['\x0964'] = '.'; // danda -> period
+            // we let dandas and double dandas pass through and handle
+            // them in ConvertDandas()
+            //deva2Cyrl['\x0964'] = '.'; // danda -> period
             deva2Cyrl['\x0902'] = "\x043C\x0323"; // niggahita
             deva2Cyrl['\x094D'] = ""; // virama
+            deva2Cyrl['\x0970'] = "."; // Dev abbreviation sign
             deva2Cyrl['\x200C'] = ""; // ZWNJ (ignore)
             deva2Cyrl['\x200D'] = ""; // ZWJ (ignore)
         }
@@ -199,9 +202,6 @@ namespace Deva2Cyrl
             string devStr = sr.ReadToEnd();
             sr.Close();
 
-            // zap the double danda around "namo tassa..."
-            devStr = devStr.Replace("\x0964\x0964", "");
-
             // change name of stylesheet for Cyrillic
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-cyrl.xsl");
 
@@ -209,6 +209,22 @@ namespace Deva2Cyrl
             Capitalizer capitalizer = new Capitalizer(ParagraphElements, IgnoreElements, CapitalMarker);
             devStr = capitalizer.MarkCapitals(devStr);
 
+            string str = Convert(devStr);
+
+            str = capitalizer.Capitalize(str);
+            str = ConvertDandas(str);
+            str = CleanupPunctuation(str);
+
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
+            sw.Flush();
+            sw.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
             // insert Cyrillic 'a' after all consonants that are not followed by virama, dependent vowel or cyrillic a
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])([^\x093E-\x094D\x0430])", "$1\x0430$2");
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])([^\x093E-\x094D\x0430])", "$1\x0430$2");
@@ -219,9 +235,8 @@ namespace Deva2Cyrl
             // abbreviation marker)
             devStr = Regex.Replace(devStr, "([\x0430\x0901-\x0963])\x0966", "$1.");
 
-            char[] dev = devStr.ToCharArray();
             StringBuilder sb = new StringBuilder();
-            foreach (char c in dev)
+            foreach (char c in devStr.ToCharArray())
             {
                 if (deva2Cyrl.ContainsKey(c))
                     sb.Append(deva2Cyrl[c]);
@@ -229,13 +244,50 @@ namespace Deva2Cyrl
                     sb.Append(c);
             }
 
-            string str = sb.ToString();
-            str = capitalizer.Capitalize(str);
+            return sb.ToString();
+        }
 
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
-            sw.Write(str);
-            sw.Flush();
-            sw.Close();
+        public string ConvertDandas(string str)
+        {
+            // in gathas, single dandas convert to semicolon, double to period
+            str = Regex.Replace(str, "<gatha[a-z0-9]*>[^<]+</gatha[a-z0-9]*>",
+                new MatchEvaluator(this.ConvertGathaDandas));
+
+            // remove double dandas around namo tassa
+            str = Regex.Replace(str, "<centre>[^<]+</centre>",
+                new MatchEvaluator(this.RemoveNamoTassaDandas));
+
+            // convert all others to period
+            str = str.Replace("\x0964", ".");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string ConvertGathaDandas(Match m)
+        {
+            string str = m.Value;
+            str = str.Replace("\x0964", ";");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string RemoveNamoTassaDandas(Match m)
+        {
+            string str = m.Value;
+            return str.Replace("\x0965", "");
+        }
+
+        // There should be no spaces before these
+        // punctuation marks. 
+        public string CleanupPunctuation(string str)
+        {
+            str = str.Replace(" ,", ",");
+            str = str.Replace(" ?", "?");
+            str = str.Replace(" !", "!");
+            str = str.Replace(" ;", ";");
+            // does not affect peyyalas because they have ellipses now
+            str = str.Replace(" .", ".");
+            return str;
         }
     }
 }
