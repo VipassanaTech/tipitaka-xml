@@ -109,10 +109,10 @@ namespace Pitaka2Xml
             xmlParaTags[14] = "subhead";
             xmlParaTags[15] = "centrebold";
             xmlParaTags[21] = "gatha1";
-            xmlParaTags[22] = "gatha2";
+            xmlParaTags[22] = "gathalast";
             xmlParaTags[25] = "nonindent";
-            xmlParaTags[26] = "gathalast";
-            xmlParaTags[27] = "gatha3";
+            xmlParaTags[26] = "gatha3";
+            xmlParaTags[27] = "gatha2";
             xmlParaTags[40] = "bodytext";
         }
 
