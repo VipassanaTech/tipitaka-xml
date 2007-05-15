@@ -113,6 +113,7 @@ namespace Pitaka2Xml
             xmlParaTags[25] = "nonindent";
             xmlParaTags[26] = "gathalast";
             xmlParaTags[27] = "gatha3";
+            xmlParaTags[40] = "bodytext";
         }
 
         public string InputFilePath
@@ -223,12 +224,13 @@ namespace Pitaka2Xml
                 para.text = Regex.Replace(para.text, "[$#@&][\x0966-\x096F]\\.[\x0966-\x096F]{4}",
                     new MatchEvaluator(this.FormatPageRefs));
 
-                if (para.format == 3)
+                // for all paragraphs that are not headings
+                if (para.format < 6 || para.format > 15)
                 {
                     // Put the <paranum> tag around paragraph numbers.
-                    // Looking for Devanagari digits or a hyphen for number ranges, e.g. 26-27
-                    para.text = Regex.Replace(para.text, "([\x0966-\x096F\\-]+)", "<paranum>$1</paranum>");
-                    int i = 0;
+                    // Looking for Devanagari digits, or a hyphen for number ranges, e.g. 26-27
+                    // at the beginning of the para.(^ matches beginning of string only)
+                    para.text = Regex.Replace(para.text, "^([\x0966-\x096F\\-]+)", "<paranum>$1</paranum>");
                 }
 
                 string tag = (string)xmlParaTags[para.format];
