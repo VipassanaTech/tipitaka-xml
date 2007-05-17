@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace Deva2Latn
+namespace VRI.CSCD.Conversion
 {
     class LatinCapitalizer
     {

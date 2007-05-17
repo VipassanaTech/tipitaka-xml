@@ -45,12 +45,12 @@ namespace VRI.CSCD.Conversion
                 Deva2Cyrl d2 = new Deva2Cyrl();
                 d2.InputFilePath = args[0];
                 d2.OutputFilePath = di.FullName + "\\" + fi.Name;
-                d2.ParagraphElements = ConfigurationManager.AppSettings["ParagraphElements"].Split(',');
+                /*d2.ParagraphElements = ConfigurationManager.AppSettings["ParagraphElements"].Split(',');
                 d2.IgnoreElements = ConfigurationManager.AppSettings["IgnoreElements"].Split(',');
                 d2.CapitalMarker = System.Convert.ToChar(
                         System.Convert.ToInt32(
                         ConfigurationManager.AppSettings["CapitalMarker"])
-                        ).ToString();
+                        ).ToString();*/
                 d2.Convert();
             }
             catch (Exception ex)
@@ -206,12 +206,12 @@ namespace VRI.CSCD.Conversion
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-cyrl.xsl");
 
             // mark the Devanagari text for programmatic capitalization
-            Capitalizer capitalizer = new Capitalizer(ParagraphElements, IgnoreElements, CapitalMarker);
-            devStr = capitalizer.MarkCapitals(devStr);
+            //Capitalizer capitalizer = new Capitalizer(ParagraphElements, IgnoreElements, CapitalMarker);
+            //devStr = capitalizer.MarkCapitals(devStr);
 
             string str = Convert(devStr);
 
-            str = capitalizer.Capitalize(str);
+            //str = capitalizer.Capitalize(str);
             str = ConvertDandas(str);
             str = CleanupPunctuation(str);
 
@@ -250,11 +250,11 @@ namespace VRI.CSCD.Conversion
         public string ConvertDandas(string str)
         {
             // in gathas, single dandas convert to semicolon, double to period
-            str = Regex.Replace(str, "<gatha[a-z0-9]*>[^<]+</gatha[a-z0-9]*>",
+            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<centre>[^<]+</centre>",
+            str = Regex.Replace(str, "<centre>.+</centre>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period

@@ -216,11 +216,11 @@ namespace VRI.CSCD.Conversion
         public string ConvertDandas(string str)
         {
             // in gathas, single dandas convert to semicolon, double to period
-            str = Regex.Replace(str, "<gatha[a-z0-9]*>[^<]+</gatha[a-z0-9]*>",
+            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<centre>[^<]+</centre>",
+            str = Regex.Replace(str, "<centre>.+</centre>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period

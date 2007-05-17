@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
-namespace Dev2Myanmar
+namespace VRI.CSCD.Conversion
 {
-    class Dev2Myanmar
+    class Deva2Mymr
     {
         static void Main(string[] args)
         {
@@ -40,7 +41,7 @@ namespace Dev2Myanmar
                     }
                 }
 
-                Dev2Myanmar d2t = new Dev2Myanmar();
+                Deva2Mymr d2t = new Deva2Mymr();
                 d2t.InputFilePath = args[0];
                 d2t.OutputFilePath = di.FullName + "\\" + fi.Name;
                 d2t.Convert();
@@ -53,100 +54,103 @@ namespace Dev2Myanmar
 
         static void PrintUsage()
         {
-            Console.WriteLine("Unicode Devanagari to Unicode Myanmar, Pali characters conversion");
+            Console.WriteLine("Transliterates Unicode Devanagari to Unicode Myanmar script");
             Console.WriteLine("syntax:");
-            Console.WriteLine("dev2mya input [output]");
+            Console.WriteLine("deva2mymr input [output]");
         }
         // end static methods
 
 
-        private Hashtable dev2Myanmar;
+        private Hashtable deva2Mymr;
 
-        public Dev2Myanmar()
+        public Deva2Mymr()
         {
-            dev2Myanmar = new Hashtable();
+            deva2Mymr = new Hashtable();
 
             // velar stops
-            dev2Myanmar['\x0915'] = '\x1000'; // ka
-            dev2Myanmar['\x0916'] = '\x1001'; // kha
-            dev2Myanmar['\x0917'] = '\x1002'; // ga
-            dev2Myanmar['\x0918'] = '\x1003'; // gha
-            dev2Myanmar['\x0919'] = '\x1004'; // n overdot a
+            deva2Mymr['\x0915'] = '\x1000'; // ka
+            deva2Mymr['\x0916'] = '\x1001'; // kha
+            deva2Mymr['\x0917'] = '\x1002'; // ga
+            deva2Mymr['\x0918'] = '\x1003'; // gha
+            deva2Mymr['\x0919'] = '\x1004'; // n overdot a
             
             // palatal stops
-            dev2Myanmar['\x091A'] = '\x1005'; // ca
-            dev2Myanmar['\x091B'] = '\x1006'; // cha
-            dev2Myanmar['\x091C'] = '\x1007'; // ja
-            dev2Myanmar['\x091D'] = '\x1008'; // jha
-            dev2Myanmar['\x091E'] = '\x1009'; // ña
+            deva2Mymr['\x091A'] = '\x1005'; // ca
+            deva2Mymr['\x091B'] = '\x1006'; // cha
+            deva2Mymr['\x091C'] = '\x1007'; // ja
+            deva2Mymr['\x091D'] = '\x1008'; // jha
+            deva2Mymr['\x091E'] = '\x1009'; // ña
 
             // retroflex stops
-            dev2Myanmar['\x091F'] = '\x100B'; // t underdot a
-            dev2Myanmar['\x0920'] = '\x100C'; // t underdot ha
-            dev2Myanmar['\x0921'] = '\x100D'; // d underdot a
-            dev2Myanmar['\x0922'] = '\x100E'; // d underdot ha
-            dev2Myanmar['\x0923'] = '\x100F'; // n underdot a
+            deva2Mymr['\x091F'] = '\x100B'; // t underdot a
+            deva2Mymr['\x0920'] = '\x100C'; // t underdot ha
+            deva2Mymr['\x0921'] = '\x100D'; // d underdot a
+            deva2Mymr['\x0922'] = '\x100E'; // d underdot ha
+            deva2Mymr['\x0923'] = '\x100F'; // n underdot a
 
             // dental stops
-            dev2Myanmar['\x0924'] = '\x1010'; // ta
-            dev2Myanmar['\x0925'] = '\x1011'; // tha
-            dev2Myanmar['\x0926'] = '\x1012'; // da
-            dev2Myanmar['\x0927'] = '\x1013'; // dha
-            dev2Myanmar['\x0928'] = '\x1014'; // na
+            deva2Mymr['\x0924'] = '\x1010'; // ta
+            deva2Mymr['\x0925'] = '\x1011'; // tha
+            deva2Mymr['\x0926'] = '\x1012'; // da
+            deva2Mymr['\x0927'] = '\x1013'; // dha
+            deva2Mymr['\x0928'] = '\x1014'; // na
 
             // labial stops
-            dev2Myanmar['\x092A'] = '\x1015'; // pa
-            dev2Myanmar['\x092B'] = '\x1016'; // pha
-            dev2Myanmar['\x092C'] = '\x1017'; // ba
-            dev2Myanmar['\x092D'] = '\x1018'; // bha
-            dev2Myanmar['\x092E'] = '\x1019'; // ma
+            deva2Mymr['\x092A'] = '\x1015'; // pa
+            deva2Mymr['\x092B'] = '\x1016'; // pha
+            deva2Mymr['\x092C'] = '\x1017'; // ba
+            deva2Mymr['\x092D'] = '\x1018'; // bha
+            deva2Mymr['\x092E'] = '\x1019'; // ma
 
             // liquids, fricatives, etc.
-            dev2Myanmar['\x092F'] = '\x101A'; // ya
-            dev2Myanmar['\x0930'] = '\x101B'; // ra
-            dev2Myanmar['\x0932'] = '\x101C'; // la
-            dev2Myanmar['\x0935'] = '\x101D'; // va
-            dev2Myanmar['\x0938'] = '\x101E'; // sa
-            dev2Myanmar['\x0939'] = '\x101F'; // ha
-            dev2Myanmar['\x0933'] = '\x1020'; // l underdot a
+            deva2Mymr['\x092F'] = '\x101A'; // ya
+            deva2Mymr['\x0930'] = '\x101B'; // ra
+            deva2Mymr['\x0932'] = '\x101C'; // la
+            deva2Mymr['\x0935'] = '\x101D'; // va
+            deva2Mymr['\x0938'] = '\x101E'; // sa
+            deva2Mymr['\x0939'] = '\x101F'; // ha
+            deva2Mymr['\x0933'] = '\x1020'; // l underdot a
 
             // independent vowels
-            dev2Myanmar['\x0905'] = '\x1021'; // a
-            dev2Myanmar['\x0906'] = "\x1021\x102C"; // aa
-            dev2Myanmar['\x0907'] = '\x1023'; // i
-            dev2Myanmar['\x0908'] = '\x1024'; // ii
-            dev2Myanmar['\x0909'] = '\x1025'; // u
-            dev2Myanmar['\x090A'] = '\x1026'; // uu
-            dev2Myanmar['\x090F'] = '\x1027'; // e
-            dev2Myanmar['\x0913'] = '\x1029'; // o
+            deva2Mymr['\x0905'] = '\x1021'; // a
+            deva2Mymr['\x0906'] = "\x1021\x102C"; // aa
+            deva2Mymr['\x0907'] = '\x1023'; // i
+            deva2Mymr['\x0908'] = '\x1024'; // ii
+            deva2Mymr['\x0909'] = '\x1025'; // u
+            deva2Mymr['\x090A'] = '\x1026'; // uu
+            deva2Mymr['\x090F'] = '\x1027'; // e
+            deva2Mymr['\x0913'] = '\x1029'; // o
 
             // dependent vowel signs
-            dev2Myanmar['\x093E'] = '\x102C'; // aa
-            dev2Myanmar['\x093F'] = '\x102D'; // i
-            dev2Myanmar['\x0940'] = '\x102E'; // ii
-            dev2Myanmar['\x0941'] = '\x102F'; // u
-            dev2Myanmar['\x0942'] = '\x1030'; // uu
-            dev2Myanmar['\x0947'] = '\x1031'; // e
-            dev2Myanmar['\x094B'] = "\x1031\x102C"; // o
+            deva2Mymr['\x093E'] = '\x102C'; // aa
+            deva2Mymr['\x093F'] = '\x102D'; // i
+            deva2Mymr['\x0940'] = '\x102E'; // ii
+            deva2Mymr['\x0941'] = '\x102F'; // u
+            deva2Mymr['\x0942'] = '\x1030'; // uu
+            deva2Mymr['\x0947'] = '\x1031'; // e
+            deva2Mymr['\x094B'] = "\x1031\x102C"; // o
 
             // numerals
-            dev2Myanmar['\x0966'] = '\x1040';
-            dev2Myanmar['\x0967'] = '\x1041';
-            dev2Myanmar['\x0968'] = '\x1042';
-            dev2Myanmar['\x0969'] = '\x1043';
-            dev2Myanmar['\x096A'] = '\x1044';
-            dev2Myanmar['\x096B'] = '\x1045';
-            dev2Myanmar['\x096C'] = '\x1046';
-            dev2Myanmar['\x096D'] = '\x1047';
-            dev2Myanmar['\x096E'] = '\x1048';
-            dev2Myanmar['\x096F'] = '\x1049';
+            deva2Mymr['\x0966'] = '\x1040';
+            deva2Mymr['\x0967'] = '\x1041';
+            deva2Mymr['\x0968'] = '\x1042';
+            deva2Mymr['\x0969'] = '\x1043';
+            deva2Mymr['\x096A'] = '\x1044';
+            deva2Mymr['\x096B'] = '\x1045';
+            deva2Mymr['\x096C'] = '\x1046';
+            deva2Mymr['\x096D'] = '\x1047';
+            deva2Mymr['\x096E'] = '\x1048';
+            deva2Mymr['\x096F'] = '\x1049';
 
             // other
-            dev2Myanmar['\x0964'] = '\x104A'; // danda
-            dev2Myanmar['\x0902'] = '\x1036'; // niggahita
-            dev2Myanmar['\x094D'] = '\x1039'; // virama
-            dev2Myanmar['\x200C'] = ""; // ZWNJ (ignore)
-            dev2Myanmar['\x200D'] = ""; // ZWJ (ignore)
+            deva2Mymr['\x0902'] = '\x1036'; // niggahita
+            deva2Mymr['\x094D'] = '\x1039'; // virama
+            // we let dandas and double dandas pass through and handle
+            // them in ConvertDandas()
+            //deva2Mymr['\x0964'] = '\x104B';
+            deva2Mymr['\x0970'] = '.'; // Devanagari abbreviation sign
+            deva2Mymr['\x200C'] = ""; // ZWNJ (ignore)
+            deva2Mymr['\x200D'] = ""; // ZWJ (ignore)
         }
 
         public string InputFilePath
@@ -168,8 +172,7 @@ namespace Dev2Myanmar
         {
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
-
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sr.Close();
 
             // zap the double danda around "namo tassa..."
             devStr = devStr.Replace("\x0964\x0964", "");
@@ -177,28 +180,85 @@ namespace Dev2Myanmar
             // change name of stylesheet for Myanmar
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-mymr.xsl");
 
-            char[] dev = devStr.ToCharArray();
-            StringBuilder sb = new StringBuilder();
+            // convert to Myanmar style of peyyala: double line + pe + double line
+            // (we do this here to remove the Dev. abbreviation sign, which would otherwise
+            // be converted to period in Convert())
+            devStr = devStr.Replace("\x2026\x092A\x094B\x0970\x2026", "\x104B\x1015\x1031\x104B");
 
-            foreach (char c in dev)
+            string str = Convert(devStr);
+
+            str = ConvertDandas(str);
+            str = CleanupPunctuation(str);
+
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
+            sw.Flush();
+            sw.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
             {
-                if (dev2Myanmar.ContainsKey(c))
-                    sb.Append(dev2Myanmar[c]);
+                if (deva2Mymr.ContainsKey(c))
+                    sb.Append(deva2Mymr[c]);
                 else
                     sb.Append(c);
             }
 
             string mya = sb.ToString();
 
-    
             // Replace ña + virama + ña with ñña character
             mya = mya.Replace("\x1009\x1039\x1009", "\x100A");
 
-            sw.Write(mya);
+            return mya;
+        }
 
-            sw.Flush();
-            sw.Close();
-            sr.Close();
+        public string ConvertDandas(string str)
+        {
+            // in gathas, single dandas convert to semicolon, double to period
+            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+                new MatchEvaluator(this.ConvertGathaDandas));
+
+            // convert all others to double line
+            str = str.Replace("\x0964", "\x104B");
+            str = str.Replace("\x0965", "\x104B");
+
+            // convert ellipsis to double line
+            str = str.Replace("\x2026", "\x104B");
+
+            return str;
+        }
+
+        public string ConvertGathaDandas(Match m)
+        {
+            string str = m.Value;
+            str = str.Replace(",", "\x104A"); // comma -> single line
+            str = str.Replace("\x0964", "\x104B"); // danda -> double line
+            str = str.Replace("\x0965", "\x104B"); // double danda -> double line
+            return str;
+        }
+
+        public string RemoveNamoTassaDandas(Match m)
+        {
+            string str = m.Value;
+            return str.Replace("\x0965", "");
+        }
+
+        // There should be no spaces before these
+        // punctuation marks. 
+        public string CleanupPunctuation(string str)
+        {
+            str = str.Replace(" ,", ",");
+            str = str.Replace(" ?", "?");
+            str = str.Replace(" !", "!");
+            str = str.Replace(" ;", ";");
+            // does not affect peyyalas because they have ellipses now
+            str = str.Replace(" .", ".");
+            return str;
         }
     }
 }

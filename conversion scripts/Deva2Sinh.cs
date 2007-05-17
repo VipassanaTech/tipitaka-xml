@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
-namespace Dev2Sinhala
+namespace VRI.CSCD.Conversion
 {
-    class Dev2Sinhala
+    class Deva2Sinh
     {
         static void Main(string[] args)
         {
@@ -40,7 +41,7 @@ namespace Dev2Sinhala
                     }
                 }
 
-                Dev2Sinhala d2 = new Dev2Sinhala();
+                Deva2Sinh d2 = new Deva2Sinh();
                 d2.InputFilePath = args[0];
                 d2.OutputFilePath = di.FullName + "\\" + fi.Name;
                 d2.Convert();
@@ -53,16 +54,16 @@ namespace Dev2Sinhala
 
         static void PrintUsage()
         {
-            Console.WriteLine("Unicode Devanagari to Unicode Sinhala, Pali characters conversion");
+            Console.WriteLine("Transliterates Unicode Devanagari to Unicode Sinhala script");
             Console.WriteLine("syntax:");
-            Console.WriteLine("dev2sin input [output]");
+            Console.WriteLine("deva2sinh input [output]");
         }
         // end static methods
 
 
         private Hashtable dev2Sinhala;
 
-        public Dev2Sinhala()
+        public Deva2Sinh()
         {
             dev2Sinhala = new Hashtable();
 
@@ -142,9 +143,10 @@ namespace Dev2Sinhala
             dev2Sinhala['\x096F'] = '9';
 
             // other
-            dev2Sinhala['\x0964'] = '.'; // danda -> period
+            //dev2Sinhala['\x0964'] = '.'; // danda -> period
             dev2Sinhala['\x0902'] = '\x0D82'; // niggahita
-            dev2Sinhala['\x094D'] = "\x200D\x0DCA"; // virama -> ZWJ + Sinhala virama
+            dev2Sinhala['\x094D'] = "\x0DCA\x200C"; // virama -> Sinhala virama + ZWNJ
+            dev2Sinhala['\x0970'] = '.'; // Dev. abbreviation sign
             dev2Sinhala['\x200C'] = ""; // ZWNJ (ignore)
             dev2Sinhala['\x200D'] = ""; // ZWJ (ignore)
         }
@@ -168,28 +170,89 @@ namespace Dev2Sinhala
         {
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
-
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
-
-            // zap the double danda around "namo tassa..."
-            devStr = devStr.Replace("\x0964\x0964", "");
+            sr.Close();
 
             // change name of stylesheet for Sinhala
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-sinh.xsl");
 
-            char[] dev = devStr.ToCharArray();
+            string str = Convert(devStr);
 
-            foreach (char c in dev)
-            {
-                if (dev2Sinhala.ContainsKey(c))
-                    sw.Write(dev2Sinhala[c]);
-                else
-                    sw.Write(c);
-            }
+            str = ConvertDandas(str);
+            str = CleanupPunctuation(str);
 
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
             sw.Flush();
             sw.Close();
-            sr.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
+            {
+                if (dev2Sinhala.ContainsKey(c))
+                    sb.Append(dev2Sinhala[c]);
+                else
+                    sb.Append(c);
+            }
+
+            string str = sb.ToString();
+
+            // a few special cases in Sinhala, per Vincent's email
+
+            // change joiners before U+0DBA Yayanna to Virama + ZWJ
+            str = str.Replace("\x0DCA\x200C\x0DBA", "\x0DCA\x200D\x0DBA");
+
+            // change joiners before U+0DBB Rayanna to Virama + ZWJ
+            str = str.Replace("\x0DCA\x200C\x0DBB", "\x0DCA\x200D\x0DBB");
+
+            return str;
+        }
+
+        public string ConvertDandas(string str)
+        {
+            // in gathas, single dandas convert to semicolon, double to period
+            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+                new MatchEvaluator(this.ConvertGathaDandas));
+
+            // remove double dandas around namo tassa
+            str = Regex.Replace(str, "<centre>.+</centre>",
+                new MatchEvaluator(this.RemoveNamoTassaDandas));
+
+            // convert all others to period
+            str = str.Replace("\x0964", ".");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string ConvertGathaDandas(Match m)
+        {
+            string str = m.Value;
+            str = str.Replace("\x0964", ";");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string RemoveNamoTassaDandas(Match m)
+        {
+            string str = m.Value;
+            return str.Replace("\x0965", "");
+        }
+
+        // There should be no spaces before these
+        // punctuation marks. 
+        public string CleanupPunctuation(string str)
+        {
+            str = str.Replace(" ,", ",");
+            str = str.Replace(" ?", "?");
+            str = str.Replace(" !", "!");
+            str = str.Replace(" ;", ";");
+            // does not affect peyyalas because they have ellipses now
+            str = str.Replace(" .", ".");
+            return str;
         }
     }
 }
