@@ -102,6 +102,7 @@ namespace Pitaka2Xml
             xmlParaTags[3] = "bodytext";
             xmlParaTags[4] = "paraalign";
             xmlParaTags[6] = "centre";
+            xmlParaTags[7] = "unindented";
             xmlParaTags[10] = "book";
             xmlParaTags[11] = "chapter";
             xmlParaTags[12] = "nikaya";
@@ -234,7 +235,7 @@ namespace Pitaka2Xml
                     new MatchEvaluator(this.FormatPageRefs));
 
                 // for all paragraphs that are not headings
-                if (para.format < 6 || para.format > 15)
+                if ((para.format < 10 || para.format > 15) && para.format != 6)
                 {
                     // Put the <paranum> tag around paragraph numbers.
                     // Looking for Devanagari digits, or a hyphen for number ranges, e.g. 26-27
