@@ -174,9 +174,6 @@ namespace VRI.CSCD.Conversion
             string devStr = sr.ReadToEnd();
             sr.Close();
 
-            // zap the double danda around "namo tassa..."
-            devStr = devStr.Replace("\x0964\x0964", "");
-
             // change name of stylesheet for Myanmar
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-mymr.xsl");
 
