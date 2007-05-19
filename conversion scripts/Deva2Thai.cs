@@ -67,6 +67,18 @@ namespace VRI.CSCD.Conversion
         {
             dev2Thai = new Hashtable();
 
+            dev2Thai['\x0902'] = '\x0E4D'; // niggahita
+
+            // independent vowels
+            dev2Thai['\x0905'] = '\x0E2D'; // a
+            dev2Thai['\x0906'] = "\x0E2D\x0E32"; // aa
+            dev2Thai['\x0907'] = "\x0E2D\x0E35"; // i
+            dev2Thai['\x0908'] = "\x0E2D\x0E37"; // ii
+            dev2Thai['\x0909'] = "\x0E2D\x0E38"; // u
+            dev2Thai['\x090A'] = "\x0E2D\x0E39"; // uu
+            dev2Thai['\x090F'] = "\x0E40\x0E2D"; // e
+            dev2Thai['\x0913'] = "\x0E42\x0E2D"; // o
+
             // velar stops
             dev2Thai['\x0915'] = '\x0E01'; // ka
             dev2Thai['\x0916'] = '\x0E02'; // kha
@@ -111,16 +123,6 @@ namespace VRI.CSCD.Conversion
             dev2Thai['\x0939'] = '\x0E2B'; // ha
             dev2Thai['\x0933'] = '\x0E2C'; // l underdot a
 
-            // independent vowels
-            dev2Thai['\x0905'] = '\x0E2D'; // a
-            dev2Thai['\x0906'] = "\x0E2D\x0E32"; // aa
-            dev2Thai['\x0907'] = "\x0E2D\x0E35"; // i
-            dev2Thai['\x0908'] = "\x0E2D\x0E37"; // ii
-            dev2Thai['\x0909'] = "\x0E2D\x0E38"; // u
-            dev2Thai['\x090A'] = "\x0E2D\x0E39"; // uu
-            dev2Thai['\x090F'] = "\x0E40\x0E2D"; // e
-            dev2Thai['\x0913'] = "\x0E42\x0E2D"; // o
-
             // dependent vowel signs
             dev2Thai['\x093E'] = '\x0E32'; // aa
             dev2Thai['\x093F'] = '\x0E35'; // i
@@ -129,6 +131,8 @@ namespace VRI.CSCD.Conversion
             dev2Thai['\x0942'] = '\x0E39'; // uu
             dev2Thai['\x0947'] = '\x0E40'; // e
             dev2Thai['\x094B'] = '\x0E42'; // o
+
+            dev2Thai['\x094D'] = '\x0E3A'; // virama
 
             // numerals
             dev2Thai['\x0966'] = '\x0E50';
@@ -143,11 +147,9 @@ namespace VRI.CSCD.Conversion
             dev2Thai['\x096F'] = '\x0E59';
 
             // other
-            dev2Thai['\x0902'] = '\x0E4D'; // niggahita
-            dev2Thai['\x094D'] = '\x0E3A'; // virama
             dev2Thai['\x0970'] = '.'; // Dev. abbreviation sign
-            dev2Thai['\x200C'] = ""; // ZWNJ (ignore)
-            dev2Thai['\x200D'] = ""; // ZWJ (ignore)
+            dev2Thai['\x200C'] = ""; // ZWNJ (remove)
+            dev2Thai['\x200D'] = ""; // ZWJ (remove)
         }
 
         public string InputFilePath
@@ -221,11 +223,11 @@ namespace VRI.CSCD.Conversion
 
             // remove double dandas around namo tassa
             str = Regex.Replace(str, "<centre>.+</centre>",
-                new MatchEvaluator(this.RemoveNamoTassaDandas));
+                new MatchEvaluator(this.ConvertNamoTassaDandas));
 
-            // convert all others to period
-            str = str.Replace("\x0964", ".");
-            str = str.Replace("\x0965", ".");
+            // convert all others to Thai paiyannoi
+            str = str.Replace("\x0964", "\x0E2F");
+            str = str.Replace("\x0965", "\x0E2F");
             return str;
         }
 
@@ -233,14 +235,14 @@ namespace VRI.CSCD.Conversion
         {
             string str = m.Value;
             str = str.Replace("\x0964", ";");
-            str = str.Replace("\x0965", ".");
+            str = str.Replace("\x0965", "\x0E2F");
             return str;
         }
 
-        public string RemoveNamoTassaDandas(Match m)
+        public string ConvertNamoTassaDandas(Match m)
         {
             string str = m.Value;
-            return str.Replace("\x0965", "");
+            return str.Replace("\x0965", "\x0E2F");
         }
 
         // There should be no spaces before these

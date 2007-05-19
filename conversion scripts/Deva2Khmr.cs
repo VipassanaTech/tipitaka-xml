@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
-namespace Dev2Khmer
+namespace VRI.CSCD.Conversion
 {
-    class Dev2Khmer
+    class Deva2Khmr
     {
         static void Main(string[] args)
         {
@@ -40,7 +41,7 @@ namespace Dev2Khmer
                     }
                 }
 
-                Dev2Khmer d2 = new Dev2Khmer();
+                Deva2Khmr d2 = new Deva2Khmr();
                 d2.InputFilePath = args[0];
                 d2.OutputFilePath = di.FullName + "\\" + fi.Name;
                 d2.Convert();
@@ -53,16 +54,16 @@ namespace Dev2Khmer
 
         static void PrintUsage()
         {
-            Console.WriteLine("Unicode Devanagari to Unicode Khmer, Pali characters conversion");
+            Console.WriteLine("Transliterates Devanagari to Unicode Khmer script");
             Console.WriteLine("syntax:");
-            Console.WriteLine("dev2khm input [output]");
+            Console.WriteLine("deva2khmr input [output]");
         }
         // end static methods
 
 
         private Hashtable dev2Khmer;
 
-        public Dev2Khmer()
+        public Deva2Khmr()
         {
             dev2Khmer = new Hashtable();
 
@@ -129,6 +130,9 @@ namespace Dev2Khmer
             dev2Khmer['\x0947'] = '\x17C1'; // e
             dev2Khmer['\x094B'] = '\x17C4'; // o
 
+            // let Devanagari danda (U+0964) and double danda (U+0965) 
+            // pass through unmodified
+
             // digits
             dev2Khmer['\x0966'] = '\x17E0';
             dev2Khmer['\x0967'] = '\x17E1';
@@ -142,9 +146,9 @@ namespace Dev2Khmer
             dev2Khmer['\x096F'] = '\x17E9';
 
             // other
-            dev2Khmer['\x0964'] = '\x17D4'; // danda -> KHAN
             dev2Khmer['\x0902'] = '\x17C6'; // niggahita
             dev2Khmer['\x094D'] = '\x17D2'; // virama
+            dev2Khmer['\x0970'] = "."; // Dev abbreviation sign
             dev2Khmer['\x200C'] = ""; // ZWNJ (ignore)
             dev2Khmer['\x200D'] = ""; // ZWJ (ignore)
         }
@@ -168,28 +172,79 @@ namespace Dev2Khmer
         {
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
-
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
-
-            // double danda around "namo tassa..." to single Khmer "KHAN"
-            devStr = devStr.Replace("\x0964\x0964", "\x17D4");
+            sr.Close();
 
             // change name of stylesheet for Khmer
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-khmr.xsl");
 
-            char[] dev = devStr.ToCharArray();
+            string str = Convert(devStr);
 
-            foreach (char c in dev)
-            {
-                if (dev2Khmer.ContainsKey(c))
-                    sw.Write(dev2Khmer[c]);
-                else
-                    sw.Write(c);
-            }
+            str = ConvertDandas(str);
+            str = CleanupPunctuation(str);
 
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
             sw.Flush();
             sw.Close();
-            sr.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
+            {
+                if (dev2Khmer.ContainsKey(c))
+                    sb.Append(dev2Khmer[c]);
+                else
+                    sb.Append(c);
+            }
+
+            return sb.ToString();
+        }
+
+        public string ConvertDandas(string str)
+        {
+            // in gathas, single dandas convert to semicolon, double to period
+            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+                new MatchEvaluator(this.ConvertGathaDandas));
+
+            // remove double dandas around namo tassa
+            str = Regex.Replace(str, "<centre>.+</centre>",
+                new MatchEvaluator(this.ConvertNamoTassaDandas));
+
+            // convert all others to KHAN
+            str = str.Replace("\x0964", "\x17D4");
+            str = str.Replace("\x0965", "\x17D4");
+            return str;
+        }
+
+        public string ConvertGathaDandas(Match m)
+        {
+            string str = m.Value;
+            str = str.Replace("\x0964", ";");
+            str = str.Replace("\x0965", "\x17D4");
+            return str;
+        }
+
+        public string ConvertNamoTassaDandas(Match m)
+        {
+            string str = m.Value;
+            return str.Replace("\x0965", "\x17D4");
+        }
+
+        // There should be no spaces before these
+        // punctuation marks. 
+        public string CleanupPunctuation(string str)
+        {
+            str = str.Replace(" ,", ",");
+            str = str.Replace(" ?", "?");
+            str = str.Replace(" !", "!");
+            str = str.Replace(" ;", ";");
+            // does not affect peyyalas because they have ellipses now
+            str = str.Replace(" .", ".");
+            return str;
         }
     }
 }
