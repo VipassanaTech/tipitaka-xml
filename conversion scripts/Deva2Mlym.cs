@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
-namespace Dev2Malayalam
+namespace VRI.CSCD.Conversion
 {
     class Dev2Malayalam
     {
@@ -53,9 +54,9 @@ namespace Dev2Malayalam
 
         static void PrintUsage()
         {
-            Console.WriteLine("Unicode Devanagari to Unicode Malayalam, Pali characters conversion");
+            Console.WriteLine("Transliterates Unicode Devanagari to Unicode Malayalam script");
             Console.WriteLine("syntax:");
-            Console.WriteLine("dev2mal input [output]");
+            Console.WriteLine("deva2mlym input [output]");
         }
         // end static methods
 
@@ -150,6 +151,9 @@ namespace Dev2Malayalam
             dev2Malayalam['\x0960'] = '\x0D60'; // vocalic rr
             dev2Malayalam['\x0961'] = '\x0D61'; // vocalic ll
 
+            // we let dandas (U+0964) and double dandas (U+0965) pass through 
+            // and handle them in ConvertDandas()
+
             // digits
             dev2Malayalam['\x0966'] = '\x0D66';
             dev2Malayalam['\x0967'] = '\x0D67';
@@ -162,11 +166,9 @@ namespace Dev2Malayalam
             dev2Malayalam['\x096E'] = '\x0D6E';
             dev2Malayalam['\x096F'] = '\x0D6F';
 
-            // other
-            dev2Malayalam['\x0964'] = '.'; // danda -> period
-            
-            dev2Malayalam['\x200C'] = ""; // ZWNJ (ignore)
-            dev2Malayalam['\x200D'] = ""; // ZWJ (ignore)
+            // zero-width joiners
+            dev2Malayalam['\x200C'] = ""; // ZWNJ (remove)
+            dev2Malayalam['\x200D'] = ""; // ZWJ (remove)
         }
 
         public string InputFilePath
@@ -188,28 +190,79 @@ namespace Dev2Malayalam
         {
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
-
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
-
-            // zap the double danda around "namo tassa..."
-            devStr = devStr.Replace("\x0964\x0964", "");
+            sr.Close();
 
             // change name of stylesheet for Gurmukhi
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-mlym.xsl");
 
-            char[] dev = devStr.ToCharArray();
+            string str = Convert(devStr);
 
-            foreach (char c in dev)
-            {
-                if (dev2Malayalam.ContainsKey(c))
-                    sw.Write(dev2Malayalam[c]);
-                else
-                    sw.Write(c);
-            }
+            str = ConvertDandas(str);
+            str = CleanupPunctuation(str);
 
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
             sw.Flush();
             sw.Close();
-            sr.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
+            {
+                if (dev2Malayalam.ContainsKey(c))
+                    sb.Append(dev2Malayalam[c]);
+                else
+                    sb.Append(c);
+            }
+
+            return sb.ToString();
+        }
+
+        public string ConvertDandas(string str)
+        {
+            // in gathas, single dandas convert to semicolon, double to period
+            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+                new MatchEvaluator(this.ConvertGathaDandas));
+
+            // remove double dandas around namo tassa
+            str = Regex.Replace(str, "<centre>.+</centre>",
+                new MatchEvaluator(this.RemoveNamoTassaDandas));
+
+            // convert all others to period
+            str = str.Replace("\x0964", ".");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string ConvertGathaDandas(Match m)
+        {
+            string str = m.Value;
+            str = str.Replace("\x0964", ";");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string RemoveNamoTassaDandas(Match m)
+        {
+            string str = m.Value;
+            return str.Replace("\x0965", "");
+        }
+
+        // There should be no spaces before these
+        // punctuation marks. 
+        public string CleanupPunctuation(string str)
+        {
+            str = str.Replace(" ,", ",");
+            str = str.Replace(" ?", "?");
+            str = str.Replace(" !", "!");
+            str = str.Replace(" ;", ";");
+            // does not affect peyyalas because they have ellipses now
+            str = str.Replace(" .", ".");
+            return str;
         }
     }
 }

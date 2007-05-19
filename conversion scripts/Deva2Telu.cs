@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
-namespace Dev2Telugu
+namespace VRI.CSCD.Conversion
 {
     class Dev2Telugu
     {
@@ -53,9 +54,9 @@ namespace Dev2Telugu
 
         static void PrintUsage()
         {
-            Console.WriteLine("Unicode Devanagari to Unicode Telugu, Pali characters conversion");
+            Console.WriteLine("Transliterates Unicode Devanagari to Unicode Telugu");
             Console.WriteLine("syntax:");
-            Console.WriteLine("dev2tel input [output]");
+            Console.WriteLine("deva2telu input [output]");
         }
         // end static methods
 
@@ -168,28 +169,79 @@ namespace Dev2Telugu
         {
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
-
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
-
-            // zap the double danda around "namo tassa..."
-            devStr = devStr.Replace("\x0964\x0964", "");
+            sr.Close();
 
             // change name of stylesheet for Telugu
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-telu.xsl");
 
-            char[] dev = devStr.ToCharArray();
+            string str = Convert(devStr);
 
-            foreach (char c in dev)
-            {
-                if (dev2Telugu.ContainsKey(c))
-                    sw.Write(dev2Telugu[c]);
-                else
-                    sw.Write(c);
-            }
+            str = ConvertDandas(str);
+            str = CleanupPunctuation(str);
 
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
             sw.Flush();
             sw.Close();
-            sr.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
+            {
+                if (dev2Telugu.ContainsKey(c))
+                    sb.Append(dev2Telugu[c]);
+                else
+                    sb.Append(c);
+            }
+
+            return sb.ToString();
+        }
+
+        public string ConvertDandas(string str)
+        {
+            // in gathas, single dandas convert to semicolon, double to period
+            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+                new MatchEvaluator(this.ConvertGathaDandas));
+
+            // remove double dandas around namo tassa
+            str = Regex.Replace(str, "<centre>.+</centre>",
+                new MatchEvaluator(this.RemoveNamoTassaDandas));
+
+            // convert all others to period
+            str = str.Replace("\x0964", ".");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string ConvertGathaDandas(Match m)
+        {
+            string str = m.Value;
+            str = str.Replace("\x0964", ";");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string RemoveNamoTassaDandas(Match m)
+        {
+            string str = m.Value;
+            return str.Replace("\x0965", "");
+        }
+
+        // There should be no spaces before these
+        // punctuation marks. 
+        public string CleanupPunctuation(string str)
+        {
+            str = str.Replace(" ,", ",");
+            str = str.Replace(" ?", "?");
+            str = str.Replace(" !", "!");
+            str = str.Replace(" ;", ";");
+            // does not affect peyyalas because they have ellipses now
+            str = str.Replace(" .", ".");
+            return str;
         }
     }
 }
