@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Dev2Kannada
+namespace VRI.CSCD.Conversion
 {
     class Dev2Kannada
     {
@@ -53,9 +53,9 @@ namespace Dev2Kannada
 
         static void PrintUsage()
         {
-            Console.WriteLine("Unicode Devanagari to Unicode Kannada, Pali characters conversion");
+            Console.WriteLine("Transliterates Unicode Devanagari to Unicode Kannada script");
             Console.WriteLine("syntax:");
-            Console.WriteLine("dev2kan input [output]");
+            Console.WriteLine("deva2knda input [output]");
         }
         // end static methods
 
@@ -151,6 +151,9 @@ namespace Dev2Kannada
             // various signs
             dev2Kannada['\x094D'] = '\x0CCD'; // virama
 
+            // let Devanagari danda (U+0964) and double danda (U+0965) 
+            // pass through unmodified
+
             // digits
             dev2Kannada['\x0966'] = '\x0CE6';
             dev2Kannada['\x0967'] = '\x0CE7';
@@ -163,11 +166,9 @@ namespace Dev2Kannada
             dev2Kannada['\x096E'] = '\x0CEE';
             dev2Kannada['\x096F'] = '\x0CEF';
 
-            // other
-            dev2Kannada['\x0964'] = '\x0964'; // danda (use Devanagari danda)
-            
-            dev2Kannada['\x200C'] = ""; // ZWNJ (ignore)
-            dev2Kannada['\x200D'] = ""; // ZWJ (ignore)
+            // zero-width joiners
+            dev2Kannada['\x200C'] = ""; // ZWNJ (remove)
+            dev2Kannada['\x200D'] = ""; // ZWJ (remove)
         }
 
         public string InputFilePath
@@ -189,25 +190,33 @@ namespace Dev2Kannada
         {
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
-
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sr.Close();
 
             // change name of stylesheet for Gurmukhi
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-knda.xsl");
 
-            char[] dev = devStr.ToCharArray();
+            string str = Convert(devStr);
 
-            foreach (char c in dev)
-            {
-                if (dev2Kannada.ContainsKey(c))
-                    sw.Write(dev2Kannada[c]);
-                else
-                    sw.Write(c);
-            }
-
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
             sw.Flush();
             sw.Close();
-            sr.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
+            {
+                if (dev2Kannada.ContainsKey(c))
+                    sb.Append(dev2Kannada[c]);
+                else
+                    sb.Append(c);
+            }
+
+            return sb.ToString();
         }
     }
 }
