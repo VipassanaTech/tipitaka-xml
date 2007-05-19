@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Deva2Guru
+namespace VRI.CSCD.Conversion
 {
     class Deva2Guru
     {
@@ -53,7 +53,7 @@ namespace Deva2Guru
 
         static void PrintUsage()
         {
-            Console.WriteLine("Converts Unicode Devanagari to Unicode Gurmukhi");
+            Console.WriteLine("Transliterates Unicode Devanagari to Unicode Gurmukhi");
             Console.WriteLine("syntax:");
             Console.WriteLine("deva2guru input [output]");
         }
@@ -142,6 +142,9 @@ namespace Deva2Guru
             // various signs
             deva2Guru['\x094D'] = '\x0A4D'; // virama
 
+            // let Devanagari danda (U+0964) and double danda (U+0965) 
+            // pass through unmodified
+
             // digits
             deva2Guru['\x0966'] = '\x0A66';
             deva2Guru['\x0967'] = '\x0A67';
@@ -154,11 +157,9 @@ namespace Deva2Guru
             deva2Guru['\x096E'] = '\x0A6E';
             deva2Guru['\x096F'] = '\x0A6F';
 
-            // other
-            deva2Guru['\x0964'] = '\x0964'; // danda (use Devanagari danda)
-            
-            deva2Guru['\x200C'] = ""; // ZWNJ (ignore)
-            deva2Guru['\x200D'] = ""; // ZWJ (ignore)
+            // zero-width joiners
+            deva2Guru['\x200C'] = ""; // ZWNJ (remove)
+            deva2Guru['\x200D'] = ""; // ZWJ (remove)
         }
 
         public string InputFilePath
@@ -180,25 +181,33 @@ namespace Deva2Guru
         {
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
-
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sr.Close();
 
             // change name of stylesheet for Gurmukhi
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-guru.xsl");
 
-            char[] dev = devStr.ToCharArray();
+            string str = Convert(devStr);
 
-            foreach (char c in dev)
-            {
-                if (deva2Guru.ContainsKey(c))
-                    sw.Write(deva2Guru[c]);
-                else
-                    sw.Write(c);
-            }
-
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
             sw.Flush();
             sw.Close();
-            sr.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
+            {
+                if (deva2Guru.ContainsKey(c))
+                    sb.Append(deva2Guru[c]);
+                else
+                    sb.Append(c);
+            }
+
+            return sb.ToString();
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Deva2Gujarati
+namespace VRI.CSCD.Conversion
 {
     class Deva2Gujr
     {
@@ -53,7 +53,7 @@ namespace Deva2Gujarati
 
         static void PrintUsage()
         {
-            Console.WriteLine("Converts Unicode Devanagari to Unicode Gujarati");
+            Console.WriteLine("Transliterates Unicode Devanagari to Unicode Gujarati script");
             Console.WriteLine("syntax:");
             Console.WriteLine("deva2gujr input [output]");
         }
@@ -65,6 +65,19 @@ namespace Deva2Gujarati
         public Deva2Gujr()
         {
             deva2Gujarati = new Hashtable();
+
+            // various signs
+            deva2Gujarati['\x0902'] = '\x0A82'; // niggahita
+
+            // independent vowels
+            deva2Gujarati['\x0905'] = '\x0A85'; // a
+            deva2Gujarati['\x0906'] = '\x0A86'; // aa
+            deva2Gujarati['\x0907'] = '\x0A87'; // i
+            deva2Gujarati['\x0908'] = '\x0A88'; // ii
+            deva2Gujarati['\x0909'] = '\x0A89'; // u
+            deva2Gujarati['\x090A'] = '\x0A8A'; // uu
+            deva2Gujarati['\x090F'] = '\x0A8F'; // e
+            deva2Gujarati['\x0913'] = '\x0A93'; // o
 
             // velar stops
             deva2Gujarati['\x0915'] = '\x0A95'; // ka
@@ -112,17 +125,6 @@ namespace Deva2Gujarati
             deva2Gujarati['\x0938'] = '\x0AB8'; // sa
             deva2Gujarati['\x0939'] = '\x0AB9'; // ha
 
-
-            // independent vowels
-            deva2Gujarati['\x0905'] = '\x0A85'; // a
-            deva2Gujarati['\x0906'] = '\x0A86'; // aa
-            deva2Gujarati['\x0907'] = '\x0A87'; // i
-            deva2Gujarati['\x0908'] = '\x0A88'; // ii
-            deva2Gujarati['\x0909'] = '\x0A89'; // u
-            deva2Gujarati['\x090A'] = '\x0A8A'; // uu
-            deva2Gujarati['\x090F'] = '\x0A8F'; // e
-            deva2Gujarati['\x0913'] = '\x0A93'; // o
-
             // dependent vowel signs
             deva2Gujarati['\x093E'] = '\x0ABE'; // aa
             deva2Gujarati['\x093F'] = '\x0ABF'; // i
@@ -131,6 +133,12 @@ namespace Deva2Gujarati
             deva2Gujarati['\x0942'] = '\x0AC2'; // uu
             deva2Gujarati['\x0947'] = '\x0AC7'; // e
             deva2Gujarati['\x094B'] = '\x0ACB'; // o
+
+            // various signs
+            deva2Gujarati['\x094D'] = '\x0ACD'; // virama
+
+            // let Devanagari danda (U+0964) and double danda (U+0965) 
+            // pass through unmodified
 
             // numerals
             deva2Gujarati['\x0966'] = '\x0AE6';
@@ -144,12 +152,9 @@ namespace Deva2Gujarati
             deva2Gujarati['\x096E'] = '\x0AEE';
             deva2Gujarati['\x096F'] = '\x0AEF';
 
-            // other
-            deva2Gujarati['\x0964'] = '\x0964'; // danda (use Devanagari danda)
-            deva2Gujarati['\x0902'] = '\x0A82'; // niggahita
-            deva2Gujarati['\x094D'] = '\x0ACD'; // virama
-            deva2Gujarati['\x200C'] = ""; // ZWNJ (ignore)
-            deva2Gujarati['\x200D'] = ""; // ZWJ (ignore)
+            // zero-width joiners
+            deva2Gujarati['\x200C'] = ""; // ZWNJ (remove)
+            deva2Gujarati['\x200D'] = ""; // ZWJ (remove)
         }
 
         public string InputFilePath
@@ -171,25 +176,33 @@ namespace Deva2Gujarati
         {
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
-
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sr.Close();
 
             // change name of stylesheet for Gujarati
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-gujr.xsl");
 
-            char[] dev = devStr.ToCharArray();
+            string str = Convert(devStr);
 
-            foreach (char c in dev)
-            {
-                if (deva2Gujarati.ContainsKey(c))
-                    sw.Write(deva2Gujarati[c]);
-                else
-                    sw.Write(c);
-            }
-
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
             sw.Flush();
             sw.Close();
-            sr.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
+            {
+                if (deva2Gujarati.ContainsKey(c))
+                    sb.Append(deva2Gujarati[c]);
+                else
+                    sb.Append(c);
+            }
+
+            return sb.ToString();
         }
     }
 }
