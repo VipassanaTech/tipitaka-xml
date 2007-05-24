@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -114,12 +113,20 @@ namespace VRI.CSCD.Conversion
             // The following formats the XML like Pitaka2Xml.
             string xmlStr = xml.OuterXml;
             xmlStr = xmlStr.Replace("<?xml-stylesheet", "\r\n<?xml-stylesheet");
+            xmlStr = xmlStr.Replace("<TEI.2>", "\r\n<TEI.2>");
+            xmlStr = xmlStr.Replace("</TEI.2>", "\r\n</TEI.2>");
+            xmlStr = xmlStr.Replace("<teiHeader>", "\r\n<teiHeader>");
+            xmlStr = xmlStr.Replace("<front>", "\r\n<front>");
+            xmlStr = xmlStr.Replace("<body>", "\r\n<body>");
+            xmlStr = xmlStr.Replace("</body>", "\r\n</body>");
+            xmlStr = xmlStr.Replace("<back>", "\r\n<back>");
             xmlStr = xmlStr.Replace("<text>", "\r\n<text>");
             xmlStr = xmlStr.Replace("</text>", "\r\n</text>");
 
             foreach (string paragraphElement in paragraphElements)
             {
-                string openTag = "<" + paragraphElement + ">";
+                // assumption: all paragraph elements (p, head) have at least one attribute: rend
+                string openTag = "<" + paragraphElement + " ";
                 xmlStr = xmlStr.Replace(openTag, "\r\n\r\n" + openTag);
             }
 

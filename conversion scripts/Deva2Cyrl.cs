@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Text;
@@ -74,6 +73,8 @@ namespace VRI.CSCD.Conversion
         {
             deva2Cyrl = new Hashtable();
 
+            deva2Cyrl['\x0902'] = "\x043C\x0323"; // niggahita
+
             // velar stops
             deva2Cyrl['\x0915'] = '\x0433'; // ka
             deva2Cyrl['\x0916'] = '\x043A'; // kha
@@ -137,6 +138,12 @@ namespace VRI.CSCD.Conversion
             deva2Cyrl['\x0947'] = '\x0437'; // e
             deva2Cyrl['\x094B'] = '\x043E'; // o
 
+            // various signs
+            deva2Cyrl['\x094D'] = ""; // virama
+
+            // let Devanagari danda (U+0964) and double danda (U+0965) 
+            // pass through unmodified
+
             // numerals
             deva2Cyrl['\x0966'] = '0';
             deva2Cyrl['\x0967'] = '1';
@@ -149,12 +156,6 @@ namespace VRI.CSCD.Conversion
             deva2Cyrl['\x096E'] = '8';
             deva2Cyrl['\x096F'] = '9';
 
-            // other
-            // we let dandas and double dandas pass through and handle
-            // them in ConvertDandas()
-            //deva2Cyrl['\x0964'] = '.'; // danda -> period
-            deva2Cyrl['\x0902'] = "\x043C\x0323"; // niggahita
-            deva2Cyrl['\x094D'] = ""; // virama
             deva2Cyrl['\x0970'] = "."; // Dev abbreviation sign
             deva2Cyrl['\x200C'] = ""; // ZWNJ (ignore)
             deva2Cyrl['\x200D'] = ""; // ZWJ (ignore)
@@ -209,6 +210,9 @@ namespace VRI.CSCD.Conversion
             //Capitalizer capitalizer = new Capitalizer(ParagraphElements, IgnoreElements, CapitalMarker);
             //devStr = capitalizer.MarkCapitals(devStr);
 
+            // remove Dev abbreviation sign before an ellipsis. We don't want a 4th dot after pe.
+            devStr = devStr.Replace("\x0970\x2026", "\x2026");
+
             string str = Convert(devStr);
 
             //str = capitalizer.Capitalize(str);
@@ -225,15 +229,11 @@ namespace VRI.CSCD.Conversion
         // no stylesheet modifications, capitalization, etc.
         public string Convert(string devStr)
         {
-            // insert Cyrillic 'a' after all consonants that are not followed by virama, dependent vowel or cyrillic a
+            // Insert Cyrillic 'a' after all consonants that are not followed by virama, dependent vowel or cyrillic a
+            // (This still works after we inserted ZWJ in the Devanagari. The ZWJ goes after virama.)
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])([^\x093E-\x094D\x0430])", "$1\x0430$2");
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])([^\x093E-\x094D\x0430])", "$1\x0430$2");
             // TODO: figure out how to backtrack so this replace doesn't have to be done twice
-
-            // replace Devanagari zero in abbreviations with period
-            // (any Dev zero following a Dev letter (or the Cyrillic a from above) is assumed to be an 
-            // abbreviation marker)
-            devStr = Regex.Replace(devStr, "([\x0430\x0901-\x0963])\x0966", "$1.");
 
             StringBuilder sb = new StringBuilder();
             foreach (char c in devStr.ToCharArray())
@@ -250,11 +250,12 @@ namespace VRI.CSCD.Conversion
         public string ConvertDandas(string str)
         {
             // in gathas, single dandas convert to semicolon, double to period
-            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+            // Regex note: the +? is the lazy quantifier which finds the shortest match
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<centre>.+</centre>",
+            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period

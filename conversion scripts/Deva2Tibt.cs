@@ -1,12 +1,11 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Dev2Tibetan
+namespace VRI.CSCD.Conversion
 {
-    class Dev2Tibetan
+    class Deva2Tibt
     {
         static void Main(string[] args)
         {
@@ -40,7 +39,7 @@ namespace Dev2Tibetan
                     }
                 }
 
-                Dev2Tibetan d2 = new Dev2Tibetan();
+                Deva2Tibt d2 = new Deva2Tibt();
                 d2.InputFilePath = args[0];
                 d2.OutputFilePath = di.FullName + "\\" + fi.Name;
                 d2.Convert();
@@ -53,101 +52,105 @@ namespace Dev2Tibetan
 
         static void PrintUsage()
         {
-            Console.WriteLine("Unicode Devanagari to Unicode Tibetan, Pali characters conversion");
+            Console.WriteLine("Transliterates Unicode Devanagari to Unicode Tibetan script");
             Console.WriteLine("syntax:");
-            Console.WriteLine("dev2tib input [output]");
+            Console.WriteLine("deva2tibt input [output]");
         }
         // end static methods
 
 
-        private Hashtable dev2Tibetan;
+        private Hashtable deva2Tibt;
 
-        public Dev2Tibetan()
+        public Deva2Tibt()
         {
-            dev2Tibetan = new Hashtable();
+            deva2Tibt = new Hashtable();
+
+            deva2Tibt['\x0902'] = '\x0F7E'; // niggahita
+
+            // independent vowels
+            deva2Tibt['\x0905'] = '\x0F68'; // a
+            deva2Tibt['\x0906'] = "\x0F68\x0F71"; // aa
+            deva2Tibt['\x0907'] = "\x0F68\x0F72"; // i
+            deva2Tibt['\x0908'] = "\x0F68\x0F71\x0F72"; // ii
+            deva2Tibt['\x0909'] = "\x0F68\x0F74"; // u
+            deva2Tibt['\x090A'] = "\x0F68\x0F71\x0F74"; // uu
+            deva2Tibt['\x090F'] = "\x0F68\x0F7A"; // e
+            deva2Tibt['\x0913'] = "\x0F68\x0F7C"; // o
 
             // velar stops
-            dev2Tibetan['\x0915'] = '\x0F40'; // ka
-            dev2Tibetan['\x0916'] = '\x0F41'; // kha
-            dev2Tibetan['\x0917'] = '\x0F42'; // ga
-            dev2Tibetan['\x0918'] = '\x0F43'; // gha
-            dev2Tibetan['\x0919'] = '\x0F44'; // n overdot a
+            deva2Tibt['\x0915'] = '\x0F40'; // ka
+            deva2Tibt['\x0916'] = '\x0F41'; // kha
+            deva2Tibt['\x0917'] = '\x0F42'; // ga
+            deva2Tibt['\x0918'] = '\x0F43'; // gha
+            deva2Tibt['\x0919'] = '\x0F44'; // n overdot a
             
             // palatal stops
             // Note that these 4 stops are represented by the Tibetan
             // tsa, tsha, dza, dzha, not ca, cha, ... (per cfynn. see below)
-            dev2Tibetan['\x091A'] = '\x0F59'; // ca
-            dev2Tibetan['\x091B'] = '\x0F5A'; // cha 
-            dev2Tibetan['\x091C'] = '\x0F5B'; // ja
-            dev2Tibetan['\x091D'] = '\x0F5C'; // jha  
-            dev2Tibetan['\x091E'] = '\x0F49'; // ña
+            deva2Tibt['\x091A'] = '\x0F59'; // ca
+            deva2Tibt['\x091B'] = '\x0F5A'; // cha 
+            deva2Tibt['\x091C'] = '\x0F5B'; // ja
+            deva2Tibt['\x091D'] = '\x0F5C'; // jha  
+            deva2Tibt['\x091E'] = '\x0F49'; // ña
 
             // retroflex stops
-            dev2Tibetan['\x091F'] = '\x0F4A'; // t underdot a
-            dev2Tibetan['\x0920'] = '\x0F4B'; // t underdot ha
-            dev2Tibetan['\x0921'] = '\x0F4C'; // d underdot a
-            dev2Tibetan['\x0922'] = '\x0F4D'; // d underdot ha
-            dev2Tibetan['\x0923'] = '\x0F4E'; // n underdot a
+            deva2Tibt['\x091F'] = '\x0F4A'; // t underdot a
+            deva2Tibt['\x0920'] = '\x0F4B'; // t underdot ha
+            deva2Tibt['\x0921'] = '\x0F4C'; // d underdot a
+            deva2Tibt['\x0922'] = '\x0F4D'; // d underdot ha
+            deva2Tibt['\x0923'] = '\x0F4E'; // n underdot a
 
             // dental stops
-            dev2Tibetan['\x0924'] = '\x0F4F'; // ta
-            dev2Tibetan['\x0925'] = '\x0F50'; // tha
-            dev2Tibetan['\x0926'] = '\x0F51'; // da
-            dev2Tibetan['\x0927'] = '\x0F52'; // dha
-            dev2Tibetan['\x0928'] = '\x0F53'; // na
+            deva2Tibt['\x0924'] = '\x0F4F'; // ta
+            deva2Tibt['\x0925'] = '\x0F50'; // tha
+            deva2Tibt['\x0926'] = '\x0F51'; // da
+            deva2Tibt['\x0927'] = '\x0F52'; // dha
+            deva2Tibt['\x0928'] = '\x0F53'; // na
 
             // labial stops
-            dev2Tibetan['\x092A'] = '\x0F54'; // pa
-            dev2Tibetan['\x092B'] = '\x0F55'; // pha
-            dev2Tibetan['\x092C'] = '\x0F56'; // ba
-            dev2Tibetan['\x092D'] = '\x0F57'; // bha
-            dev2Tibetan['\x092E'] = '\x0F58'; // ma
+            deva2Tibt['\x092A'] = '\x0F54'; // pa
+            deva2Tibt['\x092B'] = '\x0F55'; // pha
+            deva2Tibt['\x092C'] = '\x0F56'; // ba
+            deva2Tibt['\x092D'] = '\x0F57'; // bha
+            deva2Tibt['\x092E'] = '\x0F58'; // ma
 
             // liquids, fricatives, etc.
-            dev2Tibetan['\x092F'] = '\x0F61'; // ya
-            dev2Tibetan['\x0930'] = '\x0F62'; // ra
-            dev2Tibetan['\x0932'] = '\x0F63'; // la
-            dev2Tibetan['\x0935'] = '\x0F5D'; // va
-            dev2Tibetan['\x0938'] = '\x0F66'; // sa
-            dev2Tibetan['\x0939'] = '\x0F67'; // ha
-            dev2Tibetan['\x0933'] = "\x0F63\x0F39"; // l underdot a (***** PENDING FURTHER RESEARCH BY CFYNN ****)
-
-            // independent vowels
-            dev2Tibetan['\x0905'] = '\x0F68'; // a
-            dev2Tibetan['\x0906'] = "\x0F68\x0F71"; // aa
-            dev2Tibetan['\x0907'] = "\x0F68\x0F72"; // i
-            dev2Tibetan['\x0908'] = "\x0F68\x0F71\x0F72"; // ii
-            dev2Tibetan['\x0909'] = "\x0F68\x0F74"; // u
-            dev2Tibetan['\x090A'] = "\x0F68\x0F71\x0F74"; // uu
-            dev2Tibetan['\x090F'] = "\x0F68\x0F7B"; // e
-            dev2Tibetan['\x0913'] = "\x0F68\x0F7D"; // o
+            deva2Tibt['\x092F'] = '\x0F61'; // ya
+            deva2Tibt['\x0930'] = '\x0F62'; // ra
+            deva2Tibt['\x0932'] = '\x0F63'; // la
+            deva2Tibt['\x0935'] = '\x0F5D'; // va
+            deva2Tibt['\x0938'] = '\x0F66'; // sa
+            deva2Tibt['\x0939'] = '\x0F67'; // ha
+            deva2Tibt['\x0933'] = "\x0F63\x0F39"; // l underdot a (***** PENDING FURTHER RESEARCH BY CFYNN ****)
 
             // dependent vowel signs
-            dev2Tibetan['\x093E'] = '\x0F71'; // aa
-            dev2Tibetan['\x093F'] = '\x0F72'; // i
-            dev2Tibetan['\x0940'] = "\x0F71\x0F72"; // ii
-            dev2Tibetan['\x0941'] = "\x0F74"; // u
-            dev2Tibetan['\x0942'] = "\x0F71\x0F74"; // uu
-            dev2Tibetan['\x0947'] = '\x0F7B'; // e
-            dev2Tibetan['\x094B'] = '\x0F7D'; // o
+            deva2Tibt['\x093E'] = '\x0F71'; // aa
+            deva2Tibt['\x093F'] = '\x0F72'; // i
+            deva2Tibt['\x0940'] = "\x0F71\x0F72"; // ii
+            deva2Tibt['\x0941'] = "\x0F74"; // u
+            deva2Tibt['\x0942'] = "\x0F71\x0F74"; // uu
+            deva2Tibt['\x0947'] = '\x0F7A'; // e
+            deva2Tibt['\x094B'] = '\x0F7C'; // o
+
+            deva2Tibt['\x094D'] = '\x0F84'; // virama
+            deva2Tibt['\x0964'] = '\x0F0D'; // danda
+            deva2Tibt['\x0965'] = '\x0F0E'; // double danda
 
             // numerals
-            dev2Tibetan['\x0966'] = '\x0F20';
-            dev2Tibetan['\x0967'] = '\x0F21';
-            dev2Tibetan['\x0968'] = '\x0F22';
-            dev2Tibetan['\x0969'] = '\x0F23';
-            dev2Tibetan['\x096A'] = '\x0F24';
-            dev2Tibetan['\x096B'] = '\x0F25';
-            dev2Tibetan['\x096C'] = '\x0F26';
-            dev2Tibetan['\x096D'] = '\x0F27';
-            dev2Tibetan['\x096E'] = '\x0F28';
-            dev2Tibetan['\x096F'] = '\x0F29';
+            deva2Tibt['\x0966'] = '\x0F20';
+            deva2Tibt['\x0967'] = '\x0F21';
+            deva2Tibt['\x0968'] = '\x0F22';
+            deva2Tibt['\x0969'] = '\x0F23';
+            deva2Tibt['\x096A'] = '\x0F24';
+            deva2Tibt['\x096B'] = '\x0F25';
+            deva2Tibt['\x096C'] = '\x0F26';
+            deva2Tibt['\x096D'] = '\x0F27';
+            deva2Tibt['\x096E'] = '\x0F28';
+            deva2Tibt['\x096F'] = '\x0F29';
 
-            // other
-            dev2Tibetan['\x0902'] = '\x0F7E'; // niggahita
-            dev2Tibetan['\x094D'] = '\x0F84'; // virama
-            dev2Tibetan['\x200C'] = ""; // ZWNJ (ignore)
-            dev2Tibetan['\x200D'] = ""; // ZWJ (ignore)
+            // zero-width joiners
+            deva2Tibt['\x200C'] = ""; // ZWNJ (ignore)
+            deva2Tibt['\x200D'] = ""; // ZWJ (ignore)
         }
 
         public string InputFilePath
@@ -167,25 +170,31 @@ namespace Dev2Tibetan
 
         public void Convert()
         {
-            
             StreamReader sr = new StreamReader(InputFilePath);
             string devStr = sr.ReadToEnd();
-
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
-
-            // zap the double danda around "namo tassa..."
-            devStr = devStr.Replace("\x0964\x0964", "");
+            sr.Close();
 
             // change name of stylesheet for Tibetan
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-tibt.xsl");
 
-            char[] dev = devStr.ToCharArray();
+            string str = Convert(devStr);
+
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
+            sw.Flush();
+            sw.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications, capitalization, etc.
+        public string Convert(string devStr)
+        {
             StringBuilder sb = new StringBuilder();
 
-            foreach (char c in dev)
+            foreach (char c in devStr.ToCharArray())
             {
-                if (dev2Tibetan.ContainsKey(c))
-                    sb.Append(dev2Tibetan[c]);
+                if (deva2Tibt.ContainsKey(c))
+                    sb.Append(deva2Tibt[c]);
                 else
                     sb.Append(c);
             }
@@ -196,14 +205,15 @@ namespace Dev2Tibetan
             // Replace with the corresponding subjoined consonant (without halant)
             for (int i = 0; i <= 39; i++)
             {
-                tib = tib.Replace(String.Concat("\x0F84", System.Convert.ToChar(0xF40 + i)), 
+                tib = tib.Replace(String.Concat("\x0F84", System.Convert.ToChar(0xF40 + i)),
                     System.Convert.ToChar(0xF90 + i).ToString());
             }
 
-            sw.Write(tib);
-            sw.Flush();
-            sw.Close();
-            sr.Close();
+            // exceptions: yya and vva use the "fixed-form subjoined consonants as the 2nd one
+            tib = tib.Replace("\x0F61\x0FB1", "\x0F61\x0FBB"); //yya
+            tib = tib.Replace("\x0F5D\x0FAD", "\x0F5D\x0FBA"); //vva
+
+            return tib;
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -67,6 +66,18 @@ namespace VRI.CSCD.Conversion
         {
             dev2Khmer = new Hashtable();
 
+            dev2Khmer['\x0902'] = '\x17C6'; // niggahita
+
+            // independent vowels
+            dev2Khmer['\x0905'] = '\x17A2'; // a
+            dev2Khmer['\x0906'] = "\x17A2\x17B6"; // aa
+            dev2Khmer['\x0907'] = '\x17A5'; // i
+            dev2Khmer['\x0908'] = '\x17A6'; // ii
+            dev2Khmer['\x0909'] = '\x17A7'; // u
+            dev2Khmer['\x090A'] = '\x17A9'; // uu
+            dev2Khmer['\x090F'] = '\x17AF'; // e
+            dev2Khmer['\x0913'] = '\x17B1'; // o
+
             // velar stops
             dev2Khmer['\x0915'] = '\x1780'; // ka
             dev2Khmer['\x0916'] = '\x1781'; // kha
@@ -111,16 +122,6 @@ namespace VRI.CSCD.Conversion
             dev2Khmer['\x0939'] = '\x17A0'; // ha
             dev2Khmer['\x0933'] = '\x17A1'; // l underdot a
 
-            // independent vowels
-            dev2Khmer['\x0905'] = '\x17A2'; // a
-            dev2Khmer['\x0906'] = "\x17A2\x17B6"; // aa
-            dev2Khmer['\x0907'] = '\x17A5'; // i
-            dev2Khmer['\x0908'] = '\x17A6'; // ii
-            dev2Khmer['\x0909'] = '\x17A7'; // u
-            dev2Khmer['\x090A'] = '\x17A9'; // uu
-            dev2Khmer['\x090F'] = '\x17AF'; // e
-            dev2Khmer['\x0913'] = '\x17B1'; // o
-
             // dependent vowel signs
             dev2Khmer['\x093E'] = '\x17B6'; // aa
             dev2Khmer['\x093F'] = '\x17B7'; // i
@@ -129,6 +130,8 @@ namespace VRI.CSCD.Conversion
             dev2Khmer['\x0942'] = '\x17BC'; // uu
             dev2Khmer['\x0947'] = '\x17C1'; // e
             dev2Khmer['\x094B'] = '\x17C4'; // o
+
+            dev2Khmer['\x094D'] = '\x17D2'; // virama
 
             // let Devanagari danda (U+0964) and double danda (U+0965) 
             // pass through unmodified
@@ -145,9 +148,6 @@ namespace VRI.CSCD.Conversion
             dev2Khmer['\x096E'] = '\x17E8';
             dev2Khmer['\x096F'] = '\x17E9';
 
-            // other
-            dev2Khmer['\x0902'] = '\x17C6'; // niggahita
-            dev2Khmer['\x094D'] = '\x17D2'; // virama
             dev2Khmer['\x0970'] = "."; // Dev abbreviation sign
             dev2Khmer['\x200C'] = ""; // ZWNJ (ignore)
             dev2Khmer['\x200D'] = ""; // ZWJ (ignore)
@@ -207,11 +207,12 @@ namespace VRI.CSCD.Conversion
         public string ConvertDandas(string str)
         {
             // in gathas, single dandas convert to semicolon, double to period
-            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+            // Regex note: the +? is the lazy quantifier which finds the shortest match
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<centre>.+</centre>",
+            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
                 new MatchEvaluator(this.ConvertNamoTassaDandas));
 
             // convert all others to KHAN

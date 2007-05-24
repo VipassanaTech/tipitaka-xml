@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -192,7 +191,7 @@ namespace VRI.CSCD.Conversion
             string devStr = sr.ReadToEnd();
             sr.Close();
 
-            // change name of stylesheet for Gurmukhi
+            // change name of stylesheet for Kannada
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-knda.xsl");
 
             string str = Convert(devStr);

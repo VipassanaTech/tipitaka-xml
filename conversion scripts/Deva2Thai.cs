@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -191,6 +190,9 @@ namespace VRI.CSCD.Conversion
         // no stylesheet modifications, capitalization, etc.
         public string Convert(string devStr)
         {
+            // first remove all the ZWJs
+            devStr = devStr.Replace("\x200D", "");
+
             // pre-processing step for Thai: put the e vowel before its consonants
             devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
             devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
@@ -218,11 +220,12 @@ namespace VRI.CSCD.Conversion
         public string ConvertDandas(string str)
         {
             // in gathas, single dandas convert to semicolon, double to period
-            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+            // Regex note: the +? is the lazy quantifier which finds the shortest match
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<centre>.+</centre>",
+            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
                 new MatchEvaluator(this.ConvertNamoTassaDandas));
 
             // convert all others to Thai paiyannoi

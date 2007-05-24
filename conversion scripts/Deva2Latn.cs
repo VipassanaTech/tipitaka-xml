@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Text;
@@ -74,6 +73,18 @@ namespace VRI.CSCD.Conversion
         {
             deva2Latn = new Hashtable();
 
+            deva2Latn['\x0902'] = '\x1E43'; // niggahita
+
+            // independent vowels
+            deva2Latn['\x0905'] = 'a'; // a
+            deva2Latn['\x0906'] = '\x0101'; // aa
+            deva2Latn['\x0907'] = 'i'; // i
+            deva2Latn['\x0908'] = '\x012B'; // ii
+            deva2Latn['\x0909'] = 'u'; // u
+            deva2Latn['\x090A'] = '\x016B'; // uu
+            deva2Latn['\x090F'] = 'e'; // e
+            deva2Latn['\x0913'] = 'o'; // o
+
             // velar stops
             deva2Latn['\x0915'] = 'k'; // ka
             deva2Latn['\x0916'] = "kh"; // kha
@@ -118,16 +129,6 @@ namespace VRI.CSCD.Conversion
             deva2Latn['\x0939'] = 'h'; // ha
             deva2Latn['\x0933'] = "\x1E37"; // l underdot a
 
-            // independent vowels
-            deva2Latn['\x0905'] = 'a'; // a
-            deva2Latn['\x0906'] = '\x0101'; // aa
-            deva2Latn['\x0907'] = 'i'; // i
-            deva2Latn['\x0908'] = '\x012B'; // ii
-            deva2Latn['\x0909'] = 'u'; // u
-            deva2Latn['\x090A'] = '\x016B'; // uu
-            deva2Latn['\x090F'] = 'e'; // e
-            deva2Latn['\x0913'] = 'o'; // o
-
             // dependent vowel signs
             deva2Latn['\x093E'] = '\x0101'; // aa
             deva2Latn['\x093F'] = 'i'; // i
@@ -136,6 +137,8 @@ namespace VRI.CSCD.Conversion
             deva2Latn['\x0942'] = '\x016B'; // uu
             deva2Latn['\x0947'] = 'e'; // e
             deva2Latn['\x094B'] = 'o'; // o
+
+            deva2Latn['\x094D'] = ""; // virama
 
             // numerals
             deva2Latn['\x0966'] = '0';
@@ -149,9 +152,7 @@ namespace VRI.CSCD.Conversion
             deva2Latn['\x096E'] = '8';
             deva2Latn['\x096F'] = '9';
 
-            // other
-            deva2Latn['\x0902'] = '\x1E43'; // niggahita
-            deva2Latn['\x094D'] = ""; // virama
+     
             // we let dandas and double dandas pass through and handle
             // them in ConvertDandas()
             //deva2Latn['\x0964'] = '.'; // danda 
@@ -228,6 +229,7 @@ namespace VRI.CSCD.Conversion
         public string Convert(string devStr)
         {
             // insert 'a' after all consonants that are not followed by virama, dependent vowel or 'a'
+            // (This still works after we inserted ZWJ in the Devanagari. The ZWJ goes after virama.)
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])([^\x093E-\x094Da])", "$1a$2");
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])([^\x093E-\x094Da])", "$1a$2");
             // TODO: figure out how to backtrack so this replace doesn't have to be done twice
@@ -247,11 +249,12 @@ namespace VRI.CSCD.Conversion
         public string ConvertDandas(string str)
         {
             // in gathas, single dandas convert to semicolon, double to period
-            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+            // Regex note: the +? is the lazy quantifier which finds the shortest match
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<centre>.+</centre>",
+            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period

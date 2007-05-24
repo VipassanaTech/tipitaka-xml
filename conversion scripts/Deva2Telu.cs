@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -67,6 +66,18 @@ namespace VRI.CSCD.Conversion
         {
             dev2Telugu = new Hashtable();
 
+            dev2Telugu['\x0902'] = '\x0C02'; // niggahita
+
+            // independent vowels
+            dev2Telugu['\x0905'] = '\x0C05'; // a
+            dev2Telugu['\x0906'] = '\x0C06'; // aa
+            dev2Telugu['\x0907'] = '\x0C07'; // i
+            dev2Telugu['\x0908'] = '\x0C08'; // ii
+            dev2Telugu['\x0909'] = '\x0C09'; // u
+            dev2Telugu['\x090A'] = '\x0C0A'; // uu
+            dev2Telugu['\x090F'] = '\x0C0E'; // e
+            dev2Telugu['\x0913'] = '\x0C12'; // o
+
             // velar stops
             dev2Telugu['\x0915'] = '\x0C15'; // ka
             dev2Telugu['\x0916'] = '\x0C16'; // kha
@@ -111,16 +122,6 @@ namespace VRI.CSCD.Conversion
             dev2Telugu['\x0939'] = '\x0C39'; // ha
             dev2Telugu['\x0933'] = '\x0C33'; // l underdot a
 
-            // independent vowels
-            dev2Telugu['\x0905'] = '\x0C05'; // a
-            dev2Telugu['\x0906'] = '\x0C06'; // aa
-            dev2Telugu['\x0907'] = '\x0C07'; // i
-            dev2Telugu['\x0908'] = '\x0C08'; // ii
-            dev2Telugu['\x0909'] = '\x0C09'; // u
-            dev2Telugu['\x090A'] = '\x0C0A'; // uu
-            dev2Telugu['\x090F'] = '\x0C0E'; // e
-            dev2Telugu['\x0913'] = '\x0C12'; // o
-
             // dependent vowel signs
             dev2Telugu['\x093E'] = '\x0C3E'; // aa
             dev2Telugu['\x093F'] = '\x0C3F'; // i
@@ -129,6 +130,11 @@ namespace VRI.CSCD.Conversion
             dev2Telugu['\x0942'] = '\x0C42'; // uu
             dev2Telugu['\x0947'] = '\x0C46'; // e
             dev2Telugu['\x094B'] = '\x0C4A'; // o
+
+            dev2Telugu['\x094D'] = '\x0C4D'; // virama
+
+            // let Devanagari danda (U+0964) and double danda (U+0965) 
+            // pass through unmodified
 
             // numerals
             dev2Telugu['\x0966'] = '\x0C66';
@@ -142,10 +148,7 @@ namespace VRI.CSCD.Conversion
             dev2Telugu['\x096E'] = '\x0C6E';
             dev2Telugu['\x096F'] = '\x0C6F';
 
-            // other
-            dev2Telugu['\x0964'] = '.'; // danda -> period
-            dev2Telugu['\x0902'] = '\x0C02'; // niggahita
-            dev2Telugu['\x094D'] = '\x0C4D'; // virama
+            // zero-width joiners
             dev2Telugu['\x200C'] = ""; // ZWNJ (ignore)
             dev2Telugu['\x200D'] = ""; // ZWJ (ignore)
         }
@@ -204,11 +207,12 @@ namespace VRI.CSCD.Conversion
         public string ConvertDandas(string str)
         {
             // in gathas, single dandas convert to semicolon, double to period
-            str = Regex.Replace(str, "<gatha[a-z0-9]*>.+</gatha[a-z0-9]*>",
+            // Regex note: the +? is the lazy quantifier which finds the shortest match
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<centre>.+</centre>",
+            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period

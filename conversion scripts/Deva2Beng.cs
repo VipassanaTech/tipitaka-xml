@@ -1,10 +1,9 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Deva2Beng
+namespace VRI.CSCD.Conversion
 {
     class Deva2Beng
     {
@@ -65,6 +64,8 @@ namespace Deva2Beng
         public Deva2Beng()
         {
             deva2Beng = new Hashtable();
+
+            deva2Beng['\x0902'] = '\x0982'; // niggahita
 
             // independent vowels
             deva2Beng['\x0905'] = '\x0985'; // a
@@ -138,6 +139,8 @@ namespace Deva2Beng
             deva2Beng['\x094B'] = '\x09CB'; // o
             deva2Beng['\x094C'] = '\x09CC'; // au
 
+            deva2Beng['\x094D'] = '\x09CD'; // virama
+
             // numerals
             deva2Beng['\x0966'] = '\x09E6';
             deva2Beng['\x0967'] = '\x09E7';
@@ -150,12 +153,8 @@ namespace Deva2Beng
             deva2Beng['\x096E'] = '\x09EE';
             deva2Beng['\x096F'] = '\x09EF';
 
-            // other
-            deva2Beng['\x0964'] = '\x0964'; // danda (use Devanagari danda)
-            deva2Beng['\x0902'] = '\x0982'; // niggahita
-            deva2Beng['\x094D'] = '\x09CD'; // virama
-            deva2Beng['\x200C'] = ""; // ZWNJ (ignore)
-            deva2Beng['\x200D'] = ""; // ZWJ (ignore)
+            deva2Beng['\x200C'] = ""; // ZWNJ (remove)
+            deva2Beng['\x200D'] = ""; // ZWJ (remove)
         }
 
         public string InputFilePath
@@ -179,23 +178,31 @@ namespace Deva2Beng
             string devStr = sr.ReadToEnd();
             sr.Close();
 
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
-
             // change name of stylesheet for Bengali
             devStr = devStr.Replace("tipitaka-deva.xsl", "tipitaka-beng.xsl");
 
-            char[] dev = devStr.ToCharArray();
+            string str = Convert(devStr);
 
-            foreach (char c in dev)
-            {
-                if (deva2Beng.ContainsKey(c))
-                    sw.Write(deva2Beng[c]);
-                else
-                    sw.Write(c);
-            }
-
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            sw.Write(str);
             sw.Flush();
             sw.Close();
+        }
+
+        // more generalized, reusable conversion method:
+        // no stylesheet modifications or capitalization
+        public string Convert(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
+            {
+                if (deva2Beng.ContainsKey(c))
+                    sb.Append(deva2Beng[c]);
+                else
+                    sb.Append(c);
+            }
+
+            return sb.ToString();
         }
     }
 }

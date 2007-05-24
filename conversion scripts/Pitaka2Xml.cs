@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -97,10 +96,10 @@ namespace Pitaka2Xml
             Paragraphs = new ArrayList();
 
             xmlParaTags = new Hashtable();
-            xmlParaTags[1] = "unk";
+            xmlParaTags[1] = "bodytext";
             xmlParaTags[2] = "indent";
             xmlParaTags[3] = "bodytext";
-            xmlParaTags[4] = "paraalign";
+            xmlParaTags[4] = "bodytext";
             xmlParaTags[6] = "centre";
             xmlParaTags[7] = "unindented";
             xmlParaTags[10] = "book";
@@ -108,13 +107,26 @@ namespace Pitaka2Xml
             xmlParaTags[12] = "nikaya";
             xmlParaTags[13] = "title";
             xmlParaTags[14] = "subhead";
-            xmlParaTags[15] = "centrebold";
+            xmlParaTags[15] = "subsubhead";
             xmlParaTags[21] = "gatha1";
             xmlParaTags[22] = "gathalast";
-            xmlParaTags[25] = "nonindent";
+            xmlParaTags[25] = "unindented";
             xmlParaTags[26] = "gatha3";
             xmlParaTags[27] = "gatha2";
+            xmlParaTags[30] = "gatha1";
             xmlParaTags[40] = "bodytext";
+
+            deva2Latn = new Hashtable();
+            deva2Latn['\x0966'] = '0';
+            deva2Latn['\x0967'] = '1';
+            deva2Latn['\x0968'] = '2';
+            deva2Latn['\x0969'] = '3';
+            deva2Latn['\x096A'] = '4';
+            deva2Latn['\x096B'] = '5';
+            deva2Latn['\x096C'] = '6';
+            deva2Latn['\x096D'] = '7';
+            deva2Latn['\x096E'] = '8';
+            deva2Latn['\x096F'] = '9';
         }
 
         public string InputFilePath
@@ -159,6 +171,11 @@ namespace Pitaka2Xml
         }
         private bool splitXml;
 
+        // store the paranum in FormatParaNum() so it can be assigned to the Paragraph object
+        private string paranum;
+
+        // for converting numbers from Devanagari to Latin for para num stored as attribute
+        private Hashtable deva2Latn;
 
         public void Convert()
         {
@@ -205,19 +222,19 @@ namespace Pitaka2Xml
                     para.title = para.title.Replace("/", "");
                     // Delete footnotes from titles (there is only one, in s0503m.mul)
                     // The end footnote marker is a placeholder at this point
-                    para.title = Regex.Replace(para.title, "<fnote>.*\x1232", 
+                    para.title = Regex.Replace(para.title, "<note>.*\x1232", 
                         new MatchEvaluator(this.RemoveTitleFootnotes));
                 }
 
                 // use placeholders so that we don't screw up the end tags when we look for the
                 // single end-of-bold slash
                 para.text = para.text.Replace("//./", "\x1233");
-                para.text = para.text.Replace("//", "<bold>");
-                para.text = para.text.Replace("/", "</bold>");
-                para.text = para.text.Replace("\x1233", "<dot>.</dot>");
+                para.text = para.text.Replace("//", "<hi rend=\"bold\">");
+                para.text = para.text.Replace("/", "</hi>");
+                para.text = para.text.Replace("\x1233", "<hi rend=\"dot\">.</hi>");
 
                 // replace the end footnote marker that is inserted in CaptureFootnotes()
-                para.text = para.text.Replace("\x1232", "</fnote>");
+                para.text = para.text.Replace("\x1232", "</note>");
                 
                 // replace two hyphens with an en-dash
                 para.text = para.text.Replace("--", "\x2013");
@@ -234,13 +251,30 @@ namespace Pitaka2Xml
                 para.text = Regex.Replace(para.text, "[$#@&][\x0966-\x096F]\\.[\x0966-\x096F]{4}",
                     new MatchEvaluator(this.FormatPageRefs));
 
+                // insert ZWJ in some Devanagari conjuncts
+                para.text = para.text.Replace("\x0915\x094D\x0915", "\x0915\x094D\x200D\x0915"); // ka + ka
+                para.text = para.text.Replace("\x0915\x094D\x0932", "\x0915\x094D\x200D\x0932"); // ka + la
+                para.text = para.text.Replace("\x0915\x094D\x0935", "\x0915\x094D\x200D\x0935"); // ka + va
+                para.text = para.text.Replace("\x091A\x094D\x091A", "\x091A\x094D\x200D\x091A"); // ca + ca
+                para.text = para.text.Replace("\x091C\x094D\x091C", "\x091C\x094D\x200D\x091C"); // ja + ja
+                para.text = para.text.Replace("\x091E\x094D\x091A", "\x091E\x094D\x200D\x091A"); // ña + ca
+                para.text = para.text.Replace("\x091E\x094D\x091C", "\x091E\x094D\x200D\x091C"); // ña + ja
+                para.text = para.text.Replace("\x091E\x094D\x091E", "\x091E\x094D\x200D\x091E"); // ña + ña
+                para.text = para.text.Replace("\x0928\x094D\x0928", "\x0928\x094D\x200D\x0928"); // na + na
+                para.text = para.text.Replace("\x092A\x094D\x0932", "\x092A\x094D\x200D\x0932"); // pa + la
+                para.text = para.text.Replace("\x0932\x094D\x0932", "\x0932\x094D\x200D\x0932"); // la + la
+                
+
                 // for all paragraphs that are not headings
                 if ((para.format < 10 || para.format > 15) && para.format != 6)
                 {
                     // Put the <paranum> tag around paragraph numbers.
                     // Looking for Devanagari digits, or a hyphen for number ranges, e.g. 26-27
                     // at the beginning of the para.(^ matches beginning of string only)
-                    para.text = Regex.Replace(para.text, "^([\x0966-\x096F\\-]+)", "<paranum>$1</paranum>");
+                    paranum = "";
+                    para.text = Regex.Replace(para.text, "^([\x0966-\x096F\\-]+)", new MatchEvaluator(this.FormatParaNum));
+                    if (paranum.Length > 0)
+                        para.num = paranum;
                 }
 
                 string tag = (string)xmlParaTags[para.format];
@@ -249,7 +283,10 @@ namespace Pitaka2Xml
                     Console.WriteLine("Unknown format: " + para.format);
                     tag = (string)xmlParaTags[3]; // body text
                 }
-                para.text = "<" + tag + ">" + para.text + "</" + tag + ">";
+
+                para.text = "<p rend=\"" + tag + "\"" +
+                    ((para.num != null && para.num.Length > 0) ? " n=\"" + para.num + "\"" : "") +
+                    ">" + para.text + "</p>";
             }
 
             // Look for the paragraph to use as the title of the first file in the navigation tree.
@@ -380,13 +417,22 @@ namespace Pitaka2Xml
 
             sw.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-16\"?>");
             sw.WriteLine("<?xml-stylesheet type=\"text/xsl\" href=\"tipitaka-deva.xsl\"?>");
+            sw.WriteLine("<TEI.2>");
+            sw.WriteLine("<teiHeader></teiHeader>");
             sw.WriteLine("<text>");
+            sw.WriteLine("<front></front>");
+            sw.WriteLine("<body>");
+
             for (int i = xmlFragment.startIndex; i <= xmlFragment.endIndex; i++)
             {
                 sw.WriteLine(((Paragraph)Paragraphs[i]).text);
                 sw.WriteLine();
             }
+
+            sw.WriteLine("</body>");
+            sw.WriteLine("<back></back>");
             sw.WriteLine("</text>");
+            sw.WriteLine("</TEI.2>");
 
             sw.Flush();
             sw.Close();
@@ -427,25 +473,25 @@ namespace Pitaka2Xml
 
         public string CaptureFootnotes(Match m)
         {
-            string fnote = m.Value;
+            string note = m.Value;
             // chop off the start(<) and end(>) markers
-            fnote = fnote.Substring(1, fnote.Length - 2);
+            note = note.Substring(1, note.Length - 2);
 
             // There are a small number of footnotes that span multiple paragraphs.
             // We must handle them before we parse out the rest of the paragraphs.
             // Para breaks within the footnotes will be marked with the section sign. (§)
-            fnote = fnote.Replace("\r\n\r\n", "\x00A7");
+            note = note.Replace("\r\n\r\n", "\x00A7");
 
-            fnote = fnote.Replace("\r\n", " ");
-            fnote = fnote.Replace("\r", " ");
-            fnote = fnote.Replace("\n", " ");
+            note = note.Replace("\r\n", " ");
+            note = note.Replace("\r", " ");
+            note = note.Replace("\n", " ");
 
             // Delete whitespace around the section sign.
-            fnote = Regex.Replace(fnote, "[\\s]+\x00A7", "\x00A7");
-            fnote = Regex.Replace(fnote, "\x00A7[\\s]+", "\x00A7");
+            note = Regex.Replace(note, "[\\s]+\x00A7", "\x00A7");
+            note = Regex.Replace(note, "\x00A7[\\s]+", "\x00A7");
 
-            // can't use the end tag yet (</fnote>). The bold slashes haven't been replaced yet.
-            return "<fnote>" + fnote + "\x1232";
+            // can't use the end tag yet (</note>). The bold slashes haven't been replaced yet.
+            return "<note>" + note + "\x1232";
         }
 
         public string RemoveTitleFootnotes(Match m)
@@ -486,8 +532,15 @@ namespace Pitaka2Xml
                     break;
             }
 
-            return "<link p=\"" + p + "\" target=\"" + devDigitValue(s[1]) + "." + devDigitValue(s[3]) +
+            return "<pb ed=\"" + p + "\" n=\"" + devDigitValue(s[1]) + "." + devDigitValue(s[3]) +
                 devDigitValue(s[4]) + devDigitValue(s[5]) + devDigitValue(s[6]) + "\"/>";
+        }
+
+        public string FormatParaNum(Match m)
+        {
+            string devParaNum = m.Value;
+            paranum = ConvertDeva2Latn(devParaNum);
+            return "<hi rend=\"paranum\">" + devParaNum + "</hi>";
         }
 
         private int devDigitValue(char d)
@@ -515,6 +568,21 @@ namespace Pitaka2Xml
 
             return s;
         }
+
+        // convert numbers from Deva to Latn
+        public string ConvertDeva2Latn(string devStr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in devStr.ToCharArray())
+            {
+                if (deva2Latn.ContainsKey(c))
+                    sb.Append(deva2Latn[c]);
+                else
+                    sb.Append(c);
+            }
+
+            return sb.ToString();
+        }
     }
 
     public class Paragraph
@@ -522,6 +590,7 @@ namespace Pitaka2Xml
         public string title;
         public string text;
         public int format;
+        public string num;
     }
 
     public class XmlFragment
