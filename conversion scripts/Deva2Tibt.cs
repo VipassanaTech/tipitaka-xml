@@ -213,6 +213,10 @@ namespace VRI.CSCD.Conversion
             tib = tib.Replace("\x0F61\x0FB1", "\x0F61\x0FBB"); //yya
             tib = tib.Replace("\x0F5D\x0FAD", "\x0F5D\x0FBA"); //vva
 
+            // exceptions: yha and vha use explicit (visible) halant between
+            tib = tib.Replace("\x0F61\x0FB7", "\x0F61\x0F84\x0F67"); //yha
+            tib = tib.Replace("\x0F5D\x0FB7", "\x0F5D\x0F84\x0F67"); //vha
+
             return tib;
         }
     }
