@@ -115,6 +115,7 @@ namespace Pitaka2Xml
             xmlParaTags[27] = "gatha2";
             xmlParaTags[30] = "gatha1";
             xmlParaTags[40] = "bodytext";
+            xmlParaTags[100] = "hangnum";
 
             deva2Latn = new Hashtable();
             deva2Latn['\x0966'] = '0';
@@ -456,11 +457,31 @@ namespace Pitaka2Xml
 
             para.format = GetParaFormat(s);
 
-            // delete para format marker
-            s = Regex.Replace(s, "%[\x0966-\x096F]{2}", "");
+            // delete the first para format marker
+            formatMarkerCount = 0;
+            s = Regex.Replace(s, "%[\x0966-\x096F]{2}", new MatchEvaluator(this.DeleteOneParaFormat));
 
             // change pipe to dollar sign. some of the Myanmar page refs are wrongly marked with pipe.
             s = s.Replace('|', '$');
+
+            // handle the case of multiple format markers, i.e. hanging indents in gathas.
+            // e.g.: "%03 1. %21 first line of gatha"
+            string s2 = "";
+            if (Regex.Match(s, "%[\x0966-\x096F]{2}").Success)
+            {
+                // split the string into 2 pieces, "%03 1." and "%21 first line of gatha"
+                s2 = s.Substring(s.IndexOf("%"));
+                s = s.Substring(0, s.Length - s2.Length);
+
+                // make the first part "hangnum" style
+                para.format = 100;
+
+                if (reportedMultipleMarkers == false)
+                {
+                    Console.WriteLine("Multiple format markers in a paragraph");
+                    reportedMultipleMarkers = true;
+                }
+            }
 
             // delete leading and trailing whitespace
             s = Regex.Replace(s, "\\A[\\s]+(\\S+)", "$1");
@@ -468,7 +489,39 @@ namespace Pitaka2Xml
 
             para.text = s;
             Paragraphs.Add(para);
+
+            if (s2.Length > 0)
+            {
+                // delete leading and trailing whitespace on s2
+                s2 = Regex.Replace(s2, "\\A[\\s]+(\\S+)", "$1");
+                s2 = Regex.Replace(s2, "([\\S]+)[\\s]+\\z", "$1");
+
+                para = new Paragraph();
+                para.format = GetParaFormat(s2);
+
+                // delete the second para format marker 
+                s2 = Regex.Replace(s2, "%[\x0966-\x096F]{2}", "");
+
+                para.text = s2;
+                Paragraphs.Add(para);
+            }
+
             return "";
+        }
+
+        private int formatMarkerCount;
+        // print out a message once if there are multiple format markers in a paragraph
+        private bool reportedMultipleMarkers = false; 
+
+        public string DeleteOneParaFormat(Match m)
+        {
+            if (formatMarkerCount == 0)
+            {
+                formatMarkerCount++;
+                return "";
+            }
+            else
+                return m.Value;
         }
 
         public string CaptureFootnotes(Match m)
