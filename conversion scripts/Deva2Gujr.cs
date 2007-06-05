@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
+
 
 namespace VRI.CSCD.Conversion
 {
@@ -136,8 +138,8 @@ namespace VRI.CSCD.Conversion
             // various signs
             deva2Gujarati['\x094D'] = '\x0ACD'; // virama
 
-            // let Devanagari danda (U+0964) and double danda (U+0965) 
-            // pass through unmodified
+            // we let dandas (U+0964) and double dandas (U+0965) pass through 
+            // and handle them in ConvertDandas()
 
             // numerals
             deva2Gujarati['\x0966'] = '\x0AE6';
@@ -182,6 +184,9 @@ namespace VRI.CSCD.Conversion
 
             string str = Convert(devStr);
 
+            str = ConvertDandas(str);
+            str = CleanupPunctuation(str);
+
             StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
             sw.Write(str);
             sw.Flush();
@@ -202,6 +207,50 @@ namespace VRI.CSCD.Conversion
             }
 
             return sb.ToString();
+        }
+
+        public string ConvertDandas(string str)
+        {
+            // in gathas, single dandas convert to semicolon, double to period
+            // Regex note: the +? is the lazy quantifier which finds the shortest match
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
+                new MatchEvaluator(this.ConvertGathaDandas));
+
+            // remove double dandas around namo tassa
+            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
+                new MatchEvaluator(this.RemoveNamoTassaDandas));
+
+            // convert all others to period
+            str = str.Replace("\x0964", ".");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string ConvertGathaDandas(Match m)
+        {
+            string str = m.Value;
+            str = str.Replace("\x0964", ";");
+            str = str.Replace("\x0965", ".");
+            return str;
+        }
+
+        public string RemoveNamoTassaDandas(Match m)
+        {
+            string str = m.Value;
+            return str.Replace("\x0965", "");
+        }
+
+        // There should be no spaces before these
+        // punctuation marks. 
+        public string CleanupPunctuation(string str)
+        {
+            str = str.Replace(" ,", ",");
+            str = str.Replace(" ?", "?");
+            str = str.Replace(" !", "!");
+            str = str.Replace(" ;", ";");
+            // does not affect peyyalas because they have ellipses now
+            str = str.Replace(" .", ".");
+            return str;
         }
     }
 }
