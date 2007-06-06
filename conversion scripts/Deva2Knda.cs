@@ -196,7 +196,7 @@ namespace VRI.CSCD.Conversion
 
             string str = Convert(devStr);
 
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.Unicode);
             sw.Write(str);
             sw.Flush();
             sw.Close();

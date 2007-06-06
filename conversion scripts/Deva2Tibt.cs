@@ -179,7 +179,7 @@ namespace VRI.CSCD.Conversion
 
             string str = Convert(devStr);
 
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.Unicode);
             sw.Write(str);
             sw.Flush();
             sw.Close();
@@ -213,7 +213,8 @@ namespace VRI.CSCD.Conversion
             tib = tib.Replace("\x0F61\x0FB1", "\x0F61\x0FBB"); //yya
             tib = tib.Replace("\x0F5D\x0FAD", "\x0F5D\x0FBA"); //vva
 
-            // exceptions: yha and vha use explicit (visible) halant between
+            // exceptions: jjha, yha and vha use explicit (visible) halant between
+            tib = tib.Replace("\x0F5B\x0FAC", "\x0F5B\x0F84\x0F5C"); //jjha
             tib = tib.Replace("\x0F61\x0FB7", "\x0F61\x0F84\x0F67"); //yha
             tib = tib.Replace("\x0F5D\x0FB7", "\x0F5D\x0F84\x0F67"); //vha
 

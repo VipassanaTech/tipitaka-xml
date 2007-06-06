@@ -199,7 +199,7 @@ namespace VRI.CSCD.Conversion
             str = ConvertDandas(str);
             str = CleanupPunctuation(str);
 
-            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.BigEndianUnicode);
+            StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.Unicode);
             sw.Write(str);
             sw.Flush();
             sw.Close();

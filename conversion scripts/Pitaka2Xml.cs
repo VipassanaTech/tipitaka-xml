@@ -388,7 +388,7 @@ namespace Pitaka2Xml
             string outputFilePath = OutputPathStem;
             outputFilePath += ".toc.xml";
 
-            StreamWriter sw = new StreamWriter(outputFilePath, false, Encoding.BigEndianUnicode);
+            StreamWriter sw = new StreamWriter(outputFilePath, false, Encoding.Unicode);
             sw.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-16\"?>");
             sw.WriteLine("<tree>");
             int i = 0;
@@ -414,7 +414,7 @@ namespace Pitaka2Xml
             else
                 outputFilePath += fileNum + ".xml";
 
-            StreamWriter sw = new StreamWriter(outputFilePath, false, Encoding.BigEndianUnicode);
+            StreamWriter sw = new StreamWriter(outputFilePath, false, Encoding.Unicode);
 
             sw.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-16\"?>");
             sw.WriteLine("<?xml-stylesheet type=\"text/xsl\" href=\"tipitaka-deva.xsl\"?>");
@@ -478,7 +478,7 @@ namespace Pitaka2Xml
 
                 if (reportedMultipleMarkers == false)
                 {
-                    Console.WriteLine("Multiple format markers in a paragraph");
+                    //Console.WriteLine("Multiple format markers in a paragraph");
                     reportedMultipleMarkers = true;
                 }
             }
