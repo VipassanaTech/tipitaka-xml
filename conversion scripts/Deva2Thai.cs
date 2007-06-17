@@ -71,8 +71,8 @@ namespace VRI.CSCD.Conversion
             // independent vowels
             dev2Thai['\x0905'] = '\x0E2D'; // a
             dev2Thai['\x0906'] = "\x0E2D\x0E32"; // aa
-            dev2Thai['\x0907'] = "\x0E2D\x0E35"; // i
-            dev2Thai['\x0908'] = "\x0E2D\x0E37"; // ii
+            dev2Thai['\x0907'] = "\x0E2D\x0E34"; // i
+            dev2Thai['\x0908'] = "\x0E2D\x0E35"; // ii
             dev2Thai['\x0909'] = "\x0E2D\x0E38"; // u
             dev2Thai['\x090A'] = "\x0E2D\x0E39"; // uu
             dev2Thai['\x090F'] = "\x0E40\x0E2D"; // e
@@ -124,8 +124,8 @@ namespace VRI.CSCD.Conversion
 
             // dependent vowel signs
             dev2Thai['\x093E'] = '\x0E32'; // aa
-            dev2Thai['\x093F'] = '\x0E35'; // i
-            dev2Thai['\x0940'] = '\x0E37'; // ii
+            dev2Thai['\x093F'] = '\x0E34'; // i
+            dev2Thai['\x0940'] = '\x0E35'; // ii
             dev2Thai['\x0941'] = '\x0E38'; // u
             dev2Thai['\x0942'] = '\x0E39'; // uu
             dev2Thai['\x0947'] = '\x0E40'; // e
