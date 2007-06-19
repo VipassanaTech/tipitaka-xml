@@ -120,8 +120,8 @@ namespace VRI.CSCD.Conversion
             deva2Beng['\x092F'] = '\x09AF'; // ya
             deva2Beng['\x0930'] = '\x09B0'; // ra
             deva2Beng['\x0932'] = '\x09B2'; // la
-            deva2Beng['\x0933'] = "\x09B2\x093C"; // l underdot a *** la with dot, there's no l underdot in Bengali***
-            deva2Beng['\x0935'] = "\x09AC\x093C"; // va *** ba with dot, there's no va in Bengali***
+            deva2Beng['\x0933'] = "\x09B2\x09BC"; // l underdot a *** la with dot, there's no l underdot in Bengali***
+            deva2Beng['\x0935'] = "\x09F0"; // va *** Bengali ra with middle diagonal. Used for Assamese. ***
             deva2Beng['\x0936'] = '\x09B6'; // sha (palatal)
             deva2Beng['\x0937'] = '\x09B7'; // sha (retroflex)
             deva2Beng['\x0938'] = '\x09B8'; // sa
