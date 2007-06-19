@@ -75,8 +75,8 @@ namespace VRI.CSCD.Conversion
             dev2Telugu['\x0908'] = '\x0C08'; // ii
             dev2Telugu['\x0909'] = '\x0C09'; // u
             dev2Telugu['\x090A'] = '\x0C0A'; // uu
-            dev2Telugu['\x090F'] = '\x0C0E'; // e
-            dev2Telugu['\x0913'] = '\x0C12'; // o
+            dev2Telugu['\x090F'] = '\x0C0F'; // e
+            dev2Telugu['\x0913'] = '\x0C13'; // o
 
             // velar stops
             dev2Telugu['\x0915'] = '\x0C15'; // ka
@@ -128,8 +128,8 @@ namespace VRI.CSCD.Conversion
             dev2Telugu['\x0940'] = '\x0C40'; // ii
             dev2Telugu['\x0941'] = '\x0C41'; // u
             dev2Telugu['\x0942'] = '\x0C42'; // uu
-            dev2Telugu['\x0947'] = '\x0C46'; // e
-            dev2Telugu['\x094B'] = '\x0C4A'; // o
+            dev2Telugu['\x0947'] = '\x0C47'; // e
+            dev2Telugu['\x094B'] = '\x0C4B'; // o
 
             dev2Telugu['\x094D'] = '\x0C4D'; // virama
 
