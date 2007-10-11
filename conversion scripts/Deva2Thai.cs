@@ -93,7 +93,7 @@ namespace VRI.CSCD.Conversion
             dev2Thai['\x091E'] = '\x0E0D'; // ña
 
             // retroflex stops
-            dev2Thai['\x091F'] = '\x0E0E'; // t underdot a
+            dev2Thai['\x091F'] = '\x0E0F'; // t underdot a
             dev2Thai['\x0920'] = '\x0E10'; // t underdot ha
             dev2Thai['\x0921'] = '\x0E11'; // d underdot a
             dev2Thai['\x0922'] = '\x0E12'; // d underdot ha
@@ -194,15 +194,15 @@ namespace VRI.CSCD.Conversion
             devStr = devStr.Replace("\x200D", "");
 
             // pre-processing step for Thai: put the e vowel before its consonants
-            devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
-            devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
-            devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
+            //devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
+            //devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
+            //devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939])\x0947", "\x0E40$1");
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])\x0947", "\x0E40$1");
 
             // pre-processing step for Thai: put the o vowel before its consonants
-            devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x094B", "\x0E42$1");
-            devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x094B", "\x0E42$1");
-            devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939])\x094B", "\x0E42$1");
+            //devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x094B", "\x0E42$1");
+            //devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939]\x094D[\x0915-\x0939])\x094B", "\x0E42$1");
+            //devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939])\x094B", "\x0E42$1");
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])\x094B", "\x0E42$1");
 
             StringBuilder sb = new StringBuilder();

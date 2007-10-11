@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace VRI.CSCD.Conversion
 {
@@ -189,6 +190,10 @@ namespace VRI.CSCD.Conversion
         // no stylesheet modifications, capitalization, etc.
         public string Convert(string devStr)
         {
+			// add intersyllabic tsheg between "syllables"
+			devStr = Regex.Replace(devStr, "([\x0900-\x094C])([\x0904-\x0939])", "$1\x0F0B$2");
+			devStr = Regex.Replace(devStr, "([\x0900-\x094C])([\x0904-\x0939])", "$1\x0F0B$2");
+
             StringBuilder sb = new StringBuilder();
 
             foreach (char c in devStr.ToCharArray())
