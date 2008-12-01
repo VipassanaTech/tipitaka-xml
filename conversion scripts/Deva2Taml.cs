@@ -96,8 +96,8 @@ namespace CST.Conversion
             // palatal stops
             deva2Taml['\x091A'] = '\x0B9A'; // ca
             deva2Taml['\x091B'] = "\x0B9A\x00B2"; // cha
-            deva2Taml['\x091C'] = "\x0B9A\x00B3"; // ja
-            deva2Taml['\x091D'] = "\x0B9A\x2074"; // jha
+            deva2Taml['\x091C'] = "\x0B9C"; // ja
+            deva2Taml['\x091D'] = "\x0B9C\x00B2"; // jha
             deva2Taml['\x091E'] = '\x0B9E'; // ña
 
             // retroflex stops
@@ -221,8 +221,6 @@ namespace CST.Conversion
 			// change dependent o vowel to something else if followed by a double consonant
 			devStr = Regex.Replace(devStr, "\x094B([\x0915-\x0939]\x094D[\x0915-\x0939])", "\x1203$1");
 
-			// change initial "n" to something else
-
             StringBuilder sb = new StringBuilder();
             foreach (char c in devStr.ToCharArray())
             {
@@ -245,6 +243,9 @@ namespace CST.Conversion
 
 			// if "n" (0x0BA8) is preceded by any word character, change it to the other "n" (0x0BA9 TAMIL NNNA)
 			str = Regex.Replace(str, "([\x0B82-\x0BCD\x00B2\x00B3\x2074])\x0BA8", "$1\x0BA9");
+
+			// except if it's before a dental stop
+			str = Regex.Replace(str, "\x0BA9\x0BCD\x0BA4", "\x0BA8\x0BCD\x0BA4");
 
             return str;
         }
