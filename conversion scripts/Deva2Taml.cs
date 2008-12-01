@@ -154,16 +154,16 @@ namespace CST.Conversion
             // and handle them in ConvertDandas()
 
             // digits
-            deva2Taml['\x0966'] = '\x0BE6';
-            deva2Taml['\x0967'] = '\x0BE7';
-            deva2Taml['\x0968'] = '\x0BE8';
-            deva2Taml['\x0969'] = '\x0BE9';
-            deva2Taml['\x096A'] = '\x0BEA';
-            deva2Taml['\x096B'] = '\x0BEB';
-            deva2Taml['\x096C'] = '\x0BEC';
-            deva2Taml['\x096D'] = '\x0BED';
-            deva2Taml['\x096E'] = '\x0BEE';
-            deva2Taml['\x096F'] = '\x0BEF';
+            deva2Taml['\x0966'] = '0';
+            deva2Taml['\x0967'] = '1';
+            deva2Taml['\x0968'] = '2';
+            deva2Taml['\x0969'] = '3';
+            deva2Taml['\x096A'] = '4';
+            deva2Taml['\x096B'] = '5';
+            deva2Taml['\x096C'] = '6';
+            deva2Taml['\x096D'] = '7';
+            deva2Taml['\x096E'] = '8';
+            deva2Taml['\x096F'] = '9';
 
             // zero-width joiners
             deva2Taml['\x200C'] = ""; // ZWNJ (remove)
