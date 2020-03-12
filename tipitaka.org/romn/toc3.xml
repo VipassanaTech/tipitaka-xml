@@ -1,0 +1,61 @@
+﻿<?xml version="1.0"?>
+    <tree>
+      <!-- "Tīkā" //-->
+      <tree text="Vinayapiṭaka (ṭīkā)">
+        <tree text="Sāratthadīpanī-ṭīkā-1" src="./cscd/vin01t1.tik.toc.xml" />
+        <tree text="Sāratthadīpanī-ṭīkā-2" src="./cscd/vin01t2.tik.toc.xml" />
+        <tree text="Sāratthadīpanī-ṭīkā-3" src="./cscd/vin02t.tik.toc.xml" />
+        <tree text="Dvemātikāpāḷi" src="./cscd/vin04t.nrf.toc.xml" />
+        <tree text="Vinayasaṅgaha-aṭṭhakathā" src="./cscd/vin05t.nrf.toc.xml" />
+        <tree text="Vajirabuddhi-ṭīkā" src="./cscd/vin06t.nrf.toc.xml" />
+        <tree text="Vimativinodanī-ṭīkā" src="./cscd/vin07t.nrf.toc.xml" />
+        <tree text="Vinayālaṅkāra-ṭīkā" src="./cscd/vin08t.nrf.toc.xml" />
+        <tree text="Kaṅkhāvitaraṇīpurāṇa-ṭīkā" src="./cscd/vin09t.nrf.toc.xml" />
+        <tree text="Vinayavinicchaya-uttaravinicchaya" src="./cscd/vin10t.nrf.toc.xml" />
+        <tree text="Vinayavinicchaya-ṭīkā" src="./cscd/vin11t.nrf.toc.xml" />
+        <tree text="Pācityādiyojanāpāḷi" src="./cscd/vin12t.nrf.toc.xml" />
+        <tree text="Khuddasikkhā-mūlasikkhā" src="./cscd/vin13t.nrf.toc.xml" />
+      </tree>
+      <tree text="Suttapiṭaka (ṭīkā)">
+        <tree text="Dīghanikāya (ṭīkā)">
+          <tree text="Sīlakkhandhavagga-ṭīkā" src="./cscd/s0101t.tik.toc.xml" />
+          <tree text="Mahāvagga-ṭīkā" src="./cscd/s0102t.tik.toc.xml" />
+          <tree text="Pāthikavagga-ṭīkā" src="./cscd/s0103t.tik.toc.xml" />
+          <tree text="Sīlakkhandhavagga-abhinavaṭīkā-1" src="./cscd/s0104t.nrf.toc.xml" />
+          <tree text="Sīlakkhandhavagga-abhinavaṭīkā-2" src="./cscd/s0105t.nrf.toc.xml" />
+        </tree>
+        <tree text="Majjhimanikāya (ṭīkā)">
+          <tree text="Mūlapaṇṇāsa-ṭīkā" src="./cscd/s0201t.tik.toc.xml" />
+          <tree text="Majjhimapaṇṇāsa-ṭīkā" src="./cscd/s0202t.tik.toc.xml" />
+          <tree text="Uparipaṇṇāsa-ṭīkā" src="./cscd/s0203t.tik.toc.xml" />
+        </tree>
+        <tree text="Saṃyuttanikāya (ṭīkā)">
+          <tree text="Sagāthāvagga-ṭīkā" src="./cscd/s0301t.tik.toc.xml" />
+          <tree text="Nidānavagga-ṭīkā" src="./cscd/s0302t.tik.toc.xml" />
+          <tree text="Khandhavagga-ṭīkā" src="./cscd/s0303t.tik.toc.xml" />
+          <tree text="Saḷāyatanavagga-ṭīkā" src="./cscd/s0304t.tik.toc.xml" />
+          <tree text="Mahāvagga-ṭīkā" src="./cscd/s0305t.tik.toc.xml" />
+        </tree>
+        <tree text="Aṅguttaranikāya (ṭīkā)">
+          <tree text="Ekakanipāta-ṭīkā" src="./cscd/s0401t.tik.toc.xml" />
+          <tree text="Duka-tika-catukkanipāta-ṭīkā" src="./cscd/s0402t.tik.toc.xml" />
+          <tree text="Pañcaka-chakka-sattakanipāta-ṭīkā" src="./cscd/s0403t.tik.toc.xml" />
+          <tree text="Aṭṭhakādinipāta-ṭīkā" src="./cscd/s0404t.tik.toc.xml" />
+        </tree>
+        <tree text="Khuddakanikāya (ṭīkā)">
+          <tree text="Nettippakaraṇa-ṭīkā" src="./cscd/s0519t.tik.toc.xml" />
+          <tree text="Nettivibhāvinī" src="./cscd/s0501t.nrf.toc.xml" />
+        </tree>
+      </tree>
+      <tree text="Abhidhammapiṭaka (ṭīkā)">
+        <tree text="Dhammasaṅgaṇī-mūlaṭīkā" src="./cscd/abh01t.tik.toc.xml" />
+        <tree text="Vibhaṅga-mūlaṭīkā" src="./cscd/abh02t.tik.toc.xml" />
+        <tree text="Pañcapakaraṇa-mūlaṭīkā" src="./cscd/abh03t.tik.toc.xml" />
+        <tree text="Dhammasaṅgaṇī-anuṭīkā" src="./cscd/abh04t.nrf.toc.xml" />
+        <tree text="Pañcapakaraṇa-anuṭīkā" src="./cscd/abh05t.nrf.toc.xml" />
+        <tree text="Abhidhammāvatāro-nāmarūpaparicchedo" src="./cscd/abh06t.nrf.toc.xml" />
+        <tree text="Abhidhammatthasaṅgaho" src="./cscd/abh07t.nrf.toc.xml" />
+        <tree text="Abhidhammāvatāra-purāṇaṭīkā" src="./cscd/abh08t.nrf.toc.xml" />
+        <tree text="Abhidhammamātikāpāḷi" src="./cscd/abh09t.nrf.toc.xml" />
+      </tree>
+    </tree>

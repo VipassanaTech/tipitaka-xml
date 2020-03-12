@@ -1,0 +1,67 @@
+﻿<?xml version="1.0"?>
+    <tree>
+      <!--  Aṭṭhakathā//-->
+      <tree text="Vinayapiṭaka (aṭṭhakathā)">
+        <tree text="Pārājikakaṇḍa-aṭṭhakathā" src="./cscd/vin01a.att.toc.xml" />
+        <tree text="Pācittiya-aṭṭhakathā" src="./cscd/vin02a1.att.toc.xml" />
+        <tree text="Mahāvagga-aṭṭhakathā" src="./cscd/vin02a2.att.toc.xml" />
+        <tree text="Cūḷavagga-aṭṭhakathā" src="./cscd/vin02a3.att.toc.xml" />
+        <tree text="Parivāra-aṭṭhakathā" src="./cscd/vin02a4.att.toc.xml" />
+      </tree>
+      <tree text="Suttapiṭaka (aṭṭhakathā)">
+        <tree text="Dīgha nikāya (aṭṭhakathā)">
+          <tree text="Sīlakkhandhavagga-aṭṭhakathā" src="./cscd/s0101a.att.toc.xml" />
+          <tree text="Mahāvagga-aṭṭhakathā" src="./cscd/s0102a.att.toc.xml" />
+          <tree text="Pāthikavagga-aṭṭhakathā" src="./cscd/s0103a.att.toc.xml" />
+        </tree>
+        <tree text="Majjhimanikāya (aṭṭhakathā)">
+          <tree text="Mūlapaṇṇāsa-aṭṭhakathā" src="./cscd/s0201a.att.toc.xml" />
+          <tree text="Majjhimapaṇṇāsa-aṭṭhakathā" src="./cscd/s0202a.att.toc.xml" />
+          <tree text="Uparipaṇṇāsa-aṭṭhakathā" src="./cscd/s0203a.att.toc.xml" />
+        </tree>
+        <tree text="Saṃyuttanikāya (aṭṭhakathā)">
+          <tree text="Sagāthāvagga-aṭṭhakathā" src="./cscd/s0301a.att.toc.xml" />
+          <tree text="Nidānavagga-aṭṭhakathā" src="./cscd/s0302a.att.toc.xml" />
+          <tree text="Khandhavagga-aṭṭhakathā" src="./cscd/s0303a.att.toc.xml" />
+          <tree text="Saḷāyatanavagga-aṭṭhakathā" src="./cscd/s0304a.att.toc.xml" />
+          <tree text="Mahāvagga-aṭṭhakathā" src="./cscd/s0305a.att.toc.xml" />
+        </tree>
+        <tree text="Aṅguttaranikāya (aṭṭhakathā)">
+          <tree text="Ekakanipāta-aṭṭhakathā" src="./cscd/s0401a.att.toc.xml" />
+          <tree text="Duka-tika-catukkanipāta-aṭṭhakathā" src="./cscd/s0402a.att.toc.xml" />
+          <tree text="Pañcaka-chakka-sattakanipāta-aṭṭhakathā" src="./cscd/s0403a.att.toc.xml" />
+          <tree text="Aṭṭhakādinipāta-aṭṭhakathā" src="./cscd/s0404a.att.toc.xml" />
+        </tree>
+        <tree text="Khuddakanikāya (aṭṭhakathā)">
+          <tree text="Khuddakapāṭha-aṭṭhakathā" src="./cscd/s0501a.att.toc.xml" />
+          <tree text="Dhammapada-aṭṭhakathā" src="./cscd/s0502a.att.toc.xml" />
+          <tree text="Udāna-aṭṭhakathā" src="./cscd/s0503a.att.toc.xml" />
+          <tree text="Itivuttaka-aṭṭhakathā" src="./cscd/s0504a.att.toc.xml" />
+          <tree text="Suttanipāta-aṭṭhakathā" src="./cscd/s0505a.att.toc.xml" />
+          <tree text="Vimānavatthu-aṭṭhakathā" src="./cscd/s0506a.att.toc.xml" />
+          <tree text="Petavatthu-aṭṭhakathā" src="./cscd/s0507a.att.toc.xml" />
+          <tree text="Theragāthā-aṭṭhakathā-1" src="./cscd/s0508a1.att.toc.xml" />
+          <tree text="Theragāthā-aṭṭhakathā-2" src="./cscd/s0508a2.att.toc.xml" />
+          <tree text="Therīgāthā-aṭṭhakathā" src="./cscd/s0509a.att.toc.xml" />
+          <tree text="Apadāna-aṭṭhakathā" src="./cscd/s0510a.att.toc.xml" />
+          <tree text="Buddhavaṃsa-aṭṭhakathā" src="./cscd/s0511a.att.toc.xml" />
+          <tree text="Cariyāpiṭaka-aṭṭhakathā" src="./cscd/s0512a.att.toc.xml" />
+          <tree text="Jātaka-aṭṭhakathā-1" src="./cscd/s0513a1.att.toc.xml" />
+          <tree text="Jātaka-aṭṭhakathā-2" src="./cscd/s0513a2.att.toc.xml" />
+          <tree text="Jātaka-aṭṭhakathā-3" src="./cscd/s0513a3.att.toc.xml" />
+          <tree text="Jātaka-aṭṭhakathā-4" src="./cscd/s0513a4.att.toc.xml" />
+          <tree text="Jātaka-aṭṭhakathā-5" src="./cscd/s0514a1.att.toc.xml" />
+          <tree text="Jātaka-aṭṭhakathā-6" src="./cscd/s0514a2.att.toc.xml" />
+          <tree text="Jātaka-aṭṭhakathā-7" src="./cscd/s0514a3.att.toc.xml" />
+          <tree text="Mahāniddesa-aṭṭhakathā" src="./cscd/s0515a.att.toc.xml" />
+          <tree text="Cūḷaniddesa-aṭṭhakathā" src="./cscd/s0516a.att.toc.xml" />
+          <tree text="Paṭisambhidāmagga-aṭṭhakathā" src="./cscd/s0517a.att.toc.xml" />
+          <tree text="Nettippakaraṇa-aṭṭhakathā" src="./cscd/s0519a.att.toc.xml" />
+        </tree>
+      </tree>
+      <tree text="Abhidhammapiṭaka (aṭṭhakathā)">
+        <tree text="Dhammasaṅgaṇi-aṭṭhakathā" src="./cscd/abh01a.att.toc.xml" />
+        <tree text="Sammohavinodanī-aṭṭhakathā" src="./cscd/abh02a.att.toc.xml" />
+        <tree text="Pañcapakaraṇa-aṭṭhakathā" src="./cscd/abh03a.att.toc.xml" />
+      </tree>
+    </tree>

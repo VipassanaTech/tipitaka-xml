@@ -1,0 +1,90 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!-- "अन्य" //-->
+	<tree text="विसुद्धिमग्ग">
+		<tree text="विसुद्धिमग्ग-१" src="./cscd/e0101n.mul.toc.xml"/>
+		<tree text="विसुद्धिमग्ग-२" src="./cscd/e0102n.mul.toc.xml"/>
+		<tree text="विसुद्धिमग्ग-महाटीका-१" src="./cscd/e0103n.att.toc.xml"/>
+		<tree text="विसुद्धिमग्ग-महाटीका-२" src="./cscd/e0104n.att.toc.xml"/>
+		<tree text="विसुद्धिमग्ग निदानकथा" src="./cscd/e0105n.nrf.toc.xml"/>
+	</tree>
+	<tree text="सङ्गायन-पुच्छ विस्सज्जना">
+		<tree text="दीघनिकाय (पु-वि)" src="./cscd/e0901n.nrf.toc.xml"/>
+		<tree text="मज्झिमनिकाय (पु-वि)" src="./cscd/e0902n.nrf.toc.xml"/>
+		<tree text="संयुत्तनिकाय (पु-वि)" src="./cscd/e0903n.nrf.toc.xml"/>
+		<tree text="अङ्गुत्तरनिकाय (पु-वि)" src="./cscd/e0904n.nrf.toc.xml"/>
+		<tree text="विनयपिटक (पु-वि)" src="./cscd/e0905n.nrf.toc.xml"/>
+		<tree text="अभिधम्मपिटक (पु-वि)" src="./cscd/e0906n.nrf.toc.xml"/>
+		<tree text="अट्ठकथा (पु-वि)" src="./cscd/e0907n.nrf.toc.xml"/>
+	</tree>
+	<tree text="लेडी सयाडो गन्थ-सङ्गहो">
+		<tree text="निरुत्तिदीपनी" src="./cscd/e0201n.nrf.toc.xml"/>
+		<tree text="परमत्थदीपनी सङ्गहमहाटीकापाठ" src="./cscd/e0301n.nrf.toc.xml"/>
+		<tree text="अनुदीपनीपाठ" src="./cscd/e0401n.nrf.toc.xml"/>
+		<tree text="पट्ठानुद्देस दीपनीपाठ" src="./cscd/e0501n.nrf.toc.xml"/>
+	</tree>
+	<tree text="बुद्ध-वन्दना गन्थ-सङ्गहो">
+		<tree text="नमक्कारटीका" src="./cscd/e0601n.nrf.toc.xml"/>
+		<tree text="महापणामपाठ" src="./cscd/e0602n.nrf.toc.xml"/>
+		<tree text="लक्खणातो बुद्धथोमनागाथा" src="./cscd/e0603n.nrf.toc.xml"/>
+		<tree text="सुतवन्दना" src="./cscd/e0604n.nrf.toc.xml"/>
+		<tree text="कमलाञ्जलि" src="./cscd/e0606n.nrf.toc.xml"/>
+		<tree text="जिनालङ्कार" src="./cscd/e0605n.nrf.toc.xml"/>
+		<tree text="पज्जमधु" src="./cscd/e0607n.nrf.toc.xml"/>
+		<tree text="बुद्धगुणगाथावली" src="./cscd/e0608n.nrf.toc.xml"/>
+	</tree>
+	<tree text="वंस-गन्थ-सङ्गहो">
+		<tree text="चूळगन्थवंस" src="./cscd/e0701n.nrf.toc.xml"/>
+		<tree text="महावंस" src="./cscd/e0703n.nrf.toc.xml"/>
+		<tree text="सासनवंस" src="./cscd/e0702n.nrf.toc.xml"/>
+	</tree>
+	<tree text="ब्याकरण गन्थ-सङ्गहो">
+		<tree text="कच्चायनब्याकरणं" src="./cscd/e0802n.nrf.toc.xml"/>
+		<tree text="मोग्गल्लानब्याकरणं" src="./cscd/e0801n.nrf.toc.xml"/>
+		<tree text="सद्दनीतिप्पकरणं (पदमाला)" src="./cscd/e0803n.nrf.toc.xml"/>
+		<tree text="सद्दनीतिप्पकरणं (धातुमाला)" src="./cscd/e0804n.nrf.toc.xml"/>
+		<tree text="पदरूपसिद्धि" src="./cscd/e0805n.nrf.toc.xml"/>
+		<tree text="मोगल्लानपञ्चिका" src="./cscd/e0806n.nrf.toc.xml"/>
+		<tree text="पयोगसिद्धिपाठ" src="./cscd/e0807n.nrf.toc.xml"/>
+		<tree text="वुत्तोदयपाठ" src="./cscd/e0808n.nrf.toc.xml"/>
+		<tree text="अभिधानप्पदीपिकापाठ" src="./cscd/e0809n.nrf.toc.xml"/>
+		<tree text="अभिधानप्पदीपिकाटीका" src="./cscd/e0810n.nrf.toc.xml"/>
+		<tree text="सुबोधालङ्कारपाठ" src="./cscd/e0811n.nrf.toc.xml"/>
+		<tree text="सुबोधालङ्कारटीका" src="./cscd/e0812n.nrf.toc.xml"/>
+		<tree text="बालावतार गण्ठिपदत्थविनिच्छयसार" src="./cscd/e0813n.nrf.toc.xml"/>		
+	</tree>
+	<tree text="नीति-गन्थ-सङ्गहो">
+		<tree text="लोकनीति" src="./cscd/e1005n.nrf.toc.xml"/>
+		<tree text="सुत्तन्तनीति" src="./cscd/e1006n.nrf.toc.xml"/>
+		<tree text="सूरस्सतिनीति" src="./cscd/e1007n.nrf.toc.xml"/>
+		<tree text="महारहनीति" src="./cscd/e1004n.nrf.toc.xml"/>
+		<tree text="धम्मनीति" src="./cscd/e1003n.nrf.toc.xml"/>
+		<tree text="कविदप्पणनीति" src="./cscd/e1001n.nrf.toc.xml"/>
+		<tree text="नीतिमञ्जरी" src="./cscd/e1002n.nrf.toc.xml"/>
+		<tree text="नरदक्खदीपनी" src="./cscd/e1009n.nrf.toc.xml"/>
+		<tree text="चतुरारक्खदीपनी" src="./cscd/e1010n.nrf.toc.xml"/>
+		<tree text="चाणक्यनीति" src="./cscd/e1008n.nrf.toc.xml"/>
+	</tree>
+	<tree text="पकिण्णक-गन्थ-सङ्गहो">
+		<tree text="रसवाहिनी" src="./cscd/e1101n.nrf.toc.xml"/>
+		<tree text="सीमविसोधनीपाठ" src="./cscd/e1102n.nrf.toc.xml"/>
+		<tree text="वेस्सन्तरगीति" src="./cscd/e1103n.nrf.toc.xml"/>
+	</tree>
+	<tree text="सिहळ-गन्थ-सङ्गहो">
+		<tree text="मोग्गल्लान वुत्तिविवरणपञ्चिका" src="./cscd/e1201n.nrf.toc.xml"/>
+		<tree text="थूपवंस" src="./cscd/e1202n.nrf.toc.xml"/>
+		<tree text="दाठावंस" src="./cscd/e1203n.nrf.toc.xml"/>
+		<tree text="धातुपाठविलासिनिया" src="./cscd/e1204n.nrf.toc.xml"/>
+		<tree text="धातुवंस" src="./cscd/e1205n.nrf.toc.xml"/>
+		<tree text="हत्थवनगल्लविहारवंस" src="./cscd/e1206n.nrf.toc.xml"/>
+		<tree text="जिनचरितय" src="./cscd/e1207n.nrf.toc.xml"/>
+		<tree text="जिनवंसदीपं" src="./cscd/e1208n.nrf.toc.xml"/>
+		<tree text="तेलकटाहगाथा" src="./cscd/e1209n.nrf.toc.xml"/>
+		<tree text="मिलिदटीका" src="./cscd/e1210n.nrf.toc.xml"/>
+		<tree text="पदमञ्जरी" src="./cscd/e1211n.nrf.toc.xml"/>
+		<tree text="पदसाधनं" src="./cscd/e1212n.nrf.toc.xml"/>
+		<tree text="सद्दबिन्दुपकरणं" src="./cscd/e1213n.nrf.toc.xml"/>
+		<tree text="कच्चायनधातुमञ्जुसा" src="./cscd/e1214n.nrf.toc.xml"/>
+		<tree text="सामन्तकूटवण्णना" src="./cscd/e1215n.nrf.toc.xml"/>
+	</tree>		
+</tree>

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!-- "टीका" //-->
+	<tree text="विनयपिटक (टीका)">
+		<tree text="सारत्थदीपनी-टीका-१" src="./cscd/vin01t1.tik.toc.xml"/>
+		<tree text="सारत्थदीपनी-टीका-२" src="./cscd/vin01t2.tik.toc.xml"/>
+		<tree text="सारत्थदीपनी-टीका-३" src="./cscd/vin02t.tik.toc.xml"/>
+		<tree text="द्वेमातिकापाळि" src="./cscd/vin04t.nrf.toc.xml"/>
+		<tree text="विनयसङ्गह-अट्ठकथा" src="./cscd/vin05t.nrf.toc.xml"/>
+		<tree text="वजिरबुद्धि-टीका" src="./cscd/vin06t.nrf.toc.xml"/>
+		<tree text="विमतिविनोदनी-टीका" src="./cscd/vin07t.nrf.toc.xml"/>
+		<tree text="विनयालङ्कार-टीका" src="./cscd/vin08t.nrf.toc.xml"/>
+		<tree text="कङ्खावितरणीपुराण-टीका" src="./cscd/vin09t.nrf.toc.xml"/>
+		<tree text="विनयविनिच्छय-उत्तरविनिच्छय" src="./cscd/vin10t.nrf.toc.xml"/>
+		<tree text="विनयविनिच्छय-टीका" src="./cscd/vin11t.nrf.toc.xml"/>
+		<tree text="पाचित्यादियोजनापाळि" src="./cscd/vin12t.nrf.toc.xml"/>
+		<tree text="खुद्दसिक्खा-मूलसिक्खा" src="./cscd/vin13t.nrf.toc.xml"/>
+	</tree>
+	<tree text="सुत्तपिटक (टीका)">
+		<tree text="दीघनिकाय (टीका)">
+			<tree text="सीलक्खन्धवग्ग-टीका" src="./cscd/s0101t.tik.toc.xml"/>
+			<tree text="महावग्ग-टीका" src="./cscd/s0102t.tik.toc.xml"/>
+			<tree text="पाथिकवग्ग-टीका" src="./cscd/s0103t.tik.toc.xml"/>
+			<tree text="सीलक्खन्धवग्ग-अभिनवटीका-१" src="./cscd/s0104t.nrf.toc.xml"/>
+			<tree text="सीलक्खन्धवग्ग-अभिनवटीका-२" src="./cscd/s0105t.nrf.toc.xml"/>
+		</tree>
+		<tree text="मज्झिमनिकाय (टीका)">
+			<tree text="मूलपण्णास-टीका" src="./cscd/s0201t.tik.toc.xml"/>
+			<tree text="मज्झिमपण्णास-टीका" src="./cscd/s0202t.tik.toc.xml"/>
+			<tree text="उपरिपण्णास-टीका" src="./cscd/s0203t.tik.toc.xml"/>
+		</tree>
+		<tree text="संयुत्तनिकाय (टीका)">
+			<tree text="सगाथावग्ग-टीका" src="./cscd/s0301t.tik.toc.xml"/>
+			<tree text="निदानवग्ग-टीका" src="./cscd/s0302t.tik.toc.xml"/>
+			<tree text="खन्धवग्ग-टीका" src="./cscd/s0303t.tik.toc.xml"/>
+			<tree text="सळायतनवग्ग-टीका" src="./cscd/s0304t.tik.toc.xml"/>
+			<tree text="महावग्ग-टीका" src="./cscd/s0305t.tik.toc.xml"/>
+		</tree>
+		<tree text="अङ्गुत्तरनिकाय (टीका)">
+			<tree text="एककनिपात-टीका" src="./cscd/s0401t.tik.toc.xml"/>
+			<tree text="दुक-तिक-चतुक्कनिपात-टीका" src="./cscd/s0402t.tik.toc.xml"/>
+			<tree text="पञ्चक-छक्क-सत्तकनिपात-टीका" src="./cscd/s0403t.tik.toc.xml"/>
+			<tree text="अट्ठकादिनिपात-टीका" src="./cscd/s0404t.tik.toc.xml"/>
+		</tree>
+		<tree text="खुद्दकनिकाय (टीका)">
+			<tree text="नेत्तिप्पकरण-टीका" src="./cscd/s0519t.tik.toc.xml"/>
+			<tree text="नेत्तिविभाविनी" src="./cscd/s0501t.nrf.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="अभिधम्मपिटक (टीका)">
+		<tree text="धम्मसङ्गणी-मूलटीका" src="./cscd/abh01t.tik.toc.xml"/>
+		<tree text="विभङ्ग-मूलटीका" src="./cscd/abh02t.tik.toc.xml"/>
+		<tree text="पञ्चपकरण-मूलटीका" src="./cscd/abh03t.tik.toc.xml"/>
+		<tree text="धम्मसङ्गणी-अनुटीका" src="./cscd/abh04t.nrf.toc.xml"/>
+		<tree text="पञ्चपकरण-अनुटीका" src="./cscd/abh05t.nrf.toc.xml"/>
+		<tree text="अभिधम्मावतारो-नामरूपपरिच्छेदो" src="./cscd/abh06t.nrf.toc.xml"/>
+		
+		<tree text="अभिधम्मत्थसङ्गहो" src="./cscd/abh07t.nrf.toc.xml"/>
+		<tree text="अभिधम्मावतार-पुराणटीका" src="./cscd/abh08t.nrf.toc.xml"/>
+		<tree text="अभिधम्ममातिकापाळि" src="./cscd/abh09t.nrf.toc.xml"/>
+	</tree>
+</tree>

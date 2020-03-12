@@ -1,0 +1,90 @@
+﻿<?xml version="1.0"?>
+    <tree>
+      <!-- "Anya" //-->
+      <tree text="Visuddhimagga">
+        <tree text="Visuddhimagga-1" src="./cscd/e0101n.mul.toc.xml" />
+        <tree text="Visuddhimagga-2" src="./cscd/e0102n.mul.toc.xml" />
+        <tree text="Visuddhimagga-mahāṭīkā-1" src="./cscd/e0103n.att.toc.xml" />
+        <tree text="Visuddhimagga-mahāṭīkā-2" src="./cscd/e0104n.att.toc.xml" />
+        <tree text="Visuddhimagga nidānakathā" src="./cscd/e0105n.nrf.toc.xml" />
+      </tree>
+      <tree text="Saṅgāyana-puccha vissajjanā">
+        <tree text="Dīghanikāya (pu-vi)" src="./cscd/e0901n.nrf.toc.xml" />
+        <tree text="Majjhimanikāya (pu-vi)" src="./cscd/e0902n.nrf.toc.xml" />
+        <tree text="Saṃyuttanikāya (pu-vi)" src="./cscd/e0903n.nrf.toc.xml" />
+        <tree text="Aṅguttaranikāya (pu-vi)" src="./cscd/e0904n.nrf.toc.xml" />
+        <tree text="Vinayapiṭaka (pu-vi)" src="./cscd/e0905n.nrf.toc.xml" />
+        <tree text="Abhidhammapiṭaka (pu-vi)" src="./cscd/e0906n.nrf.toc.xml" />
+        <tree text="Aṭṭhakathā (pu-vi)" src="./cscd/e0907n.nrf.toc.xml" />
+      </tree>
+      <tree text="Leḍī sayāḍo gantha-saṅgaho">
+        <tree text="Niruttidīpanī" src="./cscd/e0201n.nrf.toc.xml" />
+        <tree text="Paramatthadīpanī Saṅgahamahāṭīkāpāṭha" src="./cscd/e0301n.nrf.toc.xml" />
+        <tree text="Anudīpanīpāṭha" src="./cscd/e0401n.nrf.toc.xml" />
+        <tree text="Paṭṭhānuddesa dīpanīpāṭha" src="./cscd/e0501n.nrf.toc.xml" />
+      </tree>
+      <tree text="Buddha-vandanā gantha-saṅgaho">
+        <tree text="Namakkāraṭīkā" src="./cscd/e0601n.nrf.toc.xml" />
+        <tree text="Mahāpaṇāmapāṭha" src="./cscd/e0602n.nrf.toc.xml" />
+        <tree text="Lakkhaṇāto buddhathomanāgāthā" src="./cscd/e0603n.nrf.toc.xml" />
+        <tree text="Sutavandanā" src="./cscd/e0604n.nrf.toc.xml" />
+        <tree text="Kamalāñjali" src="./cscd/e0606n.nrf.toc.xml" />
+        <tree text="Jinālaṅkāra" src="./cscd/e0605n.nrf.toc.xml" />
+        <tree text="Pajjamadhu" src="./cscd/e0607n.nrf.toc.xml" />
+        <tree text="Buddhaguṇagāthāvalī" src="./cscd/e0608n.nrf.toc.xml" />
+      </tree>
+      <tree text="Vaṃsa-gantha-saṅgaho">
+        <tree text="Cūḷaganthavaṃsa" src="./cscd/e0701n.nrf.toc.xml" />
+        <tree text="Mahāvaṃsa" src="./cscd/e0703n.nrf.toc.xml" />
+        <tree text="Sāsanavaṃsa" src="./cscd/e0702n.nrf.toc.xml" />
+      </tree>
+      <tree text="Byākaraṇa gantha-saṅgaho">
+        <tree text="Kaccāyanabyākaraṇaṃ" src="./cscd/e0802n.nrf.toc.xml" />
+        <tree text="Moggallānabyākaraṇaṃ" src="./cscd/e0801n.nrf.toc.xml" />
+        <tree text="Saddanītippakaraṇaṃ (padamālā)" src="./cscd/e0803n.nrf.toc.xml" />
+        <tree text="Saddanītippakaraṇaṃ (dhātumālā)" src="./cscd/e0804n.nrf.toc.xml" />
+        <tree text="Padarūpasiddhi" src="./cscd/e0805n.nrf.toc.xml" />
+        <tree text="Mogallānapañcikā" src="./cscd/e0806n.nrf.toc.xml" />
+        <tree text="Payogasiddhipāṭha" src="./cscd/e0807n.nrf.toc.xml" />
+        <tree text="Vuttodayapāṭha" src="./cscd/e0808n.nrf.toc.xml" />
+        <tree text="Abhidhānappadīpikāpāṭha" src="./cscd/e0809n.nrf.toc.xml" />
+        <tree text="Abhidhānappadīpikāṭīkā" src="./cscd/e0810n.nrf.toc.xml" />
+        <tree text="Subodhālaṅkārapāṭha" src="./cscd/e0811n.nrf.toc.xml" />
+        <tree text="Subodhālaṅkāraṭīkā" src="./cscd/e0812n.nrf.toc.xml" />
+        <tree text="Bālāvatāra gaṇṭhipadatthavinicchayasāra" src="./cscd/e0813n.nrf.toc.xml" />
+      </tree>
+      <tree text="Nīti-gantha-saṅgaho">
+        <tree text="Lokanīti" src="./cscd/e1005n.nrf.toc.xml" />
+        <tree text="Suttantanīti" src="./cscd/e1006n.nrf.toc.xml" />
+        <tree text="Sūrassatinīti" src="./cscd/e1007n.nrf.toc.xml" />
+        <tree text="Mahārahanīti" src="./cscd/e1004n.nrf.toc.xml" />
+        <tree text="Dhammanīti" src="./cscd/e1003n.nrf.toc.xml" />
+        <tree text="Kavidappaṇanīti" src="./cscd/e1001n.nrf.toc.xml" />
+        <tree text="Nītimañjarī" src="./cscd/e1002n.nrf.toc.xml" />
+        <tree text="Naradakkhadīpanī" src="./cscd/e1009n.nrf.toc.xml" />
+        <tree text="Caturārakkhadīpanī" src="./cscd/e1010n.nrf.toc.xml" />
+        <tree text="Cāṇakyanīti" src="./cscd/e1008n.nrf.toc.xml" />
+      </tree>
+      <tree text="Pakiṇṇaka-gantha-saṅgaho">
+        <tree text="Rasavāhinī" src="./cscd/e1101n.nrf.toc.xml" />
+        <tree text="Sīmavisodhanīpāṭha" src="./cscd/e1102n.nrf.toc.xml" />
+        <tree text="Vessantaragīti" src="./cscd/e1103n.nrf.toc.xml" />
+      </tree>
+      <tree text="Sihaḷa-gantha-saṅgaho">
+        <tree text="Moggallāna vuttivivaraṇapañcikā" src="./cscd/e1201n.nrf.toc.xml" />
+        <tree text="Thūpavaṃsa" src="./cscd/e1202n.nrf.toc.xml" />
+        <tree text="Dāṭhāvaṃsa" src="./cscd/e1203n.nrf.toc.xml" />
+        <tree text="Dhātupāṭhavilāsiniyā" src="./cscd/e1204n.nrf.toc.xml" />
+        <tree text="Dhātuvaṃsa" src="./cscd/e1205n.nrf.toc.xml" />
+        <tree text="Hatthavanagallavihāravaṃsa" src="./cscd/e1206n.nrf.toc.xml" />
+        <tree text="Jinacaritaya" src="./cscd/e1207n.nrf.toc.xml" />
+        <tree text="Jinavaṃsadīpaṃ" src="./cscd/e1208n.nrf.toc.xml" />
+        <tree text="Telakaṭāhagāthā" src="./cscd/e1209n.nrf.toc.xml" />
+        <tree text="Milidaṭīkā" src="./cscd/e1210n.nrf.toc.xml" />
+        <tree text="Padamañjarī" src="./cscd/e1211n.nrf.toc.xml" />
+        <tree text="Padasādhanaṃ" src="./cscd/e1212n.nrf.toc.xml" />
+        <tree text="Saddabindupakaraṇaṃ" src="./cscd/e1213n.nrf.toc.xml" />
+        <tree text="Kaccāyanadhātumañjusā" src="./cscd/e1214n.nrf.toc.xml" />
+        <tree text="Sāmantakūṭavaṇṇanā" src="./cscd/e1215n.nrf.toc.xml" />
+      </tree>
+    </tree>

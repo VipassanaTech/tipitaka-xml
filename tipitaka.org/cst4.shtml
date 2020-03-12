@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="Help viewing the Tipitaka" />
+<meta name="description" content="Help viewing the Tipitaka" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>CST4 Desktop Software</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+  &nbsp;&nbsp;&nbsp;<img src="./images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper"> 
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; CST4</div>
+      <h1 class="contenttitle">Chaṭṭha Saṅgāyana Tipitaka Version 4.0 (CST4)</h1>
+      <p>CST4 is a desktop client for browsing and searching the Pāli Canon. It is the successor to the Chaṭṭha Saṅgāyana CD 3.0 (CSCD3).</p>
+      <p><strong>System requirements:</strong> Windows XP, Vista, 7, 8 or 8.1. Prerequisites: .NET Framework 2.0, Windows Installer. On Windows XP, complex script support must be enabled (see below). The program uses about 350MB of disk space including the Tipitaka data and search index.</p>
+      <p><strong>Step 1:</strong></p>
+      <p>The CST4 program requires the Microsoft .NET Framework 2.0 to run. Windows XP users, <a href="http://www.microsoft.com/downloads/details.aspx?familyid=79BC3B77-E02C-4AD3-AACF-A7633F706BA5&amp;displaylang=en">click here</a> to download it. Windows 7 and later includes the .NET Framework by default. To ensure that it is installed on your computer, please go to Control Panel -> Programs and Features -> Turn Windows features on or off. In the list of features, scroll down to ".NET Framework 3.5.1" and check it if it is not checked, then click OK.</p>
+      <p><strong>Step 2:</strong></p>
+      <p><a href="http://www.tipitaka.org/cst/cst4-2014-12-24-4.0.0.15.msi">Download the CST4 installer</a> (40.9 MB)</p>
+      <p>To start the installation, click on the .msi file that you downloaded. If your version of Windows cannot run a .msi file, download the <a href="http://www.microsoft.com/en-us/download/details.aspx?id=8483" target="_blank">Windows Installer</a> component from Microsoft and install.<br />
+      </p>
+      <p>To type Roman-script Unicode Pali, download and install a <a href="http://www.tipitaka.org/keyboard/">keyboard driver</a>.<br />
+      </p>
+      <p>Enable complex script support in Windows XP. Go to Control Panel -&gt; Regional and Language Options -&gt; Languages -&gt; Click the checkbox “Install files for complex scripts including right to left languages (including Thai)”. Then OK. <a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/int_pr_install_complex_languages.mspx?mfr=true" target="_blank">More info...</a></p>
+      <p>To type in Devanagari and other Indic scripts, install the keyboard drivers included with Windows. Installation instructions: <a href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/input_kbd_add_kbd_layout.mspx?mfr=true" target="_blank">Windows XP</a>, <a href="http://windows.microsoft.com/en-SG/windows7/Add-or-change-an-input-language" target="_blank">Windows 7</a>, <a href="http://windows.microsoft.com/en-us/windows-8/add-language-keyboard" target="_blank">Windows 8</a>.</p>
+      <p><strong>Step 3:</strong></p>
+      <p>To run the program, click the “Chattha Sangayana Tipitaka 4.0” shortcut created by the installer. The search index is generated the first time the program runs. This can take up to 15 minutes.</p>
+      <p>To report bugs, make suggestions or request additional features, please send an email to the development team at <a href="mailto:help@tipitaka.org">help@tipitaka.org</a>. Your input is highly appreciated.</p>
+    </div>
+    <!-- End content --> 
+  </div>
+  <!-- End container --> 
+  <!-- Sidebars --> 
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper --> 
+<!-- Page footer --> 
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>
