@@ -1,0 +1,38 @@
+# Force HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] 
+# Enable Transparent Content Negotiation
+Options +MultiViews
+MultiviewsMatch Any
+ErrorDocument 404 /404
+DirectoryIndex index.shtml index.html index.php
+Redirect 301 /index.html http://www.tipitaka.org/index.shtml
+Redirect 301 /tindex.shtml http://www.tipitaka.org/others
+Redirect 301 /others.html http://www.tipitaka.org/others
+Redirect 301 /tipitaka/booklistframe2.html http://www.tipitaka.org/index.shtml
+Redirect 301 /tipitaka/index.html http://www.tipitaka.org/index.shtml
+Redirect 301 /unicode/index.html http://www.tipitaka.org/index.shtml
+Redirect 301 /english/index.html http://www.tipitaka.org/english-docs
+Redirect 301 /english.shtml http://www.tipitaka.org/english-docs
+Redirect 301 /cell/index.html http://www.tipitaka.org/index.shtml
+Redirect 301 /general/pali.html http://www.tipitaka.org/index.shtml
+Redirect 301 /general/ http://www.tipitaka.org/index.shtml
+Redirect 301 /hindi/index.html http://www.tipitaka.org/hindi-docs
+Redirect 301 /roman/ http://www.tipitaka.org/index.shtml
+Redirect 301 /roman/booklistframe2.html http://www.tipitaka.org/index.shtml
+Redirect 301 /roman/chattha.html http://www.tipitaka.org/chattha
+Redirect 301 /roman/ers.html http://www.tipitaka.org/help
+Redirect 301 /search.html http://www.tipitaka.org/search
+Redirect 301 /vriroman/index.html http://www.tipitaka.org/index.shtml
+Redirect 301 /thai/thai-dict.html http://www.tipitaka.org/thai-dict
+Redirect 301 /english/eot.html http://www.tipitaka.org/eot
+Redirect 301 /english/eot.html http://www.tipitaka.org/eot
+Redirect 301 /cscd4/ http://www.tipitaka.org/cst/
+Redirect 301 /cscd4 http://www.tipitaka.org/cst/
+Redirect 301 /cscd/ http://www.tipitaka.org/cst/
+Redirect 301 /cscd http://www.tipitaka.org/cst/
+Redirect 301 /cst/blog http://www.tipitaka.org/cst/
+Redirect 301 /cst/blog/ http://www.tipitaka.org/cst/
+Redirect 301 /cst/release-notes.htm http://www.tipitaka.org/cst/category/releasenotes/
+Redirect 301 /iphone/ http://www.tipitaka.org/ios/

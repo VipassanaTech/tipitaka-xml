@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="The Pali Tipitaka" />
+<meta name="description" content="The Pali Tipitaka" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>The Pali Tipitaka</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+  &nbsp;&nbsp;&nbsp;<img src="/images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <p><a href="/images/budpvbhik.jpg"><img alt="Buddha" src="/images/buddha.jpg" align="right" hspace="10" /></a> This web site is based on the&nbsp;<a href="/chattha">Chaṭṭha Saṅgāyana</a> CD published by the <a href="http://www.vridhamma.org/Home.aspx" target="_blank">Vipassana Research Institute</a>. Based at&nbsp;Dhamma Giri, Igatpuri, near Mumbai, India, the Vipassana Research Institute also&nbsp;publishes literature &amp; disseminates information related to <a href="http://www.vridhamma.org/VRI-Introduction" target="_blank">Vipassana&nbsp;Meditation Technique</a>&nbsp;as taught by <a href="http://www.vridhamma.org/Teachers-4.aspx" target="_blank">S.N.Goenka</a> in the tradition of <a target="_blank" href="http://www.vridhamma.org/Teachers-3.aspx">Sayagyi U Ba Khin</a>.<br />
+        <br />
+        Vipassana is a universal, scientific method towards purifying the mind. It is the practical essence of the teachings of the Buddha, who taught Dhamma - the Universal Law of Nature.<br />
+        <br />
+        The Pāḷi Tipiṭaka is now available online in various scripts. Although all are in Unicode fonts, you may need to install some fonts and make some changes to your system to view the site correctly. </p>
+      <p><strong>Please read the <a href="/help">help</a> page carefully for more information on setting up your system and also on how to use this site.</strong></p>
+      <hr>
+      <p><strong>New Desktop software: </strong>You can now download the entire Chaṭṭha Saṅgāyana Tipitaka to run off your computer in offline mode. <a href="/cst4">Click here for instructions</a>.</p>
+      <p><strong>New iOS web app: </strong>You can now navigate  the Chaṭṭha Saṅgāyana Tipitaka using your iPhone, iPod Touch, or iPad. <a href="/webapp">Click here for instructions</a>.</p>
+      <p><strong>Older Operating systems:</strong> Vistors using <strong>Windows 95/98</strong> may not be able to view Unicode texts as it is not fully supported by these operating systems. The older <a href="http://www.tipitaka.org/vriroman/booklistframe2">VRI Roman site</a> is still available. To use the VRI Roman site you will need to install the <a href="/vriroman-fonts">VRI Roman Pali fonts</a>. Alternatively you may download an <a href="cscd3.iso.zip">image of the CSCD3 disc</a> (208 MB) and burn your own copy of CSCD3.</p>
+      <hr>
+      <p> In case of difficulties in viewing the Pāḷi Text or if you notice any other errors on this site,&nbsp;please write to <a href="mailto:help@tipitaka.org">help@tipitaka.org</a> describing the problem.<br />
+      </p>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>

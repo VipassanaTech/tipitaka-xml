@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="English Publications Related to the Tipitaka" />
+<meta name="description" content="English Publications Related to the Tipitaka" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>English Publications Related to the Tipitaka</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+&nbsp;&nbsp;&nbsp;<img src="./images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; English Publications</div>
+      <h1 class="contenttitle">Tipiṭaka related English publications<br />
+        by the Vipassana Research Institute</h1>
+      <p><a href="/eot"><strong>The Essence of Tipiṭaka</strong></a>: This book contains a gist of the contents of the Tipiṭaka.</p>
+      </p>
+      <em><strong>Mahāsatipaṭṭhāna Sutta</strong></em></span>: contains the Pali in Roman script with an English translation of this important sutta.
+      </p>
+      <ul>
+        <li><a href="/stp-pali-eng-parallel">Pali in Roman script with parallel English translation on the right</a></li>
+        <li><a href="/stp-pali-eng-series">Pali in Roman script followed by an English translation</a></li>
+      </ul>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>

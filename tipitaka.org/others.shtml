@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="The Pali Tipitaka" />
+<meta name="description" content="The Pali Tipitaka" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>The Pali Tipitaka</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+  &nbsp;&nbsp;&nbsp;<img src="./images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; Other Scripts</div>
+      <h1 class="contenttitle">Scripts which are unapproved or under construction</h1>
+      <ul>
+        <li>Bengali <a href="/beng/" target="Bengali">Web</a> - <a href="known-issues/bengali.pdf">Pending issues</a></li>
+        <li>Gurmukhi <a href="/guru/" target="Gurmukhi">Web</a> - <a href="known-issues/gurmukhi.pdf">Pending issues</a></li>
+        <li>Khmer <a href="/khmr/" target="Khmer">Web</a></li>
+        <li>Myanmar <a href="/mymr/" target="Myanmar">Web</a> - <a href="known-issues/myanmar.pdf">Pending issues</a></li>
+        <li>Sinhala <a href="/sinh/" target="Sinhala">Web</a> - <a href="known-issues/sinhala.pdf">Pending issues</a></li>
+        <li>Thai <a href="/thai/" target="Thai">Web</a> - <a href="known-issues/thai.pdf">Pending issues</a></li>
+        <li>Tibetan <a href="/tibt/" target="Tibetan">Web</a> - <a href="known-issues/tibetan.pdf">Pending issues</a></li>
+      </ul>
+      The scripts listed above have various display issues caused by the unicode font being used. Please review the Peding issues PDF file for each script for details.  Any suggestions to resolve these issues are welcome.  VRI is also looking for volunteers to check these scripts. Please write to <a href="mailto:help@tipitaka.org">help@tipitaka.org</a> if you would like to help with this effort.<br />
+      <br />
+      <strong>Please read the <a href="/help">help</a> page carefully for more information on setting up your system and also on how to use this site.</strong><br>
+      <br />
+      In case of difficulties in viewing the Pāḷi Text or if you notice any other errors on this site,&nbsp;please&nbsp; write to <a href="mailto:help@tipitaka.org">help@tipitaka.org</a> describing the problem.<br />
+      </li>
+      </ul>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>

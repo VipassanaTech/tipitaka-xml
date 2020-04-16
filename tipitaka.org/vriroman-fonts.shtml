@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="Help viewing the Tipitaka" />
+<meta name="description" content="Help viewing the Tipitaka" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>Help viewing the Tipitaka</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+&nbsp;&nbsp;&nbsp;<img src="./images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; VRI Roman Pali </div>
+      <h1 class="contenttitle">VRI Roman Pali Font</h1>
+      <p>These fonts are copyright Vipassana Research Institute (VRI).You are free to use them for your personal use, but any commercial use must be sanctioned in writing <a href="mailto:webmaster@vri.dhamma.org">webmaster@vri.dhamma.org</a>. </p>
+      <p>Download the <a href="./vriroman/fonts/vriromanpali.zip">vriromanpali zip</a> file, unzip it, and install the fonts as detailed below.The individual font files can be downloaded as well:</p>
+      <ul>
+        <li><a href="./vriroman/fonts/vrirpn__.ttf">vrirpn__.ttf</a></li>
+        <li><a href="./vriroman/fonts/vrirpb__.ttf">vrirpb__.ttf</a></li>
+        <li><a href="./vriroman/fonts/vrirpi__.ttf">vrirpi__.ttf</a></li>
+        <li><a href="./vriroman/fonts/vrirpcb_.ttf">vrirpcb_.ttf</a></li>
+        <li><a href="./vriroman/fonts/vrirpcn_.ttf">vrirpcn_.ttf</a></li>
+        <li><a href="./vriroman/fonts/vromddb0.ttf">Vromddb0.ttf</a></li>
+        <li><a href="./vriroman/fonts/vromddn0.ttf">Vromddn0.ttf</a></li>
+      </ul>
+      <h1 class="contenttitle">Font Installation</h1>
+      <p><strong>For Windows  95/98:</strong></p>
+      <p>1.Open the Windows control panel.Inside the control panel you will see a fonts folder that lists all the .ttf fonts currently installed on the system. </p>
+      <p>2.Select 'install new font' from the File menu to bring up the Add Fonts dialog box. </p>
+      <p>3. You will see three windows labelled List of fonts, Folders and Drives to help you locate the font you want to install. </p>
+      <p>4.Select the directory where you have downloaded the Pali font. The fonts appear in the list of fonts. Select all.<br />
+        (ONLY FOR WIN 95 USERS: Make sure that you have Checked the Copy Fonts To Folder Box) </p>
+      <p>5. Click on OK.</p>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>

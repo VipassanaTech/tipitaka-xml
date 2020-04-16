@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="Pali-Thai Dictionary" />
+<meta name="description" content="Pali-Thai Dictionary" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>Pali-Thai Dictionary</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+&nbsp;&nbsp;&nbsp;<img src="./images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; Pāḷi-Thai Dictionary</div>
+      <h1 class="contenttitle">An Introductory Note to<br />
+        Bhikkhu P. A. Payutto's Dictionary of Buddhism</h1>
+      <p>Bhikkhu P. A. Payutto's Dictionary of Buddhism actually comprises three smaller bilingual dictionaries compiled over a span of some forty years on different occasions and for different purposes:</p>
+      <ul>
+        <li>Dictionary of Numerical Dhammas</li>
+        <li>Thai-English Buddhist Dictionary </li>
+        <li>English-Thai Buddhist Dictionary</li>
+      </ul>
+      <p>Part I, the core of the entire volume, is a selection of the Buddha's teachings classified according to the number of Dhamma items involved under each entry (or group) into eleven sections, ranging from &quot;groups of one&quot; to &quot;groups of more than ten.&quot; All entries are further arranged in Thai alphabetical order within each section, but only those with full explanations are, for ease of reference, numbered throughout. To date, 359 such entries have been covered-from Kaly&agrave;&otilde;amittat&agrave; in the first section up to Kilesa in the last. The definitions are all given in Thai, but systematically interspersed with Romanized Pali terms followed by brief meanings in English. Apart from a regular table of contents enumerating all the Dhamma groups dealt with, there is a special table of categorizations of closely related Dhamma groups. To facilitate word searches, an index of Thai terms and a separate index of Romanized Pali terms are also included.</p>
+      <p>The Thai-English Buddhist Dictionary in Part II is a short dictionary of key Buddhist terms in Thai, supplied with Romanized Pali equivalents and succinct definitions or explanations in English. Where a term is exclusively of Thai origin, a new Pali coinage by the author is provided, and clearly marked as such. A warning is also given where a term has acquired a new meaning or its popular use in Thai has so deviated from the original technical meaning in Pali that it might easily cause misunderstanding.</p>
+      <p>Finally, the English-Thai Buddhist Dictionary in Part III is essentially a glossary of Buddhist terms in English, encompassing those terms whose use has more or less become established, along with those deemed useful for serious students of Buddhism. Only Thai equivalents are available, with no further explanations.<br>
+      </p>
+      <p align="right">June 25, 2005</p>
+      <h2 class="contenttitle">The Thai Dictionary</h2>
+      <p>Gratitude to Venerable Bhante Phra Bhramagunabhorn and Dr. Somseen Chanawangsa for sending the dictionary to us for the benefit of many who access the Tipitaka.</p>
+      <ul>
+        <li><a href="/thai/Dhamma0.pdf">Chapter 1</a></li>
+        <li><a href="/thai/Dhamma1.pdf">Chapter 2</a></li>
+        <li><a href="/thai/Dhamma2.pdf">Chapter 3</a></li>
+        <li><a href="/thai/Dhamma3.pdf">Chapter 4</a></li>
+      </ul>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>

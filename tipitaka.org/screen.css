@@ -1,0 +1,288 @@
+body
+{
+	font-family: Times Ext Roman, Gentium, Arial Unicode MS, Tahoma, Verdana, sans-serif;
+	background: #F0F0F0;
+	color: #000000;
+	font-size: 16px;
+	padding: 15px 0;
+	margin: 0;
+}
+
+img
+{
+	border: 0;
+}
+
+/*-------------------------------------------------
+  Links
+-------------------------------------------------*/
+
+a:link, a:visited
+{
+	text-decoration: underline;
+	color: #323274;
+}
+
+a:hover, a:active
+{
+	color: #635D45;
+}
+
+#copyrights a:link, #copyrights a:visited
+{
+	color: #474747;
+}
+
+#copyrights a:hover, #copyrights a:active
+{
+	color: #737373;
+}
+
+/*-------------------------------------------------
+  Basic classes
+-------------------------------------------------*/
+
+.hidden
+{
+	display: none;
+}
+
+.clearing
+{
+	width: 750px;
+	height: 0;
+	clear: both;
+}
+
+.pagepath
+{
+	text-align: right;
+}
+
+h2
+{
+	font-size: 16px;
+	color: #323274;	
+}
+
+/*-------------------------------------------------
+  Header
+-------------------------------------------------*/
+
+#header
+{
+	/* Large header image is defined below */
+	background: white url("./images/title.gif") no-repeat top;
+	position: relative;
+	width: 750px;
+	height: 150px;
+	margin: auto;
+	border-style:solid;
+	border-width: 1px 1px 0px 1px;
+	border-color: #323274;
+}
+
+
+
+/*-------------------------------------------------
+  Content wrapper
+-------------------------------------------------*/
+
+#mainwrapper
+{
+	width: 750px;
+	background: white;
+	border-style:solid;
+	border-width: 0px 1px 0px 1px;
+	border-color: #323274;
+	margin: auto;
+}
+
+/*-------------------------------------------------
+  Main content
+-------------------------------------------------*/
+
+#container
+{
+	width: 750px;
+	height: 1%;
+	overflow: visible;
+	float: right;
+	padding: 0 0 0 0;
+	margin-left: -204px;
+}
+.content
+{
+	padding: 0;
+	margin: 7px 20px 30px 224px;
+}
+
+.content-sati
+{
+	padding: 0;
+	margin: 7px 20px 30px 20px;
+}
+
+/*-------------------------------------------------
+  Headings
+-------------------------------------------------*/
+
+h2.contenttitle
+{
+	clear: both;
+	background:    url("./images/dot.gif") bottom repeat-x;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 6px 0 6px 0;
+	margin: 0;
+	text-align:center;
+	color: #323274;	
+}
+
+h1.contenttitle
+{
+	clear: both;
+	background:    url("./images/dot.gif") bottom repeat-x;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 6px 0 6px 0;
+	margin: 0;
+	text-align:center;
+	color: #323274;	
+}
+
+/*-------------------------------------------------
+  Tables 
+-------------------------------------------------*/
+
+#tablecenter
+{
+	margin: auto;
+	text-align: center;
+	border-style: outset;
+	border-width: thin;
+	width: 95%;
+}
+
+#tablecenter td
+{
+	text-align: center;
+	border-style: solid;
+	border-color: Gray;
+	border-width: 1px;
+}
+
+#tablecenter th
+{
+	text-align: center;
+	border-style: solid;
+	border-color: Gray;
+	border-width: 1px;
+}
+
+#tableleft
+{
+	margin: auto;
+	text-align: left;
+	border-style: outset;
+	border-width: thin;
+	width: 95%;
+}
+
+#tableleft td
+{
+	text-align: left;
+	border-style: solid;
+	border-color: Gray;
+	border-width: 1px;
+}
+
+#tableleft th
+{
+	text-align: left;
+	border-style: solid;
+	border-color: Gray;
+	border-width: 1px;
+}
+
+/*-------------------------------------------------
+  Menu
+-------------------------------------------------*/
+
+#sidebarcontainer
+{
+	float: left;
+	width: 204px;
+	padding: 0 0 0 0;
+}
+
+#sidebarcontainer a:link, #sidebarcontainer a:visited
+{
+	color: #2424af;
+}
+
+.sidebar
+{
+    color: #323274;
+	margin: 0 0 4px 6px;
+	border: solid 1px;
+}
+
+/* Menu lists */
+.sidebardl
+{
+	padding: 0 0 10px 0;
+	margin: 0;
+}
+
+.sidebardl dt
+{
+	font-family: Times Ext Roman, Gentium, Arial Unicode MS, Tahoma, Verdana, sans-serif;
+	background: #E6E6FA;
+	color: #323274;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 4px 10px;
+}
+
+.sidebardl dd
+{
+	background: #FFFFFF;
+	padding: 2px 10px;
+	margin: 1px 0 0 0;
+}
+
+.sidebardl dd:hover
+{
+	background: #FFFFFF;
+	padding: 2px 10px;
+	margin: 1px 0 0 0;
+}
+
+.sidebardl dd a:link, .sidebardl dd a:visited
+{
+	background:    url("./images/arrow.gif") left center no-repeat;
+	padding: 0 0 0 10px;
+}
+
+/*-------------------------------------------------
+  Footer
+-------------------------------------------------*/
+
+#footer
+{
+	width: 750px;
+	background: white;
+	text-align: center;
+	padding: 10px 0 10px 0;
+	border-style:solid;
+	border-width: 0px 1px 1px 1px;
+	border-color: #323274;
+	margin: 0 auto;
+	font-size: 14px;
+}
+
+#copyrights
+{
+	color: #474747;
+}
