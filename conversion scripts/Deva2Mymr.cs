@@ -210,6 +210,38 @@ namespace VRI.CSCD.Conversion
             // Replace ña + virama + ña with ñña character
             mya = mya.Replace("\x1009\x1039\x1009", "\x100A");
 
+            // use dependent consonant signs ya, ra, wa and ha, if after virama
+            mya = mya.Replace("\x1039\x101A", "\x103B");
+            mya = mya.Replace("\x1039\x101B", "\x103C");
+            mya = mya.Replace("\x1039\x101D", "\x103D");
+            mya = mya.Replace("\x1039\x101F", "\x103E");
+
+            // use tall aa after ddh, both in vowels o and aa
+            mya = mya.Replace("\x1012\x1039\x1013\x1031\x102C", "\x1012\x1039\x1013\x1031\x102B");
+            mya = mya.Replace("\x1012\x1039\x1013\x102C", "\x1012\x1039\x1013\x102B");
+
+            // use tall aa after kh, both in vowels o and aa
+            mya = mya.Replace("\x1001\x1031\x102C", "\x1001\x1031\x102B");
+            mya = mya.Replace("\x1001\x102C", "\x1001\x102B");
+
+            // use tall aa after g, both in vowels o and aa
+            mya = mya.Replace("\x1002\x1031\x102C", "\x1002\x1031\x102B");
+            mya = mya.Replace("\x1002\x102C", "\x1002\x102B");
+
+            // use tall aa after p, both in vowels o and aa
+            mya = mya.Replace("\x1015\x1031\x102C", "\x1015\x1031\x102B");
+            mya = mya.Replace("\x1015\x102C", "\x1015\x102B");
+
+            // use tall aa after v, both in vowels o and aa
+            mya = mya.Replace("\x101D\x1031\x102C", "\x101D\x1031\x102B");
+            mya = mya.Replace("\x101D\x102C", "\x101D\x102B");
+
+            // use great sa for ssa
+            mya = mya.Replace("\x101E\x1039\x101E", "\x103F");
+
+            // fix the rendering of n overdot, adding asat / killer
+            mya = mya.Replace("\x1004\x1039", "\x1004\x103A\x1039");
+
             return mya;
         }
 
@@ -223,6 +255,9 @@ namespace VRI.CSCD.Conversion
             // convert all others to double line
             str = str.Replace("\x0964", "\x104B");
             str = str.Replace("\x0965", "\x104B");
+
+            // convert commas to single line
+            str = str.Replace(",", "\x104A");
 
             // convert ellipsis to double line
             str = str.Replace("\x2026", "\x104B");
