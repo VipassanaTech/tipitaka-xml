@@ -92,20 +92,21 @@ foreach ($file in Get-ChildItem $buildDir\deva\cscd\*.xml )
     Write-Host "$(Get-TimeStamp) Converted ${counter} files of ${splitCount}"
   }
 
-  & "$conversionScripts\Deva2Beng.exe" $file $buildDir\beng\cscd
-  & "$conversionScripts\Deva2Cyrl.exe" $file $buildDir\cyrl\cscd
-  & "$conversionScripts\Deva2Gujr.exe" $file $buildDir\gujr\cscd
-  & "$conversionScripts\Deva2Guru.exe" $file $buildDir\guru\cscd
-  & "$conversionScripts\Deva2Khmr.exe" $file $buildDir\khmr\cscd
-  & "$conversionScripts\Deva2Knda.exe" $file $buildDir\knda\cscd
-  & "$conversionScripts\Deva2Mlym.exe" $file $buildDir\mlym\cscd
+  & "$conversionScripts\deva2beng.exe" $file $buildDir\beng\cscd
+  & "$conversionScripts\deva2cyrl.exe" $file $buildDir\cyrl\cscd
+  & "$conversionScripts\deva2gujr.exe" $file $buildDir\gujr\cscd
+  & "$conversionScripts\deva2guru.exe" $file $buildDir\guru\cscd
+  & "$conversionScripts\deva2khmr.exe" $file $buildDir\khmr\cscd
+  & "$conversionScripts\deva2knda.exe" $file $buildDir\knda\cscd
+  & "$conversionScripts\deva2mlym.exe" $file $buildDir\mlym\cscd
+  & "$conversionScripts\deva2mymr.exe" $file $buildDir\mymr\cscd
   # Deva2Latn is the converter but it is the romn directory on site
-  & "$conversionScripts\Deva2Latn.exe" $file $buildDir\romn\cscd
-  & "$conversionScripts\Deva2Sinh.exe" $file $buildDir\sinh\cscd
-  & "$conversionScripts\Deva2Taml.exe" $file $buildDir\taml\cscd
-  & "$conversionScripts\Deva2Telu.exe" $file $buildDir\telu\cscd
-  & "$conversionScripts\Deva2Thai.exe" $file $buildDir\thai\cscd
-  & "$conversionScripts\Deva2Tibt.exe" $file $buildDir\tibt\cscd
+  & "$conversionScripts\deva2latn.exe" $file $buildDir\romn\cscd
+  & "$conversionScripts\deva2sinh.exe" $file $buildDir\sinh\cscd
+  & "$conversionScripts\deva2taml.exe" $file $buildDir\taml\cscd
+  & "$conversionScripts\deva2telu.exe" $file $buildDir\telu\cscd
+  & "$conversionScripts\deva2thai.exe" $file $buildDir\thai\cscd
+  & "$conversionScripts\deva2tibt.exe" $file $buildDir\tibt\cscd
 
   $counter++
 }
