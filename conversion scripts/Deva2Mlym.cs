@@ -218,7 +218,39 @@ namespace VRI.CSCD.Conversion
                     sb.Append(c);
             }
 
-            return sb.ToString();
+            string mlym = sb.ToString();
+
+            // e and o occur in two forms in Malayalam based on pronunciation.
+            // The short forms occur before double consonants
+            mlym = Regex.Replace(mlym, "([\u0D0F\u0D13\u0D47\u0D4B])([\u0D15-\u0D39]\u0D4D[\u0D15-\u0D39])",
+                    new MatchEvaluator(ConvertEOChars), RegexOptions.Compiled);
+
+            return mlym;
+        }
+
+        // two capture groups, 1 is the vowel, 2 is the following double consonants
+        public static string ConvertEOChars(Match m)
+        {
+            string newVal = null;
+            switch (m.Groups[1].Value)
+            {
+                case "\u0D0F":
+                    newVal = "\u0D0E";
+                    break;
+                case "\u0D13":
+                    newVal = "\u0D12";
+                    break;
+                case "\u0D47":
+                    newVal = "\u0D46";
+                    break;
+                case "\u0D4B":
+                    newVal = "\u0D4A";
+                    break;
+                default:
+                    break;
+            }
+
+            return newVal + m.Groups[2].Value;
         }
 
         public string ConvertDandas(string str)
