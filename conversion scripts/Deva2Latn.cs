@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace VRI.CSCD.Conversion
+namespace CST.Conversion
 {
     class Deva2Latn
     {
@@ -54,7 +54,14 @@ namespace VRI.CSCD.Conversion
             }
             catch (Exception ex)
             {
+                Console.WriteLine("-------- BEGIN EXCEPTION in Deva2Latn Main ---------------");
                 Console.WriteLine("Exception: " + ex);
+                Console.WriteLine("Args:");
+                foreach (string arg in args)
+                {
+                    Console.WriteLine(arg);
+                }
+                Console.WriteLine("---------- END EXCEPTION in Deva2Latn Main -------------");
             }
         }
 
@@ -218,6 +225,10 @@ namespace VRI.CSCD.Conversion
             str = ConvertDandas(str);
             str = CleanupPunctuation(str);
 
+            // convert "nti to n"ti, per Dhananjay email 3 Aug 07
+            // commenting out per Ramnath/Priti email  29 Aug 07
+            //str = Regex.Replace(str, "([’”]*)nti", "n$1ti");
+
             StreamWriter sw = new StreamWriter(OutputFilePath, false, Encoding.Unicode);
             sw.Write(str);
             sw.Flush();
@@ -281,6 +292,9 @@ namespace VRI.CSCD.Conversion
         // punctuation marks. 
         public string CleanupPunctuation(string str)
         {
+			// two spaces to one
+			//str = str.Replace("  ", " ");
+
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
             str = str.Replace(" !", "!");

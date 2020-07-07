@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace VRI.CSCD.Conversion
+namespace CST.Conversion
 {
     class LatinCapitalizer
     {
