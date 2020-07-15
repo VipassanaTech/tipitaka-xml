@@ -1,15 +1,15 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace CST.Conversion
+namespace Deva2Cyrl
 {
     class Capitalizer
     {
-        // TODO: needs to be updated for changes in XML structure
         public Capitalizer(string[] paragraphElements, string[] ignoreElements, string capitalMarker)
         {
             this.paragraphElements = paragraphElements;
@@ -120,8 +120,6 @@ namespace CST.Conversion
             foreach (string paragraphElement in paragraphElements)
             {
                 string openTag = "<" + paragraphElement + ">";
-                xmlStr = xmlStr.Replace(openTag, "\r\n\r\n" + openTag);
-                openTag = "<" + paragraphElement + " ";
                 xmlStr = xmlStr.Replace(openTag, "\r\n\r\n" + openTag);
             }
 

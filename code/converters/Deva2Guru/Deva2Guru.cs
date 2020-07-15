@@ -3,7 +3,7 @@ using System.Collections;
 using System.IO;
 using System.Text;
 
-namespace CST.Conversion
+namespace VRI.CSCD.Conversion
 {
     class Deva2Guru
     {

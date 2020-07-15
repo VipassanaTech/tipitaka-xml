@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CST.Conversion
+namespace VRI.CSCD.Conversion
 {
     class Deva2Khmr
     {
@@ -208,11 +208,11 @@ namespace CST.Conversion
         {
             // in gathas, single dandas convert to semicolon, double to period
             // Regex note: the +? is the lazy quantifier which finds the shortest match
-            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\".+?</p>",
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<p rend=\"centre\".+?</p>",
+            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
                 new MatchEvaluator(this.ConvertNamoTassaDandas));
 
             // convert all others to KHAN
@@ -239,9 +239,6 @@ namespace CST.Conversion
         // punctuation marks. 
         public string CleanupPunctuation(string str)
         {
-			// two spaces to one
-			str = str.Replace("  ", " ");
-
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
             str = str.Replace(" !", "!");

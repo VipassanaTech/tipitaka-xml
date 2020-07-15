@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CST.Conversion
+namespace VRI.CSCD.Conversion
 {
     class Deva2Sinh
     {
@@ -60,101 +60,94 @@ namespace CST.Conversion
         // end static methods
 
 
-        private Hashtable deva2Sinh;
+        private Hashtable dev2Sinhala;
 
         public Deva2Sinh()
         {
-            deva2Sinh = new Hashtable();
-
-            deva2Sinh['\x0902'] = '\x0D82'; // niggahita
-
-            // independent vowels
-            deva2Sinh['\x0905'] = '\x0D85'; // a
-            deva2Sinh['\x0906'] = '\x0D86'; // aa
-            deva2Sinh['\x0907'] = '\x0D89'; // i
-            deva2Sinh['\x0908'] = '\x0D8A'; // ii
-            deva2Sinh['\x0909'] = '\x0D8B'; // u
-            deva2Sinh['\x090A'] = '\x0D8C'; // uu
-            deva2Sinh['\x090F'] = '\x0D91'; // e
-            deva2Sinh['\x0913'] = '\x0D94'; // o
+            dev2Sinhala = new Hashtable();
 
             // velar stops
-            deva2Sinh['\x0915'] = '\x0D9A'; // ka
-            deva2Sinh['\x0916'] = '\x0D9B'; // kha
-            deva2Sinh['\x0917'] = '\x0D9C'; // ga
-            deva2Sinh['\x0918'] = '\x0D9D'; // gha
-            deva2Sinh['\x0919'] = '\x0D9E'; // n overdot a
+            dev2Sinhala['\x0915'] = '\x0D9A'; // ka
+            dev2Sinhala['\x0916'] = '\x0D9B'; // kha
+            dev2Sinhala['\x0917'] = '\x0D9C'; // ga
+            dev2Sinhala['\x0918'] = '\x0D9D'; // gha
+            dev2Sinhala['\x0919'] = '\x0D9E'; // n overdot a
             
             // palatal stops
-            deva2Sinh['\x091A'] = '\x0DA0'; // ca
-            deva2Sinh['\x091B'] = '\x0DA1'; // cha
-            deva2Sinh['\x091C'] = '\x0DA2'; // ja
-            deva2Sinh['\x091D'] = '\x0DA3'; // jha
-            deva2Sinh['\x091E'] = '\x0DA4'; // ña
+            dev2Sinhala['\x091A'] = '\x0DA0'; // ca
+            dev2Sinhala['\x091B'] = '\x0DA1'; // cha
+            dev2Sinhala['\x091C'] = '\x0DA2'; // ja
+            dev2Sinhala['\x091D'] = '\x0DA3'; // jha
+            dev2Sinhala['\x091E'] = '\x0DA4'; // ña
 
             // retroflex stops
-            deva2Sinh['\x091F'] = '\x0DA7'; // t underdot a
-            deva2Sinh['\x0920'] = '\x0DA8'; // t underdot ha
-            deva2Sinh['\x0921'] = '\x0DA9'; // d underdot a
-            deva2Sinh['\x0922'] = '\x0DAA'; // d underdot ha
-            deva2Sinh['\x0923'] = '\x0DAB'; // n underdot a
+            dev2Sinhala['\x091F'] = '\x0DA7'; // t underdot a
+            dev2Sinhala['\x0920'] = '\x0DA8'; // t underdot ha
+            dev2Sinhala['\x0921'] = '\x0DA9'; // d underdot a
+            dev2Sinhala['\x0922'] = '\x0DAA'; // d underdot ha
+            dev2Sinhala['\x0923'] = '\x0DAB'; // n underdot a
 
             // dental stops
-            deva2Sinh['\x0924'] = '\x0DAD'; // ta
-            deva2Sinh['\x0925'] = '\x0DAE'; // tha
-            deva2Sinh['\x0926'] = '\x0DAF'; // da
-            deva2Sinh['\x0927'] = '\x0DB0'; // dha
-            deva2Sinh['\x0928'] = '\x0DB1'; // na
+            dev2Sinhala['\x0924'] = '\x0DAD'; // ta
+            dev2Sinhala['\x0925'] = '\x0DAE'; // tha
+            dev2Sinhala['\x0926'] = '\x0DAF'; // da
+            dev2Sinhala['\x0927'] = '\x0DB0'; // dha
+            dev2Sinhala['\x0928'] = '\x0DB1'; // na
 
             // labial stops
-            deva2Sinh['\x092A'] = '\x0DB4'; // pa
-            deva2Sinh['\x092B'] = '\x0DB5'; // pha
-            deva2Sinh['\x092C'] = '\x0DB6'; // ba
-            deva2Sinh['\x092D'] = '\x0DB7'; // bha
-            deva2Sinh['\x092E'] = '\x0DB8'; // ma
+            dev2Sinhala['\x092A'] = '\x0DB4'; // pa
+            dev2Sinhala['\x092B'] = '\x0DB5'; // pha
+            dev2Sinhala['\x092C'] = '\x0DB6'; // ba
+            dev2Sinhala['\x092D'] = '\x0DB7'; // bha
+            dev2Sinhala['\x092E'] = '\x0DB8'; // ma
 
             // liquids, fricatives, etc.
-            deva2Sinh['\x092F'] = '\x0DBA'; // ya
-            deva2Sinh['\x0930'] = '\x0DBB'; // ra
-            deva2Sinh['\x0932'] = '\x0DBD'; // la
-            deva2Sinh['\x0935'] = '\x0DC0'; // va
-            deva2Sinh['\x0938'] = '\x0DC3'; // sa
-            deva2Sinh['\x0939'] = '\x0DC4'; // ha
-            deva2Sinh['\x0933'] = '\x0DC5'; // l underdot a
+            dev2Sinhala['\x092F'] = '\x0DBA'; // ya
+            dev2Sinhala['\x0930'] = '\x0DBB'; // ra
+            dev2Sinhala['\x0932'] = '\x0DBD'; // la
+            dev2Sinhala['\x0935'] = '\x0DC0'; // va
+            dev2Sinhala['\x0938'] = '\x0DC3'; // sa
+            dev2Sinhala['\x0939'] = '\x0DC4'; // ha
+            dev2Sinhala['\x0933'] = '\x0DC5'; // l underdot a
+
+            // independent vowels
+            dev2Sinhala['\x0905'] = '\x0D85'; // a
+            dev2Sinhala['\x0906'] = '\x0D86'; // aa
+            dev2Sinhala['\x0907'] = '\x0D89'; // i
+            dev2Sinhala['\x0908'] = '\x0D8A'; // ii
+            dev2Sinhala['\x0909'] = '\x0D8B'; // u
+            dev2Sinhala['\x090A'] = '\x0D8C'; // uu
+            dev2Sinhala['\x090F'] = '\x0D91'; // e
+            dev2Sinhala['\x0913'] = '\x0D94'; // o
 
             // dependent vowel signs
-            deva2Sinh['\x093E'] = '\x0DCF'; // aa
-            deva2Sinh['\x093F'] = '\x0DD2'; // i
-            deva2Sinh['\x0940'] = '\x0DD3'; // ii
-            deva2Sinh['\x0941'] = '\x0DD4'; // u
-            deva2Sinh['\x0942'] = '\x0DD6'; // uu
-            deva2Sinh['\x0947'] = '\x0DD9'; // e
-            deva2Sinh['\x094B'] = '\x0DDC'; // o
-
-            // various signs
-            deva2Sinh['\x094D'] = "\x0DCA\x200C"; // virama -> Sinhala virama + ZWNJ
-
-            // we let dandas (U+0964) and double dandas (U+0965) pass through 
-            // and handle them in ConvertDandas()
+            dev2Sinhala['\x093E'] = '\x0DCF'; // aa
+            dev2Sinhala['\x093F'] = '\x0DD2'; // i
+            dev2Sinhala['\x0940'] = '\x0DD3'; // ii
+            dev2Sinhala['\x0941'] = '\x0DD4'; // u
+            dev2Sinhala['\x0942'] = '\x0DD6'; // uu
+            dev2Sinhala['\x0947'] = '\x0DD9'; // e
+            dev2Sinhala['\x094B'] = '\x0DDC'; // o
 
             // numerals
-            deva2Sinh['\x0966'] = '0';
-            deva2Sinh['\x0967'] = '1';
-            deva2Sinh['\x0968'] = '2';
-            deva2Sinh['\x0969'] = '3';
-            deva2Sinh['\x096A'] = '4';
-            deva2Sinh['\x096B'] = '5';
-            deva2Sinh['\x096C'] = '6';
-            deva2Sinh['\x096D'] = '7';
-            deva2Sinh['\x096E'] = '8';
-            deva2Sinh['\x096F'] = '9';
+            dev2Sinhala['\x0966'] = '0';
+            dev2Sinhala['\x0967'] = '1';
+            dev2Sinhala['\x0968'] = '2';
+            dev2Sinhala['\x0969'] = '3';
+            dev2Sinhala['\x096A'] = '4';
+            dev2Sinhala['\x096B'] = '5';
+            dev2Sinhala['\x096C'] = '6';
+            dev2Sinhala['\x096D'] = '7';
+            dev2Sinhala['\x096E'] = '8';
+            dev2Sinhala['\x096F'] = '9';
 
             // other
-            deva2Sinh['\x0970'] = '.'; // Dev. abbreviation sign
-
-            // zero-width joiners
-            deva2Sinh['\x200C'] = ""; // ZWNJ (ignore)
-            deva2Sinh['\x200D'] = ""; // ZWJ (ignore)
+            //dev2Sinhala['\x0964'] = '.'; // danda -> period
+            dev2Sinhala['\x0902'] = '\x0D82'; // niggahita
+            dev2Sinhala['\x094D'] = "\x0DCA\x200C"; // virama -> Sinhala virama + ZWNJ
+            dev2Sinhala['\x0970'] = '.'; // Dev. abbreviation sign
+            dev2Sinhala['\x200C'] = ""; // ZWNJ (ignore)
+            dev2Sinhala['\x200D'] = ""; // ZWJ (ignore)
         }
 
         public string InputFilePath
@@ -199,8 +192,8 @@ namespace CST.Conversion
             StringBuilder sb = new StringBuilder();
             foreach (char c in devStr.ToCharArray())
             {
-                if (deva2Sinh.ContainsKey(c))
-                    sb.Append(deva2Sinh[c]);
+                if (dev2Sinhala.ContainsKey(c))
+                    sb.Append(dev2Sinhala[c]);
                 else
                     sb.Append(c);
             }
@@ -222,11 +215,11 @@ namespace CST.Conversion
         {
             // in gathas, single dandas convert to semicolon, double to period
             // Regex note: the +? is the lazy quantifier which finds the shortest match
-            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\".+?</p>",
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<p rend=\"centre\".+?</p>",
+            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period
@@ -253,9 +246,6 @@ namespace CST.Conversion
         // punctuation marks. 
         public string CleanupPunctuation(string str)
         {
-			// two spaces to one
-			str = str.Replace("  ", " ");
-
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
             str = str.Replace(" !", "!");

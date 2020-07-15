@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CST.Conversion
+namespace VRI.CSCD.Conversion
 {
     class Deva2Tibt
     {

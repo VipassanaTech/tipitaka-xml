@@ -3,9 +3,9 @@ using System.Collections;
 using System.IO;
 using System.Text;
 
-namespace CST.Conversion
+namespace VRI.CSCD.Conversion
 {
-    class Deva2Knda
+    class Dev2Kannada
     {
         static void Main(string[] args)
         {
@@ -39,7 +39,7 @@ namespace CST.Conversion
                     }
                 }
 
-                Deva2Knda d2 = new Deva2Knda();
+                Dev2Kannada d2 = new Dev2Kannada();
                 d2.InputFilePath = args[0];
                 d2.OutputFilePath = di.FullName + "\\" + fi.Name;
                 d2.Convert();
@@ -59,115 +59,115 @@ namespace CST.Conversion
         // end static methods
 
 
-        private Hashtable deva2Knda;
+        private Hashtable dev2Kannada;
 
-        public Deva2Knda()
+        public Dev2Kannada()
         {
-            deva2Knda = new Hashtable();
+            dev2Kannada = new Hashtable();
 
             // various signs
-            deva2Knda['\x0902'] = '\x0C82'; // anusvara
-            deva2Knda['\x0903'] = '\x0C83'; // visarga
+            dev2Kannada['\x0902'] = '\x0C82'; // anusvara
+            dev2Kannada['\x0903'] = '\x0C83'; // visarga
 
             // independent vowels
-            deva2Knda['\x0905'] = '\x0C85'; // a
-            deva2Knda['\x0906'] = '\x0C86'; // aa
-            deva2Knda['\x0907'] = '\x0C87'; // i
-            deva2Knda['\x0908'] = '\x0C88'; // ii
-            deva2Knda['\x0909'] = '\x0C89'; // u
-            deva2Knda['\x090A'] = '\x0C8A'; // uu
-            deva2Knda['\x090B'] = '\x0C8B'; // vocalic r
-            deva2Knda['\x090C'] = '\x0C8C'; // vocalic l
-            deva2Knda['\x090F'] = '\x0C8F'; // e
-            deva2Knda['\x0910'] = '\x0C90'; // ai
-            deva2Knda['\x0913'] = '\x0C93'; // o
-            deva2Knda['\x0914'] = '\x0C94'; // au
+            dev2Kannada['\x0905'] = '\x0C85'; // a
+            dev2Kannada['\x0906'] = '\x0C86'; // aa
+            dev2Kannada['\x0907'] = '\x0C87'; // i
+            dev2Kannada['\x0908'] = '\x0C88'; // ii
+            dev2Kannada['\x0909'] = '\x0C89'; // u
+            dev2Kannada['\x090A'] = '\x0C8A'; // uu
+            dev2Kannada['\x090B'] = '\x0C8B'; // vocalic r
+            dev2Kannada['\x090C'] = '\x0C8C'; // vocalic l
+            dev2Kannada['\x090F'] = '\x0C8F'; // e
+            dev2Kannada['\x0910'] = '\x0C90'; // ai
+            dev2Kannada['\x0913'] = '\x0C93'; // o
+            dev2Kannada['\x0914'] = '\x0C94'; // au
 
             // velar stops
-            deva2Knda['\x0915'] = '\x0C95'; // ka
-            deva2Knda['\x0916'] = '\x0C96'; // kha
-            deva2Knda['\x0917'] = '\x0C97'; // ga
-            deva2Knda['\x0918'] = '\x0C98'; // gha
-            deva2Knda['\x0919'] = '\x0C99'; // n overdot a
+            dev2Kannada['\x0915'] = '\x0C95'; // ka
+            dev2Kannada['\x0916'] = '\x0C96'; // kha
+            dev2Kannada['\x0917'] = '\x0C97'; // ga
+            dev2Kannada['\x0918'] = '\x0C98'; // gha
+            dev2Kannada['\x0919'] = '\x0C99'; // n overdot a
             
             // palatal stops
-            deva2Knda['\x091A'] = '\x0C9A'; // ca
-            deva2Knda['\x091B'] = '\x0C9B'; // cha
-            deva2Knda['\x091C'] = '\x0C9C'; // ja
-            deva2Knda['\x091D'] = '\x0C9D'; // jha
-            deva2Knda['\x091E'] = '\x0C9E'; // ña
+            dev2Kannada['\x091A'] = '\x0C9A'; // ca
+            dev2Kannada['\x091B'] = '\x0C9B'; // cha
+            dev2Kannada['\x091C'] = '\x0C9C'; // ja
+            dev2Kannada['\x091D'] = '\x0C9D'; // jha
+            dev2Kannada['\x091E'] = '\x0C9E'; // ña
 
             // retroflex stops
-            deva2Knda['\x091F'] = '\x0C9F'; // t underdot a
-            deva2Knda['\x0920'] = '\x0CA0'; // t underdot ha
-            deva2Knda['\x0921'] = '\x0CA1'; // d underdot a
-            deva2Knda['\x0922'] = '\x0CA2'; // d underdot ha
-            deva2Knda['\x0923'] = '\x0CA3'; // n underdot a
+            dev2Kannada['\x091F'] = '\x0C9F'; // t underdot a
+            dev2Kannada['\x0920'] = '\x0CA0'; // t underdot ha
+            dev2Kannada['\x0921'] = '\x0CA1'; // d underdot a
+            dev2Kannada['\x0922'] = '\x0CA2'; // d underdot ha
+            dev2Kannada['\x0923'] = '\x0CA3'; // n underdot a
 
             // dental stops
-            deva2Knda['\x0924'] = '\x0CA4'; // ta
-            deva2Knda['\x0925'] = '\x0CA5'; // tha
-            deva2Knda['\x0926'] = '\x0CA6'; // da
-            deva2Knda['\x0927'] = '\x0CA7'; // dha
-            deva2Knda['\x0928'] = '\x0CA8'; // na
+            dev2Kannada['\x0924'] = '\x0CA4'; // ta
+            dev2Kannada['\x0925'] = '\x0CA5'; // tha
+            dev2Kannada['\x0926'] = '\x0CA6'; // da
+            dev2Kannada['\x0927'] = '\x0CA7'; // dha
+            dev2Kannada['\x0928'] = '\x0CA8'; // na
 
             // labial stops
-            deva2Knda['\x092A'] = '\x0CAA'; // pa
-            deva2Knda['\x092B'] = '\x0CAB'; // pha
-            deva2Knda['\x092C'] = '\x0CAC'; // ba
-            deva2Knda['\x092D'] = '\x0CAD'; // bha
-            deva2Knda['\x092E'] = '\x0CAE'; // ma
+            dev2Kannada['\x092A'] = '\x0CAA'; // pa
+            dev2Kannada['\x092B'] = '\x0CAB'; // pha
+            dev2Kannada['\x092C'] = '\x0CAC'; // ba
+            dev2Kannada['\x092D'] = '\x0CAD'; // bha
+            dev2Kannada['\x092E'] = '\x0CAE'; // ma
 
             // liquids, fricatives, etc.
-            deva2Knda['\x092F'] = '\x0CAF'; // ya
-            deva2Knda['\x0930'] = '\x0CB0'; // ra
-            deva2Knda['\x0931'] = '\x0CB1'; // rra (Dravidian-specific)
-            deva2Knda['\x0932'] = '\x0CB2'; // la
-            deva2Knda['\x0933'] = '\x0CB3'; // l underdot a
-            deva2Knda['\x0935'] = '\x0CB5'; // va
-            deva2Knda['\x0936'] = '\x0CB6'; // sha (palatal)
-            deva2Knda['\x0937'] = '\x0CB7'; // sha (retroflex)
-            deva2Knda['\x0938'] = '\x0CB8'; // sa
-            deva2Knda['\x0939'] = '\x0CB9'; // ha
+            dev2Kannada['\x092F'] = '\x0CAF'; // ya
+            dev2Kannada['\x0930'] = '\x0CB0'; // ra
+            dev2Kannada['\x0931'] = '\x0CB1'; // rra (Dravidian-specific)
+            dev2Kannada['\x0932'] = '\x0CB2'; // la
+            dev2Kannada['\x0933'] = '\x0CB3'; // l underdot a
+            dev2Kannada['\x0935'] = '\x0CB5'; // va
+            dev2Kannada['\x0936'] = '\x0CB6'; // sha (palatal)
+            dev2Kannada['\x0937'] = '\x0CB7'; // sha (retroflex)
+            dev2Kannada['\x0938'] = '\x0CB8'; // sa
+            dev2Kannada['\x0939'] = '\x0CB9'; // ha
 
             // various signs
-            deva2Knda['\x093C'] = '\x0CBC'; // nukta
-            deva2Knda['\x093D'] = '\x0CBD'; // avagraha
+            dev2Kannada['\x093C'] = '\x0CBC'; // nukta
+            dev2Kannada['\x093D'] = '\x0CBD'; // avagraha
 
             // dependent vowel signs
-            deva2Knda['\x093E'] = '\x0CBE'; // aa
-            deva2Knda['\x093F'] = '\x0CBF'; // i
-            deva2Knda['\x0940'] = '\x0CC0'; // ii
-            deva2Knda['\x0941'] = '\x0CC1'; // u
-            deva2Knda['\x0942'] = '\x0CC2'; // uu
-            deva2Knda['\x0943'] = '\x0CC3'; // vocalic r
-            deva2Knda['\x0944'] = '\x0CC4'; // vocalic rr
-            deva2Knda['\x0947'] = '\x0CC7'; // e
-            deva2Knda['\x0948'] = '\x0CC8'; // ai
-            deva2Knda['\x094B'] = '\x0CCB'; // o
-            deva2Knda['\x094C'] = '\x0CCC'; // au
+            dev2Kannada['\x093E'] = '\x0CBE'; // aa
+            dev2Kannada['\x093F'] = '\x0CBF'; // i
+            dev2Kannada['\x0940'] = '\x0CC0'; // ii
+            dev2Kannada['\x0941'] = '\x0CC1'; // u
+            dev2Kannada['\x0942'] = '\x0CC2'; // uu
+            dev2Kannada['\x0943'] = '\x0CC3'; // vocalic r
+            dev2Kannada['\x0944'] = '\x0CC4'; // vocalic rr
+            dev2Kannada['\x0947'] = '\x0CC7'; // e
+            dev2Kannada['\x0948'] = '\x0CC8'; // ai
+            dev2Kannada['\x094B'] = '\x0CCB'; // o
+            dev2Kannada['\x094C'] = '\x0CCC'; // au
 
             // various signs
-            deva2Knda['\x094D'] = '\x0CCD'; // virama
+            dev2Kannada['\x094D'] = '\x0CCD'; // virama
 
             // let Devanagari danda (U+0964) and double danda (U+0965) 
             // pass through unmodified
 
             // digits
-            deva2Knda['\x0966'] = '\x0CE6';
-            deva2Knda['\x0967'] = '\x0CE7';
-            deva2Knda['\x0968'] = '\x0CE8';
-            deva2Knda['\x0969'] = '\x0CE9';
-            deva2Knda['\x096A'] = '\x0CEA';
-            deva2Knda['\x096B'] = '\x0CEB';
-            deva2Knda['\x096C'] = '\x0CEC';
-            deva2Knda['\x096D'] = '\x0CED';
-            deva2Knda['\x096E'] = '\x0CEE';
-            deva2Knda['\x096F'] = '\x0CEF';
+            dev2Kannada['\x0966'] = '\x0CE6';
+            dev2Kannada['\x0967'] = '\x0CE7';
+            dev2Kannada['\x0968'] = '\x0CE8';
+            dev2Kannada['\x0969'] = '\x0CE9';
+            dev2Kannada['\x096A'] = '\x0CEA';
+            dev2Kannada['\x096B'] = '\x0CEB';
+            dev2Kannada['\x096C'] = '\x0CEC';
+            dev2Kannada['\x096D'] = '\x0CED';
+            dev2Kannada['\x096E'] = '\x0CEE';
+            dev2Kannada['\x096F'] = '\x0CEF';
 
             // zero-width joiners
-            deva2Knda['\x200C'] = ""; // ZWNJ (remove)
-            deva2Knda['\x200D'] = ""; // ZWJ (remove)
+            dev2Kannada['\x200C'] = ""; // ZWNJ (remove)
+            dev2Kannada['\x200D'] = ""; // ZWJ (remove)
         }
 
         public string InputFilePath
@@ -209,8 +209,8 @@ namespace CST.Conversion
             StringBuilder sb = new StringBuilder();
             foreach (char c in devStr.ToCharArray())
             {
-                if (deva2Knda.ContainsKey(c))
-                    sb.Append(deva2Knda[c]);
+                if (dev2Kannada.ContainsKey(c))
+                    sb.Append(dev2Kannada[c]);
                 else
                     sb.Append(c);
             }
