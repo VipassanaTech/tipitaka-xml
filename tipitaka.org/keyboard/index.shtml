@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="Help viewing the Tipitaka" />
+<meta name="description" content="Help viewing the Tipitaka" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="/print.css" />
+<title>Pāli Keyboard</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+  &nbsp;&nbsp;&nbsp;<img src="/images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; <a href="/help">Help</a> &gt; Pāli Keyboard</div>
+      <h1 class="contenttitle">Pāli Keyboard</h1>
+      <p><b>Windows, Mac, and Ubuntu (Linux) Keyboards for Typing with Unicode Roman-script Pāli Fonts</b>
+      <p> In order to type Pāli, you need a tool to map keystrokes to Pāli characters. Please use the links below to install the appropriate keyboard settings.</p>
+      <p><strong>Windows</strong>: <a href="https://fsnow.com/pali/keyboard/" target="_blank">Pali keyboard</a>
+      <p><strong>Mac OSX</strong> <strong>10.2 or later: </strong><a href="http://www.tipitaka.org/keyboard/EasyUnicode5.zip">EasyUnicode keyboard.zip</a> (includes keyboard maps)
+      <p><strong>Mac installation instructions</strong> 
+       <ul style="text-align:justify;"> 
+        <li>Download Pali Keyboard .zip file</li>
+        <li>Open zip file and the folder EasyUnicode5 and locate the file EasyUnicode(R).keylayout</li>
+        <li>Open a new Finder window, and navigate to your user's Library folder (Macintosh HD > Users > [home icon with your user name] > Library). Note: on newer Macs you need to click on the Go in the top menu bar. Hold down the Option key, which will reveal the Library folder. Click on the Library. Then in the Library, open the Keyboard Layout folder.</li>
+        <li>Move the EasyUnicode(R).keylayout from Step 2, into the Keyboard Layout folder.  (Optional) Move the icon EasyUnicode(R).icns to the same folder.</li>
+        <li>Open System Preferences (click on the Apple symbol in the top left, then System Preferences). Then click on Keyboard. Then click on Input Sources. Then click on the + in the bottom left. Then click on Others and select EasyUnicode(R) and then click on Add. </li>
+        <li>To use the keyboard, click on the flag (according to the Country and Language currently being used) in the top right of the screen, and choose EasyUnicode(R). (Note: This step may have to be repeated if it ever defaults back to the previous keyboard).</li>
+      </ul>
+      </p>
+      <p><strong>Ubuntu (Linux):</strong> <a href="https://discourse.suttacentral.net/t/insert-pali-and-sanskrit-characters-with-diacritical-marks-on-discourse-and-operating-systems/311/2" target="_blank">Installation instructions</a></p>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="/sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="/footer.ssi" -->
+</body>
+</html>
