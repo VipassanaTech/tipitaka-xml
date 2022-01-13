@@ -23,15 +23,13 @@
       <h1 class="contenttitle">Chaṭṭha Saṅgāyana Tipiṭaka Version 4.0 (CST4)</h1>
       <p>CST4 is a desktop client for browsing and searching the Pāli Canon. It is the successor to the Chaṭṭha Saṅgāyana CD 3.0 (CSCD3).</p>
 
-      <p style="text-align:center;"><a href="https://tipitaka.org/cst/cst4-2020-05-07-4.0.0.15.msi">Download for Windows</a></p>
+      <p style="text-align:center;"><a href="https://tipitaka.org/cst/cst4-2022-01-05-4.0.0.15.msi">Download for Windows</a></p>
 
-      <p><strong>Installer updated May, 2020 with corrected Tipiṭaka text files.</strong></p>
+      <p><strong>Installer updated January, 2022 with corrected Tipiṭaka text files.</strong></p>
 
       <p>System requirements: Windows 10, 8.1, 8, 7 or XP.</p>
 
-      <p>Depending on your version of Windows, you may need to <a href="https://docs.microsoft.com/en-us/dotnet/framework/install/dotnet-35-windows-10" target="_blank">enable</a> or <a href="https://www.microsoft.com/en-us/download/details.aspx?id=6523" target="_blank">install</a> the .NET Framework 2.0, a component of Windows.</p>
-
-      <p>The program installer is an MSI file. Windows XP users may need to install the <a href="https://www.microsoft.com/en-us/download/details.aspx?id=25" target="_blank">Windows Installer</a> component.</p>
+      <p>Depending on your version of Windows, you may need to <a href="https://docs.microsoft.com/en-us/dotnet/framework/install/dotnet-35-windows-10" target="_blank">enable</a> the .NET Framework 2.0, a component of Windows.</p>
 
       <p>To type Roman-script Unicode Pali, download and install a <a href="http://www.tipitaka.org/keyboard/">Pali keyboard</a>.</p>
 
