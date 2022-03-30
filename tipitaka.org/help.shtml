@@ -36,8 +36,8 @@
         <a href="http://biharvidhanparishad.gov.in/HindiFonts.htm" target="_blank">http://biharvidhanparishad.gov.in/HindiFonts.htm</a></p>
       <p><strong>Khmer</strong> - Please install the font &quot;Khmer Unicode Pack&quot; from<br />
         <a href="http://www.khmeros.info/en/download" target="_blank">http://www.khmeros.info/en/download</a> </p>
-      <p><strong>Myanmar</strong> -&nbsp; Please download and install the <a href="fonts/myanmar1.ttf">Myanmar1</a> font</p>
-      <p>After you have installed these fonts, in Internet Explorer choose File --&gt; Tools --&gt; Internet Options --&gt; Fonts --&gt; In Web Page fonts, select Myanmar1&nbsp; instead of the default Times New Roman. &nbsp;Click OK and the site should display correctly now. &nbsp;You may need to do the same in Firefox too. However &nbsp;Firefox &nbsp;displays Myamaar fonts better than Internet Explorer, so we recomend that you download the same.</p>
+      <p><strong>Myanmar</strong> -&nbsp; Please download and install the <a href="https://fonts.google.com/specimen/Padauk" target="_blank">Padauk</a> font</p>
+ 
       <p><strong>Roman</strong> -&nbsp;Internet Explorer users: -This site uses Unicode fonts for displaying letters with diacritical marks. We recommened installing the following Unicode fonts: </p>
       <ul>
         <li><a href="http://www.bcca.org/services/fonts/" target="_blank">Times Extended Roman</a></li>
