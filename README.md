@@ -1,3 +1,3 @@
 # Tipitaka.org
 
-Source XML files for Tipitaka.org
+Source files for Tipitaka.org
