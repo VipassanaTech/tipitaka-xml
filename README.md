@@ -1,4 +1,4 @@
-# Tipitaka.org public xml files
+# Tipitaka.org public XML files
 
 These files are made freely available for non-commericial use. Please attribute Vipassana Research Institute when incorporating these files into your projects.
 
