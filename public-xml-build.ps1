@@ -15,7 +15,7 @@
 #>
 
 $publicXmlDir = "..\tipitaka-xml"
-$pubDevaMaster = "$publicXmlDir\deva master"
+$pubDeva = "$publicXmlDir\deva"
 
 $devaMaster = '.\deva master'
 $conversionScripts = '.\conversion scripts'
@@ -37,25 +37,25 @@ if (-Not $dirExists) {
 
 Write-Host "$(Get-TimeStamp) Copying contents of deva master directory"
 
-# copy the contents of deva master to tipitaka-xml\deva master
-Copy-Item $devaMaster\* -Recurse -Destination $pubDevaMaster
+# copy the contents of deva master to tipitaka-xml\deva
+Copy-Item $devaMaster\* -Recurse -Destination $pubDeva
 
 # to prevent intermittent errors from deleting the TOC files too soon after copying them,
 # sleep for 2 seconds
 Start-Sleep -s 2
 
 # delete the TOC files
-Remove-Item -path $pubDevaMaster\*.toc.xml
+Remove-Item -path $pubDeva\*.toc.xml
 
 # count the deva XML files
-$xmlCount = (Get-ChildItem $pubDevaMaster\s01*.xml | Measure-Object).Count
+$xmlCount = (Get-ChildItem $pubDeva\*.xml | Measure-Object).Count
 
 Write-Host "$(Get-TimeStamp) Converting $xmlCount Deva source files into 14 scripts"
 
 $counter = 0
 
 # convert each file in cscd\dev into every other script
-foreach ($file in Get-ChildItem $pubDevaMaster\s01*.xml )
+foreach ($file in Get-ChildItem $pubDeva\*.xml )
 {
   if ($counter -gt 0 -and $counter % 10 -eq 0) {
     Write-Host "$(Get-TimeStamp) Converted ${counter} Deva source files of ${xmlCount}"
