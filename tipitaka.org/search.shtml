@@ -28,7 +28,7 @@ document.googleform.q.value=document.googleform.q.value+thechar; document.google
       <div class="pagepath"> <a href="/">Home</a> &gt; Tipitaka Search</div>
       <h1 class="contenttitle">Tipiṭaka&nbsp;Search</h1>
       <p><br />
-        To search the&nbsp;<a href="/chattha">Chaṭṭha Saṅgāyana</a> Tipiṭaka, please use the <a href="http://search.tipitaka.org/solr/web?q=&fq=script%3Aromn&facet.field=volume" target="_blank">online search engine</a>.
+        To search the&nbsp;<a href="/chattha">Chaṭṭha Saṅgāyana</a> Tipiṭaka, please use the <a href="http://search.tipitaka.org/solr/web" target="_blank">online search engine</a>.
 <!-- Removing old database search engine as it is currently not available   
       <p>2)
         Older <a href="http://tutor.ksana.tw/cgi-bin/accelon3.cgi/ksana?db=tipitaka.adb" target="_blank">database search engine</a> (see instructions below)</p>
