@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+         
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Stylesheet for tipitaka.org -->
+    <link href="./css/tipistyles.css" rel="stylesheet">    
+
+    <title>Pali Tipitaka Search</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">  
+</head>     
+<body> 
+
+    <!-- Top nav bar from topnav.html imported via JScript (see below) -->
+    <div class="nav-wrapper">
+        <div class="topnav" id="myTopnav"></div>
+    </div>
+          
+    <!-- Main Heading -->
+    <div class="header">
+        <div class="centered">
+            <img src="./images/dhamma-wheel.svg" class="wheel" alt="Dhamma wheel" />
+            <h1 class="display-3">Pāḷi Tipiṭaka</h1>
+        </div>
+        <hr class="hrstyle">  
+    </div>           
+    
+    <!-- Page Content-->
+    <div class="container">
+        <h2 class="contenttitle">Tipiṭaka&nbsp;Search</h2>
+        <p>To search the&nbsp;<a href="chattha.html">Chaṭṭha Saṅgāyana</a> Tipiṭaka, please use the <a href="http://search.tipitaka.org/solr/web?" target="_blank">online search engine</a>.
+        <br>
+        <h3 class="contenttitle">Key Help for special Pāḷi characters</h2>
+        <form name="googleform">
+            Click on the buttons below to enter special Pali characters, and then copy the text from the box below into the search engine's box<br>
+            <input name="q" size="35" maxlength="255" value="" type="text">
+        </form>
+        <table id="tablecenter">
+            <tbody>
+            <tr>
+                <td><input style="font-size: 100%;" onclick="insertchar('ā') " value=" ā " type="button"></td>
+                <td><input style="font-size: 100%;" onclick="insertchar('ḍ') " value=" ḍ " type="button"></td>
+                <td><input style="font-size: 100%;" onclick="insertchar('ī') " value=" ī " type="button"></td>
+                <td><input style="font-size: 100%;" onclick="insertchar('ḷ') " value=" ḷ " type="button"></td>
+                <td><input style="font-size: 100%;" onclick="insertchar('ṃ') " value=" ṃ " type="button"></td>
+            </tr>
+            <tr>
+                <td><input style="font-size: 100%;" onclick="insertchar('ṅ') " value=" ṅ " type="button"></td>
+                <td><input style="font-size: 100%;" onclick="insertchar('ṇ') " value=" ṇ " type="button"></td>
+                <td><input style="font-size: 100%;" onclick="insertchar('ñ') " value=" ñ " type="button"></td>
+                <td><input style="font-size: 100%;" onclick="insertchar('ṭ') " value=" ṭ " type="button"></td>
+                <td><input style="font-size: 100%;" onclick="insertchar('ū') " value=" ū " type="button"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Page footer -->
+    <div class="container">
+        <footer>
+            <hr width="60%">
+            <p  class="text-center"><small> <a href="mailto:help@tipitaka.org">Contact the Webmaster</a><br> 
+            A project of the Vipassana Research Institute</small></p>
+        </footer>   
+    </div>           
+      
+    <!-- body code goes here -->  
+    <script src="js/topnavscript.js"></script>       
+    <script language="javascript">
+        function insertchar(thechar)
+        {
+        document.googleform.q.value=document.googleform.q.value+thechar; document.googleform.q.focus();
+        }
+    </script>
+         
+</body>
+</html>
