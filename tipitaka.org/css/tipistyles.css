@@ -17,8 +17,8 @@ Stylesheet for tipitaka.org website.
 
 /* ---- Heading Font ------*/
 @font-face {
-    font-family: 'Footlight';
-    src: url(../fonts/Footlights/FootlightMTProBold.woff);
+    font-family: 'EB Garamond';
+    src: url(../fonts/EB_Garamond/EBGaramond-Bold.ttf);
 }
 
 /* ---- Navigation Font ------*/
@@ -125,7 +125,7 @@ h2,
     font-size: 2rem;
     text-align: center;
     font-weight: 600;
-    font-family: 'Footlight', Georgia, 'Times New Roman', Times, serif;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
     color: #1E3461 ;
 }
 
@@ -134,7 +134,7 @@ h3,
     font-size: 1.5rem;
     text-align: center;
     font-weight: 600;    
-    font-family: 'Footlight', Georgia, 'Times New Roman', Times, serif;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', Times, serif;
     color: #1E3461 ;
 }
 
