@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="Tipitaka iOS webapp" />
+<meta name="description" content="Tipitaka iOS webapp" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="../screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../print.css" />
+<title>Tipiṭaka in PDF</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+  &nbsp;&nbsp;&nbsp;<img src="../images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; PDF</div>
+      <h1 class="contenttitle">Tipiṭaka in PDF</h1>
+      <p>This is a work in progress and only the <a href="romn">Roman</a> &amp; <a href="deva">Devanāgarī</a> script texts are available.</p>
+      <p>&nbsp;</p>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="../sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="../footer.ssi" -->
+</body>
+</html>
