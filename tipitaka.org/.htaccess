@@ -35,7 +35,4 @@ Redirect 301 /cst/blog/ https://tipitaka.org/cst/
 Redirect 301 /cst/release-notes.htm https://tipitaka.org/cst/category/releasenotes/
 Redirect 301 /iphone/ https://tipitaka.org/ios/
 Redirect 301 /keyboard/ https://tipitaka.org/keyboard.html
-Redirect 301 /pdf/ https://tipitaka.org/pdf.html
-Redirect 301 /pdf/deva/ https://tipitaka.org/deva.html
-Redirect 301 /pdf/romn/ https://tipitaka.org/romn.html
 Redirect 301 /others.shtml https://tipitaka.org/others.html
