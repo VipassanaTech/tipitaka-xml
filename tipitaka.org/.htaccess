@@ -17,7 +17,7 @@ Redirect 301 /cell/index.html https://tipitaka.org/
 Redirect 301 /general/pali.html https://tipitaka.org/
 Redirect 301 /general/ https://tipitaka.org/
 Redirect 301 /hindi/index.html https://tipitaka.org/hindi-docs
-Redirect 301 /roman/ https://tipitaka.org/
+Redirect 301 /eot.shtml https://tipitaka.org/eot.html
 Redirect 301 /roman/booklistframe2.html https://tipitaka.org/
 Redirect 301 /roman/chattha.html https://tipitaka.org/chattha
 Redirect 301 /roman/ers.html https://tipitaka.org/help
