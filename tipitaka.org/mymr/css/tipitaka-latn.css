@@ -52,7 +52,8 @@ body {
     /* Style for the page content */
     .content {
         flex: 1; /* Fill remaining space */
-        padding: 16px;
+        padding-left: 16px;
+        padding-right: 16px;
         overflow: auto;
         align-self: stretch; /* Add this line */
         }
@@ -102,8 +103,8 @@ body {
     margin-top: 0in; margin-bottom: 0.5cm;
     }
 
-
     .bold { font-weight: bold; }
+
     .indent { font-size: 12pt; text-indent: 2em; margin-left: 3em;}
 
     .bodytext { font-size: 12pt; text-indent: 2em;}
@@ -140,8 +141,32 @@ body {
 
     /* Gatha last line */
     .gathalast { font-size: 12pt; margin-bottom: 0.5cm; margin-left: 4em;}
-
     
+    /* Style substitution for rend="nikaya" */
+    p[rend="nikaya"] {
+        font-size: 24pt; text-align:center; font-weight: bold;
+    }
+    /* Style substitutionfor rend="book" */
+    p[rend="book"] {
+        font-size: 21pt; text-align:center; font-weight: bold;
+    }
+    /* Style substitution for rend="chapter" */
+    p[rend="chapter"] {
+        font-size: 18pt; text-align:center; font-weight: bold;
+    }
+    /* Style substitution for rend="center" */
+    p[rend="centre"] {
+        font-size: 12pt; text-align:center;
+    }
+    /* Style substitution for rend="bodytext" */
+    p[rend="bodytext"] {
+        font-size: 12pt; text-indent: 2em;
+    }
+    /* Style substitution for rend="paranum" */
+    p[rend="paranum"] {
+        font-weight: bold; 
+    }
+
 /* Media query for print */
 @media print {
     /* Hide the Top button when printing */
