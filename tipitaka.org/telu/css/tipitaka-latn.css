@@ -141,31 +141,41 @@ body {
 
     /* Gatha last line */
     .gathalast { font-size: 12pt; margin-bottom: 0.5cm; margin-left: 4em;}
+
+
+    /*------ Style substitutions ------*/
+
+
+    p[rend="bld"] {font-weight: bold; }
+    hi[rend="paranum"] { font-weight: bold; font-size: 14pt; }
+    hi[rend="dot"] { font-weight: bold; font-size: 14pt; }
+    hi[rend="bold"] { font-weight: bold; }
+
+    p[rend="hangnum"] { font-size: 12pt; margin-bottom: -0.75cm; text-indent: 2em;}
     
-    /* Style substitution for rend="nikaya" */
-    p[rend="nikaya"] {
-        font-size: 24pt; text-align:center; font-weight: bold;
-    }
-    /* Style substitutionfor rend="book" */
-    p[rend="book"] {
-        font-size: 21pt; text-align:center; font-weight: bold;
-    }
-    /* Style substitution for rend="chapter" */
-    p[rend="chapter"] {
-        font-size: 18pt; text-align:center; font-weight: bold;
-    }
-    /* Style substitution for rend="center" */
-    p[rend="centre"] {
-        font-size: 12pt; text-align:center;
-    }
-    /* Style substitution for rend="bodytext" */
-    p[rend="bodytext"] {
-        font-size: 12pt; text-indent: 2em;
-    }
-    /* Style substitution for rend="paranum" */
-    p[rend="paranum"] {
-        font-weight: bold; 
-    }
+    p[rend="nikaya"] { font-size: 24pt; text-align:center; font-weight: bold;}
+
+    p[rend="book"]  { font-size: 21pt; text-align:center; font-weight: bold;}
+
+    p[rend="chapter"] { font-size: 18pt; text-align:center; font-weight: bold;}
+
+    p[rend="centre"] { font-size: 12pt; text-align:center;}
+
+    p[rend="bodytext"] { font-size: 12pt; text-indent: 2em;}
+
+    p[rend="title"] { font-size: 16pt; text-align:center; font-weight: bold;}
+
+    p[rend="subhead"] { font-size: 16pt; text-align:center; font-weight: bold;}
+
+    p[rend="subsubhead"] { font-size: 14pt; text-align:center; font-weight: bold;}
+
+    p[rend="gatha1"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
+
+    p[rend="gatha2"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
+
+    p[rend="gatha3"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
+
+    p[rend="gathalast"] { font-size: 12pt; margin-bottom: 0.5cm; margin-left: 4em;}
 
 /* Media query for print */
 @media print {
