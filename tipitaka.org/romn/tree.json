@@ -1,6 +1,6 @@
 [
 	{
-		"text": "Tipitaka (Roman New)",
+		"text": "Tipitaka (Roman)",
 		"state": {
 			"opened": true,
 			"selected": false
@@ -28,7 +28,7 @@
 									},
 									{
 										"text": "1. pārājikakaṇḍaṃ",
-										"id": "pārājikakaṇḍaṃ",
+										"id": "5",
 										"type": "leaf",
 										"a_attr": {
 											"href": "cscd/vin01m.mul1.xml"
