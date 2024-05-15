@@ -44,9 +44,9 @@ body {
 
     /* Style for the separator */
     .separator {
-        width: 10px;
+        width: 5px;
         cursor: ew-resize; /* Horizontal resize cursor */
-        background-color: #ddd;
+        background-color: #B78730;
         }
 
     /* Style for the page content */
