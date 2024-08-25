@@ -2,6 +2,18 @@
 Stylesheet for tipitaka.org website.
 */
 
+/* Media query for print */
+@media print {
+    /* Hide the top navigation bar when printing */
+    .topnav {
+        display: none !important; /* Override default display property */
+    }
+    
+    /* (Optional) Show dropdown menu items if required */
+    .dropdown {
+        display: block !important; /* Override default display property */
+    }
+}
 
 /* ---- Body Font ------*/
 @font-face {
@@ -470,6 +482,8 @@ h5,
         width: 100%;
     }
 }
+
+
 
 
 /*--removing underline from links */
