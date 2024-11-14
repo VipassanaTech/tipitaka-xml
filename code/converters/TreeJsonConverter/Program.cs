@@ -5,7 +5,7 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 
 string filePath = "./tree.json";
-string outputDir = "TreeJsonConverter/";
+string outputDir = "TreeConverted/";
 
 FileInfo fi = new FileInfo(filePath);
 if (fi.Exists == false)
@@ -45,6 +45,7 @@ scripts.Add(Script.Khmer);
 scripts.Add(Script.Latin);
 scripts.Add(Script.Malayalam);
 scripts.Add(Script.Myanmar);
+scripts.Add(Script.Sinhala);
 scripts.Add(Script.Telugu);
 scripts.Add(Script.Thai);
 scripts.Add(Script.Tibetan);
