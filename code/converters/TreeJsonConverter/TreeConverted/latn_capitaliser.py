@@ -26,7 +26,7 @@ with open(input_file_path, 'r', encoding="utf-16") as infile:
             capitalized_text = re.sub(r'\b\w+\b', lambda m: m.group(0).capitalize(), text_content)
             
             # Reconstruct the line with capitalized text and preserve leading spaces
-            line = f'{leading_spaces_and_prefix}{capitalized_text}"\n'
+            line = f'{leading_spaces_and_prefix}{capitalized_text}",\n'
 
         # Add the line (modified or unmodified) to the list of new lines
         new_lines.append(line)
