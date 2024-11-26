@@ -97,6 +97,11 @@ body {
     .bld {font-weight: bold; }
     .paranum {font-weight: bold; }
 
+    .jstree-anchor{
+        padding-top: 2px;
+        padding-bottom: 0px;
+    }
+
     p {
     border-top: 0in; border-bottom: 0in;
     padding-top: 0in; padding-bottom: 0in;
