@@ -135,15 +135,6 @@ def manage_bold(text):
 #         print(f"[DEBUG] Wrote {len(gatha_lines)} gatha lines.")
 #     gatha_lines.clear()
 
-sanskrit_to_english = {
-    "१": "1", "२": "2", "३": "3", "४": "4", "५": "5",
-    "६": "6", "७": "7", "८": "8", "९": "9", "०": "0"
-}
-
-def sanskrit_to_english(sanskrit_num):
-    english_num = "".join(sanskrit_to_english[digit] for digit in sanskrit_num)
-    return english_num
-
 
 def flush_gatha_block(gatha_lines, output_file):
     """Write out a collected group of gatha lines to the XML file."""
@@ -165,7 +156,7 @@ def flush_gatha_block(gatha_lines, output_file):
                 # For all intermediate lines, also use gatha1
                 rend = "gatha1"
             output_file.write(f'<p rend="{rend}">{gline}</p>\n')
-        print(f"[DEBUG] Wrote {len(gatha_lines)} gatha lines.")
+        #print(f"[DEBUG] Wrote {len(gatha_lines)} gatha lines.")
     gatha_lines.clear()
 
 
