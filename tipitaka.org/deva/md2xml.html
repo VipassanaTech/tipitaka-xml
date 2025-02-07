@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+        
+    <!-- Stylesheet for showing hamburger icon in mobile mode -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Stylesheet for Tree site -->
+	<link rel="stylesheet" href="./css/tipitaka-latn.css" />
+
+    <!-- Stylesheet for Top Nav bar -->
+    <link href="../css/tipistyles.css" rel="stylesheet">    
+
+    <title>CSCD Tipiṭaka (Devanagari)</title>  
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <style>
+    p {text-align: center;}
+        
+    </style>
+
+
+
+
+
+
+</head>    
+
+<body> 
+    <div class="flex-wrapper">
+        <!-- Top nav bar from topnav.html imported via JScript (see below) -->
+        <div class="nav-wrapper">
+            <div class="topnav" id="myTopnav"></div>
+        </div>
+
+        <!-- Main Heading -->
+        <div class="header">
+            <div class="centered">
+                <img src="../images/dhamma-wheel.svg" class="wheel" alt="Dhamma wheel" />
+                <h1 class="display-3">Pāḷi Tipiṭaka</h1>
+            </div>
+            <hr class="hrstyle">  
+        </div>   
+
+
+        <!-- Page New Content-->
+        <!-- Return to Top button -->
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+        
+        <div class="bodycontainer" id="bodycontainer">
+            <div class="sidebar" id="tree"></div>
+    
+            <div class="separator" id="separator"></div>
+    
+            <div class="content " id="t-content"></div>
+        </div>
+        
+        <h2>Suttamala XML Conversion Test page</h2>
+        <style>
+            .table_component {
+                overflow: auto;
+                width: 50%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .table_component table {
+                border: 1px solid #dededf;
+                height: 100%;
+                width: 100%;
+                table-layout: fixed;
+                border-collapse: collapse;
+                border-spacing: 1px;
+                text-align: left;
+            }
+            
+            .table_component th {
+                border: 1px solid #dededf;
+                background-color: #eceff1;
+                color: #000000;
+                padding: 5px;
+            }
+            
+            .table_component td {
+                border: 1px solid #dededf;
+                background-color: #ffffff;
+                color: #000000;
+                padding: 5px;
+            }
+            </style>
+            <div class="table_component" role="region" tabindex="0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Word doc</th>
+                        <th>Markdown</th>
+                        <th>XML Conversion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="suttamala/सुत्तमाला_१.docx">Suttamala_1.docx</a></td>
+                        <td><a href="suttamala/Suttamala_1.md">Suttamala_1.md</a></td>
+                        <td><a href="suttamala/Suttamala_1.xml">Suttamala_1.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="suttamala/सुत्तमाला_२.docx">Suttamala_2.docx</a></td>
+                        <td><a href="suttamala/suttamala_2.md">Suttamala_2.md</a></td>
+                        <td><a href="suttamala/suttamala_2.xml">Suttamala_2.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="suttamala/सुत्तमाला_३.docx">Suttamala_3.docx</a></td>
+                        <td><a href="suttamala/suttamala_3.md">Suttamala_3.md</a></td>
+                        <td><a href="suttamala/suttamala_3.xml">Suttamala_3.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="suttamala/सुत्तमाला_४.docx">Suttamala_4.docx</a></td>
+                        <td><a href="suttamala/suttamala_4.md">Suttamala_4.md</a></td>
+                        <td><a href="suttamala/suttamala_4.xml">Suttamala_4.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="suttamala/सुत्तमाला_२.docx">Suttamala_5.docx</a></td>
+                        <td><a href="suttamala/suttamala_5.md">Suttamala_5.md</a></td>
+                        <td><a href="suttamala/suttamala_5.xml">Suttamala_5.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="suttamala/सुत्तमाला_२.docx">Suttamala_6.docx</a></td>
+                        <td><a href="suttamala/suttamala_6.md">Suttamala_6.md</a></td>
+                        <td><a href="suttamala/suttamala_6.xml">Suttamala_6.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="suttamala/सुत्तमाला_२.docx">Suttamala_7.docx</a></td>
+                        <td><a href="suttamala/suttamala_7.md">Suttamala_7.md</a></td>
+                        <td><a href="suttamala/suttamala_7.xml">Suttamala_7.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="suttamala/सुत्तमाला_२.docx">Suttamala_8.docx</a></td>
+                        <td><a href="suttamala/suttamala_8.md">Suttamala_8.md</a></td>
+                        <td><a href="suttamala/suttamala_8.xml">Suttamala_8.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="suttamala/सुत्तमाला_२.docx">Suttamala_9.docx</a></td>
+                        <td><a href="suttamala/suttamala_9.md">Suttamala_9.md</a></td>
+                        <td><a href="suttamala/suttamala_9.xml">Suttamala_9.xml</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        <p></p>
+        
+
+        <!-- Page footer -->
+        <div class="container">
+            <footer>
+            </footer>   
+        </div>
+    </div>
+
+    <!-- body code goes here -->  
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+            x.className += " responsive";
+            } else {
+            x.className = "topnav";
+            }
+        }
+    </script>   
+
+    <!-- Return to Top button code-->
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+    <!--Resizable splitter code-->
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            var separator = document.getElementById("separator");
+            var sidebar = document.getElementById("tree");
+            var container = document.getElementById("bodycontainer");
+    
+            // Check screen width to determine whether to use mouse or touch events
+            var isMobile = window.innerWidth <= 768;
+    
+            if (isMobile) {
+                separator.addEventListener("touchstart", function(e) {
+                    e.preventDefault();
+                    var touch = e.touches[0];
+                    separator.addEventListener("touchmove", resizeSidebar);
+                    separator.addEventListener("touchend", stopResizeSidebar);
+                });
+            } else {
+                separator.addEventListener("mousedown", function(e) {
+                    e.preventDefault();
+                    document.addEventListener("mousemove", resizeSidebar);
+                    document.addEventListener("mouseup", stopResizeSidebar);
+                });
+            }
+    
+            function showhideseparator() {
+                if (separator.length < 5) {
+                    separator.style.display = "none";
+                } else {
+                    separator.style.display = "block";
+                }
+            }
+    
+            function resizeSidebar(e) {
+                var xPosition = isMobile ? e.touches[0].clientX : e.clientX;
+                var sidebarWidth = xPosition - container.offsetLeft;
+                sidebar.style.width = sidebarWidth + "px";
+            }
+    
+            function stopResizeSidebar() {
+                if (isMobile) {
+                    separator.removeEventListener("touchmove", resizeSidebar);
+                    separator.removeEventListener("touchend", stopResizeSidebar);
+                } else {
+                    document.removeEventListener("mousemove", resizeSidebar);
+                    document.removeEventListener("mouseup", stopResizeSidebar);
+                }
+            }
+        });
+    </script>
+    
+    <script defer src="../../js/topnavscript.js"></script>    
+         
+</body>
+</html>
