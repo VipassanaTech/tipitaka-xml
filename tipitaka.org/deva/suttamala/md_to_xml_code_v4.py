@@ -13,10 +13,24 @@
 #   Converted to:
 #       <p rend="subhead">text</p>
 #
-# - Line starts with ** @ [Devanagari Number].:
+# - Line starts with ** @ [Devanagari Number]. and ends with **:
 #       ** @५१. यमिवण्णो न वा।** 
 #   Converted to:
+#   <p rend="bodytext" n="51"><hi rend="paranum">५१</hi><hi rend="dot">.</hi><hi rend="bold">यमिवण्णो न वा।</hi></p>
+#
+# - Line starts with ** @ [Devanagari Number]. and ends with ** after the dot (.):
+#       ** @५१.** यमिवण्णो न वा। 
+#   Converted to:
 #   <p rend="bodytext" n="51"><hi rend="paranum">५१</hi><hi rend="dot">.</hi>यमिवण्णो न वा।</p>
+#
+# - Line starts with ** @ [Devanagari Number]. and ends with ** after the dot (.) followed by another set of **{some text}** in the same paragraph:
+#       ** @५१.** यमिवण्णो **न वा।** सब्बकम्मिकअमच्चो 
+#   Converted to:
+#   <p rend="bodytext" n="51"><hi rend="paranum">५१</hi><hi rend="dot">.</hi> यमिवण्णो <hi rend="bold">न वा।</hi> सब्बकम्मिकअमच्चो</p>
+#
+# - Line starts with <p rend="centre"> and ends with </p>
+#   are output directly.
+#   As MD doesn't support centre text, we'd manually enter the centre text in xsl format.
 #
 # - Normal lines ending with two spaces ("  "):
 #       text  (two trailing spaces)
@@ -28,9 +42,9 @@
 #   Converted to an empty body text paragraph:
 #       <p rend="bodytext"></p>
 #
-# - Gatha Lines: Lines beginning with '> >':
-#       > > gatha line text
-#   These lines are grouped together until a line that does not start with '> >' is encountered.
+# - Gatha Lines: Lines beginning with '>' and ends with '>':
+#       > gatha line text>
+#   These lines are grouped together until a line that does not start with '>' is encountered.
 #   The first line of a gatha group is <p rend="gatha1">...</p>, the second is <p rend="gatha2">...</p>, 
 #   and so forth until the last line is <p rend="gathalast">...</p>.
 #   If there is only one gatha line in the group, it is directly assigned "gathalast".
@@ -45,8 +59,43 @@
 # Note:
 # - Ensure that the given folder and file are correct and that you have permission to read/write files.
 # - If any error occurs (like file not found), the code will handle it gracefully and print error messages.
+#
 ###############################################################
 
+'''User Guide
+To centre a piece of text without bold, enter:
+    <p rend="centre">pice of text</p>
+
+To define a book title, enter:
+    #Book Title#
+
+To define a chapter, enter:
+    ###Chapter###
+
+To make some piece of text bold, enter ** before and after the text that needs to be bold:
+    लोणधूपनं विय सब्बव्यञ्जनेसु **सब्बकम्मिकअमच्चो विय च** सब्बराजकिच्चेसु, सब्बत्थ इच्छितब्बं होति
+
+To add a bold number to start of the paragraph, enter:
+    ** @३१.** परो वा असरूपा।
+
+To add a bold number to start of the paragraph, as well as the rest of the text, enter:
+    ** @३१. परो वा असरूपा।**
+
+To add a bold number to start of the paragraph, then make some piece of text bold in the rest of the paragraph, enter:
+    ** @१५०.** निग्गहीतप्परो **इकारो अकारं** उकारञ्च मकारे।
+
+To add a blank line, enter:
+    <br>
+
+To enter gatha lines, add > at the start and end of each gatha line:
+    >कुब्बन्ति योगं परमानुभवा, >  
+
+
+
+
+
+
+'''
 
 import os
 import re
