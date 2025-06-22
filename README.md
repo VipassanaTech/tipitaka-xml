@@ -2,11 +2,11 @@
 
 Source files for Tipitaka.org website.
 
-##The HTML Source files
+## The HTML Source files
 ---------------------
 These are located in the tipitaka.org folder.
 
-##Code Converters
+## Code Converters
 -----------------
 
 The also contains various Python and C# code snippets to perform different types of script conversions needed for the site.
