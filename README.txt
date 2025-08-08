@@ -18,5 +18,4 @@ How to apply corrections to the Tipitaka files
 
 2) Convert the .txt files in /root text files/ into the /tipitaka.org/deva/cscd/ XML files via the pitaka2xml.exe script using the -split option (or for batch conversions via the pitaka2xml.bat batch file)
 
-
 3) Use the various deva2*.exe scripts to convert the Devanagari XML into the XML of the various scripts
