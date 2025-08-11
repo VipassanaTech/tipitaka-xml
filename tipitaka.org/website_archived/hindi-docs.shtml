@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="Hindi Publications Related to the Tipitaka" />
+<meta name="description" content="Hindi Publications Related to the Tipitaka" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>Hindi Publications Related to the Tipitaka</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+&nbsp;&nbsp;&nbsp;<img src="./images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; Hindi Publications</div>
+      <h1 class="contenttitle"> Tipiṭaka Related Hindi Publications<br />
+        by the Vipassana Research Institute</h1>
+      <p> Hindi publications of Vipassana Research Institute related to the Tipitaka available online. Kindly download and install the <a href="http://www.adobe.com/products/acrobat/">Acrobat Reader</a> to enable you to access it. Clicking on the book links will take you to the Table of contents and clicking on the topics will take you to the page containing the respective topics.</p>
+      <p>1. <strong>Suttasaar</strong> in three volumes - Essence in short of the various suttas from the Tipitaka</p>
+      <ul>
+        <li>Volume 1 : <a href="/hindi/suttasaar/DighaMajjhimasaar.pdf"><em>Digha Nikaya &amp; Majjhima Nikaya</em></a></li>
+        <li>Volume 2 : <a href="/hindi/suttasaar/Samyuttasaar.pdf"><em>Samyutta Nikaya</em></a></li>
+        <li>Volume 3 : <a href="/hindi/suttasaar/AnguttarKhuddaksaar.pdf"><em>Anguttara Nikaya &amp; Khuddaka Nikaya</em></a></li>
+      </ul>
+      <p>2. <strong><a href="/hindi/Dhammapada.pdf"><em>Dhammapada</em></a></strong> Pali with hindi translation of this important book from the cannon is very valuable.</p>
+      <p>3. <strong><a href="/hindi/dhammavani.pdf"><em>Dhammavani sangraha</em></a></strong> Inspiring couplets in pali with hindi translations.</p>
+      <p>4. <strong><em>Anguttara Nikaya</em> - </strong>volume 1 - A Hindi translation of a part of the Sutta pitaka of the pali cannon</p>
+      <ul>
+        <li><a href="/hindi/anguttaraNikaya/Preface.pdf">Preface</a>
+          <ol>
+            <li> <strong><em>Ekaka Nipata</em>:</strong>
+              <ul>
+                <li><a href="/hindi/anguttaraNikaya/ekakanipata%281-13%29.pdf">section 1</a></li>
+                <li><a href="/hindi/anguttaraNikaya/ekakanipata%2814-20%29.pdf">section 2</a></li>
+              </ul>
+            </li>
+            <li><strong><em>Dvika Nipata</em>:</strong>
+              <ul>
+                <li><a href="/hindi/anguttaraNikaya/dvikanipata%281-5%29.pdf">section 1</a></li>
+                <li><a href="/hindi/anguttaraNikaya/dvikanipata%286-10%29.pdf">section 2</a></li>
+                <li><a href="/hindi/anguttaraNikaya/dvikanipata%2811-15%29.pdf">section 3</a></li>
+              </ul>
+            </li>
+            <li><strong><em>Trika Nipata</em>:</strong>
+              <ul>
+                <li><a href="/hindi/anguttaraNikaya/trikanipata%281-5%29.pdf">section 1</a></li>
+                <li><a href="/hindi/anguttaraNikaya/trikanipata%286-10%29.pdf">section 2</a></li>
+                <li><a href="/hindi/anguttaraNikaya/trikanipata%2811-18%29.pdf">section 3</a></li>
+              </ul>
+            </li>
+          </ol>
+        </li>
+        <li><a href="/hindi/anguttaraNikaya/Appendix.pdf">Appendix</a></li>
+      </ul>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>

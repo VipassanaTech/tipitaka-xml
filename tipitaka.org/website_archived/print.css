@@ -1,0 +1,178 @@
+body
+{
+	font-family: Times Ext Roman, Gentium, Arial Unicode MS, Tahoma, Verdana, sans-serif;
+	background: #FFFFFF;
+	color: #000000;
+	font-size: 12px;
+	padding: 15px 0;
+	margin: 0;
+}
+
+img
+{
+	border: 0;
+}
+
+/*-------------------------------------------------
+  Links
+-------------------------------------------------*/
+
+a:link, a:visited
+{
+	text-decoration: underline;
+	color: #323274;
+}
+
+a:hover, a:active
+{
+	color: #635D45;
+}
+
+#copyrights a:link, #copyrights a:visited
+{
+	color: #474747;
+}
+
+#copyrights a:hover, #copyrights a:active
+{
+	color: #737373;
+}
+
+/*-------------------------------------------------
+  Basic classes
+-------------------------------------------------*/
+
+.hidden
+{
+	display: none;
+}
+
+.clearing
+{
+	width: 750px;
+	height: 0;
+	clear: both;
+}
+
+.pagepath
+{
+	text-align: right;
+}
+
+h2
+{
+	font-size: 16px;
+}
+
+
+/*-------------------------------------------------
+  Header
+-------------------------------------------------*/
+
+#header
+{
+	display: none;
+}
+
+/*-------------------------------------------------
+  Headings
+-------------------------------------------------*/
+
+h2.contenttitle
+{
+	clear: both;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 6px 0 6px 0;
+	margin: 0;
+	text-align:center;
+}
+
+h1.contenttitle
+{
+	clear: both;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 6px 0 6px 0;
+	margin: 0;
+	text-align:center;
+}
+
+/*-------------------------------------------------
+  Item styles
+-------------------------------------------------*/
+
+#tablecenter
+{
+	margin: auto;
+	text-align: center;
+	border-style: outset;
+	border-width: thin;
+	width: 95%;
+}
+
+#tablecenter td
+{
+	text-align: center;
+	border-style: solid;
+	border-color: Gray;
+	border-width: 1px;
+}
+
+#tablecenter th
+{
+	text-align: center;
+	border-style: solid;
+	border-color: Gray;
+	border-width: 1px;
+}
+
+#tableleft
+{
+	margin: auto;
+	text-align: left;
+	border-style: outset;
+	border-width: thin;
+	width: 95%;
+}
+
+#tableleft td
+{
+	text-align: left;
+	border-style: solid;
+	border-color: Gray;
+	border-width: 1px;
+}
+
+#tableleft th
+{
+	text-align: left;
+	border-style: solid;
+	border-color: Gray;
+	border-width: 1px;
+}
+
+
+/*-------------------------------------------------
+  Menu
+-------------------------------------------------*/
+
+#sidebarcontainer
+{
+	display: none;
+}
+
+
+/*-------------------------------------------------
+  Footer
+-------------------------------------------------*/
+
+#footer
+{
+	display: none;
+}
+
+#copyrights
+{
+	color: #474747;
+}

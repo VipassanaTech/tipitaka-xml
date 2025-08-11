@@ -1,0 +1,11 @@
+<!--/includes/footer.ssi START-->
+<div id="footer">
+  <div id="copyrights">
+    <hr width="60%" size="2px"/>
+    <small>
+    	<a href="mailto:help@tipitaka.org">Contact the Webmaster</a><br /><br />
+        Copyright Vipassana Research Institute
+    </small>
+  </div>
+</div>
+<!--/includes/footer.ssi END-->

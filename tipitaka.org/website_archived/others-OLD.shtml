@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="The Pali Tipitaka" />
+<meta name="description" content="The Pali Tipitaka" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>The Pali Tipitaka</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+&nbsp;&nbsp;&nbsp;<img src="./images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; Other Scripts</div>
+      <h1 class="contenttitle">Scripts which are unapproved or under construction</h1>	
+<br />
+        <a href="/guru/" target="Gurmukhi">Gurmukhi</a><br>
+        <a href="/khmr/" target="Khmer">Khmer</a><br>
+        <a href="/thai/" target="Thai">Thai</a><br>
+        <a href="/tibt/" target="Tibetan">Tibetan</a><br>  
+<br />
+The above scripts are not yet fully checked. VRI is looking for volunteers who would like to help in this effort by reading some of
+these pages and sending their comments. Please write to <a href="mailto:help@tipitaka.org">help@tipitaka.org</a> if you would like to help in this effort.<br /><br />
+<strong>Please read the <a href="/help">help</a> page carefully for more information on setting up your system and also on how to use this site.</strong><br>
+      <br />
+      In case of difficulties in viewing the Pāḷi Text or if you notice any other errors on this site,&nbsp;please&nbsp; write to <a href="mailto:help@tipitaka.org">help@tipitaka.org</a> describing the problem.<br />
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>

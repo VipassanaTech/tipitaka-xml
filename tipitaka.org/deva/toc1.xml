@@ -1,0 +1,81 @@
+﻿<?xml version="1.0"?>
+<tree>
+<!--  तिपिटक (मूल)  //-->
+	<tree text="विनयपिटक">
+		<tree text="पाराजिकपाळि" src="./cscd/vin01m.mul.toc.xml"/>
+		<tree text="पाचित्तियपाळि" src="./cscd/vin02m1.mul.toc.xml"/>
+		<tree text="महावग्गपाळि" src="./cscd/vin02m2.mul.toc.xml"/>
+		<tree text="चूळवग्गपाळि" src="./cscd/vin02m3.mul.toc.xml"/>
+		<tree text="परिवारपाळि" src="./cscd/vin02m4.mul.toc.xml"/>
+	</tree>
+	<tree text="सुत्तपिटक">
+		<tree text="दीघनिकाय">
+			<tree text="सीलक्खन्धवग्गपाळि" src="./cscd/s0101m.mul.toc.xml"/>
+			<tree text="महावग्गपाळि" src="./cscd/s0102m.mul.toc.xml"/>
+			<tree text="पाथिकवग्गपाळि" src="./cscd/s0103m.mul.toc.xml"/>
+		</tree>
+		<tree text="मज्झिमनिकाय">
+			<tree text="मूलपण्णासपाळि" src="./cscd/s0201m.mul.toc.xml"/>
+			<tree text="मज्झिमपण्णासपाळि" src="./cscd/s0202m.mul.toc.xml"/>
+			<tree text="उपरिपण्णासपाळि" src="./cscd/s0203m.mul.toc.xml"/>
+		</tree>
+		<tree text="संयुत्तनिकाय">
+			<tree text="सगाथावग्गपाळि" src="./cscd/s0301m.mul.toc.xml"/>
+			<tree text="निदानवग्गपाळि" src="./cscd/s0302m.mul.toc.xml"/>
+			<tree text="खन्धवग्गपाळि" src="./cscd/s0303m.mul.toc.xml"/>
+			<tree text="सळायतनवग्गपाळि" src="./cscd/s0304m.mul.toc.xml"/>
+			<tree text="महावग्गपाळि" src="./cscd/s0305m.mul.toc.xml"/>
+		</tree>
+		<tree text="अङ्गुत्तरनिकाय">
+			<tree text="एककनिपातपाळि" src="./cscd/s0401m.mul.toc.xml"/>
+			<tree text="दुकनिपातपाळि" src="./cscd/s0402m1.mul.toc.xml"/>
+			<tree text="तिकनिपातपाळि" src="./cscd/s0402m2.mul.toc.xml"/>
+			<tree text="चतुक्कनिपातपाळि" src="./cscd/s0402m3.mul.toc.xml"/>
+			<tree text="पञ्चकनिपातपाळि" src="./cscd/s0403m1.mul.toc.xml"/>
+			<tree text="छक्कनिपातपाळि" src="./cscd/s0403m2.mul.toc.xml"/>
+			<tree text="सत्तकनिपातपाळि" src="./cscd/s0403m3.mul.toc.xml"/>
+			<tree text="अट्ठकादिनिपातपाळि" src="./cscd/s0404m1.mul.toc.xml"/>
+			<tree text="नवकनिपातपाळि" src="./cscd/s0404m2.mul.toc.xml"/>
+			<tree text="दसकनिपातपाळि" src="./cscd/s0404m3.mul.toc.xml"/>
+			<tree text="एकादसकनिपातपाळि" src="./cscd/s0404m4.mul.toc.xml"/>
+		</tree>
+		<tree text="खुद्दकनिकाय">
+			<tree text="खुद्दकपाठपाळि" src="./cscd/s0501m.mul.toc.xml"/>
+			<tree text="धम्मपदपाळि" src="./cscd/s0502m.mul.toc.xml"/>
+			<tree text="उदानपाळि" src="./cscd/s0503m.mul.toc.xml"/>
+			<tree text="इतिवुत्तकपाळि" src="./cscd/s0504m.mul.toc.xml"/>
+			<tree text="सुत्तनिपातपाळि" src="./cscd/s0505m.mul.toc.xml"/>
+			<tree text="विमानवत्थुपाळि" src="./cscd/s0506m.mul.toc.xml"/>
+			<tree text="पेतवत्थुपाळि" src="./cscd/s0507m.mul.toc.xml"/>
+			<tree text="थेरगाथापाळि" src="./cscd/s0508m.mul.toc.xml"/>
+			<tree text="थेरीगाथापाळि" src="./cscd/s0509m.mul.toc.xml"/>
+			<tree text="अपदानपाळि-१" src="./cscd/s0510m1.mul.toc.xml"/>
+			<tree text="अपदानपाळि-२" src="./cscd/s0510m2.mul.toc.xml"/>
+			<tree text="बुद्धवंसपाळि" src="./cscd/s0511m.mul.toc.xml"/>
+			<tree text="चरियापिटकपाळि" src="./cscd/s0512m.mul.toc.xml"/>
+			<tree text="जातकपाळि-१" src="./cscd/s0513m.mul.toc.xml"/>
+			<tree text="जातकपाळि-२" src="./cscd/s0514m.mul.toc.xml"/>
+			<tree text="महानिद्देसपाळि" src="./cscd/s0515m.mul.toc.xml"/>
+			<tree text="चूळनिद्देसपाळि" src="./cscd/s0516m.mul.toc.xml"/>
+			<tree text="पटिसम्भिदामग्गपाळि" src="./cscd/s0517m.mul.toc.xml"/>
+			<tree text="नेत्तिप्पकरणपाळि" src="./cscd/s0519m.mul.toc.xml"/>
+			<tree text="मिलिन्दपञ्हपाळि" src="./cscd/s0518m.nrf.toc.xml"/>
+			<tree text="पेटकोपदेसपाळि" src="./cscd/s0520m.nrf.toc.xml"/>
+		</tree>
+	</tree>
+	<tree text="अभिधम्मपिटक">
+		<tree text="धम्मसङ्गणीपाळि" src="./cscd/abh01m.mul.toc.xml"/>
+		<tree text="विभङ्गपाळि" src="./cscd/abh02m.mul.toc.xml"/>
+		<tree text="धातुकथापाळि" src="./cscd/abh03m1.mul.toc.xml"/>
+		<tree text="पुग्गलपञ्ञत्तिपाळि" src="./cscd/abh03m2.mul.toc.xml"/>
+		<tree text="कथावत्थुपाळि" src="./cscd/abh03m3.mul.toc.xml"/>
+		<tree text="यमकपाळि-१" src="./cscd/abh03m4.mul.toc.xml"/>
+		<tree text="यमकपाळि-२" src="./cscd/abh03m5.mul.toc.xml"/>
+		<tree text="यमकपाळि-३" src="./cscd/abh03m6.mul.toc.xml"/>
+		<tree text="पट्ठानपाळि-१" src="./cscd/abh03m7.mul.toc.xml"/>
+		<tree text="पट्ठानपाळि-२" src="./cscd/abh03m8.mul.toc.xml"/>
+		<tree text="पट्ठानपाळि-३" src="./cscd/abh03m9.mul.toc.xml"/>
+		<tree text="पट्ठानपाळि-४" src="./cscd/abh03m10.mul.toc.xml"/>
+		<tree text="पट्ठानपाळि-५" src="./cscd/abh03m11.mul.toc.xml"/>
+	</tree>
+</tree>

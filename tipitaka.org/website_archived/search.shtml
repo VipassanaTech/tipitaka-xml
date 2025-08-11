@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="Pali Tipitaka Search" />
+<meta name="description" content="Pali Tipitaka Search" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>Pali Tipitaka Search</title>
+<script language="javascript">
+function insertchar(thechar)
+{
+document.googleform.q.value=document.googleform.q.value+thechar; document.googleform.q.focus();
+}
+</script>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+  &nbsp;&nbsp;&nbsp;<img src="./images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; Tipitaka Search</div>
+      <h1 class="contenttitle">Tipiṭaka&nbsp;Search</h1>
+      <p><br />
+        To search the&nbsp;<a href="/chattha">Chaṭṭha Saṅgāyana</a> Tipiṭaka, please use the <a href="http://search.tipitaka.org/solr/web" target="_blank">online search engine</a>.
+<!-- Removing old database search engine as it is currently not available   
+      <p>2)
+        Older <a href="http://tutor.ksana.tw/cgi-bin/accelon3.cgi/ksana?db=tipitaka.adb" target="_blank">database search engine</a> (see instructions below)</p>
+      <h2 class="contenttitle">How to use the Database Search Engine</h2>
+      <p>1. Type the word you are looking for in the search box at upper left hand corner. In case of multiple words, leave a space between words</p>
+      <p>2. Click on the Go button</p>
+      <p><strong>Example 1:&nbsp;Single Word Search</strong><br />
+        <br />
+        For eg a search for the word <strong>&ldquo;dana&rdquo;</strong> will result in a display as under:</p>
+      <p>Full text / <span style="color: rgb(204, 0, 0);">133</span> records</p>
+      <p>[+] (<span style="color: rgb(204, 0, 0);">13</span>) Vinaya<br />
+        [+] (<span style="color: rgb(204, 0, 0);">75</span>) Sutta<br />
+        [+] (<span style="color: rgb(204, 0, 0);">2</span>) Abhidhammapitake<br />
+        [+] (<span style="color: rgb(204, 0, 0);">43</span>) Anna </p>
+      <p>If you click on the plus sign next to Vinaya, you will see the tree of the results for this word in Vinaya as under</p>
+      <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=tree&amp;dn=$F000006&amp;pdn=$4000001,$A000001&amp;t=">[+]</a> (<a style="color: rgb(204, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000006&amp;t=&amp;excerpt=1" target="dict">1</a>)<a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000006&amp;excerpt=0&amp;t=" target="text"> Parivārapāḷi</a><br />
+      <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=tree&amp;dn=$F00000D&amp;pdn=$4000001,$A000001&amp;t=">[+]</a> (<a style="color: rgb(204, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F00000D&amp;t=&amp;excerpt=1" target="dict">1</a>)<a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F00000D&amp;excerpt=0&amp;t=" target="text"> Sāratthadīpanī-ṭīkā (dutiyo bhāgo)</a><br />
+      <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=tree&amp;dn=$F000010&amp;pdn=$4000001,$A000001&amp;t=">[+]</a> (<a style="color: rgb(204, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000010&amp;t=&amp;excerpt=1" target="dict">1</a>)<a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000010&amp;excerpt=0&amp;t=" target="text"> Vinayasaṅgaha-aṭṭhakathā</a><br />
+      <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=tree&amp;dn=$F000014&amp;pdn=$4000001,$A000001&amp;t=">[+]</a> (<a style="color: rgb(204, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000014&amp;t=&amp;excerpt=1" target="dict">1</a>)<a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000014&amp;excerpt=0&amp;t=" target="text"> Vimativinodanī-ṭīkā (dutiyo bhāgo)</a><br />
+      <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=tree&amp;dn=$F000015&amp;pdn=$4000001,$A000001&amp;t=">[+]</a> (<a style="color: rgb(204, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000015&amp;t=&amp;excerpt=1" target="dict">1</a>)<a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000015&amp;excerpt=0&amp;t=" target="text"> Vinayālaṅkāra-ṭīkā (paṭhamo bhāgo)</a><br />
+      <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=tree&amp;dn=$F000019&amp;pdn=$4000001,$A000001&amp;t=">[+]</a> (<a style="color: rgb(204, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000019&amp;t=&amp;excerpt=1" target="dict">3</a>)<a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F000019&amp;excerpt=0&amp;t=" target="text"> Vinayavinicchaya-ṭīkā (dutiyo bhāgo)</a><br />
+      <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=tree&amp;dn=$F00001A&amp;pdn=$4000001,$A000001&amp;t=">[+]</a> (<a style="color: rgb(204, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F00001A&amp;t=&amp;excerpt=1" target="dict">1</a>)<a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F00001A&amp;excerpt=0&amp;t=" target="text"> Pācityādiyojanā</a><br />
+      <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=tree&amp;dn=$F00001B&amp;pdn=$4000001,$A000001&amp;t=">[+]</a> (<a style="color: rgb(204, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F00001B&amp;t=&amp;excerpt=1" target="dict">4</a>)<a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=dana&amp;act=text&amp;dn=$F00001B&amp;excerpt=0&amp;t=" target="text"> Khuddasikkhā-mūlasikkhā</a>
+      <p> 3. If you click further on the (+) sign again, it will open up the tree further. </p>
+      <p>4. If you click on the number (<span style="color: rgb(204, 0, 0);">13</span>) next to Vinaya &ndash; this means 13 results in Vinaya &ndash; then you will see the results open up in the lower box on the right,&nbsp; as under :</p>
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <col width="256*">
+        <tbody>
+          <tr>
+            <td bgcolor="#e0e0ff" width="100%"><p>1. <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;act=text&amp;gopage=0&amp;excerpt=0&amp;ln=58316&amp;fromln=6&amp;tofind=dana" target="text">Parivārapāḷi/Ekuttarikanayo pg.143(Goto Text)</a></p></td>
+          </tr>
+        </tbody>
+      </table>
+      <p><span style="background: rgb(255, 127, 127) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">dānā</span> paṭiggahā bhogā, tividhā puna dhammikā. </p>
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <col width="256*">
+        <tbody>
+          <tr>
+            <td bgcolor="#e0e0ff" width="100%"><p>2. <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;act=text&amp;gopage=0&amp;excerpt=0&amp;ln=110647&amp;fromln=6&amp;tofind=dana" target="text">Sāratthadīpanī-ṭīkā (dutiyo bhāgo)/1. Pārājikakaṇḍaṃ pg.24(Goto Text)</a></p></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>acchedānupasampanna-<span style="background: rgb(255, 127, 127) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">dānā</span> gāhopasammatī&rdquo;ti.&ndash; </p>
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <col width="256*">
+        <tbody>
+          <tr>
+            <td bgcolor="#e0e0ff" width="100%"><p>3. <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;act=text&amp;gopage=0&amp;excerpt=0&amp;ln=147446&amp;fromln=6&amp;tofind=dana" target="text">Vinayasaṅgaha-aṭṭhakathā/13. Dānalakkhaṇādivinicchayakathā pg.16(Goto Text)</a></p></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>ettha tāva <span style="background: rgb(255, 127, 127) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">dāna</span>ntiattano santakassa cīvarādiparikkhārassa </p>
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <col width="256*">
+        <tbody>
+          <tr>
+            <td bgcolor="#e0e0ff" width="100%"><p>4. <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;act=text&amp;gopage=0&amp;excerpt=0&amp;ln=194090&amp;fromln=6&amp;tofind=dana" target="text">Vimativinodanī-ṭīkā (dutiyo bhāgo)/Pa&ntilde;cavaggo pg.359(Goto Text)</a></p></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Brahmadaṇḍassa <span style="background: rgb(255, 127, 127) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">dāna</span>nti kharadaṇḍassa ukkaṭṭhadaṇḍassa dānaṃ. </p>
+      <table border="0" cellpadding="2" cellspacing="0" width="100%">
+        <col width="256*">
+        <tbody>
+          <tr>
+            <td bgcolor="#e0e0ff" width="100%"><p>5. <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;act=text&amp;gopage=0&amp;excerpt=0&amp;ln=210303&amp;fromln=6&amp;tofind=dana" target="text">Vinayālaṅkāra-ṭīkā (paṭhamo bhāgo)/33. Kammākammavinicchayakathā pg.117(Goto Text)</a></p></td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Brahmadaṇḍassa <span style="background: rgb(255, 127, 127) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">dāna</span>nti kharadaṇḍassaukkaṭṭhadaṇḍassa dānaṃ. </p>
+      <p>and so on. Click on Next Result set to see more results</p>
+      <p>5. If you click on any result, that particular para will open up in the box on the upper right with the search word highlighted, In case of multiple words, the same will be highlighted in different colours.</p>
+      <p>6. If you wish to see more lines in the box for large paragraphs, then increase the same in the box saying &ldquo;Show lines on page&rdquo;</p>
+      <p>7. Clicking on Next result set in upper box will show more pages from the same paragraph. </p>
+      <p>8. To go back to a previous screen, press the back button of your browser.</p>
+      <p><strong>Example 2: Use of Multiple Words</strong></p>
+      <p>A search for the words <strong>"phutthassa loke dhamma"</strong> will give the results as below</p>
+      <p>
+        <node dn="$4000001">Full Text</node>
+        / <span style="color: rgb(153, 0, 0);" class="hit">4</span> records </p>
+      <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=phutthassa%20loke%20dhamma&amp;act=tree&amp;dn=$A000002&amp;pdn=$4000001&amp;t=" title="Open folder">[+]</a> (<a style="color: rgb(153, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=phutthassa%20loke%20dhamma&amp;act=text&amp;dn=$A000002&amp;t=&amp;excerpt=1" target="dict"><span class="hit">4</span></a>)
+      <node dn="$A000002" hit="4" children="1"> Sutta</node>
+      <p>and if you click on the (<a style="color: rgb(153, 0, 0);" href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;tofind=phutthassa%20loke%20dhamma&amp;act=text&amp;dn=$A000002&amp;t=&amp;excerpt=1" target="dict"><span class="hit">4</span></a>) next to Sutta, you should see as under in the result box on lower right</p>
+      <table width="100%">
+        <tbody>
+          <tr>
+            <td bgcolor="#e0e0ff">1. <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;act=text&amp;gopage=0&amp;excerpt=0&amp;ln=914088&amp;fromln=303622&amp;tofind=phutthassa%20loke%20dhamma" target="text">Khuddakapāṭha-aṭṭhakathā/5. Maṅgalasuttavaṇṇanā pg.43(Goto Text)</a> 
+          </tr>
+        </tbody>
+      </table>
+      12 . Idāni <span style="background: rgb(255, 127, 127) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">phuṭṭhassa</span> lokadhammehīti ettha <span style="background: rgb(255, 207, 207) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">phuṭṭhassāti</span> phusitassa chupitassa sampattassa. <span style="background: rgb(207, 255, 207) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">Loke</span> <span style="background: rgb(255, 255, 127) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">dhammā</span>
+      </p>
+      <table width="100%">
+        <tbody>
+          <tr>
+            <td bgcolor="#e0e0ff">3. <a href="http://search.tipitaka.org/cgi/accelon3cgi.exe/ksana?db=tipitaka.adb&amp;act=text&amp;gopage=0&amp;excerpt=0&amp;ln=975828&amp;fromln=303622&amp;tofind=phutthassa%20loke%20dhamma" target="text">Suttanipāta-aṭṭhakathā/2. Cūḷavaggo pg.58(Goto Text)</a></td>
+          </tr>
+        </tbody>
+      </table>
+      271 . Idāni <span style="background: rgb(255, 127, 127) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">phuṭṭhassa</span> lokadhammehīti ettha <span style="background: rgb(255, 207, 207) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">phuṭṭhassāti</span> phusitassa chupitassa sampattassa. <span style="background: rgb(207, 255, 207) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">Loke</span> <span style="background: rgb(255, 255, 127) none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">dhammā</span> lokadhammā, yāva lokappavatti, tāva anivattakā dhammāti vuttaṃ hoti. <br />
+      <p>At any time, you can type in a fresh word in the search box and click &ldquo;Go&rdquo;.&nbsp;</p>
+      <p>There is no need to use diacriticals for search. However if you wish to do so, please use the keyboard below to type the same.</p>
+-->
+      <h2 class="contenttitle">Key Help for special&nbsp;Pāḷi characters</h2>
+      <br />
+      <form name="googleform">
+        Click on the buttons below to enter special Pali characters, and then copy the text from the box below into the search engine's box<br />
+        <input name="q" size="35" maxlength="255" value="" type="text">
+      </form>
+      <table id="tablecenter">
+        <tbody>
+          <tr>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ā') " value=" ā " type="button"></td>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ḍ') " value=" ḍ " type="button"></td>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ī') " value=" ī " type="button"></td>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ḷ') " value=" ḷ " type="button"></td>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ṃ') " value=" ṃ " type="button"></td>
+          </tr>
+          <tr>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ṅ') " value=" ṅ " type="button"></td>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ṇ') " value=" ṇ " type="button"></td>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ñ') " value=" ñ " type="button"></td>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ṭ') " value=" ṭ " type="button"></td>
+            <td ><input style="font-size: 100%;" onclick="insertchar('ū') " value=" ū " type="button"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>

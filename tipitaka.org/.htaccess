@@ -1,0 +1,38 @@
+# Force HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301] 
+# Enable Transparent Content Negotiation
+Options +MultiViews
+MultiviewsMatch Any
+ErrorDocument 404 /404
+DirectoryIndex index.html
+Redirect 301 /tindex.shtml https://tipitaka.org/others.html
+Redirect 301 /tipitaka/booklistframe2.html https://tipitaka.org/
+Redirect 301 /tipitaka/index.html https://tipitaka.org/
+Redirect 301 /unicode/index.html https://tipitaka.org/
+Redirect 301 /english/index.html https://tipitaka.org/english-docs
+Redirect 301 /english.shtml https://tipitaka.org/english-docs
+Redirect 301 /cell/index.html https://tipitaka.org/
+Redirect 301 /general/pali.html https://tipitaka.org/
+Redirect 301 /general/ https://tipitaka.org/
+Redirect 301 /hindi/index.html https://tipitaka.org/hindi-docs
+Redirect 301 /eot.shtml https://tipitaka.org/eot.html
+Redirect 301 /roman/booklistframe2.html https://tipitaka.org/
+Redirect 301 /roman/chattha.html https://tipitaka.org/chattha
+Redirect 301 /roman/ers.html https://tipitaka.org/help
+Redirect 301 /search.html https://search.tipitaka.org/solr/web
+Redirect 301 /vriroman/index.html https://tipitaka.org/
+Redirect 301 /thai/thai-dict.html https://tipitaka.org/thai-dict
+Redirect 301 /english/eot.html https://tipitaka.org/eot
+Redirect 301 /english/eot.html https://tipitaka.org/eot
+Redirect 301 /cscd4/ https://tipitaka.org/cst/
+Redirect 301 /cscd4 https://tipitaka.org/cst/
+Redirect 301 /cscd/ https://tipitaka.org/cst/
+Redirect 301 /cscd https://tipitaka.org/cst/
+Redirect 301 /cst/blog https://tipitaka.org/cst/
+Redirect 301 /cst/blog/ https://tipitaka.org/cst/
+Redirect 301 /cst/release-notes.htm https://tipitaka.org/cst/category/releasenotes/
+Redirect 301 /iphone/ https://tipitaka.org/ios/
+Redirect 301 /keyboard/ https://tipitaka.org/keyboard.html
+Redirect 301 /others.shtml https://tipitaka.org/others.html

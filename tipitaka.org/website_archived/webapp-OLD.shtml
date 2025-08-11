@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Meta information for search engines -->
+<meta name="name" content="Tipitaka iOS webapp" />
+<meta name="description" content="Tipitaka iOS webapp" />
+<!-- Site stylesheet (site colors and layout definitions) -->
+<link rel="stylesheet" media="screen" type="text/css" href="./screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+<title>iOS Web App</title>
+</head>
+<body>
+<!-- Page header -->
+<div id="header"><br />
+  &nbsp;&nbsp;&nbsp;<img src="./images/aniwheel2.gif" /><a name="top" id="top"></a></div>
+<div id="mainwrapper">
+  <!-- Page content -->
+  <div id="container">
+    <div class="content">
+      <div class="pagepath"> <a href="/">Home</a> &gt; iOS</div>
+      <h1 class="contenttitle">iOS Web App</h1>
+      <p>This is a work in progress and only the Tipiṭaka (Mūla) is complete for all the scripts.</p>
+      <p>To install the Pāḷi Tipiṭaka web app on your iPhone,  iPod Touch, or iPad go to <a href="http://tipitaka.org/ios">tipitaka.org/ios</a>, and then follow the steps below for <a href="#iphone">iPhone &amp; iPod Touch</a> and <a href="#ipad">iPad</a>.</p>
+      <p><a name="ipad"></a><strong><u>iPad</u></strong><br/>
+        Click on the icon at the top of the screen as shown below.<br/>
+        <br/>
+        <img src="images/iPad-1.png" /></p>
+      <p>Click on the &quot;Add to Home Screen&quot; button.<br/>
+        <br/>
+        <img src="images/iPad-2.png" /></p>
+      <p>Click on the &quot;Add&quot; button.<br/>
+        <br/>
+        <img src="images/iPad-3.png" /></p>
+      <p>The Pāḷi Tipiṭaka icon will now appear on your iPad's home screen. <br/>
+        <br/>
+        <img src="images/iPad-4.png" /><br/>
+      </p>
+      <p><a name="iphone"></a><strong><u>iPhone &amp; iPod Touch</u></strong><br/>
+        Click on the icon at the bottom center of the screen as shown below.<br/>
+        <br/>
+        <img src="images/iPhone-1.png" /></p>
+      <p>Click on the &quot;Add to Home Screen&quot; button.<br/>
+        <br/>
+        <img src="images/iPhone-2.png" /></p>
+      <p>Click on the &quot;Add&quot; button.<br/>
+        <br/>
+        <img src="images/iPhone-3.png" /></p>
+      <p>The Pāḷi Tipiṭaka icon will now appear on your iPhone's or iPod Touch's home screen. <br/>
+        <br/>
+        <img src="images/iPhone-4.png" /><br/>
+      </p>
+    </div>
+    <!-- End content -->
+  </div>
+  <!-- End container -->
+  <!-- Sidebars -->
+  <!--#include virtual="./sidebars.ssi" -->
+  <div class="clearing"></div>
+</div>
+<!-- End mainwrapper -->
+<!-- Page footer -->
+<!--#include virtual="./footer.ssi" -->
+</body>
+</html>

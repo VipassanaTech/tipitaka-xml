@@ -1,0 +1,77 @@
+<!--/includes/sidebars.ssi START-->
+
+<div id="sidebarcontainer">
+  <!-- Tipitaka Resources Sidebar -->
+  <div class="sidebar">
+    <dl class="sidebardl">
+      <dt> Tipiṭaka Resources </dt>
+      <dd> <a href="/">Home</a> </dd>
+      <dd> <a href="/search">Search</a> </dd>
+      <dd> <a href="/help">Help</a> </dd>
+      <dd> <a href="/cst4">CST4 Desktop Software</a> </dd>
+      <dd> <a href="/webapp">iOS Web App</a> </dd>
+      <dd> <a href="https://github.com/VipassanaTech/tipitaka-xml" target="_blank">GitHub Repo</a> </dd>
+    </dl>
+  </div>
+  <!-- Tipitaka Scripts Sidebar -->
+  <div class="sidebar">
+    <dl class="sidebardl">
+      <dt> Tipiṭaka Scripts </dt>
+      <!--
+      <dd>
+        <a href="/beng/" target="Bengali">Bengali</a>
+      </dd>
+	  -->
+      <dd> Cyrillic <a href="/cyrl/" target="Cyrillic">Web</a> </dd>
+      <dd> Devanagari <a href="/deva/" target="Devanagari">Web</a> | <a href="/pdf/deva">PDF</a>  </dd>
+      <dd> Gujarati <a href="/gujr/" target="Gujarati">Web</a> </dd>
+      <!--	  
+	  <dd>
+        <a href="/guru/" target="Gurmukhi">Gurmukhi</a>
+      </dd>
+	  -->
+      <dd> Kannada <a href="/knda/" target="Kannada">Web</a> </dd>
+      <!--	 	  
+      <dd>
+        <a href="/khmr/" target="Khmer">Khmer</a>
+      </dd>
+	  -->
+      <dd> Malayalam <a href="/mlym/" target="Malayalam">Web</a> </dd>
+      <!--
+      <dd>
+        <a href="/mymr/" target="Myanmar">Myanmar</a>
+      </dd>
+      -->
+      <dd> Roman <a href="/romn/" target="Roman">Web</a> | <a href="/pdf/romn">PDF</a> </dd>
+      <!-- 
+      <dd>
+        <a href="/sinh/" target="Sinhala">Sinhala</a>
+      </dd>
+      -->
+      <dd> Tamil <a href="/taml/" target="Tamil">Web</a> </dd>
+      <dd> Telugu <a href="/telu/" target="Telugu">Web</a> </dd>
+      <dd> <a href="/others">Other Scripts</a> <br/>
+        (Bengali, Gurmukhi, Khmer, Myanmar, Sinhala, Thai, Tibetan) </dd>
+      <!--
+	  <dd>
+        <a href="/thai/" target="Thai">Thai</a>
+      </dd>
+	  <dd>
+        <a href="/tibt/" target="Tibetan">Tibetan</a>
+      </dd>
+	  -->
+    </dl>
+  </div>
+  <!-- Related Information Sidebar -->
+  <div class="sidebar">
+    <dl class="sidebardl">
+      <dt> Related Information </dt>
+      <dd> <a href="/chattha">Chaṭṭha Saṇgayana</a> </dd>
+      <dd> <a href="/thai-dict">Pāḷi-Thai dictionary</a> </dd>
+      <dd> <a href="/hindi-docs">Hindi Publications</a> </dd>
+      <dd> <a href="/english-docs">English Publications</a> </dd>
+      <dd> <a href="/dutch-docs">Dutch Publications</a> </dd>
+    </dl>
+  </div>
+</div>
+<!--/includes/sidebars.ssi END-->
