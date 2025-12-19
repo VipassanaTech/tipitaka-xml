@@ -50,11 +50,11 @@
 #   If there is only one gatha line in the group, it is directly assigned "gathalast".
 #
 # The code:
-# 1. Prompts the user for the folder path and the markdown filename.
-# 2. Attempts to open and read the markdown file.
-# 3. Processes each line according to the above rules.
-# 4. Outputs the result to an XML file with the same base name as the markdown file.
-# 5. Uses try-except blocks and print statements to guide troubleshooting.
+# ** @१.** Prompts the user for the folder path and the markdown filename.
+# ** @२.** Attempts to open and read the markdown file.
+# ** @३.**  Processes each line according to the above rules.
+# ** @४.**  Outputs the result to an XML file with the same base name as the markdown file.
+# ** @५.**  Uses try-except blocks and print statements to guide troubleshooting.
 #
 # Note:
 # - Ensure that the given folder and file are correct and that you have permission to read/write files.
