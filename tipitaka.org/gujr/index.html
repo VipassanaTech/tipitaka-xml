@@ -98,17 +98,18 @@
 					var s = data.instance.get_node(data.selected[0]).id;
                     console.log('node id=',s);
                     //var lnk = $( s+"_anchor").attr('href');    
-                    var lnk = $( "#"+s+"_anchor").attr('href');
+                    var anchor = document.getElementById(s + '_anchor');
+                    var lnk = anchor ? anchor.getAttribute('href') : undefined;
 					//alert('The selected node is: ' + lnk);
 					console.log("lnk is "+lnk);
-                    if (lnk != '#')  // leaf so shows the content
+                    if (typeof lnk === 'string' && lnk != '#')  // leaf so shows the content
 					{
 						window.location.hash = s;
 						$("#t-content").load(lnk);
 						setTimeout(
 						  function() 
 						  {
-							$("html").animate({scrollTop:01}, 00);
+                                $("html").animate({scrollTop:1}, 0);
 								return false;
 						  }, 0);
 					}

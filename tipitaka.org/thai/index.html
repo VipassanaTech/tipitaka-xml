@@ -97,18 +97,21 @@
 				if(data.selected.length) {
 					var s = data.instance.get_node(data.selected[0]).id;
                     console.log('node id=',s);
-                    //var lnk = $( s+"_anchor").attr('href');    
-                    var lnk = $( "#"+s+"_anchor").attr('href');
+                    // Use getElementById instead of jQuery selector because `s` may contain
+                    // characters (dots, underscores) that make the jQuery ID selector fail
+                    // unless escaped. document.getElementById works with the literal id.
+                    var anchor = document.getElementById(s + '_anchor');
+                    var lnk = anchor ? anchor.getAttribute('href') : undefined;
 					//alert('The selected node is: ' + lnk);
 					console.log("lnk is "+lnk);
-                    if (lnk != '#')  // leaf so shows the content
+                    if (typeof lnk === 'string' && lnk != '#')  // leaf so shows the content
 					{
 						window.location.hash = s;
 						$("#t-content").load(lnk);
 						setTimeout(
 						  function() 
 						  {
-							$("html").animate({scrollTop:01}, 00);
+                            $("html").animate({scrollTop:1}, 0);
 								return false;
 						  }, 0);
 					}
@@ -133,7 +136,7 @@
         <!-- Top nav bar from topnav.html imported via JScript (see below) -->
         <div class="nav-wrapper">
             <div class="topnav" id="myTopnav"></div>
-        </div>
+                                        $("html").animate({scrollTop:1}, 0);
 
         <!-- Main Heading -->
         <div class="header">

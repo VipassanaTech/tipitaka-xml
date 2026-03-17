@@ -1,0 +1,4682 @@
+{
+  "replaced_count": 2599,
+  "collision_count": 668,
+  "collisions": [
+    {
+      "text": "4. Devatāvaggo",
+      "old_id": 322,
+      "base": "4.devatavaggo",
+      "final": "4.devatavaggo_tipitaka",
+      "duplicated_with_oldid": "308"
+    },
+    {
+      "text": "(11). Rāgapeyyālaṃ",
+      "old_id": 341,
+      "base": "11.ragapeyyalam",
+      "final": "11.ragapeyyalam_tipitaka",
+      "duplicated_with_oldid": "329"
+    },
+    {
+      "text": "2. Sīhanādavaggo",
+      "old_id": 344,
+      "base": "2.sihanadavaggo",
+      "final": "2.sihanadavaggo_tipitaka",
+      "duplicated_with_oldid": "106"
+    },
+    {
+      "text": "(9) 4. Theravaggo",
+      "old_id": 362,
+      "base": "9.4.theravaggo",
+      "final": "9.4.theravaggo_tipitaka",
+      "duplicated_with_oldid": "283"
+    },
+    {
+      "text": "4. Rāgapeyyālaṃ",
+      "old_id": 381,
+      "base": "4.ragapeyyalam",
+      "final": "4.ragapeyyalam_tipitaka",
+      "duplicated_with_oldid": "225"
+    },
+    {
+      "text": "3. Mahāvaggo",
+      "old_id": 437,
+      "base": "3.mahavaggo",
+      "final": "3.mahavaggo_tipitaka",
+      "duplicated_with_oldid": "356"
+    },
+    {
+      "text": "1. Uragavaggo",
+      "old_id": 444,
+      "base": "1.uragavaggo",
+      "final": "1.uragavaggo_tipitaka",
+      "duplicated_with_oldid": "435"
+    },
+    {
+      "text": "4. Mahāvaggo",
+      "old_id": 447,
+      "base": "4.mahavaggo",
+      "final": "4.mahavaggo_tipitaka",
+      "duplicated_with_oldid": "346"
+    },
+    {
+      "text": "1. Ekakanipāto",
+      "old_id": 449,
+      "base": "1.ekakanipato",
+      "final": "1.ekakanipato_tipitaka",
+      "duplicated_with_oldid": "430"
+    },
+    {
+      "text": "2. Dukanipāto",
+      "old_id": 450,
+      "base": "2.dukanipato",
+      "final": "2.dukanipato_tipitaka",
+      "duplicated_with_oldid": "431"
+    },
+    {
+      "text": "3. Tikanipāto",
+      "old_id": 451,
+      "base": "3.tikanipato",
+      "final": "3.tikanipato_tipitaka",
+      "duplicated_with_oldid": "432"
+    },
+    {
+      "text": "4. Catukkanipāto",
+      "old_id": 452,
+      "base": "4.catukkanipato",
+      "final": "4.catukkanipato_tipitaka",
+      "duplicated_with_oldid": "433"
+    },
+    {
+      "text": "5. Pañcakanipāto",
+      "old_id": 475,
+      "base": "5.pancakanipato",
+      "final": "5.pancakanipato_tipitaka",
+      "duplicated_with_oldid": "453"
+    },
+    {
+      "text": "6. Chakkanipāto",
+      "old_id": 476,
+      "base": "6.chakkanipato",
+      "final": "6.chakkanipato_tipitaka",
+      "duplicated_with_oldid": "454"
+    },
+    {
+      "text": "7. Sattakanipāto",
+      "old_id": 477,
+      "base": "7.sattakanipato",
+      "final": "7.sattakanipato_tipitaka",
+      "duplicated_with_oldid": "455"
+    },
+    {
+      "text": "8. Aṭṭhakanipāto",
+      "old_id": 478,
+      "base": "8.atthakanipato",
+      "final": "8.atthakanipato_tipitaka",
+      "duplicated_with_oldid": "456"
+    },
+    {
+      "text": "9. Navakanipāto",
+      "old_id": 479,
+      "base": "9.navakanipato",
+      "final": "9.navakanipato_tipitaka",
+      "duplicated_with_oldid": "457"
+    },
+    {
+      "text": "1. Ekakanipāto",
+      "old_id": 584,
+      "base": "1.ekakanipato",
+      "final": "1.ekakanipato_tipitaka",
+      "duplicated_with_oldid": "471"
+    },
+    {
+      "text": "2. Dukanipāto",
+      "old_id": 585,
+      "base": "2.dukanipato",
+      "final": "2.dukanipato_tipitaka",
+      "duplicated_with_oldid": "472"
+    },
+    {
+      "text": "3. Tikanipāto",
+      "old_id": 586,
+      "base": "3.tikanipato",
+      "final": "3.tikanipato_tipitaka",
+      "duplicated_with_oldid": "473"
+    },
+    {
+      "text": "4. Catukkanipāto",
+      "old_id": 587,
+      "base": "4.catukkanipato",
+      "final": "4.catukkanipato_tipitaka",
+      "duplicated_with_oldid": "474"
+    },
+    {
+      "text": "10. Dasakanipāto",
+      "old_id": 593,
+      "base": "10.dasakanipato",
+      "final": "10.dasakanipato_tipitaka",
+      "duplicated_with_oldid": "458"
+    },
+    {
+      "text": "12. Dvādasakanipāto",
+      "old_id": 595,
+      "base": "12.dvadasakanipato",
+      "final": "12.dvadasakanipato_tipitaka",
+      "duplicated_with_oldid": "460"
+    },
+    {
+      "text": "Mātikā",
+      "old_id": 697,
+      "base": "matika",
+      "final": "matika_tipitaka",
+      "duplicated_with_oldid": "656"
+    },
+    {
+      "text": "1. Pārājikakaṇḍaṃ",
+      "old_id": 830,
+      "base": "1.parajikakandam",
+      "final": "1.parajikakandam_atthakatha_3638e0",
+      "duplicated_with_oldid": "5"
+    },
+    {
+      "text": "2. Saṅghādisesakaṇḍaṃ",
+      "old_id": 831,
+      "base": "2.sanghadisesakandam",
+      "final": "2.sanghadisesakandam_atthakatha_787e9a",
+      "duplicated_with_oldid": "6"
+    },
+    {
+      "text": "3. Aniyatakaṇḍaṃ",
+      "old_id": 832,
+      "base": "3.aniyatakandam",
+      "final": "3.aniyatakandam_atthakatha_2c51e4",
+      "duplicated_with_oldid": "7"
+    },
+    {
+      "text": "4. Nissaggiyakaṇḍaṃ",
+      "old_id": 833,
+      "base": "4.nissaggiyakandam",
+      "final": "4.nissaggiyakandam_atthakatha_a80505",
+      "duplicated_with_oldid": "8"
+    },
+    {
+      "text": "5. Pācittiyakaṇḍaṃ",
+      "old_id": 835,
+      "base": "5.pacittiyakandam",
+      "final": "5.pacittiyakandam_atthakatha_598455",
+      "duplicated_with_oldid": "10"
+    },
+    {
+      "text": "6. Pāṭidesanīyakaṇḍaṃ",
+      "old_id": 836,
+      "base": "6.patidesaniyakandam",
+      "final": "6.patidesaniyakandam_atthakatha_4c6b39",
+      "duplicated_with_oldid": "11"
+    },
+    {
+      "text": "7. Sekhiyakaṇḍaṃ",
+      "old_id": 837,
+      "base": "7.sekhiyakandam",
+      "final": "7.sekhiyakandam_atthakatha_95dd3f",
+      "duplicated_with_oldid": "12"
+    },
+    {
+      "text": "1. Kammakkhandhakaṃ",
+      "old_id": 856,
+      "base": "1.kammakkhandhakam",
+      "final": "1.kammakkhandhakam_atthakatha_709c77",
+      "duplicated_with_oldid": "33"
+    },
+    {
+      "text": "2. Pārivāsikakkhandhakaṃ",
+      "old_id": 857,
+      "base": "2.parivasikakkhandhakam",
+      "final": "2.parivasikakkhandhakam_atthakatha_ccf405",
+      "duplicated_with_oldid": "34"
+    },
+    {
+      "text": "3. Samuccayakkhandhakaṃ",
+      "old_id": 858,
+      "base": "3.samuccayakkhandhakam",
+      "final": "3.samuccayakkhandhakam_atthakatha_40a999",
+      "duplicated_with_oldid": "35"
+    },
+    {
+      "text": "4. Samathakkhandhakaṃ",
+      "old_id": 859,
+      "base": "4.samathakkhandhakam",
+      "final": "4.samathakkhandhakam_atthakatha_f101b2",
+      "duplicated_with_oldid": "36"
+    },
+    {
+      "text": "5. Khuddakavatthukkhandhakaṃ",
+      "old_id": 860,
+      "base": "5.khuddakavatthukkhandhakam",
+      "final": "5.khuddakavatthukkhandhakam_atthakatha_155384",
+      "duplicated_with_oldid": "37"
+    },
+    {
+      "text": "6. Senāsanakkhandhakaṃ",
+      "old_id": 861,
+      "base": "6.senasanakkhandhakam",
+      "final": "6.senasanakkhandhakam_atthakatha_c10fd2",
+      "duplicated_with_oldid": "38"
+    },
+    {
+      "text": "7. Saṅghabhedakakkhandhakaṃ",
+      "old_id": 862,
+      "base": "7.sanghabhedakakkhandhakam",
+      "final": "7.sanghabhedakakkhandhakam_atthakatha_8edb34",
+      "duplicated_with_oldid": "39"
+    },
+    {
+      "text": "8. Vattakkhandhakaṃ",
+      "old_id": 863,
+      "base": "8.vattakkhandhakam",
+      "final": "8.vattakkhandhakam_atthakatha_49ce88",
+      "duplicated_with_oldid": "40"
+    },
+    {
+      "text": "9. Pātimokkhaṭṭhapanakkhandhakaṃ",
+      "old_id": 864,
+      "base": "9.patimokkhatthapanakkhandhakam",
+      "final": "9.patimokkhatthapanakkhandhakam_atthakatha_7d0baa",
+      "duplicated_with_oldid": "41"
+    },
+    {
+      "text": "10. Bhikkhunikkhandhakaṃ",
+      "old_id": 865,
+      "base": "10.bhikkhunikkhandhakam",
+      "final": "10.bhikkhunikkhandhakam_atthakatha_ed06a3",
+      "duplicated_with_oldid": "42"
+    },
+    {
+      "text": "11. Pañcasatikakkhandhakaṃ",
+      "old_id": 866,
+      "base": "11.pancasatikakkhandhakam",
+      "final": "11.pancasatikakkhandhakam_atthakatha_103b07",
+      "duplicated_with_oldid": "43"
+    },
+    {
+      "text": "12. Sattasatikakkhandhakaṃ",
+      "old_id": 867,
+      "base": "12.sattasatikakkhandhakam",
+      "final": "12.sattasatikakkhandhakam_atthakatha_5dc605",
+      "duplicated_with_oldid": "44"
+    },
+    {
+      "text": "Soḷasamahāvāro",
+      "old_id": 869,
+      "base": "solasamahavaro",
+      "final": "solasamahavaro_atthakatha_8841da",
+      "duplicated_with_oldid": "46"
+    },
+    {
+      "text": "Antarapeyyālaṃ",
+      "old_id": 871,
+      "base": "antarapeyyalam",
+      "final": "antarapeyyalam_atthakatha_d8a855",
+      "duplicated_with_oldid": "48"
+    },
+    {
+      "text": "Khandhakapucchāvāro",
+      "old_id": 872,
+      "base": "khandhakapucchavaro",
+      "final": "khandhakapucchavaro_atthakatha_094789",
+      "duplicated_with_oldid": "49"
+    },
+    {
+      "text": "Ekuttarikanayo",
+      "old_id": 873,
+      "base": "ekuttarikanayo",
+      "final": "ekuttarikanayo_atthakatha_25724c",
+      "duplicated_with_oldid": "50"
+    },
+    {
+      "text": "Uposathādipucchāvissajjanā",
+      "old_id": 874,
+      "base": "uposathadipucchavissajjana",
+      "final": "uposathadipucchavissajjana_atthakatha_809546",
+      "duplicated_with_oldid": "51"
+    },
+    {
+      "text": "Dutiyagāthāsaṅgaṇikaṃ",
+      "old_id": 877,
+      "base": "dutiyagathasanganikam",
+      "final": "dutiyagathasanganikam_atthakatha_db3ab8",
+      "duplicated_with_oldid": "61"
+    },
+    {
+      "text": "Codanākaṇḍaṃ",
+      "old_id": 878,
+      "base": "codanakandam",
+      "final": "codanakandam_atthakatha_800291",
+      "duplicated_with_oldid": "55"
+    },
+    {
+      "text": "Cūḷasaṅgāmo",
+      "old_id": 879,
+      "base": "culasangamo",
+      "final": "culasangamo_atthakatha_592eda",
+      "duplicated_with_oldid": "56"
+    },
+    {
+      "text": "Mahāsaṅgāmo",
+      "old_id": 880,
+      "base": "mahasangamo",
+      "final": "mahasangamo_atthakatha_43be0d",
+      "duplicated_with_oldid": "57"
+    },
+    {
+      "text": "Upālipañcakaṃ",
+      "old_id": 882,
+      "base": "upalipancakam",
+      "final": "upalipancakam_atthakatha_8fe462",
+      "duplicated_with_oldid": "59"
+    },
+    {
+      "text": "Sedamocanagāthā",
+      "old_id": 885,
+      "base": "sedamocanagatha",
+      "final": "sedamocanagatha_atthakatha_de824a",
+      "duplicated_with_oldid": "62"
+    },
+    {
+      "text": "Pañcavaggo",
+      "old_id": 886,
+      "base": "pancavaggo",
+      "final": "pancavaggo_atthakatha_aff2fd",
+      "duplicated_with_oldid": "63"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 890,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_atthakatha",
+      "duplicated_with_oldid": "828"
+    },
+    {
+      "text": "1. Mūlapariyāyavaggo",
+      "old_id": 930,
+      "base": "1.mulapariyayavaggo",
+      "final": "1.mulapariyayavaggo_atthakatha_e26e16",
+      "duplicated_with_oldid": "105"
+    },
+    {
+      "text": "3. Opammavaggo",
+      "old_id": 932,
+      "base": "3.opammavaggo",
+      "final": "3.opammavaggo_atthakatha_48a5c4",
+      "duplicated_with_oldid": "107"
+    },
+    {
+      "text": "4. Mahāyamakavaggo",
+      "old_id": 933,
+      "base": "4.mahayamakavaggo",
+      "final": "4.mahayamakavaggo_atthakatha_286088",
+      "duplicated_with_oldid": "108"
+    },
+    {
+      "text": "5. Cūḷayamakavaggo",
+      "old_id": 934,
+      "base": "5.culayamakavaggo",
+      "final": "5.culayamakavaggo_atthakatha_241f71",
+      "duplicated_with_oldid": "109"
+    },
+    {
+      "text": "1. Gahapativaggo",
+      "old_id": 936,
+      "base": "1.gahapativaggo",
+      "final": "1.gahapativaggo_atthakatha_73eb61",
+      "duplicated_with_oldid": "111"
+    },
+    {
+      "text": "2. Bhikkhuvaggo",
+      "old_id": 937,
+      "base": "2.bhikkhuvaggo",
+      "final": "2.bhikkhuvaggo_atthakatha_86b2e3",
+      "duplicated_with_oldid": "112"
+    },
+    {
+      "text": "3. Paribbājakavaggo",
+      "old_id": 938,
+      "base": "3.paribbajakavaggo",
+      "final": "3.paribbajakavaggo_atthakatha_9c0555",
+      "duplicated_with_oldid": "113"
+    },
+    {
+      "text": "4. Rājavaggo",
+      "old_id": 939,
+      "base": "4.rajavaggo",
+      "final": "4.rajavaggo_atthakatha_56eb48",
+      "duplicated_with_oldid": "114"
+    },
+    {
+      "text": "5. Brāhmaṇavaggo",
+      "old_id": 940,
+      "base": "5.brahmanavaggo",
+      "final": "5.brahmanavaggo_atthakatha_3fe394",
+      "duplicated_with_oldid": "115"
+    },
+    {
+      "text": "1. Devadahavaggo",
+      "old_id": 942,
+      "base": "1.devadahavaggo",
+      "final": "1.devadahavaggo_atthakatha_1c9c37",
+      "duplicated_with_oldid": "117"
+    },
+    {
+      "text": "2. Anupadavaggo",
+      "old_id": 943,
+      "base": "2.anupadavaggo",
+      "final": "2.anupadavaggo_atthakatha_37876a",
+      "duplicated_with_oldid": "118"
+    },
+    {
+      "text": "3. Suññatavaggo",
+      "old_id": 944,
+      "base": "3.sunnatavaggo",
+      "final": "3.sunnatavaggo_atthakatha_b63c49",
+      "duplicated_with_oldid": "119"
+    },
+    {
+      "text": "4. Vibhaṅgavaggo",
+      "old_id": 945,
+      "base": "4.vibhangavaggo",
+      "final": "4.vibhangavaggo_atthakatha_3099bd",
+      "duplicated_with_oldid": "120"
+    },
+    {
+      "text": "5. Saḷāyatanavaggo",
+      "old_id": 946,
+      "base": "5.salayatanavaggo",
+      "final": "5.salayatanavaggo_atthakatha_d7d987",
+      "duplicated_with_oldid": "121"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 949,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_atthakatha",
+      "duplicated_with_oldid": "929"
+    },
+    {
+      "text": "1. Devatāsaṃyuttaṃ",
+      "old_id": 950,
+      "base": "1.devatasamyuttam",
+      "final": "1.devatasamyuttam_atthakatha_1d1080",
+      "duplicated_with_oldid": "124"
+    },
+    {
+      "text": "2. Devaputtasaṃyuttaṃ",
+      "old_id": 951,
+      "base": "2.devaputtasamyuttam",
+      "final": "2.devaputtasamyuttam_atthakatha_82a667",
+      "duplicated_with_oldid": "125"
+    },
+    {
+      "text": "3. Kosalasaṃyuttaṃ",
+      "old_id": 952,
+      "base": "3.kosalasamyuttam",
+      "final": "3.kosalasamyuttam_atthakatha_73f785",
+      "duplicated_with_oldid": "126"
+    },
+    {
+      "text": "4. Mārasaṃyuttaṃ",
+      "old_id": 953,
+      "base": "4.marasamyuttam",
+      "final": "4.marasamyuttam_atthakatha_653609",
+      "duplicated_with_oldid": "127"
+    },
+    {
+      "text": "5. Bhikkhunīsaṃyuttaṃ",
+      "old_id": 954,
+      "base": "5.bhikkhunisamyuttam",
+      "final": "5.bhikkhunisamyuttam_atthakatha_e5d496",
+      "duplicated_with_oldid": "128"
+    },
+    {
+      "text": "6. Brahmasaṃyuttaṃ",
+      "old_id": 955,
+      "base": "6.brahmasamyuttam",
+      "final": "6.brahmasamyuttam_atthakatha_a3ee2c",
+      "duplicated_with_oldid": "129"
+    },
+    {
+      "text": "7. Brāhmaṇasaṃyuttaṃ",
+      "old_id": 956,
+      "base": "7.brahmanasamyuttam",
+      "final": "7.brahmanasamyuttam_atthakatha_099432",
+      "duplicated_with_oldid": "130"
+    },
+    {
+      "text": "8. Vaṅgīsasaṃyuttaṃ",
+      "old_id": 957,
+      "base": "8.vangisasamyuttam",
+      "final": "8.vangisasamyuttam_atthakatha_2155ca",
+      "duplicated_with_oldid": "131"
+    },
+    {
+      "text": "9. Vanasaṃyuttaṃ",
+      "old_id": 958,
+      "base": "9.vanasamyuttam",
+      "final": "9.vanasamyuttam_atthakatha_e5e2e2",
+      "duplicated_with_oldid": "132"
+    },
+    {
+      "text": "10. Yakkhasaṃyuttaṃ",
+      "old_id": 959,
+      "base": "10.yakkhasamyuttam",
+      "final": "10.yakkhasamyuttam_atthakatha_196d8c",
+      "duplicated_with_oldid": "133"
+    },
+    {
+      "text": "11. Sakkasaṃyuttaṃ",
+      "old_id": 960,
+      "base": "11.sakkasamyuttam",
+      "final": "11.sakkasamyuttam_atthakatha_50ad62",
+      "duplicated_with_oldid": "134"
+    },
+    {
+      "text": "1. Nidānasaṃyuttaṃ",
+      "old_id": 962,
+      "base": "1.nidanasamyuttam",
+      "final": "1.nidanasamyuttam_atthakatha_01f640",
+      "duplicated_with_oldid": "136"
+    },
+    {
+      "text": "2. Abhisamayasaṃyuttaṃ",
+      "old_id": 963,
+      "base": "2.abhisamayasamyuttam",
+      "final": "2.abhisamayasamyuttam_atthakatha_7d081e",
+      "duplicated_with_oldid": "137"
+    },
+    {
+      "text": "3. Dhātusaṃyuttaṃ",
+      "old_id": 964,
+      "base": "3.dhatusamyuttam",
+      "final": "3.dhatusamyuttam_atthakatha_d00722",
+      "duplicated_with_oldid": "138"
+    },
+    {
+      "text": "4. Anamataggasaṃyuttaṃ",
+      "old_id": 965,
+      "base": "4.anamataggasamyuttam",
+      "final": "4.anamataggasamyuttam_atthakatha_a6e9d3",
+      "duplicated_with_oldid": "139"
+    },
+    {
+      "text": "5. Kassapasaṃyuttaṃ",
+      "old_id": 966,
+      "base": "5.kassapasamyuttam",
+      "final": "5.kassapasamyuttam_atthakatha_ab7290",
+      "duplicated_with_oldid": "140"
+    },
+    {
+      "text": "6. Lābhasakkārasaṃyuttaṃ",
+      "old_id": 967,
+      "base": "6.labhasakkarasamyuttam",
+      "final": "6.labhasakkarasamyuttam_atthakatha_f12daf",
+      "duplicated_with_oldid": "141"
+    },
+    {
+      "text": "7. Rāhulasaṃyuttaṃ",
+      "old_id": 968,
+      "base": "7.rahulasamyuttam",
+      "final": "7.rahulasamyuttam_atthakatha_0ab8df",
+      "duplicated_with_oldid": "142"
+    },
+    {
+      "text": "8. Lakkhaṇasaṃyuttaṃ",
+      "old_id": 969,
+      "base": "8.lakkhanasamyuttam",
+      "final": "8.lakkhanasamyuttam_atthakatha_e80599",
+      "duplicated_with_oldid": "143"
+    },
+    {
+      "text": "9. Opammasaṃyuttaṃ",
+      "old_id": 970,
+      "base": "9.opammasamyuttam",
+      "final": "9.opammasamyuttam_atthakatha_c5395e",
+      "duplicated_with_oldid": "144"
+    },
+    {
+      "text": "10. Bhikkhusaṃyuttaṃ",
+      "old_id": 971,
+      "base": "10.bhikkhusamyuttam",
+      "final": "10.bhikkhusamyuttam_atthakatha_8d3f0a",
+      "duplicated_with_oldid": "145"
+    },
+    {
+      "text": "1. Khandhasaṃyuttaṃ",
+      "old_id": 973,
+      "base": "1.khandhasamyuttam",
+      "final": "1.khandhasamyuttam_atthakatha_4bcdbe",
+      "duplicated_with_oldid": "147"
+    },
+    {
+      "text": "2. Rādhasaṃyuttaṃ",
+      "old_id": 974,
+      "base": "2.radhasamyuttam",
+      "final": "2.radhasamyuttam_atthakatha_f460e4",
+      "duplicated_with_oldid": "148"
+    },
+    {
+      "text": "3. Diṭṭhisaṃyuttaṃ",
+      "old_id": 975,
+      "base": "3.ditthisamyuttam",
+      "final": "3.ditthisamyuttam_atthakatha_0e7b42",
+      "duplicated_with_oldid": "149"
+    },
+    {
+      "text": "4. Okkantasaṃyuttaṃ",
+      "old_id": 976,
+      "base": "4.okkantasamyuttam",
+      "final": "4.okkantasamyuttam_atthakatha_d9af16",
+      "duplicated_with_oldid": "150"
+    },
+    {
+      "text": "7. Sāriputtasaṃyuttaṃ",
+      "old_id": 979,
+      "base": "7.sariputtasamyuttam",
+      "final": "7.sariputtasamyuttam_atthakatha_2cf692",
+      "duplicated_with_oldid": "153"
+    },
+    {
+      "text": "8. Nāgasaṃyuttaṃ",
+      "old_id": 980,
+      "base": "8.nagasamyuttam",
+      "final": "8.nagasamyuttam_atthakatha_5c5124",
+      "duplicated_with_oldid": "154"
+    },
+    {
+      "text": "13. Jhānasaṃyuttaṃ",
+      "old_id": 985,
+      "base": "13.jhanasamyuttam",
+      "final": "13.jhanasamyuttam_atthakatha_43a6a8",
+      "duplicated_with_oldid": "159"
+    },
+    {
+      "text": "1. Saḷāyatanasaṃyuttaṃ",
+      "old_id": 987,
+      "base": "1.salayatanasamyuttam",
+      "final": "1.salayatanasamyuttam_atthakatha_70b7b8",
+      "duplicated_with_oldid": "161"
+    },
+    {
+      "text": "2. Vedanāsaṃyuttaṃ",
+      "old_id": 988,
+      "base": "2.vedanasamyuttam",
+      "final": "2.vedanasamyuttam_atthakatha_93abe3",
+      "duplicated_with_oldid": "162"
+    },
+    {
+      "text": "3. Mātugāmasaṃyuttaṃ",
+      "old_id": 989,
+      "base": "3.matugamasamyuttam",
+      "final": "3.matugamasamyuttam_atthakatha_121a50",
+      "duplicated_with_oldid": "163"
+    },
+    {
+      "text": "4. Jambukhādakasaṃyuttaṃ",
+      "old_id": 990,
+      "base": "4.jambukhadakasamyuttam",
+      "final": "4.jambukhadakasamyuttam_atthakatha_e0b063",
+      "duplicated_with_oldid": "164"
+    },
+    {
+      "text": "6. Moggallānasaṃyuttaṃ",
+      "old_id": 992,
+      "base": "6.moggallanasamyuttam",
+      "final": "6.moggallanasamyuttam_atthakatha_16660d",
+      "duplicated_with_oldid": "166"
+    },
+    {
+      "text": "7. Cittasaṃyuttaṃ",
+      "old_id": 993,
+      "base": "7.cittasamyuttam",
+      "final": "7.cittasamyuttam_atthakatha_1b00b1",
+      "duplicated_with_oldid": "167"
+    },
+    {
+      "text": "8. Gāmaṇisaṃyuttaṃ",
+      "old_id": 994,
+      "base": "8.gamanisamyuttam",
+      "final": "8.gamanisamyuttam_atthakatha_7106ec",
+      "duplicated_with_oldid": "168"
+    },
+    {
+      "text": "9. Asaṅkhatasaṃyuttaṃ",
+      "old_id": 995,
+      "base": "9.asankhatasamyuttam",
+      "final": "9.asankhatasamyuttam_atthakatha_b78463",
+      "duplicated_with_oldid": "169"
+    },
+    {
+      "text": "10. Abyākatasaṃyuttaṃ",
+      "old_id": 996,
+      "base": "10.abyakatasamyuttam",
+      "final": "10.abyakatasamyuttam_atthakatha_fbc11b",
+      "duplicated_with_oldid": "170"
+    },
+    {
+      "text": "1. Maggasaṃyuttaṃ",
+      "old_id": 998,
+      "base": "1.maggasamyuttam",
+      "final": "1.maggasamyuttam_atthakatha_125dc2",
+      "duplicated_with_oldid": "172"
+    },
+    {
+      "text": "2. Bojjhaṅgasaṃyuttaṃ",
+      "old_id": 999,
+      "base": "2.bojjhangasamyuttam",
+      "final": "2.bojjhangasamyuttam_atthakatha_7b27ff",
+      "duplicated_with_oldid": "173"
+    },
+    {
+      "text": "3. Satipaṭṭhānasaṃyuttaṃ",
+      "old_id": 1000,
+      "base": "3.satipatthanasamyuttam",
+      "final": "3.satipatthanasamyuttam_atthakatha_66a50c",
+      "duplicated_with_oldid": "174"
+    },
+    {
+      "text": "4. Indriyasaṃyuttaṃ",
+      "old_id": 1001,
+      "base": "4.indriyasamyuttam",
+      "final": "4.indriyasamyuttam_atthakatha_980c3a",
+      "duplicated_with_oldid": "175"
+    },
+    {
+      "text": "7. Iddhipādasaṃyuttaṃ",
+      "old_id": 1004,
+      "base": "7.iddhipadasamyuttam",
+      "final": "7.iddhipadasamyuttam_atthakatha_81cf2f",
+      "duplicated_with_oldid": "178"
+    },
+    {
+      "text": "8. Anuruddhasaṃyuttaṃ",
+      "old_id": 1005,
+      "base": "8.anuruddhasamyuttam",
+      "final": "8.anuruddhasamyuttam_atthakatha_039840",
+      "duplicated_with_oldid": "179"
+    },
+    {
+      "text": "10. Ānāpānasaṃyuttaṃ",
+      "old_id": 1007,
+      "base": "10.anapanasamyuttam",
+      "final": "10.anapanasamyuttam_atthakatha_7ee969",
+      "duplicated_with_oldid": "181"
+    },
+    {
+      "text": "11. Sotāpattisaṃyuttaṃ",
+      "old_id": 1008,
+      "base": "11.sotapattisamyuttam",
+      "final": "11.sotapattisamyuttam_atthakatha_ff7f39",
+      "duplicated_with_oldid": "182"
+    },
+    {
+      "text": "12. Saccasaṃyuttaṃ",
+      "old_id": 1009,
+      "base": "12.saccasamyuttam",
+      "final": "12.saccasamyuttam_atthakatha_a1d13f",
+      "duplicated_with_oldid": "183"
+    },
+    {
+      "text": "14. Etadaggavaggo",
+      "old_id": 1025,
+      "base": "14.etadaggavaggo",
+      "final": "14.etadaggavaggo_atthakatha_732bab",
+      "duplicated_with_oldid": "199"
+    },
+    {
+      "text": "15. Aṭṭhānapāḷi",
+      "old_id": 1026,
+      "base": "15.atthanapali",
+      "final": "15.atthanapali_atthakatha_e54af5",
+      "duplicated_with_oldid": "200"
+    },
+    {
+      "text": "16. Ekadhammapāḷi",
+      "old_id": 1027,
+      "base": "16.ekadhammapali",
+      "final": "16.ekadhammapali_atthakatha_3967d2",
+      "duplicated_with_oldid": "201"
+    },
+    {
+      "text": "1. Kammakāraṇavaggo",
+      "old_id": 1033,
+      "base": "1.kammakaranavaggo",
+      "final": "1.kammakaranavaggo_atthakatha_6ebf32",
+      "duplicated_with_oldid": "207"
+    },
+    {
+      "text": "1. Kodhapeyyālaṃ",
+      "old_id": 1048,
+      "base": "1.kodhapeyyalam",
+      "final": "1.kodhapeyyalam_atthakatha_c79d71",
+      "duplicated_with_oldid": "222"
+    },
+    {
+      "text": "2. Akusalapeyyālaṃ",
+      "old_id": 1049,
+      "base": "2.akusalapeyyalam",
+      "final": "2.akusalapeyyalam_atthakatha_3defd1",
+      "duplicated_with_oldid": "223"
+    },
+    {
+      "text": "3. Vinayapeyyālaṃ",
+      "old_id": 1050,
+      "base": "3.vinayapeyyalam",
+      "final": "3.vinayapeyyalam_atthakatha_690aa2",
+      "duplicated_with_oldid": "224"
+    },
+    {
+      "text": "1. Bālavaggo",
+      "old_id": 1052,
+      "base": "1.balavaggo",
+      "final": "1.balavaggo_atthakatha_0d60ba",
+      "duplicated_with_oldid": "227"
+    },
+    {
+      "text": "2. Rathakāravaggo",
+      "old_id": 1053,
+      "base": "2.rathakaravaggo",
+      "final": "2.rathakaravaggo_atthakatha_c3e0b1",
+      "duplicated_with_oldid": "228"
+    },
+    {
+      "text": "3. Puggalavaggo",
+      "old_id": 1054,
+      "base": "3.puggalavaggo",
+      "final": "3.puggalavaggo_atthakatha_5e336b",
+      "duplicated_with_oldid": "229"
+    },
+    {
+      "text": "4. Devadūtavaggo",
+      "old_id": 1055,
+      "base": "4.devadutavaggo",
+      "final": "4.devadutavaggo_atthakatha_f737d3",
+      "duplicated_with_oldid": "230"
+    },
+    {
+      "text": "5. Cūḷavaggo",
+      "old_id": 1056,
+      "base": "5.culavaggo",
+      "final": "5.culavaggo_atthakatha_a00382",
+      "duplicated_with_oldid": "231"
+    },
+    {
+      "text": "(6) 1. Brāhmaṇavaggo",
+      "old_id": 1057,
+      "base": "6.1.brahmanavaggo",
+      "final": "6.1.brahmanavaggo_atthakatha_1a0b69",
+      "duplicated_with_oldid": "232"
+    },
+    {
+      "text": "(7) 2. Mahāvaggo",
+      "old_id": 1058,
+      "base": "7.2.mahavaggo",
+      "final": "7.2.mahavaggo_atthakatha_ca0d07",
+      "duplicated_with_oldid": "233"
+    },
+    {
+      "text": "(8) 3. Ānandavaggo",
+      "old_id": 1059,
+      "base": "8.3.anandavaggo",
+      "final": "8.3.anandavaggo_atthakatha_dd68c2",
+      "duplicated_with_oldid": "234"
+    },
+    {
+      "text": "(9) 4. Samaṇavaggo",
+      "old_id": 1060,
+      "base": "9.4.samanavaggo",
+      "final": "9.4.samanavaggo_atthakatha_4cf031",
+      "duplicated_with_oldid": "235"
+    },
+    {
+      "text": "(10) 5. Loṇakapallavaggo",
+      "old_id": 1061,
+      "base": "10.5.lonakapallavaggo",
+      "final": "10.5.lonakapallavaggo_atthakatha_72618c",
+      "duplicated_with_oldid": "236"
+    },
+    {
+      "text": "(11) 1. Sambodhavaggo",
+      "old_id": 1062,
+      "base": "11.1.sambodhavaggo",
+      "final": "11.1.sambodhavaggo_atthakatha_4366c8",
+      "duplicated_with_oldid": "237"
+    },
+    {
+      "text": "(12) 2. Āpāyikavaggo",
+      "old_id": 1063,
+      "base": "12.2.apayikavaggo",
+      "final": "12.2.apayikavaggo_atthakatha_be05a0",
+      "duplicated_with_oldid": "238"
+    },
+    {
+      "text": "(13) 3. Kusināravaggo",
+      "old_id": 1064,
+      "base": "13.3.kusinaravaggo",
+      "final": "13.3.kusinaravaggo_atthakatha_f784a8",
+      "duplicated_with_oldid": "239"
+    },
+    {
+      "text": "(14) 4. Yodhājīvavaggo",
+      "old_id": 1065,
+      "base": "14.4.yodhajivavaggo",
+      "final": "14.4.yodhajivavaggo_atthakatha_819cc5",
+      "duplicated_with_oldid": "240"
+    },
+    {
+      "text": "(15) 5. Maṅgalavaggo",
+      "old_id": 1066,
+      "base": "15.5.mangalavaggo",
+      "final": "15.5.mangalavaggo_atthakatha_56925a",
+      "duplicated_with_oldid": "241"
+    },
+    {
+      "text": "1. Bhaṇḍagāmavaggo",
+      "old_id": 1069,
+      "base": "1.bhandagamavaggo",
+      "final": "1.bhandagamavaggo_atthakatha_efff69",
+      "duplicated_with_oldid": "246"
+    },
+    {
+      "text": "2. Caravaggo",
+      "old_id": 1070,
+      "base": "2.caravaggo",
+      "final": "2.caravaggo_atthakatha_2d2617",
+      "duplicated_with_oldid": "247"
+    },
+    {
+      "text": "3. Uruvelavaggo",
+      "old_id": 1071,
+      "base": "3.uruvelavaggo",
+      "final": "3.uruvelavaggo_atthakatha_de4dd9",
+      "duplicated_with_oldid": "248"
+    },
+    {
+      "text": "4. Cakkavaggo",
+      "old_id": 1072,
+      "base": "4.cakkavaggo",
+      "final": "4.cakkavaggo_atthakatha_ff7e3e",
+      "duplicated_with_oldid": "249"
+    },
+    {
+      "text": "5. Rohitassavaggo",
+      "old_id": 1073,
+      "base": "5.rohitassavaggo",
+      "final": "5.rohitassavaggo_atthakatha_bdae59",
+      "duplicated_with_oldid": "250"
+    },
+    {
+      "text": "(6) 1. Puññābhisandavaggo",
+      "old_id": 1074,
+      "base": "6.1.punnabhisandavaggo",
+      "final": "6.1.punnabhisandavaggo_atthakatha_b8ad92",
+      "duplicated_with_oldid": "251"
+    },
+    {
+      "text": "(7) 2. Pattakammavaggo",
+      "old_id": 1075,
+      "base": "7.2.pattakammavaggo",
+      "final": "7.2.pattakammavaggo_atthakatha_3c96b2",
+      "duplicated_with_oldid": "252"
+    },
+    {
+      "text": "(8) 3. Apaṇṇakavaggo",
+      "old_id": 1076,
+      "base": "8.3.apannakavaggo",
+      "final": "8.3.apannakavaggo_atthakatha_a61f90",
+      "duplicated_with_oldid": "253"
+    },
+    {
+      "text": "(9) 4. Macalavaggo",
+      "old_id": 1077,
+      "base": "9.4.macalavaggo",
+      "final": "9.4.macalavaggo_atthakatha_a65531",
+      "duplicated_with_oldid": "254"
+    },
+    {
+      "text": "(10) 5. Asuravaggo",
+      "old_id": 1078,
+      "base": "10.5.asuravaggo",
+      "final": "10.5.asuravaggo_atthakatha_f95d24",
+      "duplicated_with_oldid": "255"
+    },
+    {
+      "text": "(11) 1. Valāhakavaggo",
+      "old_id": 1079,
+      "base": "11.1.valahakavaggo",
+      "final": "11.1.valahakavaggo_atthakatha_7b6abc",
+      "duplicated_with_oldid": "256"
+    },
+    {
+      "text": "(12) 2. Kesivaggo",
+      "old_id": 1080,
+      "base": "12.2.kesivaggo",
+      "final": "12.2.kesivaggo_atthakatha_b6623a",
+      "duplicated_with_oldid": "257"
+    },
+    {
+      "text": "(13) 3. Bhayavaggo",
+      "old_id": 1081,
+      "base": "13.3.bhayavaggo",
+      "final": "13.3.bhayavaggo_atthakatha_739edb",
+      "duplicated_with_oldid": "258"
+    },
+    {
+      "text": "(14) 4. Puggalavaggo",
+      "old_id": 1082,
+      "base": "14.4.puggalavaggo",
+      "final": "14.4.puggalavaggo_atthakatha_f5c94d",
+      "duplicated_with_oldid": "259"
+    },
+    {
+      "text": "(15) 5. Ābhāvaggo",
+      "old_id": 1083,
+      "base": "15.5.abhavaggo",
+      "final": "15.5.abhavaggo_atthakatha_c1a190",
+      "duplicated_with_oldid": "260"
+    },
+    {
+      "text": "(16) 1. Indriyavaggo",
+      "old_id": 1084,
+      "base": "16.1.indriyavaggo",
+      "final": "16.1.indriyavaggo_atthakatha_a39215",
+      "duplicated_with_oldid": "261"
+    },
+    {
+      "text": "(17) 2. Paṭipadāvaggo",
+      "old_id": 1085,
+      "base": "17.2.patipadavaggo",
+      "final": "17.2.patipadavaggo_atthakatha_188561",
+      "duplicated_with_oldid": "262"
+    },
+    {
+      "text": "(18) 3. Sañcetaniyavaggo",
+      "old_id": 1086,
+      "base": "18.3.sancetaniyavaggo",
+      "final": "18.3.sancetaniyavaggo_atthakatha_0831b9",
+      "duplicated_with_oldid": "263"
+    },
+    {
+      "text": "(19) 4. Brāhmaṇavaggo",
+      "old_id": 1087,
+      "base": "19.4.brahmanavaggo",
+      "final": "19.4.brahmanavaggo_atthakatha_334a17",
+      "duplicated_with_oldid": "264"
+    },
+    {
+      "text": "(20) 5. Mahāvaggo",
+      "old_id": 1088,
+      "base": "20.5.mahavaggo",
+      "final": "20.5.mahavaggo_atthakatha_5bbb15",
+      "duplicated_with_oldid": "265"
+    },
+    {
+      "text": "(21) 1. Sappurisavaggo",
+      "old_id": 1089,
+      "base": "21.1.sappurisavaggo",
+      "final": "21.1.sappurisavaggo_atthakatha_cd5597",
+      "duplicated_with_oldid": "266"
+    },
+    {
+      "text": "(22) 2. Parisāvaggo",
+      "old_id": 1090,
+      "base": "22.2.parisavaggo",
+      "final": "22.2.parisavaggo_atthakatha_e5353b",
+      "duplicated_with_oldid": "267"
+    },
+    {
+      "text": "(24) 4. Kammavaggo",
+      "old_id": 1092,
+      "base": "24.4.kammavaggo",
+      "final": "24.4.kammavaggo_atthakatha_d6e4ec",
+      "duplicated_with_oldid": "269"
+    },
+    {
+      "text": "(25) 5. Āpattibhayavaggo",
+      "old_id": 1093,
+      "base": "25.5.apattibhayavaggo",
+      "final": "25.5.apattibhayavaggo_atthakatha_f5dec6",
+      "duplicated_with_oldid": "270"
+    },
+    {
+      "text": "(26) 6. Abhiññāvaggo",
+      "old_id": 1094,
+      "base": "26.6.abhinnavaggo",
+      "final": "26.6.abhinnavaggo_atthakatha_2dd0c9",
+      "duplicated_with_oldid": "271"
+    },
+    {
+      "text": "1. Sekhabalavaggo",
+      "old_id": 1098,
+      "base": "1.sekhabalavaggo",
+      "final": "1.sekhabalavaggo_atthakatha_d084ce",
+      "duplicated_with_oldid": "275"
+    },
+    {
+      "text": "2. Balavaggo",
+      "old_id": 1099,
+      "base": "2.balavaggo",
+      "final": "2.balavaggo_atthakatha_375340",
+      "duplicated_with_oldid": "276"
+    },
+    {
+      "text": "3. Pañcaṅgikavaggo",
+      "old_id": 1100,
+      "base": "3.pancangikavaggo",
+      "final": "3.pancangikavaggo_atthakatha_c4f87d",
+      "duplicated_with_oldid": "277"
+    },
+    {
+      "text": "4. Sumanavaggo",
+      "old_id": 1101,
+      "base": "4.sumanavaggo",
+      "final": "4.sumanavaggo_atthakatha_21d860",
+      "duplicated_with_oldid": "278"
+    },
+    {
+      "text": "5. Muṇḍarājavaggo",
+      "old_id": 1102,
+      "base": "5.mundarajavaggo",
+      "final": "5.mundarajavaggo_atthakatha_ec87e6",
+      "duplicated_with_oldid": "279"
+    },
+    {
+      "text": "(6) 1. Nīvaraṇavaggo",
+      "old_id": 1103,
+      "base": "6.1.nivaranavaggo",
+      "final": "6.1.nivaranavaggo_atthakatha_4bd3d7",
+      "duplicated_with_oldid": "280"
+    },
+    {
+      "text": "(7) 2. Saññāvaggo",
+      "old_id": 1104,
+      "base": "7.2.sannavaggo",
+      "final": "7.2.sannavaggo_atthakatha_1e9c17",
+      "duplicated_with_oldid": "281"
+    },
+    {
+      "text": "(8) 3. Yodhājīvavaggo",
+      "old_id": 1105,
+      "base": "8.3.yodhajivavaggo",
+      "final": "8.3.yodhajivavaggo_atthakatha_409338",
+      "duplicated_with_oldid": "282"
+    },
+    {
+      "text": "(10) 5. Kakudhavaggo",
+      "old_id": 1107,
+      "base": "10.5.kakudhavaggo",
+      "final": "10.5.kakudhavaggo_atthakatha_183d48",
+      "duplicated_with_oldid": "284"
+    },
+    {
+      "text": "(11) 1. Phāsuvihāravaggo",
+      "old_id": 1108,
+      "base": "11.1.phasuviharavaggo",
+      "final": "11.1.phasuviharavaggo_atthakatha_6e98a9",
+      "duplicated_with_oldid": "285"
+    },
+    {
+      "text": "(12) 2. Andhakavindavaggo",
+      "old_id": 1109,
+      "base": "12.2.andhakavindavaggo",
+      "final": "12.2.andhakavindavaggo_atthakatha_56c92a",
+      "duplicated_with_oldid": "286"
+    },
+    {
+      "text": "(13) 3. Gilānavaggo",
+      "old_id": 1110,
+      "base": "13.3.gilanavaggo",
+      "final": "13.3.gilanavaggo_atthakatha_8a22ba",
+      "duplicated_with_oldid": "287"
+    },
+    {
+      "text": "(14) 4. Rājavaggo",
+      "old_id": 1111,
+      "base": "14.4.rajavaggo",
+      "final": "14.4.rajavaggo_atthakatha_5b46ac",
+      "duplicated_with_oldid": "288"
+    },
+    {
+      "text": "(15) 5. Tikaṇḍakīvaggo",
+      "old_id": 1112,
+      "base": "15.5.tikandakivaggo",
+      "final": "15.5.tikandakivaggo_atthakatha_38e075",
+      "duplicated_with_oldid": "289"
+    },
+    {
+      "text": "(16) 1. Saddhammavaggo",
+      "old_id": 1113,
+      "base": "16.1.saddhammavaggo",
+      "final": "16.1.saddhammavaggo_atthakatha_41b345",
+      "duplicated_with_oldid": "290"
+    },
+    {
+      "text": "(17) 2. Āghātavaggo",
+      "old_id": 1114,
+      "base": "17.2.aghatavaggo",
+      "final": "17.2.aghatavaggo_atthakatha_64f4ff",
+      "duplicated_with_oldid": "291"
+    },
+    {
+      "text": "(18) 3. Upāsakavaggo",
+      "old_id": 1115,
+      "base": "18.3.upasakavaggo",
+      "final": "18.3.upasakavaggo_atthakatha_ef9e9a",
+      "duplicated_with_oldid": "292"
+    },
+    {
+      "text": "(19) 4. Araññavaggo",
+      "old_id": 1116,
+      "base": "19.4.arannavaggo",
+      "final": "19.4.arannavaggo_atthakatha_fd799e",
+      "duplicated_with_oldid": "293"
+    },
+    {
+      "text": "(20) 5. Brāhmaṇavaggo",
+      "old_id": 1117,
+      "base": "20.5.brahmanavaggo",
+      "final": "20.5.brahmanavaggo_atthakatha_481528",
+      "duplicated_with_oldid": "294"
+    },
+    {
+      "text": "(21) 1. Kimilavaggo",
+      "old_id": 1118,
+      "base": "21.1.kimilavaggo",
+      "final": "21.1.kimilavaggo_atthakatha_5ea7fb",
+      "duplicated_with_oldid": "295"
+    },
+    {
+      "text": "(22) 2. Akkosakavaggo",
+      "old_id": 1119,
+      "base": "22.2.akkosakavaggo",
+      "final": "22.2.akkosakavaggo_atthakatha_f31dd5",
+      "duplicated_with_oldid": "296"
+    },
+    {
+      "text": "(23) 3. Dīghacārikavaggo",
+      "old_id": 1120,
+      "base": "23.3.dighacarikavaggo",
+      "final": "23.3.dighacarikavaggo_atthakatha_5f2002",
+      "duplicated_with_oldid": "297"
+    },
+    {
+      "text": "(24) 4. Āvāsikavaggo",
+      "old_id": 1121,
+      "base": "24.4.avasikavaggo",
+      "final": "24.4.avasikavaggo_atthakatha_edc434",
+      "duplicated_with_oldid": "298"
+    },
+    {
+      "text": "(25) 5. Duccaritavaggo",
+      "old_id": 1122,
+      "base": "25.5.duccaritavaggo",
+      "final": "25.5.duccaritavaggo_atthakatha_dc896c",
+      "duplicated_with_oldid": "299"
+    },
+    {
+      "text": "(26) 6. Upasampadāvaggo",
+      "old_id": 1123,
+      "base": "26.6.upasampadavaggo",
+      "final": "26.6.upasampadavaggo_atthakatha_85f5c5",
+      "duplicated_with_oldid": "300"
+    },
+    {
+      "text": "1. Āhuneyyavaggo",
+      "old_id": 1124,
+      "base": "1.ahuneyyavaggo",
+      "final": "1.ahuneyyavaggo_atthakatha_e5ce69",
+      "duplicated_with_oldid": "305"
+    },
+    {
+      "text": "2. Sāraṇīyavaggo",
+      "old_id": 1125,
+      "base": "2.saraniyavaggo",
+      "final": "2.saraniyavaggo_atthakatha_b85912",
+      "duplicated_with_oldid": "306"
+    },
+    {
+      "text": "3. Anuttariyavaggo",
+      "old_id": 1126,
+      "base": "3.anuttariyavaggo",
+      "final": "3.anuttariyavaggo_atthakatha_b7d831",
+      "duplicated_with_oldid": "307"
+    },
+    {
+      "text": "5. Dhammikavaggo",
+      "old_id": 1128,
+      "base": "5.dhammikavaggo",
+      "final": "5.dhammikavaggo_atthakatha_0cc2e1",
+      "duplicated_with_oldid": "309"
+    },
+    {
+      "text": "6. Mahāvaggo",
+      "old_id": 1129,
+      "base": "6.mahavaggo",
+      "final": "6.mahavaggo_atthakatha_81ac87",
+      "duplicated_with_oldid": "310"
+    },
+    {
+      "text": "7. Devatāvaggo",
+      "old_id": 1130,
+      "base": "7.devatavaggo",
+      "final": "7.devatavaggo_atthakatha_63eeb8",
+      "duplicated_with_oldid": "311"
+    },
+    {
+      "text": "8. Arahattavaggo",
+      "old_id": 1131,
+      "base": "8.arahattavaggo",
+      "final": "8.arahattavaggo_atthakatha_805d50",
+      "duplicated_with_oldid": "312"
+    },
+    {
+      "text": "9. Sītivaggo",
+      "old_id": 1132,
+      "base": "9.sitivaggo",
+      "final": "9.sitivaggo_atthakatha_63fd02",
+      "duplicated_with_oldid": "313"
+    },
+    {
+      "text": "10. Ānisaṃsavaggo",
+      "old_id": 1133,
+      "base": "10.anisamsavaggo",
+      "final": "10.anisamsavaggo_atthakatha_e92330",
+      "duplicated_with_oldid": "314"
+    },
+    {
+      "text": "11. Tikavaggo",
+      "old_id": 1134,
+      "base": "11.tikavaggo",
+      "final": "11.tikavaggo_atthakatha_fa5b0a",
+      "duplicated_with_oldid": "315"
+    },
+    {
+      "text": "1. Dhanavaggo",
+      "old_id": 1137,
+      "base": "1.dhanavaggo",
+      "final": "1.dhanavaggo_atthakatha_d4a191",
+      "duplicated_with_oldid": "319"
+    },
+    {
+      "text": "2. Anusayavaggo",
+      "old_id": 1138,
+      "base": "2.anusayavaggo",
+      "final": "2.anusayavaggo_atthakatha_00128b",
+      "duplicated_with_oldid": "320"
+    },
+    {
+      "text": "3. Vajjisattakavaggo",
+      "old_id": 1139,
+      "base": "3.vajjisattakavaggo",
+      "final": "3.vajjisattakavaggo_atthakatha_9aa50a",
+      "duplicated_with_oldid": "321"
+    },
+    {
+      "text": "5. Mahāyaññavaggo",
+      "old_id": 1140,
+      "base": "5.mahayannavaggo",
+      "final": "5.mahayannavaggo_atthakatha_d5d166",
+      "duplicated_with_oldid": "323"
+    },
+    {
+      "text": "6. Abyākatavaggo",
+      "old_id": 1141,
+      "base": "6.abyakatavaggo",
+      "final": "6.abyakatavaggo_atthakatha_826022",
+      "duplicated_with_oldid": "324"
+    },
+    {
+      "text": "7. Mahāvaggo",
+      "old_id": 1142,
+      "base": "7.mahavaggo",
+      "final": "7.mahavaggo_atthakatha_80a8aa",
+      "duplicated_with_oldid": "325"
+    },
+    {
+      "text": "8. Vinayavaggo",
+      "old_id": 1143,
+      "base": "8.vinayavaggo",
+      "final": "8.vinayavaggo_atthakatha_ddccc9",
+      "duplicated_with_oldid": "326"
+    },
+    {
+      "text": "1. Mettāvaggo",
+      "old_id": 1145,
+      "base": "1.mettavaggo",
+      "final": "1.mettavaggo_atthakatha_de0329",
+      "duplicated_with_oldid": "331"
+    },
+    {
+      "text": "2. Mahāvaggo",
+      "old_id": 1146,
+      "base": "2.mahavaggo",
+      "final": "2.mahavaggo_atthakatha_900c83",
+      "duplicated_with_oldid": "332"
+    },
+    {
+      "text": "3. Gahapativaggo",
+      "old_id": 1147,
+      "base": "3.gahapativaggo",
+      "final": "3.gahapativaggo_atthakatha_2f7d5a",
+      "duplicated_with_oldid": "333"
+    },
+    {
+      "text": "4. Dānavaggo",
+      "old_id": 1148,
+      "base": "4.danavaggo",
+      "final": "4.danavaggo_atthakatha_d008be",
+      "duplicated_with_oldid": "334"
+    },
+    {
+      "text": "5. Uposathavaggo",
+      "old_id": 1149,
+      "base": "5.uposathavaggo",
+      "final": "5.uposathavaggo_atthakatha_60826b",
+      "duplicated_with_oldid": "335"
+    },
+    {
+      "text": "(6) 1. Gotamīvaggo",
+      "old_id": 1150,
+      "base": "6.1.gotamivaggo",
+      "final": "6.1.gotamivaggo_atthakatha_640d1b",
+      "duplicated_with_oldid": "336"
+    },
+    {
+      "text": "(7) 2. Bhūmicālavaggo",
+      "old_id": 1151,
+      "base": "7.2.bhumicalavaggo",
+      "final": "7.2.bhumicalavaggo_atthakatha_ec1495",
+      "duplicated_with_oldid": "337"
+    },
+    {
+      "text": "(8) 3. Yamakavaggo",
+      "old_id": 1152,
+      "base": "8.3.yamakavaggo",
+      "final": "8.3.yamakavaggo_atthakatha_098932",
+      "duplicated_with_oldid": "338"
+    },
+    {
+      "text": "(9) 4. Sativaggo",
+      "old_id": 1153,
+      "base": "9.4.sativaggo",
+      "final": "9.4.sativaggo_atthakatha_dac5b2",
+      "duplicated_with_oldid": "339"
+    },
+    {
+      "text": "(10) 5. Sāmaññavaggo",
+      "old_id": 1154,
+      "base": "10.5.samannavaggo",
+      "final": "10.5.samannavaggo_atthakatha_285968",
+      "duplicated_with_oldid": "340"
+    },
+    {
+      "text": "1. Sambodhivaggo",
+      "old_id": 1155,
+      "base": "1.sambodhivaggo",
+      "final": "1.sambodhivaggo_atthakatha_f6e86e",
+      "duplicated_with_oldid": "343"
+    },
+    {
+      "text": "2. Sīhanādavaggo",
+      "old_id": 1156,
+      "base": "2.sihanadavaggo",
+      "final": "2.sihanadavaggo_atthakatha",
+      "duplicated_with_oldid": "931"
+    },
+    {
+      "text": "3. Sattāvāsavaggo",
+      "old_id": 1157,
+      "base": "3.sattavasavaggo",
+      "final": "3.sattavasavaggo_atthakatha_9ed0dc",
+      "duplicated_with_oldid": "345"
+    },
+    {
+      "text": "5. Sāmaññavaggo",
+      "old_id": 1159,
+      "base": "5.samannavaggo",
+      "final": "5.samannavaggo_atthakatha_0619a5",
+      "duplicated_with_oldid": "347"
+    },
+    {
+      "text": "1. Ānisaṃsavaggo",
+      "old_id": 1160,
+      "base": "1.anisamsavaggo",
+      "final": "1.anisamsavaggo_atthakatha_49ed29",
+      "duplicated_with_oldid": "354"
+    },
+    {
+      "text": "2. Nāthavaggo",
+      "old_id": 1161,
+      "base": "2.nathavaggo",
+      "final": "2.nathavaggo_atthakatha_e3823d",
+      "duplicated_with_oldid": "355"
+    },
+    {
+      "text": "4. Upālivaggo",
+      "old_id": 1163,
+      "base": "4.upalivaggo",
+      "final": "4.upalivaggo_atthakatha_eca821",
+      "duplicated_with_oldid": "357"
+    },
+    {
+      "text": "5. Akkosavaggo",
+      "old_id": 1164,
+      "base": "5.akkosavaggo",
+      "final": "5.akkosavaggo_atthakatha_f0e1ee",
+      "duplicated_with_oldid": "358"
+    },
+    {
+      "text": "(6) 1. Sacittavaggo",
+      "old_id": 1165,
+      "base": "6.1.sacittavaggo",
+      "final": "6.1.sacittavaggo_atthakatha_7750b4",
+      "duplicated_with_oldid": "359"
+    },
+    {
+      "text": "(7) 2. Yamakavaggo",
+      "old_id": 1166,
+      "base": "7.2.yamakavaggo",
+      "final": "7.2.yamakavaggo_atthakatha_0f914f",
+      "duplicated_with_oldid": "360"
+    },
+    {
+      "text": "(8) 3. Ākaṅkhavaggo",
+      "old_id": 1167,
+      "base": "8.3.akankhavaggo",
+      "final": "8.3.akankhavaggo_atthakatha_9ad8b8",
+      "duplicated_with_oldid": "361"
+    },
+    {
+      "text": "(9) 4. Theravaggo",
+      "old_id": 1168,
+      "base": "9.4.theravaggo",
+      "final": "9.4.theravaggo_atthakatha",
+      "duplicated_with_oldid": "1106"
+    },
+    {
+      "text": "(10) 5. Upālivaggo",
+      "old_id": 1169,
+      "base": "10.5.upalivaggo",
+      "final": "10.5.upalivaggo_atthakatha_f1b837",
+      "duplicated_with_oldid": "363"
+    },
+    {
+      "text": "(11) 1. Samaṇasaññāvaggo",
+      "old_id": 1170,
+      "base": "11.1.samanasannavaggo",
+      "final": "11.1.samanasannavaggo_atthakatha_3ff411",
+      "duplicated_with_oldid": "364"
+    },
+    {
+      "text": "(12) 2. Paccorohaṇivaggo",
+      "old_id": 1171,
+      "base": "12.2.paccorohanivaggo",
+      "final": "12.2.paccorohanivaggo_atthakatha_eabbc5",
+      "duplicated_with_oldid": "365"
+    },
+    {
+      "text": "(21) 1. Karajakāyavaggo",
+      "old_id": 1174,
+      "base": "21.1.karajakayavaggo",
+      "final": "21.1.karajakayavaggo_atthakatha_c48992",
+      "duplicated_with_oldid": "374"
+    },
+    {
+      "text": "1. Nissayavaggo",
+      "old_id": 1176,
+      "base": "1.nissayavaggo",
+      "final": "1.nissayavaggo_atthakatha_cd1ff8",
+      "duplicated_with_oldid": "378"
+    },
+    {
+      "text": "2. Anussativaggo",
+      "old_id": 1177,
+      "base": "2.anussativaggo",
+      "final": "2.anussativaggo_atthakatha_4b0f81",
+      "duplicated_with_oldid": "379"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1180,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_atthakatha",
+      "duplicated_with_oldid": "1012"
+    },
+    {
+      "text": "1. Yamakavaggo",
+      "old_id": 1192,
+      "base": "1.yamakavaggo",
+      "final": "1.yamakavaggo_atthakatha_8cee95",
+      "duplicated_with_oldid": "394"
+    },
+    {
+      "text": "2. Appamādavaggo",
+      "old_id": 1193,
+      "base": "2.appamadavaggo",
+      "final": "2.appamadavaggo_atthakatha_4891af",
+      "duplicated_with_oldid": "395"
+    },
+    {
+      "text": "3. Cittavaggo",
+      "old_id": 1194,
+      "base": "3.cittavaggo",
+      "final": "3.cittavaggo_atthakatha_f29a99",
+      "duplicated_with_oldid": "396"
+    },
+    {
+      "text": "4. Pupphavaggo",
+      "old_id": 1195,
+      "base": "4.pupphavaggo",
+      "final": "4.pupphavaggo_atthakatha_293f63",
+      "duplicated_with_oldid": "397"
+    },
+    {
+      "text": "5. Bālavaggo",
+      "old_id": 1196,
+      "base": "5.balavaggo",
+      "final": "5.balavaggo_atthakatha_2ac781",
+      "duplicated_with_oldid": "398"
+    },
+    {
+      "text": "6. Paṇḍitavaggo",
+      "old_id": 1197,
+      "base": "6.panditavaggo",
+      "final": "6.panditavaggo_atthakatha_84bc31",
+      "duplicated_with_oldid": "399"
+    },
+    {
+      "text": "7. Arahantavaggo",
+      "old_id": 1198,
+      "base": "7.arahantavaggo",
+      "final": "7.arahantavaggo_atthakatha_bc5f9b",
+      "duplicated_with_oldid": "400"
+    },
+    {
+      "text": "8. Sahassavaggo",
+      "old_id": 1199,
+      "base": "8.sahassavaggo",
+      "final": "8.sahassavaggo_atthakatha_194cb9",
+      "duplicated_with_oldid": "401"
+    },
+    {
+      "text": "9. Pāpavaggo",
+      "old_id": 1200,
+      "base": "9.papavaggo",
+      "final": "9.papavaggo_atthakatha_cd6903",
+      "duplicated_with_oldid": "402"
+    },
+    {
+      "text": "10. Daṇḍavaggo",
+      "old_id": 1201,
+      "base": "10.dandavaggo",
+      "final": "10.dandavaggo_atthakatha_5fa16c",
+      "duplicated_with_oldid": "403"
+    },
+    {
+      "text": "11. Jarāvaggo",
+      "old_id": 1202,
+      "base": "11.jaravaggo",
+      "final": "11.jaravaggo_atthakatha_1b5967",
+      "duplicated_with_oldid": "404"
+    },
+    {
+      "text": "12. Attavaggo",
+      "old_id": 1203,
+      "base": "12.attavaggo",
+      "final": "12.attavaggo_atthakatha_379a18",
+      "duplicated_with_oldid": "405"
+    },
+    {
+      "text": "13. Lokavaggo",
+      "old_id": 1204,
+      "base": "13.lokavaggo",
+      "final": "13.lokavaggo_atthakatha_3537b7",
+      "duplicated_with_oldid": "406"
+    },
+    {
+      "text": "14. Buddhavaggo",
+      "old_id": 1205,
+      "base": "14.buddhavaggo",
+      "final": "14.buddhavaggo_atthakatha_a3191b",
+      "duplicated_with_oldid": "407"
+    },
+    {
+      "text": "15. Sukhavaggo",
+      "old_id": 1206,
+      "base": "15.sukhavaggo",
+      "final": "15.sukhavaggo_atthakatha_ce71ce",
+      "duplicated_with_oldid": "408"
+    },
+    {
+      "text": "16. Piyavaggo",
+      "old_id": 1207,
+      "base": "16.piyavaggo",
+      "final": "16.piyavaggo_atthakatha_9cb4fe",
+      "duplicated_with_oldid": "409"
+    },
+    {
+      "text": "17. Kodhavaggo",
+      "old_id": 1208,
+      "base": "17.kodhavaggo",
+      "final": "17.kodhavaggo_atthakatha_391cad",
+      "duplicated_with_oldid": "410"
+    },
+    {
+      "text": "18. Malavaggo",
+      "old_id": 1209,
+      "base": "18.malavaggo",
+      "final": "18.malavaggo_atthakatha_8342e8",
+      "duplicated_with_oldid": "411"
+    },
+    {
+      "text": "19. Dhammaṭṭhavaggo",
+      "old_id": 1210,
+      "base": "19.dhammatthavaggo",
+      "final": "19.dhammatthavaggo_atthakatha_dce0ba",
+      "duplicated_with_oldid": "412"
+    },
+    {
+      "text": "20. Maggavaggo",
+      "old_id": 1211,
+      "base": "20.maggavaggo",
+      "final": "20.maggavaggo_atthakatha_39cc5d",
+      "duplicated_with_oldid": "413"
+    },
+    {
+      "text": "21. Pakiṇṇakavaggo",
+      "old_id": 1212,
+      "base": "21.pakinnakavaggo",
+      "final": "21.pakinnakavaggo_atthakatha_3d91aa",
+      "duplicated_with_oldid": "414"
+    },
+    {
+      "text": "22. Nirayavaggo",
+      "old_id": 1213,
+      "base": "22.nirayavaggo",
+      "final": "22.nirayavaggo_atthakatha_ebce3a",
+      "duplicated_with_oldid": "415"
+    },
+    {
+      "text": "23. Nāgavaggo",
+      "old_id": 1214,
+      "base": "23.nagavaggo",
+      "final": "23.nagavaggo_atthakatha_660f9a",
+      "duplicated_with_oldid": "416"
+    },
+    {
+      "text": "24. Taṇhāvaggo",
+      "old_id": 1215,
+      "base": "24.tanhavaggo",
+      "final": "24.tanhavaggo_atthakatha_d6e1d8",
+      "duplicated_with_oldid": "417"
+    },
+    {
+      "text": "25. Bhikkhuvaggo",
+      "old_id": 1216,
+      "base": "25.bhikkhuvaggo",
+      "final": "25.bhikkhuvaggo_atthakatha_01b584",
+      "duplicated_with_oldid": "418"
+    },
+    {
+      "text": "26. Brāhmaṇavaggo",
+      "old_id": 1217,
+      "base": "26.brahmanavaggo",
+      "final": "26.brahmanavaggo_atthakatha_48656c",
+      "duplicated_with_oldid": "419"
+    },
+    {
+      "text": "1. Bodhivaggo",
+      "old_id": 1220,
+      "base": "1.bodhivaggo",
+      "final": "1.bodhivaggo_atthakatha_ef9ef2",
+      "duplicated_with_oldid": "421"
+    },
+    {
+      "text": "2. Mucalindavaggo",
+      "old_id": 1221,
+      "base": "2.mucalindavaggo",
+      "final": "2.mucalindavaggo_atthakatha_1d0e39",
+      "duplicated_with_oldid": "422"
+    },
+    {
+      "text": "3. Nandavaggo",
+      "old_id": 1222,
+      "base": "3.nandavaggo",
+      "final": "3.nandavaggo_atthakatha_6214a9",
+      "duplicated_with_oldid": "423"
+    },
+    {
+      "text": "4. Meghiyavaggo",
+      "old_id": 1223,
+      "base": "4.meghiyavaggo",
+      "final": "4.meghiyavaggo_atthakatha_c0fbc4",
+      "duplicated_with_oldid": "424"
+    },
+    {
+      "text": "5. Soṇavaggo",
+      "old_id": 1224,
+      "base": "5.sonavaggo",
+      "final": "5.sonavaggo_atthakatha_80789f",
+      "duplicated_with_oldid": "425"
+    },
+    {
+      "text": "6. Jaccandhavaggo",
+      "old_id": 1225,
+      "base": "6.jaccandhavaggo",
+      "final": "6.jaccandhavaggo_atthakatha_d80710",
+      "duplicated_with_oldid": "426"
+    },
+    {
+      "text": "7. Cūḷavaggo",
+      "old_id": 1226,
+      "base": "7.culavaggo",
+      "final": "7.culavaggo_atthakatha_46a70e",
+      "duplicated_with_oldid": "427"
+    },
+    {
+      "text": "8. Pāṭaligāmiyavaggo",
+      "old_id": 1227,
+      "base": "8.pataligamiyavaggo",
+      "final": "8.pataligamiyavaggo_atthakatha_691dd4",
+      "duplicated_with_oldid": "428"
+    },
+    {
+      "text": "2. Cūḷavaggo",
+      "old_id": 1236,
+      "base": "2.culavaggo",
+      "final": "2.culavaggo_atthakatha_f1429e",
+      "duplicated_with_oldid": "436"
+    },
+    {
+      "text": "3. Mahāvaggo",
+      "old_id": 1237,
+      "base": "3.mahavaggo",
+      "final": "3.mahavaggo_atthakatha",
+      "duplicated_with_oldid": "1162"
+    },
+    {
+      "text": "4. Aṭṭhakavaggo",
+      "old_id": 1238,
+      "base": "4.atthakavaggo",
+      "final": "4.atthakavaggo_atthakatha_175690",
+      "duplicated_with_oldid": "438"
+    },
+    {
+      "text": "5. Pārāyanavaggo",
+      "old_id": 1239,
+      "base": "5.parayanavaggo",
+      "final": "5.parayanavaggo_atthakatha_589b26",
+      "duplicated_with_oldid": "439"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1241,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_atthakatha",
+      "duplicated_with_oldid": "1219"
+    },
+    {
+      "text": "1. Itthivimānaṃ",
+      "old_id": 1242,
+      "base": "1.itthivimanam",
+      "final": "1.itthivimanam_atthakatha_0d0d1a",
+      "duplicated_with_oldid": "441"
+    },
+    {
+      "text": "2. Purisavimānaṃ",
+      "old_id": 1243,
+      "base": "2.purisavimanam",
+      "final": "2.purisavimanam_atthakatha_0b5805",
+      "duplicated_with_oldid": "442"
+    },
+    {
+      "text": "1. Uragavaggo",
+      "old_id": 1246,
+      "base": "1.uragavaggo",
+      "final": "1.uragavaggo_atthakatha",
+      "duplicated_with_oldid": "1235"
+    },
+    {
+      "text": "2. Ubbarivaggo",
+      "old_id": 1247,
+      "base": "2.ubbarivaggo",
+      "final": "2.ubbarivaggo_atthakatha_1dea9c",
+      "duplicated_with_oldid": "445"
+    },
+    {
+      "text": "3. Cūḷavaggo",
+      "old_id": 1248,
+      "base": "3.culavaggo",
+      "final": "3.culavaggo_atthakatha_176dc7",
+      "duplicated_with_oldid": "446"
+    },
+    {
+      "text": "4. Mahāvaggo",
+      "old_id": 1249,
+      "base": "4.mahavaggo",
+      "final": "4.mahavaggo_atthakatha",
+      "duplicated_with_oldid": "1158"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1251,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_atthakatha",
+      "duplicated_with_oldid": "1245"
+    },
+    {
+      "text": "1. Ekakanipāto",
+      "old_id": 1252,
+      "base": "1.ekakanipato",
+      "final": "1.ekakanipato_atthakatha",
+      "duplicated_with_oldid": "1230"
+    },
+    {
+      "text": "2. Dukanipāto",
+      "old_id": 1253,
+      "base": "2.dukanipato",
+      "final": "2.dukanipato_atthakatha",
+      "duplicated_with_oldid": "1231"
+    },
+    {
+      "text": "3. Tikanipāto",
+      "old_id": 1254,
+      "base": "3.tikanipato",
+      "final": "3.tikanipato_atthakatha",
+      "duplicated_with_oldid": "1232"
+    },
+    {
+      "text": "4. Catukkanipāto",
+      "old_id": 1256,
+      "base": "4.catukkanipato",
+      "final": "4.catukkanipato_atthakatha",
+      "duplicated_with_oldid": "1233"
+    },
+    {
+      "text": "5. Pañcakanipāto",
+      "old_id": 1257,
+      "base": "5.pancakanipato",
+      "final": "5.pancakanipato_atthakatha_274761",
+      "duplicated_with_oldid": "588"
+    },
+    {
+      "text": "6. Chakkanipāto",
+      "old_id": 1258,
+      "base": "6.chakkanipato",
+      "final": "6.chakkanipato_atthakatha_8756ce",
+      "duplicated_with_oldid": "589"
+    },
+    {
+      "text": "7. Sattakanipāto",
+      "old_id": 1259,
+      "base": "7.sattakanipato",
+      "final": "7.sattakanipato_atthakatha_12232a",
+      "duplicated_with_oldid": "590"
+    },
+    {
+      "text": "8. Aṭṭhakanipāto",
+      "old_id": 1260,
+      "base": "8.atthakanipato",
+      "final": "8.atthakanipato_atthakatha_863cc0",
+      "duplicated_with_oldid": "591"
+    },
+    {
+      "text": "9. Navakanipāto",
+      "old_id": 1261,
+      "base": "9.navakanipato",
+      "final": "9.navakanipato_atthakatha_5497da",
+      "duplicated_with_oldid": "592"
+    },
+    {
+      "text": "11. Ekādasanipāto",
+      "old_id": 1263,
+      "base": "11.ekadasanipato",
+      "final": "11.ekadasanipato_atthakatha_83e1e6",
+      "duplicated_with_oldid": "459"
+    },
+    {
+      "text": "13. Terasanipāto",
+      "old_id": 1265,
+      "base": "13.terasanipato",
+      "final": "13.terasanipato_atthakatha_758fe5",
+      "duplicated_with_oldid": "461"
+    },
+    {
+      "text": "14. Cuddasakanipāto",
+      "old_id": 1266,
+      "base": "14.cuddasakanipato",
+      "final": "14.cuddasakanipato_atthakatha_b1a79b",
+      "duplicated_with_oldid": "462"
+    },
+    {
+      "text": "15. Soḷasakanipāto",
+      "old_id": 1267,
+      "base": "15.solasakanipato",
+      "final": "15.solasakanipato_atthakatha_5bd439",
+      "duplicated_with_oldid": "463"
+    },
+    {
+      "text": "16. Vīsatinipāto",
+      "old_id": 1268,
+      "base": "16.visatinipato",
+      "final": "16.visatinipato_atthakatha_782131",
+      "duplicated_with_oldid": "464"
+    },
+    {
+      "text": "17. Tiṃsanipāto",
+      "old_id": 1269,
+      "base": "17.timsanipato",
+      "final": "17.timsanipato_atthakatha_f54c9b",
+      "duplicated_with_oldid": "465"
+    },
+    {
+      "text": "18. Cattālīsanipāto",
+      "old_id": 1270,
+      "base": "18.cattalisanipato",
+      "final": "18.cattalisanipato_atthakatha_9462e8",
+      "duplicated_with_oldid": "466"
+    },
+    {
+      "text": "19. Paññāsanipāto",
+      "old_id": 1271,
+      "base": "19.pannasanipato",
+      "final": "19.pannasanipato_atthakatha_b0f11c",
+      "duplicated_with_oldid": "467"
+    },
+    {
+      "text": "20. Saṭṭhinipāto",
+      "old_id": 1272,
+      "base": "20.satthinipato",
+      "final": "20.satthinipato_atthakatha_456e9b",
+      "duplicated_with_oldid": "468"
+    },
+    {
+      "text": "21. Mahānipāto",
+      "old_id": 1273,
+      "base": "21.mahanipato",
+      "final": "21.mahanipato_atthakatha_cf0a13",
+      "duplicated_with_oldid": "469"
+    },
+    {
+      "text": "11. Dvādasakanipāto",
+      "old_id": 1285,
+      "base": "11.dvadasakanipato",
+      "final": "11.dvadasakanipato_atthakatha_cd97fb",
+      "duplicated_with_oldid": "481"
+    },
+    {
+      "text": "12. Soḷasanipāto",
+      "old_id": 1286,
+      "base": "12.solasanipato",
+      "final": "12.solasanipato_atthakatha_6a771a",
+      "duplicated_with_oldid": "482"
+    },
+    {
+      "text": "13. Vīsatinipāto",
+      "old_id": 1287,
+      "base": "13.visatinipato",
+      "final": "13.visatinipato_atthakatha_3aa8fe",
+      "duplicated_with_oldid": "483"
+    },
+    {
+      "text": "14. Tiṃsanipāto",
+      "old_id": 1288,
+      "base": "14.timsanipato",
+      "final": "14.timsanipato_atthakatha_0f73b3",
+      "duplicated_with_oldid": "484"
+    },
+    {
+      "text": "15. Cattālīsanipāto",
+      "old_id": 1289,
+      "base": "15.cattalisanipato",
+      "final": "15.cattalisanipato_atthakatha_afac6c",
+      "duplicated_with_oldid": "485"
+    },
+    {
+      "text": "16. Mahānipāto",
+      "old_id": 1290,
+      "base": "16.mahanipato",
+      "final": "16.mahanipato_atthakatha_e57406",
+      "duplicated_with_oldid": "486"
+    },
+    {
+      "text": "1. Buddhavaggo",
+      "old_id": 1293,
+      "base": "1.buddhavaggo",
+      "final": "1.buddhavaggo_atthakatha_787246",
+      "duplicated_with_oldid": "488"
+    },
+    {
+      "text": "2. Sīhāsaniyavaggo",
+      "old_id": 1294,
+      "base": "2.sihasaniyavaggo",
+      "final": "2.sihasaniyavaggo_atthakatha_b8ff0d",
+      "duplicated_with_oldid": "489"
+    },
+    {
+      "text": "3. Subhūtivaggo",
+      "old_id": 1295,
+      "base": "3.subhutivaggo",
+      "final": "3.subhutivaggo_atthakatha_e21c36",
+      "duplicated_with_oldid": "490"
+    },
+    {
+      "text": "4. Kuṇḍadhānavaggo",
+      "old_id": 1296,
+      "base": "4.kundadhanavaggo",
+      "final": "4.kundadhanavaggo_atthakatha_b5fbf8",
+      "duplicated_with_oldid": "491"
+    },
+    {
+      "text": "5. Upālivaggo",
+      "old_id": 1297,
+      "base": "5.upalivaggo",
+      "final": "5.upalivaggo_atthakatha_9c70b9",
+      "duplicated_with_oldid": "492"
+    },
+    {
+      "text": "6. Bījanivaggo",
+      "old_id": 1298,
+      "base": "6.bijanivaggo",
+      "final": "6.bijanivaggo_atthakatha_66b29a",
+      "duplicated_with_oldid": "493"
+    },
+    {
+      "text": "7. Sakacintaniyavaggo",
+      "old_id": 1299,
+      "base": "7.sakacintaniyavaggo",
+      "final": "7.sakacintaniyavaggo_atthakatha_c9587d",
+      "duplicated_with_oldid": "494"
+    },
+    {
+      "text": "8. Nāgasamālavaggo",
+      "old_id": 1300,
+      "base": "8.nagasamalavaggo",
+      "final": "8.nagasamalavaggo_atthakatha_d4f52d",
+      "duplicated_with_oldid": "495"
+    },
+    {
+      "text": "9. Timiravaggo",
+      "old_id": 1301,
+      "base": "9.timiravaggo",
+      "final": "9.timiravaggo_atthakatha_f8cb12",
+      "duplicated_with_oldid": "496"
+    },
+    {
+      "text": "10. Sudhāvaggo",
+      "old_id": 1302,
+      "base": "10.sudhavaggo",
+      "final": "10.sudhavaggo_atthakatha_111131",
+      "duplicated_with_oldid": "497"
+    },
+    {
+      "text": "11. Bhikkhadāyivaggo",
+      "old_id": 1303,
+      "base": "11.bhikkhadayivaggo",
+      "final": "11.bhikkhadayivaggo_atthakatha_a8d8dc",
+      "duplicated_with_oldid": "498"
+    },
+    {
+      "text": "12. Mahāparivāravaggo",
+      "old_id": 1304,
+      "base": "12.mahaparivaravaggo",
+      "final": "12.mahaparivaravaggo_atthakatha_85931a",
+      "duplicated_with_oldid": "499"
+    },
+    {
+      "text": "13. Sereyyavaggo",
+      "old_id": 1305,
+      "base": "13.sereyyavaggo",
+      "final": "13.sereyyavaggo_atthakatha_7beef1",
+      "duplicated_with_oldid": "500"
+    },
+    {
+      "text": "14. Sobhitavaggo",
+      "old_id": 1306,
+      "base": "14.sobhitavaggo",
+      "final": "14.sobhitavaggo_atthakatha_5e634c",
+      "duplicated_with_oldid": "501"
+    },
+    {
+      "text": "15. Chattavaggo",
+      "old_id": 1307,
+      "base": "15.chattavaggo",
+      "final": "15.chattavaggo_atthakatha_ebb661",
+      "duplicated_with_oldid": "502"
+    },
+    {
+      "text": "16. Bandhujīvakavaggo",
+      "old_id": 1308,
+      "base": "16.bandhujivakavaggo",
+      "final": "16.bandhujivakavaggo_atthakatha_370c72",
+      "duplicated_with_oldid": "503"
+    },
+    {
+      "text": "17. Supāricariyavaggo",
+      "old_id": 1309,
+      "base": "17.suparicariyavaggo",
+      "final": "17.suparicariyavaggo_atthakatha_89269a",
+      "duplicated_with_oldid": "504"
+    },
+    {
+      "text": "18. Kumudavaggo",
+      "old_id": 1310,
+      "base": "18.kumudavaggo",
+      "final": "18.kumudavaggo_atthakatha_29b5bb",
+      "duplicated_with_oldid": "505"
+    },
+    {
+      "text": "19. Kuṭajapupphiyavaggo",
+      "old_id": 1311,
+      "base": "19.kutajapupphiyavaggo",
+      "final": "19.kutajapupphiyavaggo_atthakatha_09790d",
+      "duplicated_with_oldid": "506"
+    },
+    {
+      "text": "20. Tamālapupphiyavaggo",
+      "old_id": 1312,
+      "base": "20.tamalapupphiyavaggo",
+      "final": "20.tamalapupphiyavaggo_atthakatha_3f79f7",
+      "duplicated_with_oldid": "507"
+    },
+    {
+      "text": "24. Udakāsanavaggo",
+      "old_id": 1314,
+      "base": "24.udakasanavaggo",
+      "final": "24.udakasanavaggo_atthakatha_d7762d",
+      "duplicated_with_oldid": "511"
+    },
+    {
+      "text": "25. Tuvaradāyakavaggo",
+      "old_id": 1315,
+      "base": "25.tuvaradayakavaggo",
+      "final": "25.tuvaradayakavaggo_atthakatha_3ada5e",
+      "duplicated_with_oldid": "512"
+    },
+    {
+      "text": "26. Thomakavaggo",
+      "old_id": 1316,
+      "base": "26.thomakavaggo",
+      "final": "26.thomakavaggo_atthakatha_e47bfa",
+      "duplicated_with_oldid": "513"
+    },
+    {
+      "text": "27. Padumukkhipavaggo",
+      "old_id": 1317,
+      "base": "27.padumukkhipavaggo",
+      "final": "27.padumukkhipavaggo_atthakatha_62f067",
+      "duplicated_with_oldid": "514"
+    },
+    {
+      "text": "28. Suvaṇṇabibbohanavaggo",
+      "old_id": 1318,
+      "base": "28.suvannabibbohanavaggo",
+      "final": "28.suvannabibbohanavaggo_atthakatha_b30303",
+      "duplicated_with_oldid": "515"
+    },
+    {
+      "text": "29. Paṇṇadāyakavaggo",
+      "old_id": 1319,
+      "base": "29.pannadayakavaggo",
+      "final": "29.pannadayakavaggo_atthakatha_d83b44",
+      "duplicated_with_oldid": "516"
+    },
+    {
+      "text": "30. Citakapūjakavaggo",
+      "old_id": 1320,
+      "base": "30.citakapujakavaggo",
+      "final": "30.citakapujakavaggo_atthakatha_b1d3dd",
+      "duplicated_with_oldid": "517"
+    },
+    {
+      "text": "31. Padumakesaravaggo",
+      "old_id": 1321,
+      "base": "31.padumakesaravaggo",
+      "final": "31.padumakesaravaggo_atthakatha_022052",
+      "duplicated_with_oldid": "518"
+    },
+    {
+      "text": "32. Ārakkhadāyakavaggo",
+      "old_id": 1322,
+      "base": "32.arakkhadayakavaggo",
+      "final": "32.arakkhadayakavaggo_atthakatha_aa53b1",
+      "duplicated_with_oldid": "519"
+    },
+    {
+      "text": "33. Umāpupphiyavaggo",
+      "old_id": 1323,
+      "base": "33.umapupphiyavaggo",
+      "final": "33.umapupphiyavaggo_atthakatha_fe5af5",
+      "duplicated_with_oldid": "520"
+    },
+    {
+      "text": "39. Avaṭaphalavaggo",
+      "old_id": 1325,
+      "base": "39.avataphalavaggo",
+      "final": "39.avataphalavaggo_atthakatha_edc5cd",
+      "duplicated_with_oldid": "526"
+    },
+    {
+      "text": "40. Pilindavacchavaggo",
+      "old_id": 1326,
+      "base": "40.pilindavacchavaggo",
+      "final": "40.pilindavacchavaggo_atthakatha_be3c28",
+      "duplicated_with_oldid": "527"
+    },
+    {
+      "text": "41. Metteyyavaggo",
+      "old_id": 1327,
+      "base": "41.metteyyavaggo",
+      "final": "41.metteyyavaggo_atthakatha_6e0151",
+      "duplicated_with_oldid": "528"
+    },
+    {
+      "text": "42. Bhaddālivaggo",
+      "old_id": 1328,
+      "base": "42.bhaddalivaggo",
+      "final": "42.bhaddalivaggo_atthakatha_3dfa09",
+      "duplicated_with_oldid": "529"
+    },
+    {
+      "text": "49. Paṃsukūlavaggo",
+      "old_id": 1330,
+      "base": "49.pamsukulavaggo",
+      "final": "49.pamsukulavaggo_atthakatha_98628b",
+      "duplicated_with_oldid": "537"
+    },
+    {
+      "text": "54. Kaccāyanavaggo",
+      "old_id": 1332,
+      "base": "54.kaccayanavaggo",
+      "final": "54.kaccayanavaggo_atthakatha_d9bf63",
+      "duplicated_with_oldid": "542"
+    },
+    {
+      "text": "55. Bhaddiyavaggo",
+      "old_id": 1333,
+      "base": "55.bhaddiyavaggo",
+      "final": "55.bhaddiyavaggo_atthakatha_c5652e",
+      "duplicated_with_oldid": "543"
+    },
+    {
+      "text": "56. Yasavaggo",
+      "old_id": 1334,
+      "base": "56.yasavaggo",
+      "final": "56.yasavaggo_atthakatha_391cad",
+      "duplicated_with_oldid": "544"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1336,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_atthakatha",
+      "duplicated_with_oldid": "1292"
+    },
+    {
+      "text": "1. Akittivaggo",
+      "old_id": 1367,
+      "base": "1.akittivaggo",
+      "final": "1.akittivaggo_atthakatha_ed2ee7",
+      "duplicated_with_oldid": "580"
+    },
+    {
+      "text": "2. Hatthināgavaggo",
+      "old_id": 1368,
+      "base": "2.hatthinagavaggo",
+      "final": "2.hatthinagavaggo_atthakatha_152319",
+      "duplicated_with_oldid": "581"
+    },
+    {
+      "text": "3. Yudhañjayavaggo",
+      "old_id": 1369,
+      "base": "3.yudhanjayavaggo",
+      "final": "3.yudhanjayavaggo_atthakatha_2c5f06",
+      "duplicated_with_oldid": "582"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1371,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_atthakatha",
+      "duplicated_with_oldid": "1366"
+    },
+    {
+      "text": "1. Ekakanipāto",
+      "old_id": 1372,
+      "base": "1.ekakanipato",
+      "final": "1.ekakanipato_atthakatha",
+      "duplicated_with_oldid": "1275"
+    },
+    {
+      "text": "2. Dukanipāto",
+      "old_id": 1374,
+      "base": "2.dukanipato",
+      "final": "2.dukanipato_atthakatha",
+      "duplicated_with_oldid": "1276"
+    },
+    {
+      "text": "3. Tikanipāto",
+      "old_id": 1375,
+      "base": "3.tikanipato",
+      "final": "3.tikanipato_atthakatha",
+      "duplicated_with_oldid": "1277"
+    },
+    {
+      "text": "4. Catukkanipāto",
+      "old_id": 1377,
+      "base": "4.catukkanipato",
+      "final": "4.catukkanipato_atthakatha",
+      "duplicated_with_oldid": "1278"
+    },
+    {
+      "text": "5. Pañcakanipāto",
+      "old_id": 1378,
+      "base": "5.pancakanipato",
+      "final": "5.pancakanipato_atthakatha",
+      "duplicated_with_oldid": "1279"
+    },
+    {
+      "text": "6. Chakkanipāto",
+      "old_id": 1379,
+      "base": "6.chakkanipato",
+      "final": "6.chakkanipato_atthakatha",
+      "duplicated_with_oldid": "1280"
+    },
+    {
+      "text": "7. Sattakanipāto",
+      "old_id": 1380,
+      "base": "7.sattakanipato",
+      "final": "7.sattakanipato_atthakatha",
+      "duplicated_with_oldid": "1281"
+    },
+    {
+      "text": "8. Aṭṭhakanipāto",
+      "old_id": 1381,
+      "base": "8.atthakanipato",
+      "final": "8.atthakanipato_atthakatha",
+      "duplicated_with_oldid": "1282"
+    },
+    {
+      "text": "9. Navakanipāto",
+      "old_id": 1382,
+      "base": "9.navakanipato",
+      "final": "9.navakanipato_atthakatha",
+      "duplicated_with_oldid": "1283"
+    },
+    {
+      "text": "10. Dasakanipāto",
+      "old_id": 1384,
+      "base": "10.dasakanipato",
+      "final": "10.dasakanipato_atthakatha",
+      "duplicated_with_oldid": "1262"
+    },
+    {
+      "text": "11. Ekādasakanipāto",
+      "old_id": 1385,
+      "base": "11.ekadasakanipato",
+      "final": "11.ekadasakanipato_atthakatha_618b8b",
+      "duplicated_with_oldid": "594"
+    },
+    {
+      "text": "12. Dvādasakanipāto",
+      "old_id": 1386,
+      "base": "12.dvadasakanipato",
+      "final": "12.dvadasakanipato_atthakatha",
+      "duplicated_with_oldid": "1264"
+    },
+    {
+      "text": "13. Terasakanipāto",
+      "old_id": 1387,
+      "base": "13.terasakanipato",
+      "final": "13.terasakanipato_atthakatha_252687",
+      "duplicated_with_oldid": "596"
+    },
+    {
+      "text": "14. Pakiṇṇakanipāto",
+      "old_id": 1388,
+      "base": "14.pakinnakanipato",
+      "final": "14.pakinnakanipato_atthakatha_470bca",
+      "duplicated_with_oldid": "597"
+    },
+    {
+      "text": "15. Vīsatinipāto",
+      "old_id": 1389,
+      "base": "15.visatinipato",
+      "final": "15.visatinipato_atthakatha_858c4d",
+      "duplicated_with_oldid": "598"
+    },
+    {
+      "text": "16. Tiṃsanipāto",
+      "old_id": 1390,
+      "base": "16.timsanipato",
+      "final": "16.timsanipato_atthakatha_dd0560",
+      "duplicated_with_oldid": "599"
+    },
+    {
+      "text": "17. Cattālīsanipāto",
+      "old_id": 1392,
+      "base": "17.cattalisanipato",
+      "final": "17.cattalisanipato_atthakatha_0104a4",
+      "duplicated_with_oldid": "601"
+    },
+    {
+      "text": "18. Paṇṇāsanipāto",
+      "old_id": 1393,
+      "base": "18.pannasanipato",
+      "final": "18.pannasanipato_atthakatha_d97235",
+      "duplicated_with_oldid": "602"
+    },
+    {
+      "text": "19. Saṭṭhinipāto",
+      "old_id": 1394,
+      "base": "19.satthinipato",
+      "final": "19.satthinipato_atthakatha_50ae59",
+      "duplicated_with_oldid": "603"
+    },
+    {
+      "text": "20. Sattatinipāto",
+      "old_id": 1395,
+      "base": "20.sattatinipato",
+      "final": "20.sattatinipato_atthakatha_19416b",
+      "duplicated_with_oldid": "604"
+    },
+    {
+      "text": "21. Asītinipāto",
+      "old_id": 1396,
+      "base": "21.asitinipato",
+      "final": "21.asitinipato_atthakatha_da6aa6",
+      "duplicated_with_oldid": "605"
+    },
+    {
+      "text": "22. Mahānipāto",
+      "old_id": 1398,
+      "base": "22.mahanipato",
+      "final": "22.mahanipato_atthakatha_54b91a",
+      "duplicated_with_oldid": "606"
+    },
+    {
+      "text": "Pārāyanavagganiddeso",
+      "old_id": 1420,
+      "base": "parayanavagganiddeso",
+      "final": "parayanavagganiddeso_atthakatha_c89de9",
+      "duplicated_with_oldid": "626"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1423,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_atthakatha",
+      "duplicated_with_oldid": "1402"
+    },
+    {
+      "text": "(1) Mahāvaggo",
+      "old_id": 1424,
+      "base": "1.mahavaggo",
+      "final": "1.mahavaggo_atthakatha_8c918a",
+      "duplicated_with_oldid": "629"
+    },
+    {
+      "text": "(2) Yuganaddhavaggo",
+      "old_id": 1435,
+      "base": "2.yuganaddhavaggo",
+      "final": "2.yuganaddhavaggo_atthakatha_3ab1a0",
+      "duplicated_with_oldid": "630"
+    },
+    {
+      "text": "(3) Paññāvaggo",
+      "old_id": 1436,
+      "base": "3.pannavaggo",
+      "final": "3.pannavaggo_atthakatha_88517c",
+      "duplicated_with_oldid": "631"
+    },
+    {
+      "text": "8. Satipaṭṭhānakathā",
+      "old_id": 1444,
+      "base": "8.satipatthanakatha",
+      "final": "8.satipatthanakatha_atthakatha_a61e4c",
+      "duplicated_with_oldid": "707"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1457,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_atthakatha",
+      "duplicated_with_oldid": "1448"
+    },
+    {
+      "text": "1. Khandhavibhaṅgo",
+      "old_id": 1466,
+      "base": "1.khandhavibhango",
+      "final": "1.khandhavibhango_atthakatha_b45267",
+      "duplicated_with_oldid": "662"
+    },
+    {
+      "text": "2. Āyatanavibhaṅgo",
+      "old_id": 1467,
+      "base": "2.ayatanavibhango",
+      "final": "2.ayatanavibhango_atthakatha_fde1ad",
+      "duplicated_with_oldid": "663"
+    },
+    {
+      "text": "3. Dhātuvibhaṅgo",
+      "old_id": 1468,
+      "base": "3.dhatuvibhango",
+      "final": "3.dhatuvibhango_atthakatha_d25b54",
+      "duplicated_with_oldid": "664"
+    },
+    {
+      "text": "4. Saccavibhaṅgo",
+      "old_id": 1469,
+      "base": "4.saccavibhango",
+      "final": "4.saccavibhango_atthakatha_4283e2",
+      "duplicated_with_oldid": "665"
+    },
+    {
+      "text": "5. Indriyavibhaṅgo",
+      "old_id": 1470,
+      "base": "5.indriyavibhango",
+      "final": "5.indriyavibhango_atthakatha_51b745",
+      "duplicated_with_oldid": "666"
+    },
+    {
+      "text": "6. Paṭiccasamuppādavibhaṅgo",
+      "old_id": 1471,
+      "base": "6.paticcasamuppadavibhango",
+      "final": "6.paticcasamuppadavibhango_atthakatha_e7d169",
+      "duplicated_with_oldid": "667"
+    },
+    {
+      "text": "7. Satipaṭṭhānavibhaṅgo",
+      "old_id": 1472,
+      "base": "7.satipatthanavibhango",
+      "final": "7.satipatthanavibhango_atthakatha_cb3276",
+      "duplicated_with_oldid": "668"
+    },
+    {
+      "text": "8. Sammappadhānavibhaṅgo",
+      "old_id": 1473,
+      "base": "8.sammappadhanavibhango",
+      "final": "8.sammappadhanavibhango_atthakatha_cada4b",
+      "duplicated_with_oldid": "669"
+    },
+    {
+      "text": "9. Iddhipādavibhaṅgo",
+      "old_id": 1474,
+      "base": "9.iddhipadavibhango",
+      "final": "9.iddhipadavibhango_atthakatha_6844bf",
+      "duplicated_with_oldid": "670"
+    },
+    {
+      "text": "10. Bojjhaṅgavibhaṅgo",
+      "old_id": 1475,
+      "base": "10.bojjhangavibhango",
+      "final": "10.bojjhangavibhango_atthakatha_550d78",
+      "duplicated_with_oldid": "671"
+    },
+    {
+      "text": "11. Maggaṅgavibhaṅgo",
+      "old_id": 1476,
+      "base": "11.maggangavibhango",
+      "final": "11.maggangavibhango_atthakatha_a8d6b1",
+      "duplicated_with_oldid": "672"
+    },
+    {
+      "text": "12. Jhānavibhaṅgo",
+      "old_id": 1477,
+      "base": "12.jhanavibhango",
+      "final": "12.jhanavibhango_atthakatha_b4fd76",
+      "duplicated_with_oldid": "673"
+    },
+    {
+      "text": "13. Appamaññāvibhaṅgo",
+      "old_id": 1478,
+      "base": "13.appamannavibhango",
+      "final": "13.appamannavibhango_atthakatha_6c5be6",
+      "duplicated_with_oldid": "674"
+    },
+    {
+      "text": "14. Sikkhāpadavibhaṅgo",
+      "old_id": 1479,
+      "base": "14.sikkhapadavibhango",
+      "final": "14.sikkhapadavibhango_atthakatha_1a09b1",
+      "duplicated_with_oldid": "675"
+    },
+    {
+      "text": "15. Paṭisambhidāvibhaṅgo",
+      "old_id": 1480,
+      "base": "15.patisambhidavibhango",
+      "final": "15.patisambhidavibhango_atthakatha_a40e0a",
+      "duplicated_with_oldid": "676"
+    },
+    {
+      "text": "16. Ñāṇavibhaṅgo",
+      "old_id": 1481,
+      "base": "16.nanavibhango",
+      "final": "16.nanavibhango_atthakatha_edcba6",
+      "duplicated_with_oldid": "677"
+    },
+    {
+      "text": "17. Khuddakavatthuvibhaṅgo",
+      "old_id": 1482,
+      "base": "17.khuddakavatthuvibhango",
+      "final": "17.khuddakavatthuvibhango_atthakatha_29abd5",
+      "duplicated_with_oldid": "678"
+    },
+    {
+      "text": "18. Dhammahadayavibhaṅgo",
+      "old_id": 1483,
+      "base": "18.dhammahadayavibhango",
+      "final": "18.dhammahadayavibhango_atthakatha_1fc813",
+      "duplicated_with_oldid": "679"
+    },
+    {
+      "text": "1. Puggalakathā",
+      "old_id": 1491,
+      "base": "1.puggalakatha",
+      "final": "1.puggalakatha_atthakatha_d6bdd4",
+      "duplicated_with_oldid": "700"
+    },
+    {
+      "text": "2. Parihānikathā",
+      "old_id": 1492,
+      "base": "2.parihanikatha",
+      "final": "2.parihanikatha_atthakatha_38138d",
+      "duplicated_with_oldid": "701"
+    },
+    {
+      "text": "3. Brahmacariyakathā",
+      "old_id": 1493,
+      "base": "3.brahmacariyakatha",
+      "final": "3.brahmacariyakatha_atthakatha_d215a1",
+      "duplicated_with_oldid": "702"
+    },
+    {
+      "text": "4. Jahatikathā",
+      "old_id": 1494,
+      "base": "4.jahatikatha",
+      "final": "4.jahatikatha_atthakatha_d93b7a",
+      "duplicated_with_oldid": "703"
+    },
+    {
+      "text": "5. Sabbamatthītikathā",
+      "old_id": 1495,
+      "base": "5.sabbamatthitikatha",
+      "final": "5.sabbamatthitikatha_atthakatha_c06150",
+      "duplicated_with_oldid": "704"
+    },
+    {
+      "text": "6. Atītakkhandhādikathā",
+      "old_id": 1496,
+      "base": "6.atitakkhandhadikatha",
+      "final": "6.atitakkhandhadikatha_atthakatha_4f9274",
+      "duplicated_with_oldid": "705"
+    },
+    {
+      "text": "2. Dutiyavaggo",
+      "old_id": 1500,
+      "base": "2.dutiyavaggo",
+      "final": "2.dutiyavaggo_atthakatha_c351e9",
+      "duplicated_with_oldid": "709"
+    },
+    {
+      "text": "3. Tatiyavaggo",
+      "old_id": 1501,
+      "base": "3.tatiyavaggo",
+      "final": "3.tatiyavaggo_atthakatha_4896b0",
+      "duplicated_with_oldid": "710"
+    },
+    {
+      "text": "4. Catutthavaggo",
+      "old_id": 1502,
+      "base": "4.catutthavaggo",
+      "final": "4.catutthavaggo_atthakatha_cead62",
+      "duplicated_with_oldid": "711"
+    },
+    {
+      "text": "5. Pañcamavaggo",
+      "old_id": 1503,
+      "base": "5.pancamavaggo",
+      "final": "5.pancamavaggo_atthakatha_3f5e72",
+      "duplicated_with_oldid": "712"
+    },
+    {
+      "text": "6. Chaṭṭhavaggo",
+      "old_id": 1504,
+      "base": "6.chatthavaggo",
+      "final": "6.chatthavaggo_atthakatha_6093cd",
+      "duplicated_with_oldid": "713"
+    },
+    {
+      "text": "7. Sattamavaggo",
+      "old_id": 1505,
+      "base": "7.sattamavaggo",
+      "final": "7.sattamavaggo_atthakatha_1d74a4",
+      "duplicated_with_oldid": "714"
+    },
+    {
+      "text": "8. Aṭṭhamavaggo",
+      "old_id": 1506,
+      "base": "8.atthamavaggo",
+      "final": "8.atthamavaggo_atthakatha_e44fd0",
+      "duplicated_with_oldid": "715"
+    },
+    {
+      "text": "9. Navamavaggo",
+      "old_id": 1507,
+      "base": "9.navamavaggo",
+      "final": "9.navamavaggo_atthakatha_788569",
+      "duplicated_with_oldid": "716"
+    },
+    {
+      "text": "10. Dasamavaggo",
+      "old_id": 1508,
+      "base": "10.dasamavaggo",
+      "final": "10.dasamavaggo_atthakatha_a7b516",
+      "duplicated_with_oldid": "717"
+    },
+    {
+      "text": "11. Ekādasamavaggo",
+      "old_id": 1509,
+      "base": "11.ekadasamavaggo",
+      "final": "11.ekadasamavaggo_atthakatha_c8e056",
+      "duplicated_with_oldid": "718"
+    },
+    {
+      "text": "12. Dvādasamavaggo",
+      "old_id": 1510,
+      "base": "12.dvadasamavaggo",
+      "final": "12.dvadasamavaggo_atthakatha_86f06d",
+      "duplicated_with_oldid": "719"
+    },
+    {
+      "text": "13. Terasamavaggo",
+      "old_id": 1511,
+      "base": "13.terasamavaggo",
+      "final": "13.terasamavaggo_atthakatha_1d4929",
+      "duplicated_with_oldid": "720"
+    },
+    {
+      "text": "14. Cuddasamavaggo",
+      "old_id": 1512,
+      "base": "14.cuddasamavaggo",
+      "final": "14.cuddasamavaggo_atthakatha_d2567f",
+      "duplicated_with_oldid": "721"
+    },
+    {
+      "text": "15. Pannarasamavaggo",
+      "old_id": 1513,
+      "base": "15.pannarasamavaggo",
+      "final": "15.pannarasamavaggo_atthakatha_55a637",
+      "duplicated_with_oldid": "722"
+    },
+    {
+      "text": "16. Soḷasamavaggo",
+      "old_id": 1514,
+      "base": "16.solasamavaggo",
+      "final": "16.solasamavaggo_atthakatha_364b1f",
+      "duplicated_with_oldid": "723"
+    },
+    {
+      "text": "17. Sattarasamavaggo",
+      "old_id": 1515,
+      "base": "17.sattarasamavaggo",
+      "final": "17.sattarasamavaggo_atthakatha_8aa375",
+      "duplicated_with_oldid": "724"
+    },
+    {
+      "text": "18. Aṭṭhārasamavaggo",
+      "old_id": 1516,
+      "base": "18.attharasamavaggo",
+      "final": "18.attharasamavaggo_atthakatha_ce43af",
+      "duplicated_with_oldid": "725"
+    },
+    {
+      "text": "19. Ekūnavīsatimavaggo",
+      "old_id": 1517,
+      "base": "19.ekunavisatimavaggo",
+      "final": "19.ekunavisatimavaggo_atthakatha_870a2b",
+      "duplicated_with_oldid": "726"
+    },
+    {
+      "text": "20. Vīsatimavaggo",
+      "old_id": 1518,
+      "base": "20.visatimavaggo",
+      "final": "20.visatimavaggo_atthakatha_cad5c6",
+      "duplicated_with_oldid": "727"
+    },
+    {
+      "text": "21. Ekavīsatimavaggo",
+      "old_id": 1519,
+      "base": "21.ekavisatimavaggo",
+      "final": "21.ekavisatimavaggo_atthakatha_474e9b",
+      "duplicated_with_oldid": "728"
+    },
+    {
+      "text": "22. Bāvīsatimavaggo",
+      "old_id": 1520,
+      "base": "22.bavisatimavaggo",
+      "final": "22.bavisatimavaggo_atthakatha_1cc494",
+      "duplicated_with_oldid": "729"
+    },
+    {
+      "text": "23. Tevīsatimavaggo",
+      "old_id": 1521,
+      "base": "23.tevisatimavaggo",
+      "final": "23.tevisatimavaggo_atthakatha_28eceb",
+      "duplicated_with_oldid": "730"
+    },
+    {
+      "text": "1. Mūlayamakaṃ",
+      "old_id": 1523,
+      "base": "1.mulayamakam",
+      "final": "1.mulayamakam_atthakatha_18cdcc",
+      "duplicated_with_oldid": "732"
+    },
+    {
+      "text": "2. Khandhayamakaṃ",
+      "old_id": 1524,
+      "base": "2.khandhayamakam",
+      "final": "2.khandhayamakam_atthakatha_97d939",
+      "duplicated_with_oldid": "733"
+    },
+    {
+      "text": "3. Āyatanayamakaṃ",
+      "old_id": 1525,
+      "base": "3.ayatanayamakam",
+      "final": "3.ayatanayamakam_atthakatha_bc1979",
+      "duplicated_with_oldid": "734"
+    },
+    {
+      "text": "4. Dhātuyamakaṃ",
+      "old_id": 1526,
+      "base": "4.dhatuyamakam",
+      "final": "4.dhatuyamakam_atthakatha_92300c",
+      "duplicated_with_oldid": "735"
+    },
+    {
+      "text": "5. Saccayamakaṃ",
+      "old_id": 1527,
+      "base": "5.saccayamakam",
+      "final": "5.saccayamakam_atthakatha_2c29ad",
+      "duplicated_with_oldid": "736"
+    },
+    {
+      "text": "6. Saṅkhārayamakaṃ",
+      "old_id": 1528,
+      "base": "6.sankharayamakam",
+      "final": "6.sankharayamakam_atthakatha_3aedf3",
+      "duplicated_with_oldid": "738"
+    },
+    {
+      "text": "7. Anusayayamakaṃ",
+      "old_id": 1529,
+      "base": "7.anusayayamakam",
+      "final": "7.anusayayamakam_atthakatha_eb4b11",
+      "duplicated_with_oldid": "739"
+    },
+    {
+      "text": "8. Cittayamakaṃ",
+      "old_id": 1530,
+      "base": "8.cittayamakam",
+      "final": "8.cittayamakam_atthakatha_cbace3",
+      "duplicated_with_oldid": "740"
+    },
+    {
+      "text": "9. Dhammayamakaṃ",
+      "old_id": 1531,
+      "base": "9.dhammayamakam",
+      "final": "9.dhammayamakam_atthakatha_b94e11",
+      "duplicated_with_oldid": "742"
+    },
+    {
+      "text": "10. Indriyayamakaṃ",
+      "old_id": 1532,
+      "base": "10.indriyayamakam",
+      "final": "10.indriyayamakam_atthakatha_f19139",
+      "duplicated_with_oldid": "743"
+    },
+    {
+      "text": "Verañjakaṇḍavaṇṇanā",
+      "old_id": 1553,
+      "base": "veranjakandavannana",
+      "final": "veranjakandavannana_tika_a30134",
+      "duplicated_with_oldid": "829"
+    },
+    {
+      "text": "1. Pārājikakaṇḍaṃ (Bhikkhunīvibhaṅgavaṇṇanā)",
+      "old_id": 1563,
+      "base": "1.parajikakandam_bhikkhunivibhangavannana",
+      "final": "1.parajikakandam_bhikkhunivibhangavannana_tika_4568b5",
+      "duplicated_with_oldid": "839"
+    },
+    {
+      "text": "2. Saṅghādisesakaṇḍaṃ (Bhikkhunīvibhaṅgavaṇṇanā)",
+      "old_id": 1564,
+      "base": "2.sanghadisesakandam_bhikkhunivibhangavannana",
+      "final": "2.sanghadisesakandam_bhikkhunivibhangavannana_tika_a78535",
+      "duplicated_with_oldid": "840"
+    },
+    {
+      "text": "3. Nissaggiyakaṇḍaṃ (Bhikkhunīvibhaṅgavaṇṇanā)",
+      "old_id": 1565,
+      "base": "3.nissaggiyakandam_bhikkhunivibhangavannana",
+      "final": "3.nissaggiyakandam_bhikkhunivibhangavannana_tika_25001e",
+      "duplicated_with_oldid": "841"
+    },
+    {
+      "text": "4. Pācittiyakaṇḍaṃ (Bhikkhunīvibhaṅgavaṇṇanā)",
+      "old_id": 1566,
+      "base": "4.pacittiyakandam_bhikkhunivibhangavannana",
+      "final": "4.pacittiyakandam_bhikkhunivibhangavannana_tika_20cff1",
+      "duplicated_with_oldid": "842"
+    },
+    {
+      "text": "5. Pāṭidesanīyakaṇḍaṃ (Bhikkhunīvibhaṅgavaṇṇanā)",
+      "old_id": 1567,
+      "base": "5.patidesaniyakandam_bhikkhunivibhangavannana",
+      "final": "5.patidesaniyakandam_bhikkhunivibhangavannana_tika_bcc215",
+      "duplicated_with_oldid": "843"
+    },
+    {
+      "text": "1. Mahākhandhakaṃ",
+      "old_id": 1569,
+      "base": "1.mahakhandhakam",
+      "final": "1.mahakhandhakam_tika_dca7c8",
+      "duplicated_with_oldid": "845"
+    },
+    {
+      "text": "2. Uposathakkhandhakaṃ",
+      "old_id": 1570,
+      "base": "2.uposathakkhandhakam",
+      "final": "2.uposathakkhandhakam_tika_2cb34f",
+      "duplicated_with_oldid": "846"
+    },
+    {
+      "text": "3. Vassūpanāyikakkhandhakaṃ",
+      "old_id": 1571,
+      "base": "3.vassupanayikakkhandhakam",
+      "final": "3.vassupanayikakkhandhakam_tika_b7986f",
+      "duplicated_with_oldid": "847"
+    },
+    {
+      "text": "4. Pavāraṇakkhandhakaṃ",
+      "old_id": 1572,
+      "base": "4.pavaranakkhandhakam",
+      "final": "4.pavaranakkhandhakam_tika_0fb62a",
+      "duplicated_with_oldid": "848"
+    },
+    {
+      "text": "5. Cammakkhandhakaṃ",
+      "old_id": 1573,
+      "base": "5.cammakkhandhakam",
+      "final": "5.cammakkhandhakam_tika_9fb723",
+      "duplicated_with_oldid": "849"
+    },
+    {
+      "text": "6. Bhesajjakkhandhakaṃ",
+      "old_id": 1574,
+      "base": "6.bhesajjakkhandhakam",
+      "final": "6.bhesajjakkhandhakam_tika_4a89a0",
+      "duplicated_with_oldid": "850"
+    },
+    {
+      "text": "7. Kathinakkhandhakaṃ",
+      "old_id": 1575,
+      "base": "7.kathinakkhandhakam",
+      "final": "7.kathinakkhandhakam_tika_f159da",
+      "duplicated_with_oldid": "851"
+    },
+    {
+      "text": "8. Cīvarakkhandhakaṃ",
+      "old_id": 1576,
+      "base": "8.civarakkhandhakam",
+      "final": "8.civarakkhandhakam_tika_363de3",
+      "duplicated_with_oldid": "852"
+    },
+    {
+      "text": "9. Campeyyakkhandhakaṃ",
+      "old_id": 1577,
+      "base": "9.campeyyakkhandhakam",
+      "final": "9.campeyyakkhandhakam_tika_7c8df4",
+      "duplicated_with_oldid": "853"
+    },
+    {
+      "text": "10. Kosambakakkhandhakaṃ",
+      "old_id": 1578,
+      "base": "10.kosambakakkhandhakam",
+      "final": "10.kosambakakkhandhakam_tika_5bf59f",
+      "duplicated_with_oldid": "854"
+    },
+    {
+      "text": "Samuṭṭhānasīsavaṇṇanā",
+      "old_id": 1594,
+      "base": "samutthanasisavannana",
+      "final": "samutthanasisavannana_tika_8a0aa7",
+      "duplicated_with_oldid": "870"
+    },
+    {
+      "text": "Paṭhamagāthāsaṅgaṇikaṃ",
+      "old_id": 1598,
+      "base": "pathamagathasanganikam",
+      "final": "pathamagathasanganikam_tika_6eb460",
+      "duplicated_with_oldid": "875"
+    },
+    {
+      "text": "Aparadutiyagāthāsaṅgaṇikaṃ",
+      "old_id": 1605,
+      "base": "aparadutiyagathasanganikam",
+      "final": "aparadutiyagathasanganikam_tika_c237f9",
+      "duplicated_with_oldid": "884"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1622,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_tika",
+      "duplicated_with_oldid": "1552"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1665,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_tika",
+      "duplicated_with_oldid": "1658"
+    },
+    {
+      "text": "5. Pācittiyakaṇḍaṃ",
+      "old_id": 1671,
+      "base": "5.pacittiyakandam",
+      "final": "5.pacittiyakandam_tika",
+      "duplicated_with_oldid": "1560"
+    },
+    {
+      "text": "6. Pāṭidesanīyakaṇḍaṃ",
+      "old_id": 1672,
+      "base": "6.patidesaniyakandam",
+      "final": "6.patidesaniyakandam_tika",
+      "duplicated_with_oldid": "1561"
+    },
+    {
+      "text": "7. Sekhiyakaṇḍaṃ",
+      "old_id": 1673,
+      "base": "7.sekhiyakandam",
+      "final": "7.sekhiyakandam_tika",
+      "duplicated_with_oldid": "1562"
+    },
+    {
+      "text": "1. Pārājikakaṇḍaṃ",
+      "old_id": 1675,
+      "base": "1.parajikakandam",
+      "final": "1.parajikakandam_tika",
+      "duplicated_with_oldid": "1555"
+    },
+    {
+      "text": "2. Saṅghādisesakaṇḍaṃ",
+      "old_id": 1676,
+      "base": "2.sanghadisesakandam",
+      "final": "2.sanghadisesakandam_tika",
+      "duplicated_with_oldid": "1556"
+    },
+    {
+      "text": "Mahāvaggavaṇṇanā",
+      "old_id": 1680,
+      "base": "mahavaggavannana",
+      "final": "mahavaggavannana_tika",
+      "duplicated_with_oldid": "1661"
+    },
+    {
+      "text": "1. Mahākhandhako",
+      "old_id": 1681,
+      "base": "1.mahakhandhako",
+      "final": "1.mahakhandhako_tika_040536",
+      "duplicated_with_oldid": "22"
+    },
+    {
+      "text": "2. Uposathakkhandhako",
+      "old_id": 1682,
+      "base": "2.uposathakkhandhako",
+      "final": "2.uposathakkhandhako_tika_53be52",
+      "duplicated_with_oldid": "23"
+    },
+    {
+      "text": "3. Vassūpanāyikakkhandhako",
+      "old_id": 1683,
+      "base": "3.vassupanayikakkhandhako",
+      "final": "3.vassupanayikakkhandhako_tika_b31924",
+      "duplicated_with_oldid": "24"
+    },
+    {
+      "text": "4. Pavāraṇākkhandhako",
+      "old_id": 1684,
+      "base": "4.pavaranakkhandhako",
+      "final": "4.pavaranakkhandhako_tika_5a80f8",
+      "duplicated_with_oldid": "25"
+    },
+    {
+      "text": "5. Cammakkhandhako",
+      "old_id": 1685,
+      "base": "5.cammakkhandhako",
+      "final": "5.cammakkhandhako_tika_6f4b12",
+      "duplicated_with_oldid": "26"
+    },
+    {
+      "text": "6. Bhesajjakkhandhako",
+      "old_id": 1686,
+      "base": "6.bhesajjakkhandhako",
+      "final": "6.bhesajjakkhandhako_tika_f808f6",
+      "duplicated_with_oldid": "27"
+    },
+    {
+      "text": "7. Kathinakkhandhako",
+      "old_id": 1687,
+      "base": "7.kathinakkhandhako",
+      "final": "7.kathinakkhandhako_tika_b1a7a4",
+      "duplicated_with_oldid": "28"
+    },
+    {
+      "text": "8. Cīvarakkhandhako",
+      "old_id": 1688,
+      "base": "8.civarakkhandhako",
+      "final": "8.civarakkhandhako_tika_1203b2",
+      "duplicated_with_oldid": "29"
+    },
+    {
+      "text": "9. Campeyyakkhandhako",
+      "old_id": 1689,
+      "base": "9.campeyyakkhandhako",
+      "final": "9.campeyyakkhandhako_tika_72e42d",
+      "duplicated_with_oldid": "30"
+    },
+    {
+      "text": "10. Kosambakakkhandhako",
+      "old_id": 1690,
+      "base": "10.kosambakakkhandhako",
+      "final": "10.kosambakakkhandhako_tika_3bbb7b",
+      "duplicated_with_oldid": "31"
+    },
+    {
+      "text": "Cūḷavaggavaṇṇanā",
+      "old_id": 1691,
+      "base": "culavaggavannana",
+      "final": "culavaggavannana_tika",
+      "duplicated_with_oldid": "1662"
+    },
+    {
+      "text": "Parivāravaṇṇanā",
+      "old_id": 1704,
+      "base": "parivaravannana",
+      "final": "parivaravannana_tika",
+      "duplicated_with_oldid": "1663"
+    },
+    {
+      "text": "Antarapeyyālaṃ",
+      "old_id": 1707,
+      "base": "antarapeyyalam",
+      "final": "antarapeyyalam_tika",
+      "duplicated_with_oldid": "1595"
+    },
+    {
+      "text": "Uposathādipucchāvissajjanāvaṇṇanā",
+      "old_id": 1711,
+      "base": "uposathadipucchavissajjanavannana",
+      "final": "uposathadipucchavissajjanavannana_tika",
+      "duplicated_with_oldid": "1597"
+    },
+    {
+      "text": "Adhikaraṇabhedaṃ",
+      "old_id": 1713,
+      "base": "adhikaranabhedam",
+      "final": "adhikaranabhedam_tika_d924a7",
+      "duplicated_with_oldid": "876"
+    },
+    {
+      "text": "Kathinabhedaṃ",
+      "old_id": 1717,
+      "base": "kathinabhedam",
+      "final": "kathinabhedam_tika_6d0632",
+      "duplicated_with_oldid": "881"
+    },
+    {
+      "text": "Sedamocanagāthā",
+      "old_id": 1720,
+      "base": "sedamocanagatha",
+      "final": "sedamocanagatha_tika",
+      "duplicated_with_oldid": "1606"
+    },
+    {
+      "text": "Pañcavaggo",
+      "old_id": 1721,
+      "base": "pancavaggo",
+      "final": "pancavaggo_tika",
+      "duplicated_with_oldid": "1607"
+    },
+    {
+      "text": "1. Divāseyyavinicchayakathā",
+      "old_id": 1724,
+      "base": "1.divaseyyavinicchayakatha",
+      "final": "1.divaseyyavinicchayakatha_tika",
+      "duplicated_with_oldid": "1623"
+    },
+    {
+      "text": "2. Parikkhāravinicchayakathā",
+      "old_id": 1725,
+      "base": "2.parikkharavinicchayakatha",
+      "final": "2.parikkharavinicchayakatha_tika",
+      "duplicated_with_oldid": "1624"
+    },
+    {
+      "text": "3. Bhesajjādikaraṇavinicchayakathā",
+      "old_id": 1726,
+      "base": "3.bhesajjadikaranavinicchayakatha",
+      "final": "3.bhesajjadikaranavinicchayakatha_tika",
+      "duplicated_with_oldid": "1625"
+    },
+    {
+      "text": "4. Viññattivinicchayakathā",
+      "old_id": 1727,
+      "base": "4.vinnattivinicchayakatha",
+      "final": "4.vinnattivinicchayakatha_tika",
+      "duplicated_with_oldid": "1626"
+    },
+    {
+      "text": "5. Kulasaṅgahavinicchayakathā",
+      "old_id": 1728,
+      "base": "5.kulasangahavinicchayakatha",
+      "final": "5.kulasangahavinicchayakatha_tika",
+      "duplicated_with_oldid": "1627"
+    },
+    {
+      "text": "6. Macchamaṃsavinicchayakathā",
+      "old_id": 1729,
+      "base": "6.macchamamsavinicchayakatha",
+      "final": "6.macchamamsavinicchayakatha_tika",
+      "duplicated_with_oldid": "1628"
+    },
+    {
+      "text": "7. Anāmāsavinicchayakathā",
+      "old_id": 1730,
+      "base": "7.anamasavinicchayakatha",
+      "final": "7.anamasavinicchayakatha_tika",
+      "duplicated_with_oldid": "1629"
+    },
+    {
+      "text": "8. Adhiṭṭhānavikappanavinicchayakathā",
+      "old_id": 1731,
+      "base": "8.adhitthanavikappanavinicchayakatha",
+      "final": "8.adhitthanavikappanavinicchayakatha_tika",
+      "duplicated_with_oldid": "1630"
+    },
+    {
+      "text": "9. Cīvaravippavāsavinicchayakathā",
+      "old_id": 1732,
+      "base": "9.civaravippavasavinicchayakatha",
+      "final": "9.civaravippavasavinicchayakatha_tika",
+      "duplicated_with_oldid": "1631"
+    },
+    {
+      "text": "10. Bhaṇḍapaṭisāmanavinicchayakathā",
+      "old_id": 1733,
+      "base": "10.bhandapatisamanavinicchayakatha",
+      "final": "10.bhandapatisamanavinicchayakatha_tika",
+      "duplicated_with_oldid": "1632"
+    },
+    {
+      "text": "11. Kayavikkayasamāpattivinicchayakathā",
+      "old_id": 1734,
+      "base": "11.kayavikkayasamapattivinicchayakatha",
+      "final": "11.kayavikkayasamapattivinicchayakatha_tika",
+      "duplicated_with_oldid": "1633"
+    },
+    {
+      "text": "12. Rūpiyādipaṭiggahaṇavinicchayakathā",
+      "old_id": 1735,
+      "base": "12.rupiyadipatiggahanavinicchayakatha",
+      "final": "12.rupiyadipatiggahanavinicchayakatha_tika",
+      "duplicated_with_oldid": "1634"
+    },
+    {
+      "text": "13. Dānalakkhaṇādivinicchayakathā",
+      "old_id": 1736,
+      "base": "13.danalakkhanadivinicchayakatha",
+      "final": "13.danalakkhanadivinicchayakatha_tika",
+      "duplicated_with_oldid": "1635"
+    },
+    {
+      "text": "14. Pathavīkhaṇanavinicchayakathā",
+      "old_id": 1737,
+      "base": "14.pathavikhananavinicchayakatha",
+      "final": "14.pathavikhananavinicchayakatha_tika",
+      "duplicated_with_oldid": "1636"
+    },
+    {
+      "text": "15. Bhūtagāmavinicchayakathā",
+      "old_id": 1738,
+      "base": "15.bhutagamavinicchayakatha",
+      "final": "15.bhutagamavinicchayakatha_tika",
+      "duplicated_with_oldid": "1637"
+    },
+    {
+      "text": "16. Sahaseyyavinicchayakathā",
+      "old_id": 1739,
+      "base": "16.sahaseyyavinicchayakatha",
+      "final": "16.sahaseyyavinicchayakatha_tika",
+      "duplicated_with_oldid": "1638"
+    },
+    {
+      "text": "18. Kālikavinicchayakathā",
+      "old_id": 1741,
+      "base": "18.kalikavinicchayakatha",
+      "final": "18.kalikavinicchayakatha_tika",
+      "duplicated_with_oldid": "1640"
+    },
+    {
+      "text": "19. Kappiyabhūmivinicchayakathā",
+      "old_id": 1742,
+      "base": "19.kappiyabhumivinicchayakatha",
+      "final": "19.kappiyabhumivinicchayakatha_tika",
+      "duplicated_with_oldid": "1641"
+    },
+    {
+      "text": "20. Paṭiggahaṇavinicchayakathā",
+      "old_id": 1743,
+      "base": "20.patiggahanavinicchayakatha",
+      "final": "20.patiggahanavinicchayakatha_tika",
+      "duplicated_with_oldid": "1642"
+    },
+    {
+      "text": "21. Pavāraṇāvinicchayakathā",
+      "old_id": 1744,
+      "base": "21.pavaranavinicchayakatha",
+      "final": "21.pavaranavinicchayakatha_tika",
+      "duplicated_with_oldid": "1643"
+    },
+    {
+      "text": "22. Pabbajjāvinicchayakathā",
+      "old_id": 1745,
+      "base": "22.pabbajjavinicchayakatha",
+      "final": "22.pabbajjavinicchayakatha_tika",
+      "duplicated_with_oldid": "1644"
+    },
+    {
+      "text": "23. Nissayavinicchayakathā",
+      "old_id": 1746,
+      "base": "23.nissayavinicchayakatha",
+      "final": "23.nissayavinicchayakatha_tika",
+      "duplicated_with_oldid": "1645"
+    },
+    {
+      "text": "24. Sīmāvinicchayakathā",
+      "old_id": 1747,
+      "base": "24.simavinicchayakatha",
+      "final": "24.simavinicchayakatha_tika",
+      "duplicated_with_oldid": "1646"
+    },
+    {
+      "text": "25. Uposathapavāraṇāvinicchayakathā",
+      "old_id": 1748,
+      "base": "25.uposathapavaranavinicchayakatha",
+      "final": "25.uposathapavaranavinicchayakatha_tika",
+      "duplicated_with_oldid": "1647"
+    },
+    {
+      "text": "26. Vassūpanāyikavinicchayakathā",
+      "old_id": 1749,
+      "base": "26.vassupanayikavinicchayakatha",
+      "final": "26.vassupanayikavinicchayakatha_tika",
+      "duplicated_with_oldid": "1648"
+    },
+    {
+      "text": "27. Upajjhāyādivattavinicchayakathā",
+      "old_id": 1750,
+      "base": "27.upajjhayadivattavinicchayakatha",
+      "final": "27.upajjhayadivattavinicchayakatha_tika",
+      "duplicated_with_oldid": "1649"
+    },
+    {
+      "text": "28. Catupaccayabhājanīyavinicchayakathā",
+      "old_id": 1751,
+      "base": "28.catupaccayabhajaniyavinicchayakatha",
+      "final": "28.catupaccayabhajaniyavinicchayakatha_tika",
+      "duplicated_with_oldid": "1650"
+    },
+    {
+      "text": "29. Kathinatthāravinicchayakathā",
+      "old_id": 1752,
+      "base": "29.kathinattharavinicchayakatha",
+      "final": "29.kathinattharavinicchayakatha_tika",
+      "duplicated_with_oldid": "1651"
+    },
+    {
+      "text": "30. Garubhaṇḍavinicchayakathā",
+      "old_id": 1753,
+      "base": "30.garubhandavinicchayakatha",
+      "final": "30.garubhandavinicchayakatha_tika",
+      "duplicated_with_oldid": "1652"
+    },
+    {
+      "text": "31. Codanādivinicchayakathā",
+      "old_id": 1754,
+      "base": "31.codanadivinicchayakatha",
+      "final": "31.codanadivinicchayakatha_tika",
+      "duplicated_with_oldid": "1653"
+    },
+    {
+      "text": "32. Garukāpattivuṭṭhānavinicchayakathā",
+      "old_id": 1755,
+      "base": "32.garukapattivutthanavinicchayakatha",
+      "final": "32.garukapattivutthanavinicchayakatha_tika",
+      "duplicated_with_oldid": "1654"
+    },
+    {
+      "text": "33. Kammākammavinicchayakathā",
+      "old_id": 1756,
+      "base": "33.kammakammavinicchayakatha",
+      "final": "33.kammakammavinicchayakatha_tika",
+      "duplicated_with_oldid": "1655"
+    },
+    {
+      "text": "34. Pakiṇṇakavinicchayakathā",
+      "old_id": 1757,
+      "base": "34.pakinnakavinicchayakatha",
+      "final": "34.pakinnakavinicchayakatha_tika",
+      "duplicated_with_oldid": "1656"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1760,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_tika",
+      "duplicated_with_oldid": "1723"
+    },
+    {
+      "text": "Bhikkhunīpātimokkhavaṇṇanā",
+      "old_id": 1768,
+      "base": "bhikkhunipatimokkhavannana",
+      "final": "bhikkhunipatimokkhavannana_tika",
+      "duplicated_with_oldid": "1620"
+    },
+    {
+      "text": "Bhikkhuvibhaṅgo",
+      "old_id": 1779,
+      "base": "bhikkhuvibhango",
+      "final": "bhikkhuvibhango_tika",
+      "duplicated_with_oldid": "1771"
+    },
+    {
+      "text": "Bhikkhunivibhaṅgo",
+      "old_id": 1787,
+      "base": "bhikkhunivibhango",
+      "final": "bhikkhunivibhango_tika",
+      "duplicated_with_oldid": "1772"
+    },
+    {
+      "text": "Mahāvaggo",
+      "old_id": 1790,
+      "base": "mahavaggo",
+      "final": "mahavaggo_tika",
+      "duplicated_with_oldid": "1773"
+    },
+    {
+      "text": "Cūḷavaggo",
+      "old_id": 1799,
+      "base": "culavaggo",
+      "final": "culavaggo_tika",
+      "duplicated_with_oldid": "1774"
+    },
+    {
+      "text": "1. Brahmajālasuttavaṇṇanā",
+      "old_id": 1838,
+      "base": "1.brahmajalasuttavannana",
+      "final": "1.brahmajalasuttavannana_tika_8acb23",
+      "duplicated_with_oldid": "891"
+    },
+    {
+      "text": "2. Sāmaññaphalasuttavaṇṇanā",
+      "old_id": 1839,
+      "base": "2.samannaphalasuttavannana",
+      "final": "2.samannaphalasuttavannana_tika_1121f6",
+      "duplicated_with_oldid": "892"
+    },
+    {
+      "text": "3. Ambaṭṭhasuttavaṇṇanā",
+      "old_id": 1840,
+      "base": "3.ambatthasuttavannana",
+      "final": "3.ambatthasuttavannana_tika_124275",
+      "duplicated_with_oldid": "893"
+    },
+    {
+      "text": "4. Soṇadaṇḍasuttavaṇṇanā",
+      "old_id": 1841,
+      "base": "4.sonadandasuttavannana",
+      "final": "4.sonadandasuttavannana_tika_0f55d7",
+      "duplicated_with_oldid": "894"
+    },
+    {
+      "text": "5. Kūṭadantasuttavaṇṇanā",
+      "old_id": 1842,
+      "base": "5.kutadantasuttavannana",
+      "final": "5.kutadantasuttavannana_tika_1277de",
+      "duplicated_with_oldid": "895"
+    },
+    {
+      "text": "6. Mahālisuttavaṇṇanā",
+      "old_id": 1843,
+      "base": "6.mahalisuttavannana",
+      "final": "6.mahalisuttavannana_tika_d380a6",
+      "duplicated_with_oldid": "896"
+    },
+    {
+      "text": "7. Jāliyasuttavaṇṇanā",
+      "old_id": 1844,
+      "base": "7.jaliyasuttavannana",
+      "final": "7.jaliyasuttavannana_tika_91ebc7",
+      "duplicated_with_oldid": "897"
+    },
+    {
+      "text": "8. Mahāsīhanādasuttavaṇṇanā",
+      "old_id": 1845,
+      "base": "8.mahasihanadasuttavannana",
+      "final": "8.mahasihanadasuttavannana_tika_80e79b",
+      "duplicated_with_oldid": "898"
+    },
+    {
+      "text": "9. Poṭṭhapādasuttavaṇṇanā",
+      "old_id": 1846,
+      "base": "9.potthapadasuttavannana",
+      "final": "9.potthapadasuttavannana_tika_c4666e",
+      "duplicated_with_oldid": "899"
+    },
+    {
+      "text": "10. Subhasuttavaṇṇanā",
+      "old_id": 1847,
+      "base": "10.subhasuttavannana",
+      "final": "10.subhasuttavannana_tika_19ac59",
+      "duplicated_with_oldid": "900"
+    },
+    {
+      "text": "11. Kevaṭṭasuttavaṇṇanā",
+      "old_id": 1848,
+      "base": "11.kevattasuttavannana",
+      "final": "11.kevattasuttavannana_tika_1f17f8",
+      "duplicated_with_oldid": "901"
+    },
+    {
+      "text": "12. Lohiccasuttavaṇṇanā",
+      "old_id": 1849,
+      "base": "12.lohiccasuttavannana",
+      "final": "12.lohiccasuttavannana_tika_e74b20",
+      "duplicated_with_oldid": "902"
+    },
+    {
+      "text": "13. Tevijjasuttavaṇṇanā",
+      "old_id": 1850,
+      "base": "13.tevijjasuttavannana",
+      "final": "13.tevijjasuttavannana_tika_62f5b6",
+      "duplicated_with_oldid": "903"
+    },
+    {
+      "text": "1. Mahāpadānasuttavaṇṇanā",
+      "old_id": 1852,
+      "base": "1.mahapadanasuttavannana",
+      "final": "1.mahapadanasuttavannana_tika_9f8c9a",
+      "duplicated_with_oldid": "905"
+    },
+    {
+      "text": "2. Mahānidānasuttavaṇṇanā",
+      "old_id": 1853,
+      "base": "2.mahanidanasuttavannana",
+      "final": "2.mahanidanasuttavannana_tika_f68f4a",
+      "duplicated_with_oldid": "906"
+    },
+    {
+      "text": "3. Mahāparinibbānasuttavaṇṇanā",
+      "old_id": 1854,
+      "base": "3.mahaparinibbanasuttavannana",
+      "final": "3.mahaparinibbanasuttavannana_tika_771b34",
+      "duplicated_with_oldid": "907"
+    },
+    {
+      "text": "4. Mahāsudassanasuttavaṇṇanā",
+      "old_id": 1855,
+      "base": "4.mahasudassanasuttavannana",
+      "final": "4.mahasudassanasuttavannana_tika_43d7cf",
+      "duplicated_with_oldid": "908"
+    },
+    {
+      "text": "5. Janavasabhasuttavaṇṇanā",
+      "old_id": 1856,
+      "base": "5.janavasabhasuttavannana",
+      "final": "5.janavasabhasuttavannana_tika_66c701",
+      "duplicated_with_oldid": "909"
+    },
+    {
+      "text": "6. Mahāgovindasuttavaṇṇanā",
+      "old_id": 1857,
+      "base": "6.mahagovindasuttavannana",
+      "final": "6.mahagovindasuttavannana_tika_f40a60",
+      "duplicated_with_oldid": "910"
+    },
+    {
+      "text": "7. Mahāsamayasuttavaṇṇanā",
+      "old_id": 1858,
+      "base": "7.mahasamayasuttavannana",
+      "final": "7.mahasamayasuttavannana_tika_921ec5",
+      "duplicated_with_oldid": "911"
+    },
+    {
+      "text": "8. Sakkapañhasuttavaṇṇanā",
+      "old_id": 1859,
+      "base": "8.sakkapanhasuttavannana",
+      "final": "8.sakkapanhasuttavannana_tika_5e8595",
+      "duplicated_with_oldid": "912"
+    },
+    {
+      "text": "9. Mahāsatipaṭṭhānasuttavaṇṇanā",
+      "old_id": 1860,
+      "base": "9.mahasatipatthanasuttavannana",
+      "final": "9.mahasatipatthanasuttavannana_tika_bfa19f",
+      "duplicated_with_oldid": "913"
+    },
+    {
+      "text": "10. Pāyāsirājaññasuttavaṇṇanā",
+      "old_id": 1861,
+      "base": "10.payasirajannasuttavannana",
+      "final": "10.payasirajannasuttavannana_tika_7c4ef1",
+      "duplicated_with_oldid": "914"
+    },
+    {
+      "text": "1. Pāthikasuttavaṇṇanā",
+      "old_id": 1863,
+      "base": "1.pathikasuttavannana",
+      "final": "1.pathikasuttavannana_tika_6156e3",
+      "duplicated_with_oldid": "916"
+    },
+    {
+      "text": "2. Udumbarikasuttavaṇṇanā",
+      "old_id": 1864,
+      "base": "2.udumbarikasuttavannana",
+      "final": "2.udumbarikasuttavannana_tika_7b7fbb",
+      "duplicated_with_oldid": "917"
+    },
+    {
+      "text": "3. Cakkavattisuttavaṇṇanā",
+      "old_id": 1865,
+      "base": "3.cakkavattisuttavannana",
+      "final": "3.cakkavattisuttavannana_tika_7e88c1",
+      "duplicated_with_oldid": "918"
+    },
+    {
+      "text": "4. Aggaññasuttavaṇṇanā",
+      "old_id": 1866,
+      "base": "4.aggannasuttavannana",
+      "final": "4.aggannasuttavannana_tika_5ebe91",
+      "duplicated_with_oldid": "919"
+    },
+    {
+      "text": "5. Sampasādanīyasuttavaṇṇanā",
+      "old_id": 1867,
+      "base": "5.sampasadaniyasuttavannana",
+      "final": "5.sampasadaniyasuttavannana_tika_95f193",
+      "duplicated_with_oldid": "920"
+    },
+    {
+      "text": "6. Pāsādikasuttavaṇṇanā",
+      "old_id": 1868,
+      "base": "6.pasadikasuttavannana",
+      "final": "6.pasadikasuttavannana_tika_fe0778",
+      "duplicated_with_oldid": "921"
+    },
+    {
+      "text": "7. Lakkhaṇasuttavaṇṇanā",
+      "old_id": 1869,
+      "base": "7.lakkhanasuttavannana",
+      "final": "7.lakkhanasuttavannana_tika_cc71cc",
+      "duplicated_with_oldid": "922"
+    },
+    {
+      "text": "8. Siṅgālasuttavaṇṇanā",
+      "old_id": 1870,
+      "base": "8.singalasuttavannana",
+      "final": "8.singalasuttavannana_tika_24eada",
+      "duplicated_with_oldid": "923"
+    },
+    {
+      "text": "9. Āṭānāṭiyasuttavaṇṇanā",
+      "old_id": 1871,
+      "base": "9.atanatiyasuttavannana",
+      "final": "9.atanatiyasuttavannana_tika_958c82",
+      "duplicated_with_oldid": "924"
+    },
+    {
+      "text": "10. Saṅgītisuttavaṇṇanā",
+      "old_id": 1872,
+      "base": "10.sangitisuttavannana",
+      "final": "10.sangitisuttavannana_tika_86075e",
+      "duplicated_with_oldid": "925"
+    },
+    {
+      "text": "11. Dasuttarasuttavaṇṇanā",
+      "old_id": 1873,
+      "base": "11.dasuttarasuttavannana",
+      "final": "11.dasuttarasuttavannana_tika_ab247e",
+      "duplicated_with_oldid": "926"
+    },
+    {
+      "text": "Ganthārambhakathāvaṇṇanā",
+      "old_id": 1875,
+      "base": "gantharambhakathavannana",
+      "final": "gantharambhakathavannana_tika",
+      "duplicated_with_oldid": "1837"
+    },
+    {
+      "text": "1. Brahmajālasuttaṃ",
+      "old_id": 1876,
+      "base": "1.brahmajalasuttam",
+      "final": "1.brahmajalasuttam_tika_b64328",
+      "duplicated_with_oldid": "67"
+    },
+    {
+      "text": "Ganthārambhakathāvaṇṇanā",
+      "old_id": 1912,
+      "base": "gantharambhakathavannana",
+      "final": "gantharambhakathavannana_tika",
+      "duplicated_with_oldid": "1892"
+    },
+    {
+      "text": "5. Uppādasaṃyuttavaṇṇanā",
+      "old_id": 1940,
+      "base": "5.uppadasamyuttavannana",
+      "final": "5.uppadasamyuttavannana_tika_59d6b7",
+      "duplicated_with_oldid": "977"
+    },
+    {
+      "text": "6. Kilesasaṃyuttavaṇṇanā",
+      "old_id": 1941,
+      "base": "6.kilesasamyuttavannana",
+      "final": "6.kilesasamyuttavannana_tika_9d7ec7",
+      "duplicated_with_oldid": "978"
+    },
+    {
+      "text": "9. Supaṇṇasaṃyuttavaṇṇanā",
+      "old_id": 1944,
+      "base": "9.supannasamyuttavannana",
+      "final": "9.supannasamyuttavannana_tika_89fe53",
+      "duplicated_with_oldid": "981"
+    },
+    {
+      "text": "10. Gandhabbakāyasaṃyuttavaṇṇanā",
+      "old_id": 1945,
+      "base": "10.gandhabbakayasamyuttavannana",
+      "final": "10.gandhabbakayasamyuttavannana_tika_a836a2",
+      "duplicated_with_oldid": "982"
+    },
+    {
+      "text": "11. Valāhakasaṃyuttavaṇṇanā",
+      "old_id": 1946,
+      "base": "11.valahakasamyuttavannana",
+      "final": "11.valahakasamyuttavannana_tika_e38d28",
+      "duplicated_with_oldid": "983"
+    },
+    {
+      "text": "12. Vacchagottasaṃyuttavaṇṇanā",
+      "old_id": 1947,
+      "base": "12.vacchagottasamyuttavannana",
+      "final": "12.vacchagottasamyuttavannana_tika_858130",
+      "duplicated_with_oldid": "984"
+    },
+    {
+      "text": "5. Sāmaṇḍakasaṃyuttavaṇṇanā",
+      "old_id": 1954,
+      "base": "5.samandakasamyuttavannana",
+      "final": "5.samandakasamyuttavannana_tika_40074b",
+      "duplicated_with_oldid": "991"
+    },
+    {
+      "text": "5. Sammappadhānasaṃyuttavaṇṇanā",
+      "old_id": 1965,
+      "base": "5.sammappadhanasamyuttavannana",
+      "final": "5.sammappadhanasamyuttavannana_tika_cc78fb",
+      "duplicated_with_oldid": "1002"
+    },
+    {
+      "text": "6. Balasaṃyuttavaṇṇanā",
+      "old_id": 1966,
+      "base": "6.balasamyuttavannana",
+      "final": "6.balasamyuttavannana_tika_c94b41",
+      "duplicated_with_oldid": "1003"
+    },
+    {
+      "text": "9. Jhānasaṃyuttavaṇṇanā",
+      "old_id": 1969,
+      "base": "9.jhanasamyuttavannana",
+      "final": "9.jhanasamyuttavannana_tika_d16d42",
+      "duplicated_with_oldid": "1006"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 1975,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_tika",
+      "duplicated_with_oldid": "1778"
+    },
+    {
+      "text": "1. Rūpādivaggavaṇṇanā",
+      "old_id": 1976,
+      "base": "1.rupadivaggavannana",
+      "final": "1.rupadivaggavannana_tika_f4f118",
+      "duplicated_with_oldid": "1013"
+    },
+    {
+      "text": "2. Nīvaraṇappahānavaggavaṇṇanā",
+      "old_id": 1977,
+      "base": "2.nivaranappahanavaggavannana",
+      "final": "2.nivaranappahanavaggavannana_tika_53ac8a",
+      "duplicated_with_oldid": "1014"
+    },
+    {
+      "text": "3. Akammaniyavaggavaṇṇanā",
+      "old_id": 1978,
+      "base": "3.akammaniyavaggavannana",
+      "final": "3.akammaniyavaggavannana_tika_57d04e",
+      "duplicated_with_oldid": "1015"
+    },
+    {
+      "text": "4. Adantavaggavaṇṇanā",
+      "old_id": 1979,
+      "base": "4.adantavaggavannana",
+      "final": "4.adantavaggavannana_tika_0c7e16",
+      "duplicated_with_oldid": "1016"
+    },
+    {
+      "text": "5. Paṇihitaacchavaggavaṇṇanā",
+      "old_id": 1980,
+      "base": "5.panihitaacchavaggavannana",
+      "final": "5.panihitaacchavaggavannana_tika_8d247b",
+      "duplicated_with_oldid": "1017"
+    },
+    {
+      "text": "6. Accharāsaṅghātavaggavaṇṇanā",
+      "old_id": 1981,
+      "base": "6.accharasanghatavaggavannana",
+      "final": "6.accharasanghatavaggavannana_tika_90d4ef",
+      "duplicated_with_oldid": "1018"
+    },
+    {
+      "text": "7. Vīriyārambhādivaggavaṇṇanā",
+      "old_id": 1982,
+      "base": "7.viriyarambhadivaggavannana",
+      "final": "7.viriyarambhadivaggavannana_tika_ff65c5",
+      "duplicated_with_oldid": "1019"
+    },
+    {
+      "text": "10. Dutiyapamādādivaggavaṇṇanā",
+      "old_id": 1984,
+      "base": "10.dutiyapamadadivaggavannana",
+      "final": "10.dutiyapamadadivaggavannana_tika_1fb118",
+      "duplicated_with_oldid": "1022"
+    },
+    {
+      "text": "13. Ekapuggalavaggavaṇṇanā",
+      "old_id": 1985,
+      "base": "13.ekapuggalavaggavannana",
+      "final": "13.ekapuggalavaggavannana_tika_00f322",
+      "duplicated_with_oldid": "1024"
+    },
+    {
+      "text": "17. Pasādakaradhammavaggavaṇṇanā",
+      "old_id": 1990,
+      "base": "17.pasadakaradhammavaggavannana",
+      "final": "17.pasadakaradhammavaggavannana_tika_bfe504",
+      "duplicated_with_oldid": "1028"
+    },
+    {
+      "text": "18. Aparaaccharāsaṅghātavaggavaṇṇanā",
+      "old_id": 1991,
+      "base": "18.aparaaccharasanghatavaggavannana",
+      "final": "18.aparaaccharasanghatavaggavannana_tika_e283e4",
+      "duplicated_with_oldid": "1029"
+    },
+    {
+      "text": "19. Kāyagatāsativaggavaṇṇanā",
+      "old_id": 1992,
+      "base": "19.kayagatasativaggavannana",
+      "final": "19.kayagatasativaggavannana_tika_9cd3ff",
+      "duplicated_with_oldid": "1030"
+    },
+    {
+      "text": "20. Amatavaggavaṇṇanā",
+      "old_id": 1993,
+      "base": "20.amatavaggavannana",
+      "final": "20.amatavaggavannana_tika_b5f1d7",
+      "duplicated_with_oldid": "1031"
+    },
+    {
+      "text": "2. Adhikaraṇavaggavaṇṇanā",
+      "old_id": 1996,
+      "base": "2.adhikaranavaggavannana",
+      "final": "2.adhikaranavaggavannana_tika_b1ff18",
+      "duplicated_with_oldid": "1034"
+    },
+    {
+      "text": "3. Bālavaggavaṇṇanā",
+      "old_id": 1997,
+      "base": "3.balavaggavannana",
+      "final": "3.balavaggavannana_tika_f758f3",
+      "duplicated_with_oldid": "1035"
+    },
+    {
+      "text": "4. Samacittavaggavaṇṇanā",
+      "old_id": 1998,
+      "base": "4.samacittavaggavannana",
+      "final": "4.samacittavaggavannana_tika_3ccc6a",
+      "duplicated_with_oldid": "1036"
+    },
+    {
+      "text": "5. Parisavaggavaṇṇanā",
+      "old_id": 1999,
+      "base": "5.parisavaggavannana",
+      "final": "5.parisavaggavannana_tika_89cf15",
+      "duplicated_with_oldid": "1037"
+    },
+    {
+      "text": "(6) 1. Puggalavaggavaṇṇanā",
+      "old_id": 2000,
+      "base": "6.1.puggalavaggavannana",
+      "final": "6.1.puggalavaggavannana_tika_d52fec",
+      "duplicated_with_oldid": "1038"
+    },
+    {
+      "text": "(7) 2. Sukhavaggavaṇṇanā",
+      "old_id": 2001,
+      "base": "7.2.sukhavaggavannana",
+      "final": "7.2.sukhavaggavannana_tika_a5a799",
+      "duplicated_with_oldid": "1039"
+    },
+    {
+      "text": "(8) 3. Sanimittavaggavaṇṇanā",
+      "old_id": 2002,
+      "base": "8.3.sanimittavaggavannana",
+      "final": "8.3.sanimittavaggavannana_tika_62fb82",
+      "duplicated_with_oldid": "1040"
+    },
+    {
+      "text": "(9) 4. Dhammavaggavaṇṇanā",
+      "old_id": 2003,
+      "base": "9.4.dhammavaggavannana",
+      "final": "9.4.dhammavaggavannana_tika_8f3404",
+      "duplicated_with_oldid": "1041"
+    },
+    {
+      "text": "(10) 5. Bālavaggavaṇṇanā",
+      "old_id": 2004,
+      "base": "10.5.balavaggavannana",
+      "final": "10.5.balavaggavannana_tika_45c1e7",
+      "duplicated_with_oldid": "1042"
+    },
+    {
+      "text": "(11) 1. Āsāduppajahavaggavaṇṇanā",
+      "old_id": 2005,
+      "base": "11.1.asaduppajahavaggavannana",
+      "final": "11.1.asaduppajahavaggavannana_tika_e77d4e",
+      "duplicated_with_oldid": "1043"
+    },
+    {
+      "text": "(12) 2. Āyācanavaggavaṇṇanā",
+      "old_id": 2006,
+      "base": "12.2.ayacanavaggavannana",
+      "final": "12.2.ayacanavaggavannana_tika_154745",
+      "duplicated_with_oldid": "1044"
+    },
+    {
+      "text": "(13) 3. Dānavaggavaṇṇanā",
+      "old_id": 2007,
+      "base": "13.3.danavaggavannana",
+      "final": "13.3.danavaggavannana_tika_0ce171",
+      "duplicated_with_oldid": "1045"
+    },
+    {
+      "text": "(14) 4. Santhāravaggavaṇṇanā",
+      "old_id": 2008,
+      "base": "14.4.santharavaggavannana",
+      "final": "14.4.santharavaggavannana_tika_e4dabf",
+      "duplicated_with_oldid": "1046"
+    },
+    {
+      "text": "(15) 5. Samāpattivaggavaṇṇanā",
+      "old_id": 2009,
+      "base": "15.5.samapattivaggavannana",
+      "final": "15.5.samapattivaggavannana_tika_ee2000",
+      "duplicated_with_oldid": "1047"
+    },
+    {
+      "text": "(16) 6. Acelakavaggavaṇṇanā",
+      "old_id": 2027,
+      "base": "16.6.acelakavaggavannana",
+      "final": "16.6.acelakavaggavannana_tika_8fb43a",
+      "duplicated_with_oldid": "1067"
+    },
+    {
+      "text": "(23) 3. Duccaritavaggavaṇṇanā",
+      "old_id": 2050,
+      "base": "23.3.duccaritavaggavannana",
+      "final": "23.3.duccaritavaggavannana_tika_e41731",
+      "duplicated_with_oldid": "1091"
+    },
+    {
+      "text": "4. Devatāvaggo",
+      "old_id": 2081,
+      "base": "4.devatavaggo",
+      "final": "4.devatavaggo_tika_ecd9a7",
+      "duplicated_with_oldid": "1127"
+    },
+    {
+      "text": "2. Sīhanādavaggo",
+      "old_id": 2105,
+      "base": "2.sihanadavaggo",
+      "final": "2.sihanadavaggo_tika",
+      "duplicated_with_oldid": "1894"
+    },
+    {
+      "text": "(9) 4. Theravaggo",
+      "old_id": 2117,
+      "base": "9.4.theravaggo",
+      "final": "9.4.theravaggo_tika",
+      "duplicated_with_oldid": "2063"
+    },
+    {
+      "text": "1. Saṅgahavāravaṇṇanā",
+      "old_id": 2127,
+      "base": "1.sangahavaravannana",
+      "final": "1.sangahavaravannana_tika_b92dd0",
+      "duplicated_with_oldid": "1449"
+    },
+    {
+      "text": "2. Uddesavāravaṇṇanā",
+      "old_id": 2128,
+      "base": "2.uddesavaravannana",
+      "final": "2.uddesavaravannana_tika_9f31ad",
+      "duplicated_with_oldid": "1450"
+    },
+    {
+      "text": "3. Niddesavāravaṇṇanā",
+      "old_id": 2129,
+      "base": "3.niddesavaravannana",
+      "final": "3.niddesavaravannana_tika_1ebaa1",
+      "duplicated_with_oldid": "1451"
+    },
+    {
+      "text": "Nayasamuṭṭhānavāravaṇṇanā",
+      "old_id": 2131,
+      "base": "nayasamutthanavaravannana",
+      "final": "nayasamutthanavaravannana_tika_2c8bbd",
+      "duplicated_with_oldid": "1453"
+    },
+    {
+      "text": "Sāsanapaṭṭhānavāravaṇṇanā",
+      "old_id": 2132,
+      "base": "sasanapatthanavaravannana",
+      "final": "sasanapatthanavaravannana_tika_3919a3",
+      "duplicated_with_oldid": "1454"
+    },
+    {
+      "text": "1. Cittuppādakaṇḍaṃ",
+      "old_id": 2143,
+      "base": "1.cittuppadakandam",
+      "final": "1.cittuppadakandam_tika_36e27f",
+      "duplicated_with_oldid": "657"
+    },
+    {
+      "text": "Tikamātikāpadavaṇṇanā",
+      "old_id": 2144,
+      "base": "tikamatikapadavannana",
+      "final": "tikamatikapadavannana_tika_baa17d",
+      "duplicated_with_oldid": "1459"
+    },
+    {
+      "text": "Dukamātikāpadavaṇṇanā",
+      "old_id": 2145,
+      "base": "dukamatikapadavannana",
+      "final": "dukamatikapadavannana_tika_a2cfa3",
+      "duplicated_with_oldid": "1460"
+    },
+    {
+      "text": "2. Rūpakaṇḍaṃ",
+      "old_id": 2148,
+      "base": "2.rupakandam",
+      "final": "2.rupakandam_tika_1fca08",
+      "duplicated_with_oldid": "658"
+    },
+    {
+      "text": "3. Nikkhepakaṇḍaṃ",
+      "old_id": 2149,
+      "base": "3.nikkhepakandam",
+      "final": "3.nikkhepakandam_tika_3b629b",
+      "duplicated_with_oldid": "659"
+    },
+    {
+      "text": "4. Aṭṭhakathākaṇḍaṃ",
+      "old_id": 2150,
+      "base": "4.atthakathakandam",
+      "final": "4.atthakathakandam_tika_9d40e3",
+      "duplicated_with_oldid": "660"
+    },
+    {
+      "text": "Vīsatigāthāvaṇṇanā",
+      "old_id": 2177,
+      "base": "visatigathavannana",
+      "final": "visatigathavannana_tika",
+      "duplicated_with_oldid": "2142"
+    },
+    {
+      "text": "Kāmāvacarakusalapadabhājanīyavaṇṇanā",
+      "old_id": 2181,
+      "base": "kamavacarakusalapadabhajaniyavannana",
+      "final": "kamavacarakusalapadabhajaniyavannana_tika",
+      "duplicated_with_oldid": "2146"
+    },
+    {
+      "text": "1. Paṭhamo Paricchedo",
+      "old_id": 2270,
+      "base": "1.pathamo_paricchedo",
+      "final": "1.pathamo_paricchedo_tika",
+      "duplicated_with_oldid": "2194"
+    },
+    {
+      "text": "2. Dutiyo Paricchedo",
+      "old_id": 2271,
+      "base": "2.dutiyo_paricchedo",
+      "final": "2.dutiyo_paricchedo_tika",
+      "duplicated_with_oldid": "2195"
+    },
+    {
+      "text": "3. Tatiyo Paricchedo",
+      "old_id": 2272,
+      "base": "3.tatiyo_paricchedo",
+      "final": "3.tatiyo_paricchedo_tika",
+      "duplicated_with_oldid": "2196"
+    },
+    {
+      "text": "4. Catuttho Paricchedo",
+      "old_id": 2273,
+      "base": "4.catuttho_paricchedo",
+      "final": "4.catuttho_paricchedo_tika",
+      "duplicated_with_oldid": "2197"
+    },
+    {
+      "text": "5. Pañcamo Paricchedo",
+      "old_id": 2274,
+      "base": "5.pancamo_paricchedo",
+      "final": "5.pancamo_paricchedo_tika",
+      "duplicated_with_oldid": "2198"
+    },
+    {
+      "text": "6. Chaṭṭho Paricchedo",
+      "old_id": 2275,
+      "base": "6.chattho_paricchedo",
+      "final": "6.chattho_paricchedo_tika",
+      "duplicated_with_oldid": "2199"
+    },
+    {
+      "text": "7. Sattamo Paricchedo",
+      "old_id": 2276,
+      "base": "7.sattamo_paricchedo",
+      "final": "7.sattamo_paricchedo_tika",
+      "duplicated_with_oldid": "2200"
+    },
+    {
+      "text": "8. Aṭṭhamo Paricchedo",
+      "old_id": 2277,
+      "base": "8.atthamo_paricchedo",
+      "final": "8.atthamo_paricchedo_tika",
+      "duplicated_with_oldid": "2201"
+    },
+    {
+      "text": "9. Navamo Paricchedo",
+      "old_id": 2278,
+      "base": "9.navamo_paricchedo",
+      "final": "9.navamo_paricchedo_tika",
+      "duplicated_with_oldid": "2202"
+    },
+    {
+      "text": "10. Dasamo Paricchedo",
+      "old_id": 2279,
+      "base": "10.dasamo_paricchedo",
+      "final": "10.dasamo_paricchedo_tika",
+      "duplicated_with_oldid": "2203"
+    },
+    {
+      "text": "11. Ekādasamo Paricchedo",
+      "old_id": 2280,
+      "base": "11.ekadasamo_paricchedo",
+      "final": "11.ekadasamo_paricchedo_tika",
+      "duplicated_with_oldid": "2204"
+    },
+    {
+      "text": "12. Dvādasamo Paricchedo",
+      "old_id": 2281,
+      "base": "12.dvadasamo_paricchedo",
+      "final": "12.dvadasamo_paricchedo_tika",
+      "duplicated_with_oldid": "2205"
+    },
+    {
+      "text": "13. Terasamo Paricchedo",
+      "old_id": 2282,
+      "base": "13.terasamo_paricchedo",
+      "final": "13.terasamo_paricchedo_tika",
+      "duplicated_with_oldid": "2206"
+    },
+    {
+      "text": "14. Cuddasamo Paricchedo",
+      "old_id": 2283,
+      "base": "14.cuddasamo_paricchedo",
+      "final": "14.cuddasamo_paricchedo_tika",
+      "duplicated_with_oldid": "2207"
+    },
+    {
+      "text": "15. Pannarasamo Paricchedo",
+      "old_id": 2284,
+      "base": "15.pannarasamo_paricchedo",
+      "final": "15.pannarasamo_paricchedo_tika",
+      "duplicated_with_oldid": "2208"
+    },
+    {
+      "text": "16. Soḷasamo Paricchedo",
+      "old_id": 2285,
+      "base": "16.solasamo_paricchedo",
+      "final": "16.solasamo_paricchedo_tika",
+      "duplicated_with_oldid": "2209"
+    },
+    {
+      "text": "17. Sattarasamo Paricchedo",
+      "old_id": 2286,
+      "base": "17.sattarasamo_paricchedo",
+      "final": "17.sattarasamo_paricchedo_tika",
+      "duplicated_with_oldid": "2210"
+    },
+    {
+      "text": "18. Aṭṭhārasamo Paricchedo",
+      "old_id": 2287,
+      "base": "18.attharasamo_paricchedo",
+      "final": "18.attharasamo_paricchedo_tika",
+      "duplicated_with_oldid": "2211"
+    },
+    {
+      "text": "19. Ekūnavīsatimo Paricchedo",
+      "old_id": 2288,
+      "base": "19.ekunavisatimo_paricchedo",
+      "final": "19.ekunavisatimo_paricchedo_tika",
+      "duplicated_with_oldid": "2212"
+    },
+    {
+      "text": "20. Vīsatimo Paricchedo",
+      "old_id": 2289,
+      "base": "20.visatimo_paricchedo",
+      "final": "20.visatimo_paricchedo_tika",
+      "duplicated_with_oldid": "2213"
+    },
+    {
+      "text": "21. Ekavīsatimo Paricchedo",
+      "old_id": 2290,
+      "base": "21.ekavisatimo_paricchedo",
+      "final": "21.ekavisatimo_paricchedo_tika",
+      "duplicated_with_oldid": "2214"
+    },
+    {
+      "text": "23. Tevīsatimo Paricchedo",
+      "old_id": 2292,
+      "base": "23.tevisatimo_paricchedo",
+      "final": "23.tevisatimo_paricchedo_tika",
+      "duplicated_with_oldid": "2216"
+    },
+    {
+      "text": "24. Catuvīsatimo Paricchedo",
+      "old_id": 2293,
+      "base": "24.catuvisatimo_paricchedo",
+      "final": "24.catuvisatimo_paricchedo_tika",
+      "duplicated_with_oldid": "2217"
+    },
+    {
+      "text": "Ganthārambhakathāvaṇṇanā",
+      "old_id": 2294,
+      "base": "gantharambhakathavannana",
+      "final": "gantharambhakathavannana_tika",
+      "duplicated_with_oldid": "2126"
+    },
+    {
+      "text": "22. Bāvīsatimo Paricchedo",
+      "old_id": 2295,
+      "base": "22.bavisatimo_paricchedo",
+      "final": "22.bavisatimo_paricchedo_tika",
+      "duplicated_with_oldid": "2215"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": 2635,
+      "base": "gantharambhakatha",
+      "final": "gantharambhakatha_anna_693631",
+      "duplicated_with_oldid": "2193"
+    },
+    {
+      "text": "1. Sandhikaṇḍa",
+      "old_id": 2657,
+      "base": "1.sandhikanda",
+      "final": "1.sandhikanda_anna",
+      "duplicated_with_oldid": "2425"
+    },
+    {
+      "text": "2. Nāmakaṇḍa",
+      "old_id": 2658,
+      "base": "2.namakanda",
+      "final": "2.namakanda_anna",
+      "duplicated_with_oldid": "2426"
+    },
+    {
+      "text": "3. Kārakakaṇḍa",
+      "old_id": 2659,
+      "base": "3.karakakanda",
+      "final": "3.karakakanda_anna",
+      "duplicated_with_oldid": "2427"
+    },
+    {
+      "text": "4. Samāsakaṇḍa",
+      "old_id": 2660,
+      "base": "4.samasakanda",
+      "final": "4.samasakanda_anna",
+      "duplicated_with_oldid": "2428"
+    },
+    {
+      "text": "6. Ākhyātakaṇḍa",
+      "old_id": 2662,
+      "base": "6.akhyatakanda",
+      "final": "6.akhyatakanda_anna",
+      "duplicated_with_oldid": "2430"
+    },
+    {
+      "text": "2. Bhūkaṇḍa",
+      "old_id": 2695,
+      "base": "2.bhukanda",
+      "final": "2.bhukanda_anna",
+      "duplicated_with_oldid": "2690"
+    },
+    {
+      "text": "3. Sāmaññakaṇḍa",
+      "old_id": 2696,
+      "base": "3.samannakanda",
+      "final": "3.samannakanda_anna",
+      "duplicated_with_oldid": "2691"
+    },
+    {
+      "text": "1. Dosāvabodha Paṭhamapariccheda",
+      "old_id": 2704,
+      "base": "1.dosavabodha_pathamapariccheda",
+      "final": "1.dosavabodha_pathamapariccheda_anna",
+      "duplicated_with_oldid": "2698"
+    },
+    {
+      "text": "2. Nāmakaṇḍa",
+      "old_id": 2713,
+      "base": "2.namakanda",
+      "final": "2.namakanda_anna",
+      "duplicated_with_oldid": "2674"
+    },
+    {
+      "text": "1. Ekakanipāto",
+      "old_id": "584",
+      "base": "1.ekakanipato_tipitaka",
+      "final": "1.ekakanipato_tipitaka_484a94",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "2. Dukanipāto",
+      "old_id": "585",
+      "base": "2.dukanipato_tipitaka",
+      "final": "2.dukanipato_tipitaka_a475c2",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "3. Tikanipāto",
+      "old_id": "586",
+      "base": "3.tikanipato_tipitaka",
+      "final": "3.tikanipato_tipitaka_281e66",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "4. Catukkanipāto",
+      "old_id": "587",
+      "base": "4.catukkanipato_tipitaka",
+      "final": "4.catukkanipato_tipitaka_2c6348",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "949",
+      "base": "gantharambhakatha_atthakatha",
+      "final": "gantharambhakatha_atthakatha_2953c5",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1180",
+      "base": "gantharambhakatha_atthakatha",
+      "final": "gantharambhakatha_atthakatha_95fc10",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1241",
+      "base": "gantharambhakatha_atthakatha",
+      "final": "gantharambhakatha_atthakatha_77c04a",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1251",
+      "base": "gantharambhakatha_atthakatha",
+      "final": "gantharambhakatha_atthakatha_737001",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1336",
+      "base": "gantharambhakatha_atthakatha",
+      "final": "gantharambhakatha_atthakatha_cb2cc6",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1371",
+      "base": "gantharambhakatha_atthakatha",
+      "final": "gantharambhakatha_atthakatha_95f182",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1423",
+      "base": "gantharambhakatha_atthakatha",
+      "final": "gantharambhakatha_atthakatha_adfec2",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1457",
+      "base": "gantharambhakatha_atthakatha",
+      "final": "gantharambhakatha_atthakatha_041213",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "1. Ekakanipāto",
+      "old_id": "1372",
+      "base": "1.ekakanipato_atthakatha",
+      "final": "1.ekakanipato_atthakatha_d90a44",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "2. Dukanipāto",
+      "old_id": "1374",
+      "base": "2.dukanipato_atthakatha",
+      "final": "2.dukanipato_atthakatha_ac989a",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "3. Tikanipāto",
+      "old_id": "1375",
+      "base": "3.tikanipato_atthakatha",
+      "final": "3.tikanipato_atthakatha_808678",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "4. Catukkanipāto",
+      "old_id": "1377",
+      "base": "4.catukkanipato_atthakatha",
+      "final": "4.catukkanipato_atthakatha_81a420",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1665",
+      "base": "gantharambhakatha_tika",
+      "final": "gantharambhakatha_tika_8fe296",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1760",
+      "base": "gantharambhakatha_tika",
+      "final": "gantharambhakatha_tika_ca07c5",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathā",
+      "old_id": "1975",
+      "base": "gantharambhakatha_tika",
+      "final": "gantharambhakatha_tika_817be2",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathāvaṇṇanā",
+      "old_id": "1912",
+      "base": "gantharambhakathavannana_tika",
+      "final": "gantharambhakathavannana_tika_6607ad",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "Ganthārambhakathāvaṇṇanā",
+      "old_id": "2294",
+      "base": "gantharambhakathavannana_tika",
+      "final": "gantharambhakathavannana_tika_c5f0e3",
+      "resolved_by": "sha1"
+    },
+    {
+      "text": "2. Nāmakaṇḍa",
+      "old_id": "2713",
+      "base": "2.namakanda_anna",
+      "final": "2.namakanda_anna_2feaff",
+      "resolved_by": "sha1"
+    }
+  ]
+}

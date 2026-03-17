@@ -19,7 +19,7 @@
     <!-- Stylesheet for Top Nav bar -->
     <link href="../css/tipistyles.css" rel="stylesheet">    
 
-    <title>CSCD Tipiṭaka (Gurmukhi)</title>  
+    <title>CSCD Tipiṭaka (Roman)</title>  
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <style>
 
@@ -36,7 +36,7 @@
 		var jtree = $('#tree').jstree({
             'plugins': ['types'], // Enable the types plugin
             'core' : {
-                'data' : {'url': 'tree.json'},
+                'data' : {'url': 'treebyname.json'},
                 'expand_selected_onload' : true,
                 'responsive': true
             },
@@ -97,7 +97,9 @@
 				if(data.selected.length) {
 					var s = data.instance.get_node(data.selected[0]).id;
                     console.log('node id=',s);
-                    //var lnk = $( s+"_anchor").attr('href');    
+                    // Use getElementById instead of jQuery selector because `s` may contain
+                    // characters (dots, underscores) that make the jQuery ID selector fail
+                    // unless escaped. document.getElementById works with the literal id.
                     var anchor = document.getElementById(s + '_anchor');
                     var lnk = anchor ? anchor.getAttribute('href') : undefined;
 					//alert('The selected node is: ' + lnk);
@@ -109,7 +111,7 @@
 						setTimeout(
 						  function() 
 						  {
-                                $("html").animate({scrollTop:1}, 0);
+                            $("html").animate({scrollTop:1}, 0);
 								return false;
 						  }, 0);
 					}
