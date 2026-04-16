@@ -24,7 +24,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Stylesheet for tipitaka.org -->
-    <link href="./css/tipistyles.css" rel="stylesheet">    
+    <link href="./css/tipistyles.css" rel="stylesheet">
+    <link href="./css/dwob.css" rel="stylesheet">    
 
     <title>The Pāḷi Tipiṭaka</title>  
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -47,23 +48,130 @@
 
     <!-- Page Content-->
     <div class="container"> 
+        <div class="buddha-img-wrapper">
         <p><a href="https://tipitaka.org/images/budpvbhik.jpg">
-        <img src="./images/buddha.jpg" alt="Buddha" width="30%" align="right" hspace="10"></a> 
-        This website provides a digital reproduction of the authenticated Tipitaka texts from the <a href="chattha.html">Chaṭṭha Saṅgāyana</a> CD published by the <a href="http://www.vridhamma.org/Home.aspx" target="_blank">Vipassana Research Institute</a>. Based at&nbsp;Dhamma Giri, Igatpuri, near Mumbai, India, the Vipassana Research Institute also&nbsp;publishes literature &amp; disseminates information related to <a href="http://www.vridhamma.org/VRI-Introduction" target="_blank">Vipassana&nbsp;Meditation Technique</a>&nbsp;as taught by <a href="http://www.vridhamma.org/Teachers-4.aspx" target="_blank">S.N.Goenka</a> in the tradition of <a target="_blank" href="http://www.vridhamma.org/Teachers-3.aspx">Sayagyi U Ba Khin</a>.<br> <br> 
+        <img src="./images/buddha.jpg" alt="Buddha" class="buddha-img"></a></p>
+
+        <!-- Daily Words of the Buddha -->
+        <div class="dwob-box" id="dwob-container">
+            <div class="dwob-loading">Loading Daily Word of the Buddha&hellip;</div>
+        </div>
+        </div>
+        <script>
+        (function() {
+            // Helper: strip leading/trailing <br> tags and whitespace
+            function stripBr(s) {
+                return s.replace(/^(\s*<br\s*\/?>\s*)+/gi, '').replace(/(\s*<br\s*\/?>\s*)+$/gi, '').trim();
+            }
+            var feedUrl = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent('http://feeds.pariyatti.org/dwob');
+            fetch(feedUrl)
+                .then(function(res) { return res.json(); })
+                .then(function(data) {
+                    if (!data.items || !data.items.length) throw new Error('No items');
+                    var desc = data.items[0].description;
+                    // Parse the HTML description
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString('<div>' + desc + '</div>', 'text/html');
+                    var html = doc.body.firstChild.innerHTML;
+
+                    // Split on the "Listen" link to separate Pali from the rest
+                    // Extract audio URL from Listen link first
+                    var audioUrl = '';
+                    var listenMatch = html.match(/<a[^>]*href=["']([^"']*)["'][^>]*>Listen<\/a>/i);
+                    if (listenMatch) {
+                        var listenHref = listenMatch[1];
+                        // Extract mp3 URL from src= parameter
+                        var srcParam = listenHref.match(/[?&]src=([^&]+)/i);
+                        if (srcParam) {
+                            audioUrl = decodeURIComponent(srcParam[1]);
+                        }
+                    }
+                    var parts = html.split(/<a[^>]*>Listen<\/a>/i);
+                    var paliHtml = stripBr(parts[0] || '');
+                    var rest = stripBr(parts[1] || '');
+
+                    // Extract English: everything up to the reference line
+                    var refMatch = rest.match(/([\s\S]*?)<br\s*\/?>\s*<br\s*\/?>\s*([\s\S]*)/i);
+                    var englishHtml = '';
+                    var sourceHtml = '';
+                    var tipitakaLink = '';
+                    if (refMatch) {
+                        englishHtml = stripBr(refMatch[1]);
+                        var remainder = refMatch[2];
+                        // Extract the source name (e.g. "Saṃyutta Nikāya 1.71")
+                        var srcMatch = remainder.match(/^([^<]+)/);
+                        if (srcMatch) {
+                            sourceHtml = srcMatch[1].trim();
+                        }
+                        // Extract the tipitaka.org link from "View Pāli on Tipitaka.org"
+                        var linkMatch = remainder.match(/<a[^>]*href=["']([^"']*tipitaka\.org[^"']*)["'][^>]*>/i);
+                        if (linkMatch) {
+                            tipitakaLink = linkMatch[1];
+                        }
+                    } else {
+                        englishHtml = stripBr(rest);
+                    }
+
+                    // Build source with link
+                    var sourceContent = '';
+                    if (sourceHtml) {
+                        if (tipitakaLink) {
+                            sourceContent = '<a href="' + tipitakaLink + '" target="_blank">' + sourceHtml + '</a>';
+                        } else {
+                            sourceContent = sourceHtml;
+                        }
+                    }
+
+                    var container = document.getElementById('dwob-container');
+                    var speakerIcon = audioUrl ?
+                        '<img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Speaker_Icon.svg" ' +
+                        'class="dwob-speaker" id="dwob-speaker-icon" alt="Listen" title="Listen to the Daily Word of the Buddha" ' +
+                        'onclick="(function(){var a=document.getElementById(\'dwob-audio\');if(a){if(a.paused){a.play();}else{a.pause();}}})()" />' +
+                        '<audio id="dwob-audio" src="' + audioUrl + '"></audio>' : '';
+                    container.innerHTML =
+                        '<div class="dwob-heading">Daily Words of the Buddha ' + speakerIcon + '</div>' +
+                        '<div class="dwob-columns">' +
+                            '<div class="dwob-pali">' + paliHtml + '</div>' +
+                            '<div class="dwob-english">' + englishHtml + '</div>' +
+                        '</div>' +
+                        (sourceContent ? '<div class="dwob-source">' + sourceContent + '</div>' : '');
+
+                    // Toggle speaker icon color during audio playback
+                    var audio = document.getElementById('dwob-audio');
+                    var icon = document.getElementById('dwob-speaker-icon');
+                    if (audio && icon) {
+                        audio.addEventListener('play', function() {
+                            icon.style.filter = 'brightness(0) invert(0.4)';
+                        });
+                        audio.addEventListener('pause', function() {
+                            icon.style.filter = 'brightness(0) invert(1)';
+                        });
+                        audio.addEventListener('ended', function() {
+                            icon.style.filter = 'brightness(0) invert(1)';
+                        });
+                    }
+                })
+                .catch(function() {
+                    var container = document.getElementById('dwob-container');
+                    container.innerHTML = '<div class="dwob-loading">Daily Words of the Buddha is temporarily unavailable. ' +
+                        'Visit <a href="https://www.pariyatti.org/FreeResources/DailyWords/BuddhaEnglish/tabid/209/Default.aspx" target="_blank">Pariyatti.org</a> directly.</div>';
+                });
+        })();
+        </script>
+
+        <p>This website provides a digital reproduction of the authenticated Tipitaka texts from the <a href="chattha.html">Chaṭṭha Saṅgāyana</a> CD published by the <a href="http://www.vridhamma.org/Home.aspx" target="_blank">Vipassana Research Institute</a>. Based at&nbsp;Dhamma Giri, Igatpuri, near Mumbai, India, the Vipassana Research Institute also&nbsp;publishes literature &amp; disseminates information related to <a href="http://www.vridhamma.org/VRI-Introduction" target="_blank">Vipassana&nbsp;Meditation Technique</a>&nbsp;as taught by <a href="http://www.vridhamma.org/Teachers-4.aspx" target="_blank">S.N.Goenka</a> in the tradition of <a target="_blank" href="http://www.vridhamma.org/Teachers-3.aspx">Sayagyi U Ba Khin</a>.<br> <br> 
         Vipassana is a universal, scientific method towards purifying the mind. It is the practical essence of the teachings of the Buddha, who taught Dhamma - the Universal Law of Nature.<br> <br>
         The Pāḷi Tipiṭaka is presented in many scripts so that the words of the Buddha are easily made available for all. Although all are in Unicode fonts, you may need to install some fonts and make some changes to your system to view the site correctly. </p> 
+
         <p><strong>Please read the <a href="help.html">help</a> page carefully for more information on setting up your system and also on how to use this site.</strong></p> 
         <hr> 
-        <p><strong>Windows Desktop software: </strong>You can now download the entire Chaṭṭha Saṅgāyana Tipiṭaka to run off your computer in offline mode. <a href="cst4.html">Click here for instructions</a>.</p> 
-        <p><strong>iOS web app: </strong>You can navigate the Chaṭṭha Saṅgāyana Tipiṭaka using your iPhone, iPod Touch, or iPad. <a href="webapp.html">Click here for instructions</a>.</p> 
-        <p><strong>Older Operating systems:</strong> Visitors using <strong>Windows 95/98</strong> may not be able to view Unicode texts as it is not fully supported by these operating systems. The older <a href="http://www.tipitaka.org/vriroman/booklistframe2">VRI Roman site</a> is still available. To use the VRI Roman site you will need to install the <a href="https://tipitaka.org/VRI_Roman_Pali.zip">VRI Roman Pali fonts</a>. Alternatively you may download an <a href="https://tipitaka.org/cscd3.iso.zip">image of the CSCD3 disc</a> (208 MB) and burn your own copy of CSCD3.</p> 
         <p> In case of difficulties in viewing the Pāḷi Text or if you notice any other errors on this site,&nbsp;please write to <a href="mailto:help@tipitaka.org">help@tipitaka.org</a> describing the problem.<br> </p>     
     </div>  
 
     <!-- Page footer -->
     <div class="container">
         <footer>
-            <hr width="60%">
+            <hr width="80%">
             <p  class="text-center"><small> <a href="mailto:help@tipitaka.org">Contact the Webmaster</a><br> 
             A project of the Vipassana Research Institute</small>
             </p>
@@ -73,7 +181,30 @@
 
 
     <!-- body code goes here -->
-    <script src="js/topnavscript.js"></script>     
+    <script src="js/topnavscript.js"></script>
+
+    <!-- On mobile, move DWoB box to just above the footer -->
+    <script>
+    (function() {
+        function moveDwobForMobile() {
+            var dwob = document.getElementById('dwob-container');
+            var footer = document.querySelector('footer');
+            var wrapper = document.querySelector('.buddha-img-wrapper');
+            if (!dwob || !footer) return;
+            if (window.innerWidth <= 767) {
+                // Move DWoB just before the footer's parent container
+                footer.parentNode.parentNode.insertBefore(dwob, footer.parentNode);
+            } else {
+                // Move DWoB back inside the buddha-img-wrapper (after the image)
+                if (wrapper && dwob.parentNode !== wrapper) {
+                    wrapper.appendChild(dwob);
+                }
+            }
+        }
+        moveDwobForMobile();
+        window.addEventListener('resize', moveDwobForMobile);
+    })();
+    </script>     
 
 </body>
 </html>
