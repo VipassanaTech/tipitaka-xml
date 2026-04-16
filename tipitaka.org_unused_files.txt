@@ -1,0 +1,974 @@
+================================================================================
+TIPITAKA.ORG WEBSITE - UNUSED FILE ANALYSIS
+================================================================================
+
+Step 1: Collecting all files under tipitaka.org/...
+  Found 3771 total files.
+
+Step 2: Tracing file references from index.html (BFS)...
+  Found 26 directly referenced files.
+
+Step 3: Checking for SSI (Server Side Include) directives...
+  No SSI directives found.
+
+Step 4: Checking XML cross-references...
+
+Step 5: Analyzing JavaScript for dynamic path patterns...
+
+================================================================================
+RESULTS
+================================================================================
+
+Total files: 3771
+Used files: 26
+Unused files: 3745
+
+--------------------------------------------------------------------------------
+ANALYSIS OF SPECIFIC FILES OF INTEREST
+--------------------------------------------------------------------------------
+
+### sitemap-*.txt files in root:
+  sitemap-romn-abhi-mul.txt -> NOT USED
+  sitemap-romn-abhi.txt -> NOT USED
+  sitemap-romn-mul.txt -> NOT USED
+  sitemap-romn-s-mul.txt -> NOT USED
+  sitemap-romn-s.txt -> NOT USED
+  sitemap-romn-vin-mul.txt -> NOT USED
+  sitemap-romn-vin.txt -> NOT USED
+  sitemap-romn.txt -> NOT USED
+  sitemap.txt -> NOT USED
+
+### sidebar.ssi in root:
+  No sidebar.ssi found in root.
+  All sidebar-related files:
+    sidebars.ssi -> NOT USED
+
+### toc*.xml, tipitaka_toc.*, x*.js inside script folders:
+
+  [romn/]
+    romn/toc1.xml -> NOT USED
+    romn/toc2.xml -> NOT USED
+    romn/toc3.xml -> NOT USED
+    romn/toc4.xml -> NOT USED
+    romn/tipitaka_toc.html -> NOT USED
+    romn/tipitaka_toc.xml -> NOT USED
+    romn/xloadtree.js -> NOT USED
+    romn/xmlextras.js -> NOT USED
+    romn/xtree.js -> NOT USED
+
+  [deva/]
+    deva/toc1.xml -> NOT USED
+    deva/toc2.xml -> NOT USED
+    deva/toc3.xml -> NOT USED
+    deva/toc4.xml -> NOT USED
+    deva/tipitaka_toc.html -> NOT USED
+    deva/tipitaka_toc.xml -> NOT USED
+    deva/xloadtree.js -> NOT USED
+    deva/xmlextras.js -> NOT USED
+    deva/xtree.js -> NOT USED
+
+  [sinh/]
+    sinh/toc1.xml -> NOT USED
+    sinh/toc2.xml -> NOT USED
+    sinh/toc3.xml -> NOT USED
+    sinh/toc4.xml -> NOT USED
+    sinh/tipitaka_toc.html -> NOT USED
+    sinh/tipitaka_toc.xml -> NOT USED
+    sinh/xloadtree.js -> NOT USED
+    sinh/xmlextras.js -> NOT USED
+    sinh/xtree.js -> NOT USED
+
+  [thai/]
+    thai/toc1.xml -> NOT USED
+    thai/toc2.xml -> NOT USED
+    thai/toc3.xml -> NOT USED
+    thai/toc4.xml -> NOT USED
+    thai/tipitaka_toc.html -> NOT USED
+    thai/tipitaka_toc.xml -> NOT USED
+    thai/xloadtree.js -> NOT USED
+    thai/xmlextras.js -> NOT USED
+    thai/xtree.js -> NOT USED
+
+  [mymr/]
+    mymr/toc1.xml -> NOT USED
+    mymr/toc2.xml -> NOT USED
+    mymr/toc3.xml -> NOT USED
+    mymr/toc4.xml -> NOT USED
+    mymr/tipitaka_toc.html -> NOT USED
+    mymr/tipitaka_toc.xml -> NOT USED
+    mymr/xloadtree.js -> NOT USED
+    mymr/xmlextras.js -> NOT USED
+    mymr/xtree.js -> NOT USED
+
+  [khmr/]
+    khmr/toc1.xml -> NOT USED
+    khmr/toc2.xml -> NOT USED
+    khmr/toc3.xml -> NOT USED
+    khmr/toc4.xml -> NOT USED
+    khmr/tipitaka_toc.html -> NOT USED
+    khmr/tipitaka_toc.xml -> NOT USED
+    khmr/xloadtree.js -> NOT USED
+    khmr/xmlextras.js -> NOT USED
+    khmr/xtree.js -> NOT USED
+
+  [beng/]
+    beng/toc1.xml -> NOT USED
+    beng/toc2.xml -> NOT USED
+    beng/toc3.xml -> NOT USED
+    beng/toc4.xml -> NOT USED
+    beng/tipitaka_toc.html -> NOT USED
+    beng/tipitaka_toc.xml -> NOT USED
+    beng/xloadtree.js -> NOT USED
+    beng/xmlextras.js -> NOT USED
+    beng/xtree.js -> NOT USED
+
+  [guru/]
+    guru/toc1.xml -> NOT USED
+    guru/toc2.xml -> NOT USED
+    guru/toc3.xml -> NOT USED
+    guru/toc4.xml -> NOT USED
+    guru/tipitaka_toc.html -> NOT USED
+    guru/tipitaka_toc.xml -> NOT USED
+    guru/xloadtree.js -> NOT USED
+    guru/xmlextras.js -> NOT USED
+    guru/xtree.js -> NOT USED
+
+  [gujr/]
+    gujr/toc1.xml -> NOT USED
+    gujr/toc2.xml -> NOT USED
+    gujr/toc3.xml -> NOT USED
+    gujr/toc4.xml -> NOT USED
+    gujr/tipitaka_toc.html -> NOT USED
+    gujr/tipitaka_toc.xml -> NOT USED
+    gujr/xloadtree.js -> NOT USED
+    gujr/xmlextras.js -> NOT USED
+    gujr/xtree.js -> NOT USED
+
+  [telu/]
+    telu/toc1.xml -> NOT USED
+    telu/toc2.xml -> NOT USED
+    telu/toc3.xml -> NOT USED
+    telu/toc4.xml -> NOT USED
+    telu/tipitaka_toc.html -> NOT USED
+    telu/tipitaka_toc.xml -> NOT USED
+    telu/xloadtree.js -> NOT USED
+    telu/xmlextras.js -> NOT USED
+    telu/xtree.js -> NOT USED
+
+  [knda/]
+    knda/toc1.xml -> NOT USED
+    knda/toc2.xml -> NOT USED
+    knda/toc3.xml -> NOT USED
+    knda/toc4.xml -> NOT USED
+    knda/tipitaka_toc.html -> NOT USED
+    knda/tipitaka_toc.xml -> NOT USED
+    knda/xloadtree.js -> NOT USED
+    knda/xmlextras.js -> NOT USED
+    knda/xtree.js -> NOT USED
+
+  [mlym/]
+    mlym/toc1.xml -> NOT USED
+    mlym/toc2.xml -> NOT USED
+    mlym/toc3.xml -> NOT USED
+    mlym/toc4.xml -> NOT USED
+    mlym/tipitaka_toc.html -> NOT USED
+    mlym/tipitaka_toc.xml -> NOT USED
+    mlym/xloadtree.js -> NOT USED
+    mlym/xmlextras.js -> NOT USED
+    mlym/xtree.js -> NOT USED
+
+  [tibt/]
+    tibt/toc1.xml -> NOT USED
+    tibt/toc2.xml -> NOT USED
+    tibt/toc3.xml -> NOT USED
+    tibt/toc4.xml -> NOT USED
+    tibt/tipitaka_toc.html -> NOT USED
+    tibt/tipitaka_toc.xml -> NOT USED
+    tibt/xloadtree.js -> NOT USED
+    tibt/xmlextras.js -> NOT USED
+    tibt/xtree.js -> NOT USED
+
+--------------------------------------------------------------------------------
+ALL UNUSED FILES (grouped by directory)
+--------------------------------------------------------------------------------
+
+  ./ (35 unused files)
+    .htaccess
+    404.html
+    VRI_Roman_Pali.zip
+    dutch-docs.html
+    english-docs.html
+    eot.html
+    footer.ssi
+    google6b611e276637bc8c.html
+    google8256a2ece02f4a60.html
+    hindi-docs.html
+    ... and 25 more
+
+  beng/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  beng/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  beng/cscd/ (2 unused files)
+    tipitaka-beng.css
+    tipitaka-beng.xsl
+
+  beng/css/ (1 unused files)
+    tipitaka-latn.css
+
+  beng/images/ (1 unused files)
+    blank.png
+
+  beng/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  cyrl/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  cyrl/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  cyrl/cscd/ (2 unused files)
+    tipitaka-cyrl.css
+    tipitaka-cyrl.xsl
+
+  cyrl/css/ (1 unused files)
+    tipitaka-latn.css
+
+  cyrl/images/ (1 unused files)
+    blank.png
+
+  cyrl/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  deva/ (17 unused files)
+    index.html
+    indexold.html
+    md2xml.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  deva/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  deva/cscd/ (2917 unused files)
+    abh01a.att.toc.xml
+    abh01a.att0.xml
+    abh01a.att1.xml
+    abh01a.att2.xml
+    abh01a.att3.xml
+    abh01a.att4.xml
+    abh01a.att5.xml
+    abh01a.att6.xml
+    abh01a.att7.xml
+    abh01m.mul.toc.xml
+    ... and 2907 more
+
+  deva/css/ (1 unused files)
+    tipitaka-latn.css
+
+  deva/images/ (1 unused files)
+    blank.png
+
+  deva/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  fonts/ (1 unused files)
+    myanmar1.ttf
+
+  fonts/EB_Garamond/ (1 unused files)
+    EBGaramond-Regular.ttf
+
+  fonts/Maitree/ (6 unused files)
+    Maitree-Bold.ttf
+    Maitree-ExtraLight.ttf
+    Maitree-Light.ttf
+    Maitree-Medium.ttf
+    Maitree-SemiBold.ttf
+    OFL.txt
+
+  fonts/Monda/ (1 unused files)
+    Monda-Bold.ttf
+
+  fonts/Philosopher/ (4 unused files)
+    OFL.txt
+    Philosopher-Bold.ttf
+    Philosopher-BoldItalic.ttf
+    Philosopher-Italic.ttf
+
+  gujr/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  gujr/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  gujr/cscd/ (2 unused files)
+    tipitaka-gujr.css
+    tipitaka-gujr.xsl
+
+  gujr/css/ (1 unused files)
+    tipitaka-latn.css
+
+  gujr/images/ (1 unused files)
+    blank.png
+
+  gujr/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  guru/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  guru/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  guru/cscd/ (2 unused files)
+    tipitaka-guru.css
+    tipitaka-guru.xsl
+
+  guru/css/ (1 unused files)
+    tipitaka-latn.css
+
+  guru/images/ (1 unused files)
+    blank.png
+
+  guru/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  images/ (4 unused files)
+    aniwheel2.gif
+    iPhone-2o.png
+    icons8-facebook-48.png
+    icons8-twitter-48.png
+
+  js/ (1 unused files)
+    satitable.js
+
+  khmr/ (16 unused files)
+    1xtree.css
+    index.html
+    indexold.html
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  khmr/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  khmr/cscd/ (2 unused files)
+    tipitaka-khmr.css
+    tipitaka-khmr.xsl
+
+  khmr/css/ (1 unused files)
+    tipitaka-latn.css
+
+  khmr/images/ (1 unused files)
+    blank.png
+
+  khmr/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  knda/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  knda/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  knda/cscd/ (2 unused files)
+    tipitaka-knda.css
+    tipitaka-knda.xsl
+
+  knda/css/ (1 unused files)
+    tipitaka-latn.css
+
+  knda/images/ (1 unused files)
+    blank.png
+
+  knda/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  known-issues/ (12 unused files)
+    bengali.doc
+    bengali.pdf
+    gurmukhi.doc
+    gurmukhi.pdf
+    myanmar.doc
+    myanmar.pdf
+    sinhala.doc
+    sinhala.pdf
+    thai.doc
+    thai.pdf
+    tibetan.doc
+    tibetan.pdf
+
+  mackeyboard/ (70 unused files)
+    EasyUnicode5.zip
+    PaliUniAltGr.png
+    PaliUniShftAltGr.png
+    U00D1.gif
+    U00F1.gif
+    U0100.gif
+    U0101.gif
+    U012A.gif
+    U012B.gif
+    U015A.gif
+    ... and 60 more
+
+  mlym/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  mlym/cscd/ (2 unused files)
+    tipitaka-mlym.css
+    tipitaka-mlym.xsl
+
+  mlym/css/ (1 unused files)
+    tipitaka-latn.css
+
+  mlym/images/ (1 unused files)
+    blank.png
+
+  mlym/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  mymr/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  mymr/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  mymr/cscd/ (2 unused files)
+    tipitaka-mymr.css
+    tipitaka-mymr.xsl
+
+  mymr/css/ (1 unused files)
+    tipitaka-latn.css
+
+  mymr/images/ (1 unused files)
+    blank.png
+
+  mymr/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  romn/ (17 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka.xsl
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  romn/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  romn/cscd/ (219 unused files)
+    abh01a.att.toc.xml
+    abh01m.mul.toc.xml
+    abh01t.tik.toc.xml
+    abh02a.att.toc.xml
+    abh02m.mul.toc.xml
+    abh02t.tik.toc.xml
+    abh03a.att.toc.xml
+    abh03m1.mul.toc.xml
+    abh03m10.mul.toc.xml
+    abh03m11.mul.toc.xml
+    ... and 209 more
+
+  romn/css/ (1 unused files)
+    tipitaka-latn.css
+
+  romn/images/ (1 unused files)
+    blank.png
+
+  romn/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  sinh/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  sinh/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  sinh/cscd/ (2 unused files)
+    tipitaka-sinh.css
+    tipitaka-sinh.xsl
+
+  sinh/css/ (1 unused files)
+    tipitaka-latn.css
+
+  sinh/images/ (1 unused files)
+    blank.png
+
+  sinh/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  taml/ (15 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  taml/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  taml/cscd/ (1 unused files)
+    tipitaka-taml.xsl
+
+  taml/css/ (1 unused files)
+    tipitaka-latn.css
+
+  taml/images/ (1 unused files)
+    blank.png
+
+  taml/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  telu/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  telu/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  telu/cscd/ (2 unused files)
+    tipitaka-telu.css
+    tipitaka-telu.xsl
+
+  telu/css/ (1 unused files)
+    tipitaka-latn.css
+
+  telu/images/ (1 unused files)
+    blank.png
+
+  telu/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  thai/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  thai/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  thai/cscd/ (2 unused files)
+    tipitaka-thai.css
+    tipitaka-thai.xsl
+
+  thai/css/ (1 unused files)
+    tipitaka-latn.css
+
+  thai/images/ (1 unused files)
+    blank.png
+
+  thai/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+  tibt/ (16 unused files)
+    index.html
+    indexold.html
+    tag-comment.gif
+    tipitaka_toc.html
+    tipitaka_toc.xml
+    toc1.xml
+    toc2.xml
+    toc3.xml
+    toc4.xml
+    topnav.html
+    tree.dtd
+    tree.json
+    xloadtree.js
+    xmlextras.js
+    xtree.css
+    xtree.js
+
+  tibt/XML Validation/ (2 unused files)
+    report_invalid.txt
+    report_valid.txt
+
+  tibt/cscd/ (2 unused files)
+    tipitaka-tibt.css
+    tipitaka-tibt.xsl
+
+  tibt/css/ (1 unused files)
+    tipitaka-latn.css
+
+  tibt/images/ (1 unused files)
+    blank.png
+
+  tibt/images/xp/ (10 unused files)
+    I.png
+    L.png
+    Lminus.png
+    Lplus.png
+    T.png
+    Tminus.png
+    Tplus.png
+    file.png
+    folder.png
+    openfolder.png
+
+--------------------------------------------------------------------------------
+ALL USED FILES (for reference)
+--------------------------------------------------------------------------------
+
+  chattha.html
+  css/tipistyles.css
+  cst4.html
+  favicon.ico
+  fonts/EB_Garamond/EBGaramond-Bold.ttf
+  fonts/Maitree/Maitree-Regular.ttf
+  fonts/Monda/Monda-Regular.ttf
+  fonts/Philosopher/Philosopher-Regular.ttf
+  fonts/un-abhaya-bold-prod.ttf
+  fonts/un-abhaya-prod.ttf
+  fonts/un-samantha.ttf
+  help.html
+  images/buddha.jpg
+  images/dhamma-wheel.svg
+  images/iPad-1.png
+  images/iPad-2.png
+  images/iPad-3.png
+  images/iPad-4.png
+  images/iPhone-1.png
+  images/iPhone-2.png
+  images/iPhone-3.png
+  images/iPhone-4.png
+  index.html
+  js/topnavscript.js
+  keyboard.html
+  webapp.html
+
+--------------------------------------------------------------------------------
+JS DYNAMIC LOADING ANALYSIS
+--------------------------------------------------------------------------------
