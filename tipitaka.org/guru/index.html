@@ -103,18 +103,27 @@
 					console.log("lnk is "+lnk);
                     if (lnk != '#')  // leaf so shows the content
 					{
-						window.location.hash = s;
+						if (window.innerWidth <= 768) {
+							history.replaceState(null, null, '#' + s);
+						} else {
+							window.location.hash = s;
+						}
 						$("#t-content").load(lnk);
-						setTimeout(
-						  function() 
-						  {
-							$("html").animate({scrollTop:01}, 00);
-								return false;
-						  }, 0);
+						if (window.innerWidth > 768) {
+							setTimeout(
+							  function() 
+							  {
+								$("html").animate({scrollTop:01}, 00);
+									return false;
+							  }, 0);
+						}
 					}
 					else
                     // open nodes
 					{
+						if (window.innerWidth > 768) {
+                            $("html").animate({scrollTop:-50}, 00);
+						}
                         console.log("data.selected[0]", data.selected[0])
 						data.instance.open_node(data.selected[0],false, false);
 					}
@@ -124,11 +133,110 @@
 	</script>
 
 
+<style>
+/* Responsive styles for the navigation tree */
+@media (max-width: 768px) {
+    #tree {
+        position: fixed;
+        left: 0;
+        top: 130px;
+        bottom: 0;
+        width: 250px;
+        background: #fff;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #tree.visible {
+        transform: translateX(0);
+    }
+
+    #nav-toggle {
+        position: fixed;
+        left: 10px;
+        top: 60px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1100;
+        cursor: pointer;
+    }
+
+    #nav-toggle i {
+        font-size: 18px;
+        color: #333;
+    }
+
+    /* Hide the hamburger menu icon on mobile */
+    .topnav .icon {
+        display: none !important;
+    }
+}
+
+/* Hide the toggle button in desktop view */
+@media (min-width: 769px) {
+    #nav-toggle {
+        display: none !important;
+    }
+}
+</style>
+
+<script>
+$(document).ready(function () {
+    const $tree = $('#tree');
+    const $toggle = $('#nav-toggle');
+
+    $toggle.on('click', function () {
+        $tree.toggleClass('visible');
+        const icon = $tree.hasClass('visible') ? 'fa-arrow-left' : 'fa-arrow-right';
+        $toggle.find('i').attr('class', `fa ${icon}`);
+        $toggle.toggle(!$tree.hasClass('visible'));
+    });
+
+    $(window).on('scroll', function () {
+        if (window.innerWidth <= 768 && !$tree.hasClass('visible')) {
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            if (scrollTop > 100) {
+                $toggle.hide();
+            } else {
+                $toggle.show();
+            }
+        }
+    });
+
+    $('#tree').on('changed.jstree', function (e, data) {
+        if (data && data.selected.length) {
+            const selectedNode = data.instance.get_node(data.selected[0]);
+            if (selectedNode && selectedNode.icon === './images/xp/file.png') {
+                $tree.removeClass('visible');
+                $toggle.find('i').attr('class', 'fa fa-arrow-right');
+                if (window.innerWidth <= 768) {
+                    $toggle.show();
+                }
+            }
+        }
+    });
+});
+</script>
 
 
 </head>    
 
 <body> 
+    <div id="nav-toggle" class="nav-toggle">
+        <i class="fa fa-arrow-right"></i>
+    </div>
+
     <div class="flex-wrapper">
         <!-- Top nav bar from topnav.html imported via JScript (see below) -->
         <div class="nav-wrapper">
