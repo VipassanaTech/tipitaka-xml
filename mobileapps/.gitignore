@@ -1,0 +1,21 @@
+# Android build artifacts
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/*.iml
+android/app/*.iml
+android/.idea/
+android/captures/
+
+# Keystore files (sensitive)
+android/*.jks
+android/*.keystore
+
+# iOS
+ios/.build/
+ios/DerivedData/
+
+# OS files
+.DS_Store
+Thumbs.db

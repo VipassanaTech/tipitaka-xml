@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path name="twa_splash_cache" path="twa_splash/" />
+    <files-path name="twa_splash_files" path="twa_splash/" />
+</paths>

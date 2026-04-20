@@ -1,0 +1,47 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'org.tipitaka.twa'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "org.tipitaka.twa"
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName "1.0.0"
+
+        // TWA configuration
+        // Replace with your actual domain
+        manifestPlaceholders = [
+            hostName: "tipitaka.org",
+            defaultUrl: "https://tipitaka.org",
+            launcherName: "Tipitaka",
+            // Digital Asset Links - replace with your SHA-256 fingerprint
+            assetStatements: '[{ "relation": ["delegate_permission/common.handle_all_urls"], "target": { "namespace": "web", "site": "https://tipitaka.org" } }]'
+        ]
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // For testing, we can use debug signing
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.browser:browser:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0'
+}
