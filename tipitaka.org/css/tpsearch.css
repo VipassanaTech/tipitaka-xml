@@ -1,0 +1,498 @@
+/**
+ * Tipitaka Search Styles
+ * Shared CSS for search bar, results, context menu across all script pages.
+ */
+
+/* ===== Search Bar ===== */
+#tp-search-bar {
+    background: #f8f6f2;
+    border-bottom: 2px solid #B78730;
+    padding: 8px 16px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+#tp-search-form {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.tp-search-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#tp-search-input {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 15px;
+    font-family: 'Maitree', 'Times Ext Roman', serif;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#tp-search-input:focus {
+    border-color: #1E3461;
+    box-shadow: 0 0 3px rgba(30, 52, 97, 0.25);
+}
+
+#tp-search-input::placeholder {
+    color: #aaa;
+    font-style: italic;
+}
+
+#tp-search-btn,
+#tp-search-clear {
+    padding: 8px 14px;
+    font-size: 15px;
+    border: 1px solid #1E3461;
+    background: #1E3461;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#tp-search-btn:hover,
+#tp-search-clear:hover {
+    background: #2a4a7f;
+}
+
+#tp-search-clear {
+    background: #888;
+    border-color: #888;
+}
+
+#tp-search-clear:hover {
+    background: #666;
+    border-color: #666;
+}
+
+/* Back button (matches search button style) */
+.tpsearch-back-btn {
+    padding: 8px 14px;
+    font-size: 15px;
+    border: 1px solid #1E3461;
+    background: #1E3461;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 6px;
+}
+.tpsearch-back-btn:hover {
+    background: #2a4a7f;
+    border-color: #2a4a7f;
+}
+
+/* Pali character buttons row */
+.tp-pali-chars {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+/* Devanagari palette and toggle */
+.tp-deva-controls {
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+}
+
+.tp-deva-toggle {
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+}
+
+.tp-deva-toggle.tp-active {
+    background: #1E3461;
+    color: #fff;
+    border-color: #1E3461;
+}
+
+.tp-deva-palette {
+    margin-top: 6px;
+    display: none;
+    justify-content: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.tp-deva-btn {
+    padding: 4px 8px;
+    font-size: 16px;
+    font-family: 'Maitree', serif;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 28px;
+}
+
+.tp-deva-settings {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    margin-left: 8px;
+}
+
+.tp-solr-field {
+    padding: 6px 8px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
+
+/* Mode switch buttons */
+.tp-mode-btn {
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+}
+
+.tp-mode-btn.tp-mode-active {
+    background: #1E3461;
+    color: #fff;
+    border-color: #1E3461;
+}
+
+.tp-pali-btn {
+    padding: 3px 10px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Maitree', serif;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #4F4D47;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    min-width: 32px;
+}
+
+.tp-pali-btn:hover {
+    background: #f0dfbf;
+    border-color: #B78730;
+}
+
+
+/* ===== Search Results ===== */
+.tp-search-results {
+    padding: 10px 0;
+}
+
+.tp-results-header {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 1.4rem;
+    color: #1E3461;
+    text-align: left;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.tp-results-summary {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 10px;
+}
+
+/* Facet chips */
+.tp-facets {
+    margin-bottom: 12px;
+    line-height: 2;
+}
+
+.tp-facets-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #4F4D47;
+}
+
+.tp-facet-item {
+    display: inline-block;
+    background: #eef3f7;
+    color: #1E3461;
+    font-size: 0.82rem;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-left: 4px;
+    white-space: nowrap;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.tp-facet-item:hover {
+    background: #dce6f0;
+    border-color: #aac;
+    text-decoration: none;
+}
+
+.tp-facet-item.tp-facet-active {
+    background: #1E3461;
+    color: #fff;
+    border-color: #1E3461;
+}
+
+.tp-facet-item.tp-facet-active:hover {
+    background: #2a4a7f;
+    border-color: #2a4a7f;
+}
+
+/* Filter label shown in results header */
+.tp-filter-label {
+    font-size: 0.85em;
+    font-weight: 400;
+    color: #B78730;
+}
+
+/* Individual result */
+.tp-result-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.tp-result-item:last-child {
+    border-bottom: none;
+}
+
+.tp-result-title {
+    margin-bottom: 2px;
+}
+
+.tp-result-link {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1E3461;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.tp-result-link:hover {
+    text-decoration: underline;
+    text-decoration-color: #B78730;
+    background: none;
+}
+
+.tp-result-link .fa {
+    color: #B78730;
+    margin-right: 4px;
+}
+
+.tp-result-breadcrumb {
+    font-size: 0.85rem;
+    color: #4F4D47;
+    margin-bottom: 6px;
+    font-weight: 400;
+    /* Use a sans-serif stack that supports Devanagari where available */
+    font-family: 'Noto Sans Devanagari', 'Noto Sans', 'Monda', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 0.2px;
+}
+
+.tp-result-snippet {
+    font-size: 0.92rem;
+    color: #555;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+.tp-result-snippet em {
+    font-weight: bold;
+    color: #1E3461;
+    font-style: normal;
+    background: #fdf3d4;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+
+/* ===== Pagination ===== */
+.tp-pagination {
+    text-align: center;
+    padding: 16px 0 8px;
+    user-select: none;
+}
+
+.tp-page-link,
+.tp-page-current,
+.tp-page-ellipsis {
+    display: inline-block;
+    padding: 4px 10px;
+    margin: 0 2px;
+    font-size: 0.92rem;
+    border-radius: 3px;
+}
+
+.tp-page-link {
+    color: #1E3461;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.tp-page-link:hover {
+    background: #f0dfbf;
+    border-color: #B78730;
+    text-decoration: none;
+}
+
+.tp-page-current {
+    background: #1E3461;
+    color: #fff;
+    font-weight: bold;
+    border: 1px solid #1E3461;
+}
+
+.tp-page-ellipsis {
+    color: #999;
+    border: none;
+}
+
+.tp-page-prev,
+.tp-page-next {
+    font-weight: 600;
+}
+
+
+/* ===== Loading & Error ===== */
+.tp-search-loading {
+    text-align: center;
+    padding: 40px 0;
+    font-size: 1.1rem;
+    color: #777;
+}
+
+.tp-search-loading .fa-spinner {
+    font-size: 1.5rem;
+    color: #B78730;
+}
+
+.tp-search-error {
+    text-align: center;
+    padding: 30px 0;
+    font-size: 1rem;
+    color: #c33;
+}
+
+.tp-search-error .fa {
+    margin-right: 6px;
+}
+
+
+/* ===== Right-Click Context Menu ===== */
+.tp-context-menu {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    min-width: 160px;
+    padding: 4px 0;
+    font-size: 14px;
+    font-family: 'Monda', sans-serif;
+}
+
+.tp-context-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+.tp-context-item:hover {
+    background: #f0dfbf;
+    color: #1E3461;
+}
+
+.tp-context-item .fa {
+    margin-right: 6px;
+    color: #B78730;
+}
+
+#tp-context-text {
+    font-weight: 600;
+}
+
+
+/* ===== Top Bar Search Icon ===== */
+#tp-topbar-search-icon {
+    float: right;
+    padding: 10px 14px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#tp-topbar-search-icon:hover {
+    background: #eee;
+    color: #4F4D47;
+}
+
+#tp-topbar-search-icon.tp-topbar-search-active {
+    background: #B78730;
+    color: #fff;
+}
+
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    #tp-search-bar {
+        padding: 6px 10px;
+    }
+
+    #tp-search-input {
+        font-size: 14px;
+        padding: 7px 10px;
+    }
+
+    #tp-search-btn,
+    #tp-search-clear {
+        padding: 7px 10px;
+        font-size: 14px;
+    }
+
+    .tp-pali-btn {
+        padding: 2px 7px;
+        font-size: 13px;
+        min-width: 28px;
+    }
+
+    .tp-results-header {
+        font-size: 1.15rem;
+    }
+
+    .tp-result-snippet {
+        font-size: 0.85rem;
+    }
+}
+
+/* Print: hide search bar, context menu, and topbar search icon */
+@media print {
+    #tp-search-bar,
+    .tp-context-menu,
+    #tp-topbar-search-icon {
+        display: none !important;
+    }
+}
