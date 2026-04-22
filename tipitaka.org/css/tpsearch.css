@@ -189,6 +189,25 @@
     border-color: #B78730;
 }
 
+/* Topbar search icon placement: ensure it sits with other left-floated links */
+.topnav a#tp-topbar-search-icon,
+.topnav a#tp-topbar-search-icon-mobile {
+    float: left;
+    display: block;
+    padding: 10px 8px;
+    color: white;
+    text-decoration: none;
+}
+.topnav a#tp-topbar-search-icon i,
+.topnav a#tp-topbar-search-icon-mobile i {
+    font-size: 16px;
+}
+.topnav a#tp-topbar-search-icon:hover,
+.topnav a#tp-topbar-search-icon-mobile:hover {
+    background-color: #eee;
+    color: #4F4D47;
+}
+
 
 /* ===== Search Results ===== */
 .tp-search-results {

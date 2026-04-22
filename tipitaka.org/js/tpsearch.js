@@ -119,12 +119,12 @@
                 iconHtml.id = 'tp-topbar-search-icon';
                 iconHtml.title = 'Search Tipiṭaka';
                 iconHtml.innerHTML = '<i class="fa fa-search"></i>';
-                iconHtml.onclick = function(e) {
-                    e.preventDefault();
-                    $('#tpsearch-bar').toggle();
-                    $('#tpsearch-input').focus();
-                };
-                if ($home.length && $scriptsDropdown.length) {
+                // Prefer placing the search icon immediately next to the GitHub Repo link
+                var $github = $links.filter(function () { return $(this).text().trim() === 'GitHub Repo'; }).first();
+                if ($github.length) {
+                    // Insert after the GitHub link so the icon appears next to it
+                    $github[0].parentNode.insertBefore(iconHtml, $github[0].nextSibling);
+                } else if ($home.length && $scriptsDropdown.length) {
                     $nav[0].insertBefore(iconHtml, $scriptsDropdown[0]);
                 } else if ($home.length) {
                     $home[0].parentNode.insertBefore(iconHtml, $home[0].nextSibling);
@@ -142,8 +142,18 @@
                         mobileIcon.id = 'tp-topbar-search-icon-mobile';
                         mobileIcon.title = 'Search Tipiṭaka';
                         mobileIcon.innerHTML = '<i class="fa fa-search"></i>';
-                        mobileIcon.onclick = iconHtml.onclick;
-                        $mobileHome[0].parentNode.insertBefore(mobileIcon, $mobileHome[0].nextSibling);
+                        mobileIcon.onclick = function(e) {
+                            e.preventDefault();
+                            $('#tp-search-bar').toggle();
+                            $('#tp-search-input').focus();
+                        };
+                        // Try to insert after mobile GitHub link if present, otherwise after Home
+                        var $mobileGit = $mobileLinks.filter(function () { return $(this).text().trim() === 'GitHub Repo'; }).first();
+                        if ($mobileGit.length) {
+                            $mobileGit[0].parentNode.insertBefore(mobileIcon, $mobileGit[0].nextSibling);
+                        } else {
+                            $mobileHome[0].parentNode.insertBefore(mobileIcon, $mobileHome[0].nextSibling);
+                        }
                     }
                 }
                 clearInterval(timer);
@@ -897,17 +907,13 @@
             }
         });
 
-        // Clear & close
+        // Clear input only (do not close the search bar)
         $(document).on('click', '#tp-search-clear', function () {
             $('#tp-search-input').val('');
+            // hide the clear button until there's input again
             $('#tp-search-clear').hide();
-            currentFilter = '';
-            lastFacets = {};
-            currentExpandedFacet = '';
-            $('#t-content').html('');
-            // Collapse search bar
-            $('#tp-search-bar').slideUp(200);
-            $('#tp-topbar-search-icon').removeClass('tp-topbar-search-active');
+            // keep current results and filters intact; refocus input for convenience
+            $('#tp-search-input').focus();
         });
 
         // Pali character buttons
