@@ -416,7 +416,12 @@
             html += '    </a>';
             html += '  </div>';
             if (breadcrumb.length > 0) {
-                html += '  <div class="tp-result-breadcrumb">' + escapeHtml(breadcrumb.join(' \u203A ')) + '</div>';
+                // Display mapping: show 'Anya' as 'Añña' to match facet label
+                var displayBreadcrumb = breadcrumb.map(function(b) {
+                    if (!b) return b;
+                    return (b === 'Anya') ? 'Añña' : b;
+                });
+                html += '  <div class="tp-result-breadcrumb">' + escapeHtml(displayBreadcrumb.join(' \u203A ')) + '</div>';
             }
             if (snippet) {
                 html += '  <div class="tp-result-snippet">' + snippet + '</div>';
