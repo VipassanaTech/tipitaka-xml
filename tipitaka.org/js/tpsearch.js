@@ -62,10 +62,7 @@
         html += '        <button type="button" id="tp-mode-roman" class="tp-mode-btn tp-mode-active">Roman</button>';
         html += '        <button type="button" id="tp-mode-deva" class="tp-mode-btn">देव</button>';
         html += '      </div>';
-        html += '      <div class="tp-deva-settings">';
-        html += '        <a href="javascript:void(0)" id="tp-solr-field-toggle" style="font-size:13px;color:#1E3461;text-decoration:underline;">Solr field</a>';
-        html += '        <input id="tp-solr-field" class="tp-solr-field" type="text" placeholder="Solr field (optional)" style="display:none;" />';
-        html += '      </div>';
+        // Devanagari mode settings intentionally minimal (no Solr field input)
         html += '    </div>';
 
         // Insert Roman Pali character row below the mode buttons (hidden/shown by mode)
@@ -195,7 +192,6 @@
         if (currentFilter) {
             facetFields.push('pitaka');
         }
-
         var params = {
             q: query,
             wt: 'json',
@@ -206,7 +202,8 @@
             'hl.simple.pre': '<em>',
             'hl.simple.post': '</em>',
             facet: 'on',
-            'facet.field': facetFields
+            'facet.field': facetFields,
+            'facet.pivot': 'volume,pitaka'
         };
 
         // Apply volume or field-prefixed filter if set
@@ -220,6 +217,8 @@
         $.ajax({
             url: SOLR_URL,
             data: params,
+            // Send arrays as repeated parameters (facet.field=volume&facet.field=pitaka)
+            traditional: true,
             dataType: 'jsonp',
             jsonp: 'json.wrf',
             timeout: 15000,
@@ -230,6 +229,11 @@
                     unfilteredTotal = (data.response || {}).numFound || 0;
                 }
                 renderResults(data);
+                // Always fetch pivot counts when a volume filter is active so the
+                // Pitaka (subfacet) counts reflect the entire filtered result set.
+                if (currentFilter) {
+                    fetchPivotCounts(currentFilter);
+                }
             },
             error: function () {
                 $content.html(
@@ -253,6 +257,77 @@
             }
         }
         return facets;
+    }
+
+    // Fetch pivot-only counts when the main (paged) response doesn't include pivot data.
+    // This performs a lightweight rows=0 request with the same filter so we can render
+    // accurate subfacet counts for the UI.
+    function fetchPivotCounts(filterStr) {
+        var pf = parseFilter(filterStr || currentFilter);
+        var params = {
+            q: currentQuery || '*:*',
+            wt: 'json',
+            start: 0,
+            rows: 0,
+            facet: 'on',
+            'facet.field': ['volume', 'pitaka'],
+            'facet.pivot': 'volume,pitaka'
+        };
+        if (pf && pf.value) {
+            params.fq = pf.field + ':"' + pf.value + '"';
+        }
+
+        $.ajax({
+            url: SOLR_URL,
+            data: params,
+            traditional: true,
+            dataType: 'jsonp',
+            jsonp: 'json.wrf',
+            timeout: 10000,
+            success: function (pdata) {
+                try {
+                    var pivotData = (pdata.facet_counts && pdata.facet_counts.facet_pivot && (pdata.facet_counts.facet_pivot['volume,pitaka'] || pdata.facet_counts.facet_pivot['volume, pitaka'])) || null;
+                    var children = [];
+                    if (Array.isArray(pivotData) && pivotData.length) {
+                        var parentVal = pf.value || '';
+                        for (var pi = 0; pi < pivotData.length; pi++) {
+                            var p = pivotData[pi];
+                            if ((p.value + '') === (parentVal + '')) {
+                                var sub = p.pivot || p['pivot'] || [];
+                                for (var si = 0; si < sub.length; si++) {
+                                    var s = sub[si];
+                                    children.push({ key: s.value, count: s.count, field: 'pitaka' });
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    // Fallback to facet_fields.pitaka if pivot not available
+                    if (children.length === 0) {
+                        var ffields = (pdata.facet_counts && pdata.facet_counts.facet_fields) || {};
+                        var pitakaArr = ffields.pitaka || null;
+                        if (Array.isArray(pitakaArr)) {
+                            for (var pi2 = 0; pi2 < pitakaArr.length; pi2 += 2) {
+                                var k2 = pitakaArr[pi2];
+                                var v2 = pitakaArr[pi2 + 1] || 0;
+                                if (v2 > 0) children.push({ key: k2, count: v2, field: 'pitaka' });
+                            }
+                        }
+                    }
+
+                    if (children.length) {
+                        renderSubfacetsHtml(filterStr, children);
+                    }
+                } catch (e) {
+                    // silently ignore pivot parse errors; UI will continue to show per-page counts
+                    console.warn('fetchPivotCounts: failed to parse pivot response', e);
+                }
+            },
+            error: function () {
+                // ignore pivot fetch failures; per-page counts remain usable
+            }
+        });
     }
 
     // Render search results into #t-content
@@ -433,15 +508,39 @@
         var $sub = $('#tp-sub-facets-container');
         $sub.empty();
         if (currentFilter) {
-            // Try to read pitaka facet counts from the response
-            var ffields = (data.facet_counts && data.facet_counts.facet_fields) || {};
-            var pitakaArr = ffields.pitaka || null;
+            // Show a small inline loading indicator while we fetch pivot counts
+            $sub.html('<div class="tp-sub-facets-loading"><i class="fa fa-spinner fa-spin"></i> Loading…</div>');
+
+            // Prefer pivot facet data for hierarchical counts if present in this response
             var children = [];
-            if (Array.isArray(pitakaArr)) {
-                for (var pi = 0; pi < pitakaArr.length; pi += 2) {
-                    var k = pitakaArr[pi];
-                    var v = pitakaArr[pi + 1] || 0;
-                    if (v > 0) children.push({ key: k, count: v, field: 'pitaka' });
+            var pivotData = (data.facet_counts && data.facet_counts.facet_pivot && (data.facet_counts.facet_pivot['volume,pitaka'] || data.facet_counts.facet_pivot['volume, pitaka'])) || null;
+            if (Array.isArray(pivotData) && pivotData.length) {
+                // Find the pivot entry matching the current parent value
+                var pf = parseFilter(currentFilter);
+                var parentVal = pf.value || currentFilter || '';
+                for (var pi = 0; pi < pivotData.length; pi++) {
+                    var p = pivotData[pi];
+                    if ((p.value + '') === (parentVal + '')) {
+                        var sub = p.pivot || p['pivot'] || [];
+                        for (var si = 0; si < sub.length; si++) {
+                            var s = sub[si];
+                            children.push({ key: s.value, count: s.count, field: 'pitaka' });
+                        }
+                        break;
+                    }
+                }
+            }
+
+            // If no pivot data, fall back to facet_fields.pitaka when available
+            if (children.length === 0) {
+                var ffields = (data.facet_counts && data.facet_counts.facet_fields) || {};
+                var pitakaArr = ffields.pitaka || null;
+                if (Array.isArray(pitakaArr)) {
+                    for (var pi2 = 0; pi2 < pitakaArr.length; pi2 += 2) {
+                        var k2 = pitakaArr[pi2];
+                        var v2 = pitakaArr[pi2 + 1] || 0;
+                        if (v2 > 0) children.push({ key: k2, count: v2, field: 'pitaka' });
+                    }
                 }
             }
 
@@ -480,7 +579,8 @@
                 // Render sub-facets from filtered response or derived from docs
                 renderSubfacetsHtml(currentFilter, children);
             } else {
-                // If no subcategory info available, clear expanded state
+                // If no subcategory info available yet, keep the loading indicator
+                // and let fetchPivotCounts (called unconditionally) populate when ready.
                 currentExpandedFacet = '';
             }
         } else {
@@ -592,7 +692,7 @@
         var pf = parseFilter(parent);
         var parentField = pf.field || 'volume';
         var pval = pf.value || '';
-        var nextLabelMap = { 'volume': 'Pitaka', 'pitaka': 'Book', 'book': 'Chapter' };
+        var nextLabelMap = { 'volume': 'Volume', 'pitaka': 'Book', 'book': 'Chapter' };
         var labelName = nextLabelMap[parentField] || 'Pitaka';
 
         html += '<span class="tp-facets-label">' + escapeHtml(labelName) + ': </span>';
@@ -810,7 +910,7 @@
     $(document).ready(function () {
         // Add highlight style for search term and back-button hover - append once
         var style = document.createElement('style');
-        style.innerHTML = '.tpsearch-highlight { background: #fdf3d4; color: #1E3461; font-weight: bold; border-radius: 2px; padding: 0 2px; }\n#tpsearch-back-btn:hover { background: #2a4a7f; color: #fff; border-color: #2a4a7f; }';
+        style.innerHTML = '.tpsearch-highlight { background: #fdf3d4; color: #1E3461; font-weight: bold; border-radius: 2px; padding: 0 2px; }\n#tpsearch-back-btn:hover { background: #2a4a7f; color: #fff; border-color: #2a4a7f; }\n.tp-sub-facets-loading { color: #1E3461; font-size: 13px; margin: 6px 0; }\n.tp-sub-facets-loading .fa-spinner { margin-right: 6px; }';
         document.head.appendChild(style);
         // Insert search bar (hidden) between .header and .bodycontainer
         var $header = $('.header');
@@ -850,11 +950,7 @@
         $(document).on('click', '#tp-mode-roman', function () { setInputMode('roman'); });
         $(document).on('click', '#tp-mode-deva', function () { setInputMode('deva'); });
 
-        // Show/hide Solr field input
-        $(document).on('click', '#tp-solr-field-toggle', function () {
-            var $f = $('#tp-solr-field');
-            if ($f.is(':visible')) $f.hide(); else $f.show().focus();
-        });
+        // No Solr field toggle in UI
 
         // Insert Devanagari char into search input
         $(document).on('click', '.tp-deva-btn', function () {
