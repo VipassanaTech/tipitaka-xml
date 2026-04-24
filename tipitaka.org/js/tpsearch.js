@@ -42,8 +42,7 @@
     // Build the search bar HTML (hidden by default)
     function buildSearchBar() {
         var paliChars = [
-            '\u0101', '\u1E0D', '\u012B', '\u1E37', '\u1E43',
-            '\u1E45', '\u1E47', '\u00F1', '\u1E6D', '\u016B'
+            'ā', 'ī', 'ū', 'ṅ', 'ñ', 'ṭ', 'ḍ', 'ṇ', 'ḷ', 'ṃ'
         ];
 
         var html = '<div id="tp-search-bar" style="display:none;">';
@@ -56,7 +55,7 @@
         // Roman Pali character row (moved below mode buttons)
 
         // Input mode switch + Devanagari palette
-        var devaChars = ['क','ख','ग','घ','ङ','च','छ','ज','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','श','ष','स','ह','ा','ि','ी','ु','ू','े','ै','ो','ौ','्'];
+        var devaChars = ['अ','आ','इ','ई','उ','ऊ','ए','ओ','क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','स','ह','ळ','अं','ा','ि','ी','ु','ू','े','ै','ो','ौ','्'];
         html += '    <div class="tp-deva-controls">';
         html += '      <div class="tp-mode-switch">';
         html += '        <button type="button" id="tp-mode-roman" class="tp-mode-btn tp-mode-active">Roman</button>';
