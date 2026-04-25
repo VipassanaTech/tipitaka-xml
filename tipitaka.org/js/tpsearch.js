@@ -480,12 +480,16 @@
                     if (term) {
                         // Try to highlight all occurrences (case-insensitive)
                         var $xml = $('#t-content');
-                        var esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                        var flags = currentIsDeva ? 'giu' : 'gi';
-                        var regex = new RegExp('('+esc+')', flags);
-                        $xml.html(function(_, html) {
-                            return html.replace(regex, '<span class="tpsearch-highlight">$1</span>');
-                        });
+                        // Use diacritic-insensitive, wildcard-aware highlighter
+                        try {
+                            highlightLooseMatches($xml, term, currentIsDeva);
+                        } catch (e) {
+                            // fallback to simple regex highlight when something fails
+                            var esc = term.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+                            var flags = currentIsDeva ? 'giu' : 'gi';
+                            var regex = new RegExp('(' + esc + ')', flags);
+                            $xml.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
+                        }
                         // Scroll to first highlight
                         var $first = $xml.find('.tpsearch-highlight').first();
                         if ($first.length) {
@@ -791,12 +795,15 @@
                     var term = currentQuery;
                     if (term) {
                         var $xml = $('#t-content');
-                        var esc = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                        var flags = currentIsDeva ? 'giu' : 'gi';
-                        var regex = new RegExp('(' + esc + ')', flags);
-                        $xml.html(function (_, html) {
-                            return html.replace(regex, '<span class="tpsearch-highlight">$1</span>');
-                        });
+                        // Use diacritic-insensitive, wildcard-aware highlighter
+                        try {
+                            highlightLooseMatches($xml, term, currentIsDeva);
+                        } catch (e) {
+                            var esc = term.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+                            var flags = currentIsDeva ? 'giu' : 'gi';
+                            var regex = new RegExp('(' + esc + ')', flags);
+                            $xml.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
+                        }
                         var $first = $xml.find('.tpsearch-highlight').first();
                         if ($first.length) {
                             var top = $first.offset().top - 80;
@@ -895,6 +902,130 @@
             .replace(/"/g, '&quot;');
     }
 
+    // Highlight loosely matching terms inside a container.
+    // Supports wildcard '*' in the search term and ignores diacritics when matching.
+    function highlightLooseMatches($container, term, isDeva) {
+        if (!term) return;
+        var container = ($container instanceof jQuery) ? $container.get(0) : $container;
+        if (!container) return;
+
+        // Build a regex pattern from the term: preserve '*' as wildcard, escape other regex chars
+        var placeholder = '__WILDCARD__';
+        var tmp = term.replace(/\*/g, placeholder);
+        tmp = tmp.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
+        // Do not allow wildcard to span whitespace (keep match within one token)
+        tmp = tmp.replace(new RegExp(placeholder, 'g'), '[^\\s]*');
+
+        // Normalize pattern: remove diacritic marks so matching is diacritic-insensitive
+        var normPattern = tmp.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        var flags = 'g' + (isDeva ? 'iu' : 'iu');
+        var re = null;
+        try {
+            re = new RegExp(normPattern, flags);
+        } catch (e) {
+            // Fallback to simple escaped term
+            var esc = tmp.replace(/[\\/\[\]\-]/g, '\\$&');
+            re = new RegExp(esc, 'giu');
+        }
+
+        // Walk text nodes and apply highlights (skip nodes already inside highlights)
+        var walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+        var nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes = nodes.filter(function(n) {
+            var p = n.parentElement;
+            return p && !p.closest('.tpsearch-highlight');
+        });
+
+        nodes.forEach(function (textNode) {
+            var s = textNode.nodeValue;
+            if (!s || !s.trim()) return;
+
+            // Build normalized string and map from normalized index -> original index
+            var norm = '';
+            var map = [];
+            var origIndex = 0;
+            for (var i = 0; i < s.length; ) {
+                // Grab next code point (handles surrogate pairs)
+                var cp = s.charAt(i);
+                var code = s.charCodeAt(i);
+                if (0xD800 <= code && code <= 0xDBFF && i + 1 < s.length) {
+                    // surrogate pair
+                    cp = s.substr(i, 2);
+                    i += 2;
+                } else {
+                    i += 1;
+                }
+                var base = cp.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                for (var k = 0; k < base.length; k++) {
+                    norm += base.charAt(k);
+                    map.push(origIndex);
+                }
+                origIndex += cp.length;
+            }
+
+            var matches = [];
+            var m;
+            while ((m = re.exec(norm)) !== null) {
+                var nstart = m.index;
+                var nend = m.index + m[0].length;
+                var ostart = map[nstart];
+                // To include any combining marks (or multi-unit codepoints) attached
+                // to the last matched normalized character, use the original index
+                // of the next normalized char as the exclusive end; fall back to
+                // the full text length when matching to the end.
+                var oend = (nend < map.length) ? map[nend] : s.length;
+                // Include any following combining marks so the highlighting includes attached diacritics
+                while (oend < s.length) {
+                    var ch = s.charAt(oend);
+                    if (/\p{M}/u.test(ch)) {
+                        oend++;
+                        continue;
+                    }
+                    break;
+                }
+                // Ensure indices are within bounds
+                if (ostart >= 0 && oend > ostart && ostart < s.length) {
+                    if (oend > s.length) oend = s.length;
+                    matches.push({ start: ostart, end: oend });
+                }
+                // Prevent infinite loops for zero-length matches
+                if (m.index === re.lastIndex) re.lastIndex++;
+            }
+
+            if (matches.length === 0) return;
+
+            // Merge overlapping matches
+            matches.sort(function (a, b) { return a.start - b.start; });
+            var merged = [matches[0]];
+            for (var mi = 1; mi < matches.length; mi++) {
+                var cur = matches[mi];
+                var last = merged[merged.length - 1];
+                if (cur.start <= last.end) {
+                    last.end = Math.max(last.end, cur.end);
+                } else merged.push(cur);
+            }
+
+            // Replace text node with a DocumentFragment to avoid problematic splitText behavior
+            var parent = textNode.parentNode;
+            var frag = document.createDocumentFragment();
+            var lastIdx = 0;
+            for (var mj = 0; mj < merged.length; mj++) {
+                var mm = merged[mj];
+                if (mm.start > lastIdx) {
+                    frag.appendChild(document.createTextNode(s.substring(lastIdx, mm.start)));
+                }
+                var span = document.createElement('span');
+                span.className = 'tpsearch-highlight';
+                span.textContent = s.substring(mm.start, mm.end);
+                frag.appendChild(span);
+                lastIdx = mm.end;
+            }
+            if (lastIdx < s.length) frag.appendChild(document.createTextNode(s.substring(lastIdx)));
+            parent.replaceChild(frag, textNode);
+        });
+    }
+
     // Build and attach the right-click context menu
     function buildContextMenu() {
         var menuHtml =
@@ -940,7 +1071,7 @@
         // Add highlight style for search term and back-button hover - append once
         var style = document.createElement('style');
         style.innerHTML =
-            '.tpsearch-highlight { background: #fdf3d4; color: #1E3461; font-weight: bold; border-radius: 2px; padding: 0 2px; }\n' +
+            '.tpsearch-highlight { background: #fdf3d4; color: #1E3461; border-radius: 2px; padding: 0 2px; font-weight: normal; }\n' +
             '#tpsearch-back-btn:hover { background: #2a4a7f; color: #fff; border-color: #2a4a7f; }\n' +
             '.tp-sub-facets-loading { color: #1E3461; font-size: 13px; margin: 6px 0; }\n' +
             '.tp-sub-facets-loading .fa-spinner { margin-right: 6px; }\n' +
