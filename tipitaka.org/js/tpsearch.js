@@ -48,6 +48,7 @@
         var html = '<div id="tp-search-bar" style="display:none;">';
         html += '  <form id="tp-search-form" onsubmit="return false;">';
         html += '    <div class="tp-search-row">';
+        html += '      <button type="button" id="tp-help-btn" class="tp-help-btn" title="Help"><i class="fa fa-info-circle" aria-hidden="true"></i></button>';
         html += '      <input type="text" id="tp-search-input" placeholder="Search Tipiṭaka (Roman Pāḷi or देवनागरी)…" autocomplete="off" />';
         html += '      <button type="submit" id="tp-search-btn" title="Search"><i class="fa fa-search"></i></button>';
         html += '      <button type="button" id="tp-search-clear" title="Clear search &amp; close" style="display:none;"><i class="fa fa-times"></i></button>';
@@ -58,10 +59,13 @@
         var devaChars = ['अ','आ','इ','ई','उ','ऊ','ए','ओ','क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','स','ह','ळ','अं','ा','ि','ी','ु','ू','े','ै','ो','ौ','्'];
         html += '    <div class="tp-deva-controls">';
         html += '      <div class="tp-mode-switch">';
-        html += '        <button type="button" id="tp-mode-roman" class="tp-mode-btn tp-mode-active">Roman</button>';
+        html += '        <button type="button" id="tp-mode-roman" class="tp-mode-btn">Roman</button>';
         html += '        <button type="button" id="tp-mode-deva" class="tp-mode-btn">देव</button>';
         html += '      </div>';
-        // Devanagari mode settings intentionally minimal (no Solr field input)
+        // Exact match checkbox placed to the right of the Devanagari button
+        html += '      <label class="tp-exact-label" style="margin-left:8px; font-size:13px; color:#1E3461;">';
+        html += '        <input type="checkbox" id="tp-exact-match" /> Exact Match';
+        html += '      </label>';
         html += '    </div>';
 
         // Insert Roman Pali character row below the mode buttons (hidden/shown by mode)
@@ -76,6 +80,17 @@
             html += '<button type="button" class="tp-deva-btn" data-char="' + devaChars[d] + '">' + devaChars[d] + '</button>';
         }
         html += '    </div>';
+        // Help popup (hidden by default) appended inside search bar container
+        html += '<div id="tp-help-popup" class="tp-help-popup" style="display:none;">';
+        html += '<div class="tp-help-content">';
+        html += '<div class="tp-help-title">How to use Search</div>';
+        html += '<ol class="tp-help-list">';
+        html += '<li>Typing in the proper Pāḷi characters is not necessary. Searching for vipassanā or vipassana will produce the same results.</li>';
+        html += '<li>To only search for part of a word use * to complete the search term. For example, searching for dhammacakka* will find all instances that start with dhammacakka.</li>';
+        //html += '<li>Click "Exact Match" to restrict the search to words that are spelled exactly as entered.</li>';
+        html += '</ol>';
+        html += '</div>';
+        html += '</div>';
         html += '  </form>';
         html += '</div>';
         return html;
@@ -191,8 +206,18 @@
         if (currentFilter) {
             facetFields.push('pitaka');
         }
+        var exactMatch = false;
+        try { exactMatch = !!$('#tp-exact-match').prop('checked'); } catch(e) { exactMatch = false; }
+
+        var qparam = query;
+        if (exactMatch) {
+            // Use fielded phrase query for an exact match on the `title_exact` field
+            var escq = query.replace(/"/g, '\\"');
+            qparam = 'field_exact:"' + escq + '"';
+        }
+
         var params = {
-            q: query,
+            q: qparam,
             wt: 'json',
             start: currentStart,
             rows: PAGE_SIZE,
@@ -914,7 +939,23 @@
     $(document).ready(function () {
         // Add highlight style for search term and back-button hover - append once
         var style = document.createElement('style');
-        style.innerHTML = '.tpsearch-highlight { background: #fdf3d4; color: #1E3461; font-weight: bold; border-radius: 2px; padding: 0 2px; }\n#tpsearch-back-btn:hover { background: #2a4a7f; color: #fff; border-color: #2a4a7f; }\n.tp-sub-facets-loading { color: #1E3461; font-size: 13px; margin: 6px 0; }\n.tp-sub-facets-loading .fa-spinner { margin-right: 6px; }';
+        style.innerHTML =
+            '.tpsearch-highlight { background: #fdf3d4; color: #1E3461; font-weight: bold; border-radius: 2px; padding: 0 2px; }\n' +
+            '#tpsearch-back-btn:hover { background: #2a4a7f; color: #fff; border-color: #2a4a7f; }\n' +
+            '.tp-sub-facets-loading { color: #1E3461; font-size: 13px; margin: 6px 0; }\n' +
+            '.tp-sub-facets-loading .fa-spinner { margin-right: 6px; }\n' +
+            '.tp-deva-controls { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; }\n' +
+            '.tp-mode-switch .tp-mode-btn { margin-right: 6px; }\n' +
+            '.tp-exact-label { display: none !important; align-items: center; gap: 6px; font-size: 13px; color: #000; cursor: pointer; font-family: sans-serif; }\n' +
+            '.tp-exact-label input { margin-right: 4px; transform: translateY(0); width: 16px; height: 16px; }\n' +
+            '#tp-deva-palette { margin-top: 8px; }\n' +
+            '#tp-deva-palette .tp-deva-btn { margin: 2px; padding: 4px; font-size: 15px; min-width: 34px; min-height: 34px; border-radius: 6px; background: #fff; border: 1px solid #e6e6e6; }\n' +
+            '.tp-pali-chars .tp-pali-btn { margin: 4px 4px; min-width: 34px; min-height: 34px; padding: 6px; border-radius: 6px; background: #fff; border: 1px solid #e6e6e6; }\n' +
+            '.tp-help-btn { display: inline-block; width: 36px; height: 36px; line-height: 32px; text-align: center; border-radius: 6px; border: 1px solid #e6e6e6; background: #fff; margin-right: 6px; font-weight: bold; cursor: pointer; }\n' +
+            '#tp-help-popup { position: absolute; z-index: 9999; background: #fff; border: 1px solid #ddd; padding: 10px 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); width: 360px; max-width: 90%; font-size: 13px; color: #111; border-radius: 6px; }\n' +
+            '.tp-help-title { text-align: center; font-weight: 700; margin-bottom: 8px; }\n' +
+            '.tp-help-list { margin: 0 0 0 18px; padding: 0; }\n' +
+            '.tp-help-list li { margin: 8px 0; line-height: 1.3; text-align: left; }\n';
         document.head.appendChild(style);
         // Insert search bar (hidden) between .header and .bodycontainer
         var $header = $('.header');
@@ -931,9 +972,31 @@
             toggleSearchBar();
         });
 
+        // Help popup toggle and global hide
+        $(document).on('click', '#tp-help-btn', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var $popup = $('#tp-help-popup');
+            var $btn = $(this);
+            if (!$btn.length || !$popup.length) return;
+            var off = $btn.offset();
+            $popup.css({ top: (off.top + $btn.outerHeight() + 6) + 'px', left: off.left + 'px' });
+            $popup.toggle();
+        });
+
+        // Prevent clicks inside popup from closing it
+        $(document).on('click', '#tp-help-popup', function (e) { e.stopPropagation(); });
+
+        // Hide popup when clicking elsewhere
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('#tp-help-popup, #tp-help-btn').length) {
+                $('#tp-help-popup').hide();
+            }
+        });
+
         // Mode switch: Roman vs Devanagari
         var setInputMode = function(mode) {
-            mode = mode || 'roman';
+            // mode: 'deva', 'roman', or falsy/other for no selection
             if (mode === 'deva') {
                 $('#tp-mode-deva').addClass('tp-mode-active');
                 $('#tp-mode-roman').removeClass('tp-mode-active');
@@ -941,18 +1004,40 @@
                 $('#tp-deva-palette').show();
                 currentIsDeva = true;
                 try { sessionStorage.setItem('tpsearch-mode', 'deva'); } catch(e){}
-            } else {
+            } else if (mode === 'roman') {
                 $('#tp-mode-roman').addClass('tp-mode-active');
                 $('#tp-mode-deva').removeClass('tp-mode-active');
                 $('.tp-pali-chars').show();
                 $('#tp-deva-palette').hide();
                 currentIsDeva = false;
                 try { sessionStorage.setItem('tpsearch-mode', 'roman'); } catch(e){}
+            } else {
+                // No mode selected: clear active state and hide palettes
+                $('#tp-mode-roman').removeClass('tp-mode-active');
+                $('#tp-mode-deva').removeClass('tp-mode-active');
+                $('.tp-pali-chars').hide();
+                $('#tp-deva-palette').hide();
+                currentIsDeva = false;
+                try { sessionStorage.removeItem('tpsearch-mode'); } catch(e){}
             }
         };
 
-        $(document).on('click', '#tp-mode-roman', function () { setInputMode('roman'); });
-        $(document).on('click', '#tp-mode-deva', function () { setInputMode('deva'); });
+        $(document).on('click', '#tp-mode-roman', function () {
+            // Toggle: if already active, clear mode (hide palettes), otherwise enable Roman
+            if ($(this).hasClass('tp-mode-active')) {
+                setInputMode('');
+            } else {
+                setInputMode('roman');
+            }
+        });
+        $(document).on('click', '#tp-mode-deva', function () {
+            // Toggle: if already active, clear mode (hide palettes), otherwise enable Devanagari
+            if ($(this).hasClass('tp-mode-active')) {
+                setInputMode('');
+            } else {
+                setInputMode('deva');
+            }
+        });
 
         // No Solr field toggle in UI
 
@@ -977,9 +1062,9 @@
         // Initialize mode from session (default roman)
         (function initMode() {
             try {
-                var m = sessionStorage.getItem('tpsearch-mode') || 'roman';
-                setInputMode(m);
-            } catch (e) { setInputMode('roman'); }
+                var m = sessionStorage.getItem('tpsearch-mode');
+                if (m) setInputMode(m); else setInputMode('');
+            } catch (e) { setInputMode(''); }
         })();
 
         // Build context menu
