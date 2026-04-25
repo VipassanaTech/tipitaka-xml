@@ -74,17 +74,17 @@
 /* Back button (matches search button style) */
 .tpsearch-back-btn {
     padding: 8px 14px;
-    font-size: 15px;
-    border: 1px solid #1E3461;
-    background: #1E3461;
+    font-size: 17px;
+    border: 1px solid #888;
+    background: #888;
     color: #fff;
     border-radius: 4px;
     cursor: pointer;
     margin-left: 6px;
 }
 .tpsearch-back-btn:hover {
-    background: #2a4a7f;
-    border-color: #2a4a7f;
+    background: #666;
+    border-color: #666;
 }
 
 /* Pali character buttons row */
@@ -396,6 +396,106 @@
     padding: 40px 0;
     font-size: 1.1rem;
     color: #777;
+}
+
+/* Additional styles previously injected at runtime */
+.tpsearch-highlight {
+    background: #fdf3d4;
+    color: #1E3461;
+    border-radius: 2px;
+    padding: 0 2px;
+    font-weight: normal;
+}
+
+.tp-sub-facets-loading {
+    color: #1E3461;
+    font-size: 13px;
+    margin: 6px 0;
+}
+
+.tp-sub-facets-loading .fa-spinner {
+    margin-right: 6px;
+}
+
+.tp-mode-switch .tp-mode-btn {
+    margin-right: 6px;
+}
+
+.tp-exact-label {
+    display: none !important;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #000;
+    cursor: pointer;
+    font-family: sans-serif;
+}
+
+.tp-exact-label input {
+    margin-right: 4px;
+    transform: translateY(0);
+    width: 16px;
+    height: 16px;
+}
+
+#tp-deva-palette {
+    margin-top: 8px;
+}
+
+#tp-deva-palette .tp-deva-btn {
+    margin: 2px;
+    padding: 4px;
+    font-size: 15px;
+    min-width: 34px;
+    min-height: 34px;
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid #e6e6e6;
+}
+
+.tp-help-btn {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #e6e6e6;
+    background: #fff;
+    margin-right: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#tp-help-popup {
+    position: absolute;
+    z-index: 9999;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 10px 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    width: 360px;
+    max-width: 90%;
+    font-size: 13px;
+    color: #111;
+    border-radius: 6px;
+}
+
+.tp-help-title {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.tp-help-list {
+    margin: 0 0 0 18px;
+    padding: 0;
+}
+
+.tp-help-list li {
+    margin: 8px 0;
+    line-height: 1.3;
+    text-align: left;
 }
 
 .tp-search-loading .fa-spinner {

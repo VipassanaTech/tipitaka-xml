@@ -19,6 +19,23 @@
     var unfilteredTotal = 0;      // numFound without any filter
     var currentIsDeva = false;    // whether current query is Devanagari
     var currentExpandedFacet = ''; // which top-level facet is currently expanded (not applied)
+    // Cached jQuery objects (initialized on document ready)
+    var $tContent = null;
+    var $tpSearchInput = null;
+    var $tpSearchClear = null;
+    var __delegationBound = false;
+
+    // Simple debounce helper
+    function debounce(fn, wait) {
+        var t = null;
+        function wrapper() {
+            var ctx = this, args = arguments;
+            clearTimeout(t);
+            t = setTimeout(function () { fn.apply(ctx, args); }, wait);
+        }
+        wrapper.cancel = function() { clearTimeout(t); t = null; };
+        return wrapper;
+    }
 
     // Quick check if a string contains Devanagari characters
     function isDevanagari(s) {
@@ -190,7 +207,7 @@
         // Applying a real filter clears any previously-expanded (but not applied) facet
         if (filterVolume) currentExpandedFacet = '';
 
-        var $content = $('#t-content');
+        var $content = $tContent || $('#t-content');
         $content.html('<div class="tp-search-loading"><i class="fa fa-spinner fa-spin"></i> Searching…</div>');
         $('#tp-search-clear').show();
 
@@ -200,11 +217,25 @@
             $('#tp-topbar-search-icon').addClass('tp-topbar-search-active');
         }
 
+        // Determine which facet fields and pivot key to request based on the
+        // currently-applied filter so we retrieve the next hierarchical level.
         var facetFields = ['volume'];
-        // When a volume filter is active (we are showing subcategories), also request the sub-facet field(s)
-        // (commonly 'pitaka') so the filtered response contains subcategory counts.
+        var pivotKey = 'volume,pitaka';
         if (currentFilter) {
-            facetFields.push('pitaka');
+            var _pf = parseFilter(currentFilter);
+            if (_pf.field === 'volume') {
+                facetFields.push('pitaka');
+                pivotKey = 'volume,pitaka';
+            } else if (_pf.field === 'pitaka') {
+                facetFields.push('book');
+                pivotKey = 'pitaka,book';
+            } else if (_pf.field === 'book') {
+                facetFields.push('chapter');
+                pivotKey = 'book,chapter';
+            } else {
+                facetFields.push('pitaka');
+                pivotKey = 'volume,pitaka';
+            }
         }
         var exactMatch = false;
         try { exactMatch = !!$('#tp-exact-match').prop('checked'); } catch(e) { exactMatch = false; }
@@ -227,7 +258,7 @@
             'hl.simple.post': '</em>',
             facet: 'on',
             'facet.field': facetFields,
-            'facet.pivot': 'volume,pitaka'
+            'facet.pivot': pivotKey
         };
 
         // Apply volume or field-prefixed filter if set
@@ -236,6 +267,11 @@
             if (pf.value) {
                 params.fq = pf.field + ':"' + pf.value + '"';
             }
+        }
+
+        // Debug: show what facet fields / pivot and final params are being sent
+        if (window.console && window.console.debug) {
+            console.debug('tpsearch: doSearch params', { facetFields: facetFields, pivotKey: pivotKey, params: params });
         }
 
         $.ajax({
@@ -288,17 +324,44 @@
     // accurate subfacet counts for the UI.
     function fetchPivotCounts(filterStr) {
         var pf = parseFilter(filterStr || currentFilter);
+        // Choose facet fields / pivot pair that correspond to the next-level
+        // children for the provided parent filter.
+        var facetFields = ['volume'];
+        var pivotKey = 'volume,pitaka';
+        if (pf && pf.field) {
+            if (pf.field === 'volume') {
+                facetFields.push('pitaka');
+                pivotKey = 'volume,pitaka';
+            } else if (pf.field === 'pitaka') {
+                facetFields.push('book');
+                pivotKey = 'pitaka,book';
+            } else if (pf.field === 'book') {
+                facetFields.push('chapter');
+                pivotKey = 'book,chapter';
+            } else {
+                facetFields.push('pitaka');
+                pivotKey = 'volume,pitaka';
+            }
+        } else {
+            facetFields.push('pitaka');
+        }
+
         var params = {
             q: currentQuery || '*:*',
             wt: 'json',
             start: 0,
             rows: 0,
             facet: 'on',
-            'facet.field': ['volume', 'pitaka'],
-            'facet.pivot': 'volume,pitaka'
+            'facet.field': facetFields,
+            'facet.pivot': pivotKey
         };
         if (pf && pf.value) {
             params.fq = pf.field + ':"' + pf.value + '"';
+        }
+
+        // Debug: show what pivot request is being sent for the current filter
+        if (window.console && window.console.debug) {
+            console.debug('tpsearch: fetchPivotCounts params', { facetFields: facetFields, pivotKey: pivotKey, params: params });
         }
 
         $.ajax({
@@ -310,7 +373,13 @@
             timeout: 10000,
             success: function (pdata) {
                 try {
-                    var pivotData = (pdata.facet_counts && pdata.facet_counts.facet_pivot && (pdata.facet_counts.facet_pivot['volume,pitaka'] || pdata.facet_counts.facet_pivot['volume, pitaka'])) || null;
+                    // Use the pivotKey and child field determined earlier
+                    var childField = (pf && pf.field === 'pitaka') ? 'book' : (pf && pf.field === 'book') ? 'chapter' : 'pitaka';
+                    var pivotData = null;
+                    if (pdata.facet_counts && pdata.facet_counts.facet_pivot) {
+                        pivotData = pdata.facet_counts.facet_pivot[pivotKey] || pdata.facet_counts.facet_pivot[pivotKey.replace(',', ', ')];
+                    }
+
                     var children = [];
                     if (Array.isArray(pivotData) && pivotData.length) {
                         var parentVal = pf.value || '';
@@ -320,28 +389,34 @@
                                 var sub = p.pivot || p['pivot'] || [];
                                 for (var si = 0; si < sub.length; si++) {
                                     var s = sub[si];
-                                    children.push({ key: s.value, count: s.count, field: 'pitaka' });
+                                    children.push({ key: s.value, count: s.count, field: childField });
                                 }
                                 break;
                             }
                         }
                     }
 
-                    // Fallback to facet_fields.pitaka if pivot not available
+                    // Fallback to facet_fields.<childField> if pivot not available
                     if (children.length === 0) {
                         var ffields = (pdata.facet_counts && pdata.facet_counts.facet_fields) || {};
-                        var pitakaArr = ffields.pitaka || null;
-                        if (Array.isArray(pitakaArr)) {
-                            for (var pi2 = 0; pi2 < pitakaArr.length; pi2 += 2) {
-                                var k2 = pitakaArr[pi2];
-                                var v2 = pitakaArr[pi2 + 1] || 0;
-                                if (v2 > 0) children.push({ key: k2, count: v2, field: 'pitaka' });
+                        var arr = ffields[childField] || null;
+                        if (Array.isArray(arr)) {
+                            for (var pi2 = 0; pi2 < arr.length; pi2 += 2) {
+                                var k2 = arr[pi2];
+                                var v2 = arr[pi2 + 1] || 0;
+                                if (v2 > 0) children.push({ key: k2, count: v2, field: childField });
                             }
                         }
                     }
 
                     if (children.length) {
-                        renderSubfacetsHtml(filterStr, children);
+                        var pf = parseFilter(filterStr || currentFilter);
+                        if (pf.field === 'chapter') {
+                            $('#tp-sub-facets-container').empty();
+                            currentExpandedFacet = '';
+                        } else {
+                            renderSubfacetsHtml(filterStr, children);
+                        }
                     }
                 } catch (e) {
                     // silently ignore pivot parse errors; UI will continue to show per-page counts
@@ -356,7 +431,7 @@
 
     // Render search results into #t-content
     function renderResults(data) {
-        var $content = $('#t-content');
+        var $content = $tContent || $('#t-content');
         var resp = data.response || {};
         var docs = resp.docs || [];
         var numFound = resp.numFound || 0;
@@ -462,76 +537,10 @@
         html += '</div>';
         $content.html(html);
 
-        // Bind result link clicks
-        $content.find('.tp-result-link').on('click', function (e) {
-            e.preventDefault();
-            var linkPath = $(this).data('path');
-            if (linkPath) {
-                // Save current search state for back button
-                window.sessionStorage.setItem('tpsearch-last-results', $('#t-content').html());
-                window.sessionStorage.setItem('tpsearch-scroll', window.scrollY);
-                // Also save the current search query and filter for possible re-search
-                window.sessionStorage.setItem('tpsearch-query', currentQuery);
-                window.sessionStorage.setItem('tpsearch-filter', currentFilter);
-                // Load the XML content
-                $('#t-content').load(linkPath, function () {
-                    // Highlight and scroll to the first search term occurrence
-                    var term = currentQuery;
-                    if (term) {
-                        // Try to highlight all occurrences (case-insensitive)
-                        var $xml = $('#t-content');
-                        // Use diacritic-insensitive, wildcard-aware highlighter
-                        try {
-                            highlightLooseMatches($xml, term, currentIsDeva);
-                        } catch (e) {
-                            // fallback to simple regex highlight when something fails
-                            var esc = term.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
-                            var flags = currentIsDeva ? 'giu' : 'gi';
-                            var regex = new RegExp('(' + esc + ')', flags);
-                            $xml.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
-                        }
-                        // Scroll to first highlight
-                        var $first = $xml.find('.tpsearch-highlight').first();
-                        if ($first.length) {
-                            var top = $first.offset().top - 80; // offset for header
-                            $('html, body').animate({ scrollTop: top }, 300);
-                        }
-                    }
-                    // Add floating Back button (insert after the X/clear button)
-                    if (!$('#tpsearch-back-btn').length) {
-                        var $btn = $('<button id="tpsearch-back-btn" class="tpsearch-back-btn">&lt;</button>');
-                        $btn.on('click', function() {
-                            var last = window.sessionStorage.getItem('tpsearch-last-results');
-                            if (last) {
-                                $('#t-content').html(last);
-                                var scroll = window.sessionStorage.getItem('tpsearch-scroll');
-                                if (scroll) window.scrollTo(0, parseInt(scroll, 10));
-                                $('#tpsearch-back-btn').remove();
-                                rebindSearchEvents();
-                            } else {
-                                var q = window.sessionStorage.getItem('tpsearch-query') || '';
-                                var f = window.sessionStorage.getItem('tpsearch-filter') || '';
-                                doSearch(q, 0, f);
-                                $('#tpsearch-back-btn').remove();
-                            }
-                        });
-                        var $xbtn = $('#tp-search-clear');
-                        // Assume #tp-search-clear is present and insert directly after it
-                        $xbtn.after($btn);
-                    }
-                    // Re-bind events after restoring results from session (now delegated to module-level)
-                });
-            }
-        });
+        // Result link clicks are handled via delegated handlers bound at init
     // (moved injected styles to initialization to avoid repeated insertion)
 
-        // Bind pagination clicks
-        $content.find('.tp-page-link').on('click', function (e) {
-            e.preventDefault();
-            var pageStart = parseInt($(this).data('start'), 10);
-            doSearch(currentQuery, pageStart, currentFilter);
-            $('html, body').animate({ scrollTop: 0 }, 200);
-        });
+        // Pagination clicks are handled via delegated handlers bound at init
 
         // Bind facet clicks
         bindFacetClicks($content);
@@ -546,10 +555,15 @@
 
             // Prefer pivot facet data for hierarchical counts if present in this response
             var children = [];
-            var pivotData = (data.facet_counts && data.facet_counts.facet_pivot && (data.facet_counts.facet_pivot['volume,pitaka'] || data.facet_counts.facet_pivot['volume, pitaka'])) || null;
+            var pf = parseFilter(currentFilter);
+            var childField = (pf.field === 'pitaka') ? 'book' : (pf.field === 'book') ? 'chapter' : 'pitaka';
+            var pivotKey = (pf.field === 'pitaka') ? 'pitaka,book' : (pf.field === 'book') ? 'book,chapter' : 'volume,pitaka';
+            var pivotData = null;
+            if (data.facet_counts && data.facet_counts.facet_pivot) {
+                pivotData = data.facet_counts.facet_pivot[pivotKey] || data.facet_counts.facet_pivot[pivotKey.replace(',', ', ')];
+            }
             if (Array.isArray(pivotData) && pivotData.length) {
                 // Find the pivot entry matching the current parent value
-                var pf = parseFilter(currentFilter);
                 var parentVal = pf.value || currentFilter || '';
                 for (var pi = 0; pi < pivotData.length; pi++) {
                     var p = pivotData[pi];
@@ -557,22 +571,22 @@
                         var sub = p.pivot || p['pivot'] || [];
                         for (var si = 0; si < sub.length; si++) {
                             var s = sub[si];
-                            children.push({ key: s.value, count: s.count, field: 'pitaka' });
+                            children.push({ key: s.value, count: s.count, field: childField });
                         }
                         break;
                     }
                 }
             }
 
-            // If no pivot data, fall back to facet_fields.pitaka when available
+            // If no pivot data, fall back to facet_fields.<childField> when available
             if (children.length === 0) {
                 var ffields = (data.facet_counts && data.facet_counts.facet_fields) || {};
-                var pitakaArr = ffields.pitaka || null;
-                if (Array.isArray(pitakaArr)) {
-                    for (var pi2 = 0; pi2 < pitakaArr.length; pi2 += 2) {
-                        var k2 = pitakaArr[pi2];
-                        var v2 = pitakaArr[pi2 + 1] || 0;
-                        if (v2 > 0) children.push({ key: k2, count: v2, field: 'pitaka' });
+                var arr = ffields[childField] || null;
+                if (Array.isArray(arr)) {
+                    for (var pi2 = 0; pi2 < arr.length; pi2 += 2) {
+                        var k2 = arr[pi2];
+                        var v2 = arr[pi2 + 1] || 0;
+                        if (v2 > 0) children.push({ key: k2, count: v2, field: childField });
                     }
                 }
             }
@@ -609,8 +623,16 @@
             }
 
             if (children.length) {
-                // Render sub-facets from filtered response or derived from docs
-                renderSubfacetsHtml(currentFilter, children);
+                // Only suppress rendering when the active filter itself is a
+                // chapter (i.e. we're already at the lowest level). This lets
+                // Book -> Chapter transitions render Chapter pills normally.
+                var pf = parseFilter(currentFilter);
+                if (pf.field === 'chapter') {
+                    $sub.empty();
+                    currentExpandedFacet = '';
+                } else {
+                    renderSubfacetsHtml(currentFilter, children);
+                }
             } else {
                 // If no subcategory info available yet, keep the loading indicator
                 // and let fetchPivotCounts (called unconditionally) populate when ready.
@@ -689,28 +711,20 @@
 
     // Bind click handlers on facet pills
     function bindFacetClicks($container) {
-        $container.find('.tp-facet-item').on('click', function (e) {
-            e.preventDefault();
-            var $el = $(this);
-            var volume = $el.data('volume') || '';
-            var filter = $el.data('filter') || '';
-
-            // If this is a sub-facet (has data-filter), apply it directly
-            if (filter) {
-                doSearch(currentQuery, 0, filter);
-                return;
-            }
-
-            // If the clicked item is the "All" pill (empty volume), clear filter.
-            if (!volume) {
-                doSearch(currentQuery, 0, '');
-                return;
-            }
-
-            // Clicking a top-level volume should apply that volume as a filter
-            // and let renderResults show sub-facets from the filtered response.
-            doSearch(currentQuery, 0, volume);
-        });
+        // Delegated facet click binding (bound once during init)
+        if (!__delegationBound && ($tContent || $('#t-content')).length) {
+            var $root = $tContent || $('#t-content');
+            $root.on('click', '.tp-facet-item', function (e) {
+                e.preventDefault();
+                var $el = $(this);
+                var volume = $el.data('volume') || '';
+                var filter = $el.data('filter') || '';
+                if (filter) { doSearch(currentQuery, 0, filter); return; }
+                if (!volume) { doSearch(currentQuery, 0, ''); return; }
+                doSearch(currentQuery, 0, volume);
+            });
+            __delegationBound = true;
+        }
     }
 
     // (removed unused fetchAndRenderSubfacets)
@@ -751,7 +765,7 @@
     // Update the top-level facet pills to reflect the currently-expanded facet
     function updateTopFacetActiveState(parent) {
         // Find the main facets block (first one in results area)
-        var $mainFacets = $('#t-content').find('.tp-facets').first();
+        var $mainFacets = ($tContent || $('#t-content')).find('.tp-facets').first();
         if (!$mainFacets.length) return;
         // Remove active class from all top-level facet items
         $mainFacets.find('.tp-facet-item').removeClass('tp-facet-active');
@@ -781,71 +795,7 @@
 
     // Re-bind result link, facet and pagination events after dynamic content replacement
     function rebindSearchEvents() {
-        var $content = $('#t-content');
-        // Result links
-        $content.find('.tp-result-link').off('click').on('click', function (e) {
-            e.preventDefault();
-            var linkPath = $(this).data('path');
-            if (linkPath) {
-                window.sessionStorage.setItem('tpsearch-last-results', $('#t-content').html());
-                window.sessionStorage.setItem('tpsearch-scroll', window.scrollY);
-                window.sessionStorage.setItem('tpsearch-query', currentQuery);
-                window.sessionStorage.setItem('tpsearch-filter', currentFilter);
-                $('#t-content').load(linkPath, function () {
-                    var term = currentQuery;
-                    if (term) {
-                        var $xml = $('#t-content');
-                        // Use diacritic-insensitive, wildcard-aware highlighter
-                        try {
-                            highlightLooseMatches($xml, term, currentIsDeva);
-                        } catch (e) {
-                            var esc = term.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
-                            var flags = currentIsDeva ? 'giu' : 'gi';
-                            var regex = new RegExp('(' + esc + ')', flags);
-                            $xml.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
-                        }
-                        var $first = $xml.find('.tpsearch-highlight').first();
-                        if ($first.length) {
-                            var top = $first.offset().top - 80;
-                            $('html, body').animate({ scrollTop: top }, 300);
-                        }
-                    }
-                    if (!$('#tpsearch-back-btn').length) {
-                        var $btn = $('<button id="tpsearch-back-btn" class="tpsearch-back-btn">&lt;</button>');
-                        $btn.on('click', function () {
-                            var last = window.sessionStorage.getItem('tpsearch-last-results');
-                            if (last) {
-                                $('#t-content').html(last);
-                                var scroll = window.sessionStorage.getItem('tpsearch-scroll');
-                                if (scroll) window.scrollTo(0, parseInt(scroll, 10));
-                                $('#tpsearch-back-btn').remove();
-                                rebindSearchEvents();
-                            } else {
-                                var q = window.sessionStorage.getItem('tpsearch-query') || '';
-                                var f = window.sessionStorage.getItem('tpsearch-filter') || '';
-                                doSearch(q, 0, f);
-                                $('#tpsearch-back-btn').remove();
-                            }
-                        });
-                        var $xbtn = $('#tp-search-clear');
-                        $xbtn.after($btn);
-                    }
-                });
-            }
-        });
-
-        // Facets
-        bindFacetClicks($content);
-
-        // Pagination
-        $content.find('.tp-page-link').off('click').on('click', function (e) {
-            e.preventDefault();
-            var pageStart = parseInt($(this).data('start'), 10);
-            if (!isNaN(pageStart)) {
-                doSearch(currentQuery, pageStart, currentFilter);
-                $('html, body').animate({ scrollTop: 0 }, 200);
-            }
-        });
+        // Delegated handlers are used; no per-element re-binding needed here.
     }
 
     // Build pagination HTML
@@ -1068,26 +1018,13 @@
 
     // ───── Initialisation ─────
     $(document).ready(function () {
-        // Add highlight style for search term and back-button hover - append once
-        var style = document.createElement('style');
-        style.innerHTML =
-            '.tpsearch-highlight { background: #fdf3d4; color: #1E3461; border-radius: 2px; padding: 0 2px; font-weight: normal; }\n' +
-            '#tpsearch-back-btn:hover { background: #2a4a7f; color: #fff; border-color: #2a4a7f; }\n' +
-            '.tp-sub-facets-loading { color: #1E3461; font-size: 13px; margin: 6px 0; }\n' +
-            '.tp-sub-facets-loading .fa-spinner { margin-right: 6px; }\n' +
-            '.tp-deva-controls { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; }\n' +
-            '.tp-mode-switch .tp-mode-btn { margin-right: 6px; }\n' +
-            '.tp-exact-label { display: none !important; align-items: center; gap: 6px; font-size: 13px; color: #000; cursor: pointer; font-family: sans-serif; }\n' +
-            '.tp-exact-label input { margin-right: 4px; transform: translateY(0); width: 16px; height: 16px; }\n' +
-            '#tp-deva-palette { margin-top: 8px; }\n' +
-            '#tp-deva-palette .tp-deva-btn { margin: 2px; padding: 4px; font-size: 15px; min-width: 34px; min-height: 34px; border-radius: 6px; background: #fff; border: 1px solid #e6e6e6; }\n' +
-            '.tp-pali-chars .tp-pali-btn { margin: 4px 4px; min-width: 34px; min-height: 34px; padding: 6px; border-radius: 6px; background: #fff; border: 1px solid #e6e6e6; }\n' +
-            '.tp-help-btn { display: inline-block; width: 36px; height: 36px; line-height: 32px; text-align: center; border-radius: 6px; border: 1px solid #e6e6e6; background: #fff; margin-right: 6px; font-weight: bold; cursor: pointer; }\n' +
-            '#tp-help-popup { position: absolute; z-index: 9999; background: #fff; border: 1px solid #ddd; padding: 10px 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); width: 360px; max-width: 90%; font-size: 13px; color: #111; border-radius: 6px; }\n' +
-            '.tp-help-title { text-align: center; font-weight: 700; margin-bottom: 8px; }\n' +
-            '.tp-help-list { margin: 0 0 0 18px; padding: 0; }\n' +
-            '.tp-help-list li { margin: 8px 0; line-height: 1.3; text-align: left; }\n';
-        document.head.appendChild(style);
+        // Ensure external tpsearch stylesheet is loaded (reduces runtime CSS injection)
+        if (!document.querySelector('link[href*="tpsearch.css"]')) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = '/css/tpsearch.css';
+            document.head.appendChild(link);
+        }
         // Insert search bar (hidden) between .header and .bodycontainer
         var $header = $('.header');
         if ($header.length) {
@@ -1201,25 +1138,111 @@
         // Build context menu
         buildContextMenu();
 
+        // Cache commonly used jQuery selectors and bind delegated handlers
+        $tpSearchInput = $('#tp-search-input');
+        $tContent = $('#t-content');
+        $tpSearchClear = $('#tp-search-clear');
+
+        // Debounced live search on input (300ms)
+        var debouncedSearch = debounce(function () {
+            currentFilter = '';
+            doSearch($tpSearchInput.val(), 0, '');
+        }, 300);
+
+        $tpSearchInput.on('input', function () {
+            var v = $tpSearchInput.val();
+            if (v && v.trim().length) $tpSearchClear.show();
+            debouncedSearch();
+        });
+
+        // Delegated handler for result links (single binding)
+        if ($tContent && $tContent.length) {
+            $tContent.on('click', '.tp-result-link', function (e) {
+                e.preventDefault();
+                var linkPath = $(this).data('path');
+                if (!linkPath) return;
+                // Save current search state for back button
+                try { window.sessionStorage.setItem('tpsearch-last-results', $tContent.html()); } catch (err) {}
+                try { window.sessionStorage.setItem('tpsearch-scroll', window.scrollY); } catch (err) {}
+                try { window.sessionStorage.setItem('tpsearch-query', currentQuery); } catch (err) {}
+                try { window.sessionStorage.setItem('tpsearch-filter', currentFilter); } catch (err) {}
+                $tContent.load(linkPath, function () {
+                    var term = currentQuery;
+                    if (term) {
+                        try {
+                            highlightLooseMatches($tContent, term, currentIsDeva);
+                        } catch (e) {
+                            var esc = term.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+                            var flags = currentIsDeva ? 'giu' : 'gi';
+                            var regex = new RegExp('(' + esc + ')', flags);
+                            $tContent.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
+                        }
+                        var $first = $tContent.find('.tpsearch-highlight').first();
+                        if ($first.length) {
+                            var top = $first.offset().top - 80;
+                            $('html, body').animate({ scrollTop: top }, 300);
+                        }
+                    }
+                    if (!$('#tpsearch-back-btn').length) {
+                        var $btn = $('<button id="tpsearch-back-btn" class="tpsearch-back-btn">&lt;</button>');
+                        $btn.on('click', function () {
+                            var last = null;
+                            try { last = window.sessionStorage.getItem('tpsearch-last-results'); } catch (e) {}
+                            if (last) {
+                                $tContent.html(last);
+                                var scroll = null;
+                                try { scroll = window.sessionStorage.getItem('tpsearch-scroll'); } catch (e) {}
+                                if (scroll) window.scrollTo(0, parseInt(scroll, 10));
+                                $('#tpsearch-back-btn').remove();
+                                // no rebind needed; delegated handlers handle events
+                            } else {
+                                var q = '';
+                                var f = '';
+                                try { q = window.sessionStorage.getItem('tpsearch-query') || ''; } catch (e) {}
+                                try { f = window.sessionStorage.getItem('tpsearch-filter') || ''; } catch (e) {}
+                                doSearch(q, 0, f);
+                                $('#tpsearch-back-btn').remove();
+                            }
+                        });
+                        var $xbtn = $('#tp-search-clear');
+                        $xbtn.after($btn);
+                    }
+                });
+            });
+
+            // Delegated pagination handler
+            $tContent.on('click', '.tp-page-link', function (e) {
+                e.preventDefault();
+                var pageStart = parseInt($(this).data('start'), 10);
+                if (!isNaN(pageStart)) {
+                    doSearch(currentQuery, pageStart, currentFilter);
+                    $('html, body').animate({ scrollTop: 0 }, 200);
+                }
+            });
+        }
+
         // Search form submit
         $(document).on('submit', '#tp-search-form', function (e) {
             e.preventDefault();
+            if (typeof debouncedSearch !== 'undefined' && debouncedSearch.cancel) debouncedSearch.cancel();
             currentFilter = '';  // new search resets filter
-            doSearch($('#tp-search-input').val(), 0, '');
+            doSearch($tpSearchInput ? $tpSearchInput.val() : $('#tp-search-input').val(), 0, '');
         });
 
         // Search button click
         $(document).on('click', '#tp-search-btn', function () {
+            if (typeof debouncedSearch !== 'undefined' && debouncedSearch.cancel) debouncedSearch.cancel();
             currentFilter = '';
-            doSearch($('#tp-search-input').val(), 0, '');
+            doSearch($tpSearchInput ? $tpSearchInput.val() : $('#tp-search-input').val(), 0, '');
         });
 
         // Enter key
         $(document).on('keydown', '#tp-search-input', function (e) {
             if (e.keyCode === 13) {
                 e.preventDefault();
+                if (typeof debouncedSearch !== 'undefined' && debouncedSearch.cancel) debouncedSearch.cancel();
                 currentFilter = '';
-                doSearch($(this).val(), 0, '');
+                doSearch($tpSearchInput ? $tpSearchInput.val() : $(this).val(), 0, '');
             }
         });
 
@@ -1228,6 +1251,8 @@
             $('#tp-search-input').val('');
             // hide the clear button until there's input again
             $('#tp-search-clear').hide();
+            // remove the Back button since it only applies to the current search
+            $('#tpsearch-back-btn').remove();
             // keep current results and filters intact; refocus input for convenience
             $('#tp-search-input').focus();
         });
