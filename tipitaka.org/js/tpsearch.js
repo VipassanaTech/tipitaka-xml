@@ -85,6 +85,13 @@
         html += '      <label class="tp-exact-label" style="margin-left:8px; font-size:13px; color:#1E3461;">';
         html += '        <input type="checkbox" id="tp-exact-match" /> Exact Match';
         html += '      </label>';
+        // Proximity mode radio buttons: Strict (ordered) or Any order (unordered)
+        html += '      <div class="tp-prox-mode" style="display:inline-block; margin-left:8px; font-size:13px; color:#1E3461;">';
+        html += '        <span style="margin-right:6px;">Proximity Search:</span>';
+        html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-strict" value="strict" checked /> Strict</label>';
+        html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-any" value="any" /> Any order</label>';
+        html += '      </div>';
+        // Inline proximity syntax supported: use `termA |N| termB` in the main input
         html += '    </div>';
 
         // Insert Roman Pali character row below the mode buttons (hidden/shown by mode)
@@ -106,7 +113,7 @@
         html += '<ol class="tp-help-list">';
         html += '<li>Typing in the proper Pāḷi characters is not necessary. Searching for vipassanā or vipassana will produce the same results.</li>';
         html += '<li>To only search for part of a word use * to complete the search term. For example, searching for dhammacakka* will find all instances that start with dhammacakka.</li>';
-        //html += '<li>Click "Exact Match" to restrict the search to words that are spelled exactly as entered.</li>';
+        html += '<li>For proximity search, place |n| between the two terms to search, e.g. metta |2| mudita will find instances where metta and mudita are within 2 words of each other.</li>';
         html += '</ol>';
         html += '</div>';
         html += '</div>';
@@ -242,11 +249,38 @@
         var exactMatch = false;
         try { exactMatch = !!$('#tp-exact-match').prop('checked'); } catch(e) { exactMatch = false; }
 
+        // Detect inline proximity syntax: `termA |N| termB` (distance = N)
         var qparam = query;
-        if (exactMatch) {
-            // Use fielded phrase query for an exact match on the `title_exact` field
-            var escq = query.replace(/"/g, '\\"');
-            qparam = 'field_exact:"' + escq + '"';
+        try {
+            var proxRe = /^\s*([^\|]+?)\s*\|\s*(\d+)\s*\|\s*([^\|]+?)\s*$/;
+            var proxMatch = query.match(proxRe);
+            if (proxMatch) {
+                var termA = proxMatch[1].trim();
+                var dist = parseInt(proxMatch[2], 10) || 0;
+                var termB = proxMatch[3].trim();
+                var escq = function(s) { return s.replace(/"/g, '\\"'); };
+                // If user selected unordered/either-order, build an OR of both phrase directions
+                var unordered = false;
+                try {
+                    var _pm = (document.querySelector('input[name="tp-prox-mode"]:checked') || {}).value || 'strict';
+                    unordered = (_pm === 'any');
+                } catch (e) { unordered = false; }
+                if (unordered) {
+                    var q1 = 'text:"' + escq(termA) + ' ' + escq(termB) + '"~' + dist;
+                    var q2 = 'text:"' + escq(termB) + ' ' + escq(termA) + '"~' + dist;
+                    qparam = '(' + q1 + ' OR ' + q2 + ')';
+                } else {
+                    // Use the `text` field (used for highlighting) with phrase slop (ordered)
+                    qparam = 'text:"' + escq(termA) + ' ' + escq(termB) + '"~' + dist;
+                }
+            } else if (exactMatch) {
+                // Use fielded phrase query for an exact match on the `title_exact` field
+                var escq2 = query.replace(/"/g, '\\"');
+                qparam = 'field_exact:"' + escq2 + '"';
+            }
+        } catch (e) {
+            // fallback to simple query
+            qparam = query;
         }
 
         var params = {
@@ -1162,16 +1196,10 @@
         $tContent = $('#t-content');
         $tpSearchClear = $('#tp-search-clear');
 
-        // Debounced live search on input (300ms)
-        var debouncedSearch = debounce(function () {
-            currentFilter = '';
-            doSearch($tpSearchInput.val(), 0, '');
-        }, 300);
-
+        // Do not perform live searches while typing. Show/hide clear button only.
         $tpSearchInput.on('input', function () {
             var v = $tpSearchInput.val();
-            if (v && v.trim().length) $tpSearchClear.show();
-            debouncedSearch();
+            if (v && v.trim().length) $tpSearchClear.show(); else $tpSearchClear.hide();
         });
 
         // Delegated handler for result links (single binding)
@@ -1254,6 +1282,8 @@
             currentFilter = '';
             doSearch($tpSearchInput ? $tpSearchInput.val() : $('#tp-search-input').val(), 0, '');
         });
+
+        // Inline proximity syntax is handled in doSearch(): use `termA |N| termB` in the main input
 
         // Enter key
         $(document).on('keydown', '#tp-search-input', function (e) {
