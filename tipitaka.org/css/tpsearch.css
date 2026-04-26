@@ -254,10 +254,9 @@
     color: #4F4D47;
 }
 
-/* Temporarily hide the mobile topbar search icon */
-.topnav a#tp-topbar-search-icon-mobile {
-    display: none !important;
-}
+
+
+/* (moved to site-level stylesheet: tipistyles.css) */
 
 
 /* ===== Search Results ===== */
