@@ -398,6 +398,144 @@
     color: #777;
 }
 
+/* ===== Limit Search (left column) ===== */
+#tp-search-bar {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.tp-limit-search {
+    background: #fff;
+    border: 1px solid #e0dfdc;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    padding: 1px;
+    border-radius: 1px;
+    color: #23303b;
+    /* occupy roughly one-third of the available width */
+    flex: 0 0 35%;
+    max-width: 420px;
+    box-sizing: border-box;
+}
+
+/* Use Monda (sans-serif) for the Limit Search block and its labels */
+.tp-limit-search,
+.tp-limit-list,
+.tp-limit-list label {
+    font-family: 'Monda', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.tp-limit-title {
+    font-weight: 700;
+    font-size: 14px;
+    color: #23303b;
+}
+
+.tp-limit-list {
+    /* Use CSS Grid and explicitly place items into a 3x3 grid so
+       there are no empty gaps and ordering is exact across columns. */
+    display: grid;
+     /* 4 columns x 4 rows grid: first row reserved for headings
+         Use min row heights so headings don't overlap checkbox labels
+         Use only 3 data rows (Vinaya/Sutta/Abdhi) to avoid the extra empty bottom row */
+     grid-template-columns: repeat(4, 1fr);
+     grid-template-rows: auto repeat(3, minmax(28px, auto));
+     grid-auto-rows: minmax(28px, auto);
+    column-gap: 1px;
+     row-gap: 2px;
+    /* We'll explicitly place the labels into their intended cells */
+}
+
+.tp-limit-list label {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    font-size: 13px;
+    color: #23303b;
+    /* tighten vertical padding so labels occupy less height */
+    padding: 1px 2px;
+    background: transparent;
+    border: none;
+    /* Allow wrapping inside the grid cell if needed, but keep items compact */
+    white-space: normal;
+    /* Prevent grid items from stretching to full cell width (remove empty clickable area) */
+    justify-self: start;
+    width: auto;
+}
+
+/* Explicit placement: map the HTML order to the desired 3-column, top-down layout
+   HTML order is: 1 Vinayapitaka, 2 Suttapitaka, 3 Abhidhammapitaka,
+                  4 Mūla, 5 Aṭṭhakathā, 6 Tīkā, 7 Añña, 8 All
+   Desire: column1 rows 1..3 = items 1,2,3; column2 rows 1..3 = items 4,5,6;
+           column3 rows 1..3 = items 7,8,(empty)
+*/
+/* remove old nth-child positioning (we rely on class-based placement below) */
+
+/* Header styles */
+.tp-limit-head {
+    font-weight: 700;
+    font-size: 13px;
+    text-align: left;
+    color: #23303b;
+    background: transparent;
+    z-index: 2;
+}
+.tp-limit-head-1 { grid-column: 1; grid-row: 1; }
+.tp-limit-head-2 { grid-column: 2; grid-row: 1; }
+.tp-limit-head-3 { grid-column: 3; grid-row: 1; }
+
+/* Explicit placement for the labeled checkbox items using their classes */
+.tp-limit-list .item-mula-vinaya { grid-column: 1; grid-row: 2; }
+.tp-limit-list .item-mula-sutta  { grid-column: 1; grid-row: 3; }
+.tp-limit-list .item-mula-abhd   { grid-column: 1; grid-row: 4; }
+.tp-limit-list .item-atth-vinaya { grid-column: 2; grid-row: 2; }
+.tp-limit-list .item-atth-sutta  { grid-column: 2; grid-row: 3; }
+.tp-limit-list .item-atth-abhd   { grid-column: 2; grid-row: 4; }
+.tp-limit-list .item-tika-vinaya { grid-column: 3; grid-row: 2; }
+.tp-limit-list .item-tika-sutta  { grid-column: 3; grid-row: 3; }
+.tp-limit-list .item-tika-abhd   { grid-column: 3; grid-row: 4; }
+/* Keep legacy class mappings for backward compatibility */
+.tp-limit-list .item-vinaya { grid-column: 1; grid-row: 2; }
+.tp-limit-list .item-sutta  { grid-column: 1; grid-row: 3; }
+.tp-limit-list .item-abhd   { grid-column: 1; grid-row: 4; }
+/* Place Añña and All into the rightmost (4th) column */
+.tp-limit-list .item-anya   { grid-column: 4; grid-row: 2; }
+.tp-limit-list .item-all    { grid-column: 4; grid-row: 3; }
+
+.tp-limit-list input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    transform: none;
+    accent-color: #0b66c2;
+}
+
+/* Make the checkbox label text and checkbox align compactly on one line */
+.tp-limit-list {
+    align-items: start;
+}
+
+/* Make the search form take remaining space */
+#tp-search-form {
+    flex: 1 1 auto;
+    max-width: none;
+}
+
+/* Responsive: stack limit box above search on small screens */
+@media (max-width: 900px) {
+    #tp-search-bar {
+        display: block;
+        text-align: left;
+    }
+    .tp-limit-search {
+        width: auto;
+        margin-bottom: 8px;
+    }
+    .tp-pali-chars, .tp-deva-palette, .tp-deva-controls {
+        justify-content: flex-start;
+    }
+}
+
 /* Additional styles previously injected at runtime */
 .tpsearch-highlight {
     background: #fdf3d4;
@@ -405,6 +543,15 @@
     border-radius: 2px;
     padding: 0 2px;
     font-weight: normal;
+}
+
+/* Proximity mode label styling: use sans-serif and black text to match design */
+.tp-prox-mode,
+.tp-prox-mode span,
+.tp-prox-mode label {
+    font-family: 'Monda', sans-serif;
+    color: #4F4D47 !important;
+    font-weight: 400;
 }
 
 .tp-sub-facets-loading {

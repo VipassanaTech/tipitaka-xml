@@ -63,6 +63,32 @@
         ];
 
         var html = '<div id="tp-search-bar" style="display:none;">';
+        // Left column: Limit Search checkboxes
+        html += '<div id="tp-limit-search" class="tp-limit-search" style="float:left; width:260px; padding:10px; box-sizing:border-box;">';
+        html += '<div class="tp-limit-title" style="font-weight:600; margin-bottom:6px;">Limit Search</div>';
+        // list of checkboxes; 'Anya' (Other texts) displayed as 'Añña'
+        html += '<div class="tp-limit-list">';
+        // Column headings (top row)
+        html += '<div class="tp-limit-head tp-limit-head-1">Mula</div>';
+        html += '<div class="tp-limit-head tp-limit-head-2">Attha.</div>';
+        html += '<div class="tp-limit-head tp-limit-head-3">Tika</div>';
+        // Mula column: Vinaya / Sutta / Abdhi
+        html += '<label class="limit-item item-mula-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-vinaya" data-val="Vinayapitaka" /> Vinaya</label>';
+        html += '<label class="limit-item item-mula-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-sutta" data-val="Suttapitaka" /> Sutta</label>';
+        html += '<label class="limit-item item-mula-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-abhd" data-val="Abhidhammapitaka" /> Abdhi</label>';
+        // Attha. column: Vinaya / Sutta / Abdhi (aṭṭhakathā)
+        html += '<label class="limit-item item-atth-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-vinaya" data-val="Vinayapiṭaka (aṭṭhakathā)" /> Vinaya</label>';
+        html += '<label class="limit-item item-atth-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-sutta" data-val="Suttapiṭaka (aṭṭhakathā)" /> Sutta</label>';
+        html += '<label class="limit-item item-atth-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-abhd" data-val="Abhidhammapiṭaka (aṭṭhakathā)" /> Abdhi</label>';
+        // Tika column: Vinaya / Sutta / Abdhi (ṭīkā)
+        html += '<label class="limit-item item-tika-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-vinaya" data-val="Vinayapiṭaka (ṭīkā)" /> Vinaya</label>';
+        html += '<label class="limit-item item-tika-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-sutta" data-val="Suttapiṭaka (ṭīkā)" /> Sutta</label>';
+        html += '<label class="limit-item item-tika-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-abhd" data-val="Abhidhammapiṭaka (ṭīkā)" /> Abdhi</label>';
+        // Other options
+        html += '<label class="limit-item item-anya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-anya" data-val="Anya" /> Añña</label>';
+        html += '<label class="limit-item item-all"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-all" data-val="ALL" style="margin-top:6px;" checked /> All</label>';
+        html += '</div>'; // tp-limit-list
+        html += '</div>'; // tp-limit-search
         html += '  <form id="tp-search-form" onsubmit="return false;">';
         html += '    <div class="tp-search-row">';
         // Note: do NOT include a title attribute here — we use aria-label for screen readers
@@ -85,11 +111,11 @@
         html += '      <label class="tp-exact-label" style="margin-left:8px; font-size:13px; color:#1E3461;">';
         html += '        <input type="checkbox" id="tp-exact-match" /> Exact Match';
         html += '      </label>';
-        // Proximity mode radio buttons: Strict (ordered) or Any order (unordered)
+        // Proximity mode radio buttons: As-is (ordered) or Any order (unordered)
         html += '      <div class="tp-prox-mode" style="display:inline-block; margin-left:8px; font-size:13px; color:#1E3461;">';
-        html += '        <span style="margin-right:6px;">Proximity Search:</span>';
-        html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-strict" value="strict" checked /> Strict</label>';
-        html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-any" value="any" /> Any order</label>';
+        html += '        <span style="margin-right:6px;">Proximity Match:</span>';
+        html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-strict" value="strict" checked /> As-is</label>';
+        html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-any" value="any" /> Any</label>';
         html += '      </div>';
         // Inline proximity syntax supported: use `termA |N| termB` in the main input
         html += '    </div>';
@@ -297,6 +323,16 @@
             'facet.pivot': pivotKey
         };
 
+        // Apply limit search filters (if any)
+        try {
+            var limitFq = buildLimitFq();
+            if (limitFq) {
+                // Combine with existing filter (currentFilter) if present
+                if (params.fq) params.fq = '(' + params.fq + ') AND (' + limitFq + ')';
+                else params.fq = '(' + limitFq + ')';
+            }
+        } catch (e) { /* ignore */ }
+
         // Apply volume or field-prefixed filter if set
         if (currentFilter) {
             var pf = parseFilter(currentFilter);
@@ -353,6 +389,29 @@
             }
         }
         return facets;
+    }
+
+    // Build fq string for Limit Search checkboxes; return null if no limiting
+    function buildLimitFq() {
+        if (!window.jQuery) return null;
+        var $ = window.jQuery;
+        var vals = [];
+        $('.tp-limit-checkbox:checked').each(function () {
+            var v = $(this).data('val');
+            if (v && v !== 'ALL') vals.push(v);
+        });
+        // If none selected or all selected, do not limit
+        if (!vals.length) return null;
+        var totalBoxes = $('.tp-limit-checkbox').length;
+        var checkedBoxes = $('.tp-limit-checkbox:checked').length;
+        if (checkedBoxes === totalBoxes) return null;
+        // Build OR expression on the `volume` field
+        var parts = [];
+        for (var i = 0; i < vals.length; i++) {
+            parts.push('volume:"' + vals[i] + '"');
+        }
+        if (!parts.length) return null;
+        return parts.join(' OR ');
     }
 
     // Fetch pivot-only counts when the main (paged) response doesn't include pivot data.
@@ -1267,6 +1326,24 @@
                 }
             });
         }
+
+        // Limit Search checkbox behavior: 'All' toggles others
+        $(document).on('change', '.tp-limit-checkbox', function () {
+            var $all = $('#tp-limit-all');
+            if ($(this).attr('id') === 'tp-limit-all') {
+                if ($(this).is(':checked')) {
+                    $('.tp-limit-checkbox').not(this).prop('checked', false);
+                }
+            } else {
+                if ($(this).is(':checked')) {
+                    $all.prop('checked', false);
+                } else {
+                    // If none selected, default back to All checked
+                    var any = $('.tp-limit-checkbox').not('#tp-limit-all').filter(':checked').length;
+                    if (!any) $all.prop('checked', true);
+                }
+            }
+        });
 
         // Search form submit
         $(document).on('submit', '#tp-search-form', function (e) {
