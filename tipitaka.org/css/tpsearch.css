@@ -12,20 +12,32 @@
     text-align: center;
 }
 
+/* Ensure the search bar can contain the Devanagari palette */
+#tp-search-bar {
+    position: relative;
+    /* Let the search bar size itself to contents; keep small bottom padding */
+    padding-bottom: 12px;
+}
+
 #tp-search-form {
-    max-width: 700px;
+    /* Slightly wider form so language palette toggles don't push the input */
+    max-width: 760px;
     margin: 0 auto;
+    position: relative; /* anchor for the in-form Deva palette */
 }
 
 .tp-search-row {
     display: flex;
     align-items: center;
     gap: 6px;
+    justify-content: center; /* keep input & buttons centered in the middle column */
 }
 
 #tp-search-input {
+    /* Fixed-size input to keep identical dimensions between Roman and Deva modes */
     width: 400px;
-    max-width: 100%;
+    flex: 0 0 400px;
+    box-sizing: border-box;
     padding: 8px 12px;
     font-size: 15px;
     font-family: 'Maitree', 'Times Ext Roman', serif;
@@ -94,7 +106,8 @@
     display: flex;
     justify-content: center;
     gap: 4px;
-    flex-wrap: wrap;
+    /* Keep Roman characters on a single row */
+    flex-wrap: nowrap;
 }
 
 /* Devanagari palette and toggle */
@@ -121,12 +134,33 @@
     border-color: #1E3461;
 }
 
-.tp-deva-palette {
+.tp-deva-controls {
     margin-top: 6px;
-    display: none;
+    display: flex;
     justify-content: center;
-    gap: 4px;
-    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.tp-deva-palette {
+    /* Keep the Devanagari palette inside the centered search form and in-flow */
+    position: static;
+    display: none;
+    background: transparent;
+    z-index: 120; /* above other UI elements when visible */
+    padding: 6px 8px 0 8px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 760px; /* match form */
+    margin: 8px auto 0 auto;
+}
+
+.tp-deva-row {
+    display: flex;
+    justify-content: center;
+    gap: 1px;
+    margin-bottom: 1px;
+    flex-wrap: nowrap;
 }
 
 .tp-deva-btn {
@@ -169,6 +203,17 @@
     background: #1E3461;
     color: #fff;
     border-color: #1E3461;
+}
+
+/* Help icon offset: move 50px left and 10px down relative to its inline position */
+#tp-help-btn {
+    display: inline-block;
+    position: relative;
+    left: -40px; /* 50px left */
+    top: 2px;   /* 10px down */
+    margin-right: 6px;
+    cursor: pointer;
+    z-index: 200;
 }
 
 .tp-pali-btn {
@@ -519,10 +564,11 @@
     align-items: start;
 }
 
-/* Make the search form take remaining space */
+/* Make the search form occupy the middle column and stay centered */
 #tp-search-form {
     grid-column: 2;
-    max-width: none;
+    max-width: 760px; /* fixed max width to avoid horizontal shifts */
+    margin: 0 auto;
 }
 
 /* Right placeholder occupies third column */

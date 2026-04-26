@@ -93,9 +93,7 @@
         html += '    <div class="tp-search-row">';
         // Note: do NOT include a title attribute here — we use aria-label for screen readers
         // and show the full help popup on hover/focus. The native title tooltip would duplicate it.
-        // Help icon (no button) - rendered as a simple inline element so it can be
-        // positioned independently of the form layout.
-        html += '      <span id="tp-help-btn" class="tp-help-icon" aria-label="Help"><i class="fa fa-info-circle" aria-hidden="true"></i></span>';
+        // Help icon removed from the row; it will be rendered next to the Roman button
         html += '      <input type="text" id="tp-search-input" placeholder="Enter Roman Pāḷi or देवनागरी..." autocomplete="off" />';
         html += '      <button type="submit" id="tp-search-btn" title="Search" aria-label="Search"><i class="fa fa-search" aria-hidden="true"></i></button>';
         html += '      <button type="button" id="tp-search-clear" title="Clear" aria-label="Clear" style="display:none;"><i class="fa fa-times" aria-hidden="true"></i></button>';
@@ -103,9 +101,13 @@
         // Roman Pali character row (moved below mode buttons)
 
         // Input mode switch + Devanagari palette
-        var devaChars = ['अ','आ','इ','ई','उ','ऊ','ए','ओ','क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','स','ह','ळ','अं','ं','ा','ि','ी','ु','ू','े','ो','्'];
+        var devaRow1 = ['अ','आ','इ','ई','उ','ऊ','ए','ओ','क','ख','ग','घ','ङ'];
+        var devaRow2 = ['च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द'];
+        var devaRow3 = ['ध','न','प','फ','भ','म','य','र','ल','व','स','ह','ळ','अं'];
+        var devaRow4 = ['ं','ा','ि','ी','ु','ू','े','ो','्'];
         html += '    <div class="tp-deva-controls">';
         html += '      <div class="tp-mode-switch">';
+        html += '        <span id="tp-help-btn" class="tp-help-icon" aria-label="Help"><i class="fa fa-info-circle" aria-hidden="true"></i></span>';
         html += '        <button type="button" id="tp-mode-roman" class="tp-mode-btn" aria-pressed="false">Roman</button>';
         html += '        <button type="button" id="tp-mode-deva" class="tp-mode-btn" aria-pressed="false">देव</button>';
         html += '      </div>';
@@ -115,11 +117,11 @@
         html += '      </label>';
         // Proximity mode radio buttons: As-is (ordered) or Any order (unordered)
         html += '      <div class="tp-prox-mode" style="display:inline-block; margin-left:8px; font-size:13px; color:#1E3461;">';
-        html += '        <span style="margin-right:6px;">Proximity Match:</span>';
+        html += '        <span style="margin-right:6px;">Proximity:</span>';
         html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-strict" value="strict" checked /> As-is</label>';
         html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-any" value="any" /> Any</label>';
         html += '      </div>';
-        // Inline proximity syntax supported: use `termA |N| termB` in the main input
+        // Inline proximity syntax supported: use `termA /N termB` in the main input
         html += '    </div>';
 
         // Insert Roman Pali character row below the mode buttons (hidden/shown by mode)
@@ -130,9 +132,26 @@
         html += '    </div>';
 
         html += '    <div id="tp-deva-palette" class="tp-deva-palette">';
-        for (var d = 0; d < devaChars.length; d++) {
-            html += '<button type="button" class="tp-deva-btn" data-char="' + devaChars[d] + '">' + devaChars[d] + '</button>';
+        html += '<div class="tp-deva-row">';
+        for (var d = 0; d < devaRow1.length; d++) {
+            html += '<button type="button" class="tp-deva-btn" data-char="' + devaRow1[d] + '">' + devaRow1[d] + '</button>';
         }
+        html += '</div>';
+        html += '<div class="tp-deva-row">';
+        for (var d = 0; d < devaRow2.length; d++) {
+            html += '<button type="button" class="tp-deva-btn" data-char="' + devaRow2[d] + '">' + devaRow2[d] + '</button>';
+        }
+        html += '</div>';
+        html += '<div class="tp-deva-row">';
+        for (var d = 0; d < devaRow3.length; d++) {
+            html += '<button type="button" class="tp-deva-btn" data-char="' + devaRow3[d] + '">' + devaRow3[d] + '</button>';
+        }
+        html += '</div>';
+        html += '<div class="tp-deva-row">';
+        for (var d = 0; d < devaRow4.length; d++) {
+            html += '<button type="button" class="tp-deva-btn" data-char="' + devaRow4[d] + '">' + devaRow4[d] + '</button>';
+        }
+        html += '</div>';
         html += '    </div>';
         // Help popup (hidden by default) appended inside search bar container
         html += '<div id="tp-help-popup" class="tp-help-popup" style="display:none;">';
@@ -141,7 +160,7 @@
         html += '<ol class="tp-help-list">';
         html += '<li>Typing in the proper Pāḷi characters is not necessary. Searching for vipassanā or vipassana will produce the same results.</li>';
         html += '<li>To only search for part of a word use * to complete the search term. For example, searching for dhammacakka* will find all instances that start with dhammacakka.</li>';
-        html += '<li>For proximity search, place |n| between the two terms to search, e.g. metta |2| mudita will find instances where metta and mudita are within 2 words of each other.</li>';
+        html += '<li>For proximity search, place /n between the two terms to search, e.g. metta /2 mudita will find instances where metta and mudita are within 2 words of each other.</li>';
         html += '</ol>';
         html += '</div>';
         html += '</div>';
@@ -308,10 +327,10 @@
         var exactMatch = false;
         try { exactMatch = !!$('#tp-exact-match').prop('checked'); } catch(e) { exactMatch = false; }
 
-        // Detect inline proximity syntax: `termA |N| termB` (distance = N)
+        // Detect inline proximity syntax: `termA /N termB` (distance = N)
         var qparam = query;
         try {
-            var proxRe = /^\s*([^\|]+?)\s*\|\s*(\d+)\s*\|\s*([^\|]+?)\s*$/;
+            var proxRe = /^\s*([^\/]+?)\s*\/\s*(\d+)\s+([^\/]+?)\s*$/;
             var proxMatch = query.match(proxRe);
             if (proxMatch) {
                 var termA = proxMatch[1].trim();
@@ -1225,40 +1244,20 @@
             minimizeSearchBar();
         });
 
-        // Position the help icon beneath the Search button (fallback to input)
-        function positionHelpIcon() {
-            var $help = $('#tp-help-btn');
-            var $btn = $('#tp-search-btn');
-            var $input = $('#tp-search-input');
-            // Require help, the button and the input to be present
-            if (!$help.length || !$btn.length || !$input.length) return;
-            // Use the input's closest .tp-search-row as the positioning context
-            var $row = $input.closest('.tp-search-row');
-            if (!$row.length) return;
-            $row.css('position', 'relative');
-            // Compute button position relative to the row and place help 20px below
-            var btnOff = $btn.offset();
-            var rowOff = $row.offset() || { top: 0, left: 0 };
-            var left = (btnOff.left - rowOff.left) + Math.max(0, ($btn.outerWidth() - $help.outerWidth()) / 2);
-            var top = (btnOff.top - rowOff.top) + $btn.outerHeight() + 55; // 20px below button
-            $help.css({ position: 'absolute', left: left + 'px', top: top + 'px' });
-        }
-        // compute initially and on window resize (debounced)
-        positionHelpIcon();
-        $(window).on('resize', debounce(positionHelpIcon, 120));
-
         // Show help popup on hover or focus; hide on leave/blur or outside click
-        // Position popup relative to the search bar so it appears beside the help icon
+        // Position popup near the help icon using fixed viewport coordinates
         $(document).on('mouseenter focusin', '#tp-help-btn', function (e) {
             var $popup = $('#tp-help-popup');
             var $btn = $(this);
-            var $bar = $('#tp-search-bar');
-            if (!$btn.length || !$popup.length || !$bar.length) return;
+            if (!$btn.length || !$popup.length) return;
             var off = $btn.offset();
-            var barOff = $bar.offset() || { top: 0, left: 0 };
-            var top = off.top - barOff.top + $btn.outerHeight() + 6;
-            var left = off.left - barOff.left;
-            $popup.css({ position: 'absolute', top: top + 'px', left: left + 'px' }).show();
+            // Use viewport-fixed positioning so we don't depend on any container offsets
+            var scrollTop = $(window).scrollTop() || 0;
+            var scrollLeft = $(window).scrollLeft() || 0;
+            var popupW = $popup.outerWidth();
+            var top = off.top - scrollTop + $btn.outerHeight() - 4; // slightly below the icon
+            var left = off.left - scrollLeft + Math.round(($btn.outerWidth() - popupW) / 2);
+            $popup.css({ position: 'fixed', top: top + 'px', left: left + 'px' }).show();
         });
 
         // Hide with a short delay to allow moving between button and popup
@@ -1467,7 +1466,7 @@
             doSearch($tpSearchInput ? $tpSearchInput.val() : $('#tp-search-input').val(), 0, '');
         });
 
-        // Inline proximity syntax is handled in doSearch(): use `termA |N| termB` in the main input
+        // Inline proximity syntax is handled in doSearch(): use `termA /N termB` in the main input
 
         // Enter key
         $(document).on('keydown', '#tp-search-input', function (e) {
