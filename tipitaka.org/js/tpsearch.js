@@ -148,19 +148,44 @@
         return html;
     }
 
-    // Toggle the search bar open/closed
+    // State: whether the search icon has been activated at least once
+    var _tpsearchActivated = false;
+
+    // Open the search bar and mark the header icon active
+    function openSearchBar() {
+        var $bar = $('#tp-search-bar');
+        var $collapse = $('#tp-search-collapse-btn');
+        var $expand = $('#tp-search-expand-btn');
+        var $icon = $('#tp-topbar-search-icon');
+        if ($expand && $expand.length) $expand.hide();
+        $bar.stop(true,true).slideDown(200, function() {
+            $('#tp-search-input').focus();
+            if ($collapse && $collapse.length) $collapse.show();
+        });
+        if ($icon && $icon.length) $icon.addClass('tp-topbar-search-active');
+        _tpsearchActivated = true;
+    }
+
+    // Minimize the search bar but keep the header icon active (search session still active)
+    function minimizeSearchBar() {
+        var $bar = $('#tp-search-bar');
+        var $collapse = $('#tp-search-collapse-btn');
+        var $expand = $('#tp-search-expand-btn');
+        $bar.stop(true,true).slideUp(200, function() {
+            if ($collapse && $collapse.length) $collapse.hide();
+            if ($expand && $expand.length) $expand.show();
+        });
+        // keep header icon active if the user had opened search earlier
+        if (_tpsearchActivated) {
+            $('#tp-topbar-search-icon').addClass('tp-topbar-search-active');
+        }
+    }
+
+    // Toggle wrapper that chooses open/minimize based on current visibility
     function toggleSearchBar() {
         var $bar = $('#tp-search-bar');
-        var $icon = $('#tp-topbar-search-icon');
-        if ($bar.is(':visible')) {
-            $bar.slideUp(200);
-            $icon.removeClass('tp-topbar-search-active');
-        } else {
-            $bar.slideDown(200, function () {
-                $('#tp-search-input').focus();
-            });
-            $icon.addClass('tp-topbar-search-active');
-        }
+        if ($bar.is(':visible')) minimizeSearchBar();
+        else openSearchBar();
     }
 
     // Inject a search icon into the top navigation bar
@@ -1134,6 +1159,25 @@
         var $header = $('.header');
         if ($header.length) {
             $header.after(buildSearchBar());
+            // Insert a small expand handle (triangle) before the search bar so it is visible
+            // when the bar is collapsed, and append a collapse button inside the bar.
+            if (!$('#tp-search-handle-container').length) {
+                $('#tp-search-bar').before('<div id="tp-search-handle-container" style="position:relative; height:0;">' +
+                    '<button type="button" id="tp-search-expand-btn" class="tp-search-triangle tp-search-expand" aria-label="Open search" style="display:block;"></button>' +
+                '</div>');
+            }
+            // Append collapse button inside search bar for proper positioning
+            if (!$('#tp-search-collapse-btn').length) {
+                $('#tp-search-bar').append('<button type="button" id="tp-search-collapse-btn" class="tp-search-triangle tp-search-collapse" aria-label="Collapse search" style="display:none;"></button>');
+            }
+            // Set initial visibility of handles based on whether the bar is visible
+            if ($('#tp-search-bar').is(':visible')) {
+                $('#tp-search-collapse-btn').show();
+                $('#tp-search-expand-btn').hide();
+            } else {
+                $('#tp-search-collapse-btn').hide();
+                $('#tp-search-expand-btn').show();
+            }
         }
 
         // Inject search icon into the top nav bar
@@ -1143,6 +1187,16 @@
         $(document).on('click', '#tp-topbar-search-icon', function (e) {
             e.preventDefault();
             toggleSearchBar();
+        });
+
+        // Expand/collapse triangle handlers
+        $(document).on('click', '#tp-search-expand-btn', function (e) {
+            e.preventDefault();
+            openSearchBar();
+        });
+        $(document).on('click', '#tp-search-collapse-btn', function (e) {
+            e.preventDefault();
+            minimizeSearchBar();
         });
 
         // Show help popup on hover or focus; hide on leave/blur or outside click

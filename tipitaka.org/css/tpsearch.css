@@ -536,6 +536,60 @@
     }
 }
 
+/* Triangle handles for collapsing/expanding the search bar */
+#tp-search-bar { position: relative; overflow: visible; z-index: 10; }
+.tp-search-triangle {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    background: transparent;
+    cursor: pointer;
+    display: inline-block;
+    /* remove any UA or shadow styling from button elements */
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    padding: 0;
+}
+/* Expand (closed state): downward pointing triangle at top of bar */
+.tp-search-expand {
+    border-top: 12px solid #f0dfbf;
+}
+/* Collapse (open state): upward pointing triangle centered on bottom border */
+.tp-search-collapse {
+    border-bottom: 12px solid #f0dfbf;
+    position: absolute;
+    left: 50%;
+    z-index: 30;
+}
+/* Collapse button: shown when search is open, positioned at bottom center */
+.tp-search-collapse {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0px;
+    z-index: 30;
+}
+/* Expand handle container sits where the search bar would be; center the triangle */
+#tp-search-handle-container {
+    position: relative; /* ensure absolute children are positioned to full width */
+    width: 100%;
+    height: 0;
+    margin-bottom: -6px; /* pull handle up to align with header border */
+    z-index: 50;
+}
+/* show expand handle by default (JS will hide when bar is open) */
+#tp-search-expand-btn {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -12px; /* nudge into header border area */
+    z-index: 60;
+}
+
 /* Additional styles previously injected at runtime */
 .tpsearch-highlight {
     background: #fdf3d4;
