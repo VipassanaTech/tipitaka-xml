@@ -254,6 +254,11 @@
     color: #4F4D47;
 }
 
+/* Temporarily hide the mobile topbar search icon */
+.topnav a#tp-topbar-search-icon-mobile {
+    display: none !important;
+}
+
 
 /* ===== Search Results ===== */
 .tp-search-results {
@@ -454,17 +459,16 @@
 }
 
 .tp-limit-search {
-    background: #fff;
+    background: transparent;
     border: 1px solid #e0dfdc;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-    padding: 12px;
-    border-radius: 1px;
+    box-shadow: none;
+    padding: 6px;
     color: #23303b;
     /* occupy the left grid column fully */
     grid-column: 1;
     width: 100%;
     max-width: none;
-    box-sizing: border-box;
+    //box-sizing: border-box;
 }
 
 /* Use Monda (sans-serif) for the Limit Search block and its labels */
@@ -474,11 +478,7 @@
     font-family: 'Monda', 'Helvetica Neue', Arial, sans-serif;
 }
 
-.tp-limit-title {
-    font-weight: 700;
-    font-size: 14px;
-    color: #23303b;
-}
+/* .tp-limit-title removed — heading omitted from markup */
 
 .tp-limit-list {
     /* Use CSS Grid and explicitly place items into a 4x3 grid so
@@ -487,8 +487,10 @@
      /* 4 columns x 4 rows grid: first row reserved for headings
          Use min row heights so headings don't overlap checkbox labels
          Use only 3 data rows (Vinaya/Sutta/Abdhi) to avoid the extra empty bottom row */
-     grid-template-columns: repeat(4, 1fr);
-     grid-template-rows: auto repeat(3, minmax(28px, auto));
+      grid-template-columns: repeat(4, 1fr);
+      /* add an extra data row to accommodate the sub-limit table inserted between
+          the Sutta and Abdhi rows */
+      grid-template-rows: auto repeat(4, minmax(28px, auto));
      grid-auto-rows: minmax(28px, auto);
     column-gap: 1px;
      row-gap: 2px;
@@ -510,6 +512,20 @@
     /* Prevent grid items from stretching to full cell width (remove empty clickable area) */
     justify-self: start;
     width: auto;
+}
+
+/* Sub-limit table: center-align cells and center inline labels */
+.tp-sub-limit-table td,
+.tp-sub-limit-table th {
+    text-align: center;
+    vertical-align: middle;
+    padding: 4px 6px;
+}
+.tp-sub-limit .limit-item-sub {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 /* Explicit placement: map the HTML order to the desired 3-column, top-down layout

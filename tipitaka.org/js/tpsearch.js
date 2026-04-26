@@ -65,7 +65,6 @@
         var html = '<div id="tp-search-bar" style="display:none;">';
         // Left column: Limit Search checkboxes
         html += '<div id="tp-limit-search" class="tp-limit-search">';
-        html += '<div class="tp-limit-title" style="font-weight:600; margin-bottom:6px;">Limit Search</div>';
         // list of checkboxes; 'Anya' (Other texts) displayed as 'Añña'
         html += '<div class="tp-limit-list">';
         // Column headings (top row)
@@ -75,15 +74,31 @@
         // Mula column: Vinaya / Sutta / Abdhi
         html += '<label class="limit-item item-mula-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-vinaya" data-val="Vinayapitaka" /> Vinaya</label>';
         html += '<label class="limit-item item-mula-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-sutta" data-val="Suttapitaka" /> Sutta</label>';
-        html += '<label class="limit-item item-mula-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-abhd" data-val="Abhidhammapitaka" /> Abdhi</label>';
+        // Small separate 3x2 table of additional collections (visually separate from main limit grid)
+        // place sub-limit as a full-width grid row between Sutta and Abdhi
+        html += '<div class="tp-sub-limit" style="grid-column:1 / -1; grid-row:4; margin:6px 0 6px 0;">';
+        html += '<table class="tp-sub-limit-table" style="width:80%; border-collapse:collapse;">';
+        html += '<tr>';
+        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-digha" data-val="Dighanikāya" /> Digha</label></td>';
+        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-majjhima" data-val="Majjhimanikāya" /> Majjhima</label></td>';
+        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-samyutta" data-val="Samyuttanikāya" /> Samyutta</label></td>';
+        html += '</tr>';
+        html += '<tr>';
+        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-anguttara" data-val="Anguttaranikāya" /> Anguttara</label></td>';
+        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-khuddaka" data-val="Khuddakanikāya" /> Khuddaka</label></td>';
+        html += '<td style="padding:2px;"></td>';
+        html += '</tr>';
+        html += '</table>';
+        html += '</div>';
+        html += '<label class="limit-item item-mula-abhd" style="grid-row:5;"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-abhd" data-val="Abhidhammapitaka" /> Abdhi</label>';
         // Attha. column: Vinaya / Sutta / Abdhi (aṭṭhakathā)
         html += '<label class="limit-item item-atth-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-vinaya" data-val="Vinayapiṭaka (aṭṭhakathā)" /> Vinaya</label>';
         html += '<label class="limit-item item-atth-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-sutta" data-val="Suttapiṭaka (aṭṭhakathā)" /> Sutta</label>';
-        html += '<label class="limit-item item-atth-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-abhd" data-val="Abhidhammapiṭaka (aṭṭhakathā)" /> Abdhi</label>';
+        html += '<label class="limit-item item-atth-abhd" style="grid-row:5;"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-abhd" data-val="Abhidhammapiṭaka (aṭṭhakathā)" /> Abdhi</label>';
         // Tika column: Vinaya / Sutta / Abdhi (ṭīkā)
         html += '<label class="limit-item item-tika-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-vinaya" data-val="Vinayapiṭaka (ṭīkā)" /> Vinaya</label>';
         html += '<label class="limit-item item-tika-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-sutta" data-val="Suttapiṭaka (ṭīkā)" /> Sutta</label>';
-        html += '<label class="limit-item item-tika-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-abhd" data-val="Abhidhammapiṭaka (ṭīkā)" /> Abdhi</label>';
+        html += '<label class="limit-item item-tika-abhd" style="grid-row:5;"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-abhd" data-val="Abhidhammapiṭaka (ṭīkā)" /> Abdhi</label>';
         // Other options
         html += '<label class="limit-item item-anya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-anya" data-val="Anya" /> Añña</label>';
         html += '<label class="limit-item item-all"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-all" data-val="ALL" style="margin-top:6px;" checked /> All</label>';
@@ -121,6 +136,8 @@
         html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-strict" value="strict" checked /> As-is</label>';
         html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-any" value="any" /> Any</label>';
         html += '      </div>';
+        // Filter button (placed to the right of proximity controls)
+        html += '      <button type="button" id="tp-filter-btn" class="tp-filter-btn" aria-label="Filter">Filter</button>';
         // Inline proximity syntax supported: use `termA /N termB` in the main input
         html += '    </div>';
 
@@ -333,24 +350,25 @@
             var proxRe = /^\s*([^\/]+?)\s*\/\s*(\d+)\s+([^\/]+?)\s*$/;
             var proxMatch = query.match(proxRe);
             if (proxMatch) {
-                var termA = proxMatch[1].trim();
-                var dist = parseInt(proxMatch[2], 10) || 0;
-                var termB = proxMatch[3].trim();
-                var escq = function(s) { return s.replace(/"/g, '\\"'); };
-                // If user selected unordered/either-order, build an OR of both phrase directions
-                var unordered = false;
-                try {
-                    var _pm = (document.querySelector('input[name="tp-prox-mode"]:checked') || {}).value || 'strict';
-                    unordered = (_pm === 'any');
-                } catch (e) { unordered = false; }
-                if (unordered) {
-                    var q1 = 'text:"' + escq(termA) + ' ' + escq(termB) + '"~' + dist;
-                    var q2 = 'text:"' + escq(termB) + ' ' + escq(termA) + '"~' + dist;
-                    qparam = '(' + q1 + ' OR ' + q2 + ')';
-                } else {
-                    // Use the `text` field (used for highlighting) with phrase slop (ordered)
-                    qparam = 'text:"' + escq(termA) + ' ' + escq(termB) + '"~' + dist;
-                }
+                    var termA = proxMatch[1].trim();
+                    var dist = parseInt(proxMatch[2], 10) || 0;
+                    var termB = proxMatch[3].trim();
+                    var escq = function(s) { return s.replace(/"/g, '\\"'); };
+                    // Determine proximity mode: 'strict' = As-is, 'any' = unordered
+                    var proxMode = 'strict';
+                    try {
+                        proxMode = (document.querySelector('input[name="tp-prox-mode"]:checked') || {}).value || 'strict';
+                    } catch (e) { proxMode = 'strict'; }
+                    if (proxMode === 'strict') {
+                        // where N is the distance and W indicates word-based proximity
+                        var q1 = 'text:"' + escq(termA) + ' ' + escq(termB) + '"~' + dist;
+                        qparam = '(' + q1 + ')';
+                    } else {
+                        // Unordered: build an OR of both ordered phrase queries using phrase slop
+                        var q1 = 'text:"' + escq(termA) + ' ' + escq(termB) + '"~' + dist;
+                        var q2 = 'text:"' + escq(termB) + ' ' + escq(termA) + '"~' + dist;
+                        qparam = '(' + q1 + ' OR ' + q2 + ')';
+                    }
             } else if (exactMatch) {
                 // Use fielded phrase query for an exact match on the `title_exact` field
                 var escq2 = query.replace(/"/g, '\\"');
@@ -1186,6 +1204,8 @@
         var $header = $('.header');
         if ($header.length) {
             $header.after(buildSearchBar());
+            // Hide Limit Search by default; revealed when user clicks Filter
+            $('#tp-limit-search').hide();
             // Insert a small expand handle (triangle) before the search bar so it is visible
             // when the bar is collapsed, and append a collapse button inside the bar.
             if (!$('#tp-search-handle-container').length) {
@@ -1211,6 +1231,16 @@
 
         // Inject search icon into the top nav bar
         injectTopBarSearchIcon();
+
+        // Toggle Limit Search when Filter button is clicked
+        $(document).on('click', '#tp-filter-btn', function (e) {
+            e.preventDefault();
+            var $btn = $(this);
+            var $panel = $('#tp-limit-search');
+            if (!$panel.length) return;
+            $panel.stop(true, true).slideToggle(180);
+            $btn.toggleClass('tp-filter-active');
+        });
 
         // Toggle search bar when the top-bar icon is clicked
         // If the icon is already active, treat click as a deselect: close bar
