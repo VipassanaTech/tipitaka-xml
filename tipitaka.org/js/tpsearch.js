@@ -64,7 +64,7 @@
 
         var html = '<div id="tp-search-bar" style="display:none;">';
         // Left column: Limit Search checkboxes
-        html += '<div id="tp-limit-search" class="tp-limit-search" style="float:left; width:260px; padding:10px; box-sizing:border-box;">';
+        html += '<div id="tp-limit-search" class="tp-limit-search">';
         html += '<div class="tp-limit-title" style="font-weight:600; margin-bottom:6px;">Limit Search</div>';
         // list of checkboxes; 'Anya' (Other texts) displayed as 'Añña'
         html += '<div class="tp-limit-list">';
@@ -93,8 +93,10 @@
         html += '    <div class="tp-search-row">';
         // Note: do NOT include a title attribute here — we use aria-label for screen readers
         // and show the full help popup on hover/focus. The native title tooltip would duplicate it.
-        html += '      <button type="button" id="tp-help-btn" class="tp-help-btn" aria-label="Help"><i class="fa fa-info-circle" aria-hidden="true"></i></button>';
-        html += '      <input type="text" id="tp-search-input" placeholder="Search Tipiṭaka (Roman Pāḷi or देवनागरी)…" autocomplete="off" />';
+        // Help icon (no button) - rendered as a simple inline element so it can be
+        // positioned independently of the form layout.
+        html += '      <span id="tp-help-btn" class="tp-help-icon" aria-label="Help"><i class="fa fa-info-circle" aria-hidden="true"></i></span>';
+        html += '      <input type="text" id="tp-search-input" placeholder="Enter Roman Pāḷi or देवनागरी..." autocomplete="off" />';
         html += '      <button type="submit" id="tp-search-btn" title="Search" aria-label="Search"><i class="fa fa-search" aria-hidden="true"></i></button>';
         html += '      <button type="button" id="tp-search-clear" title="Clear" aria-label="Clear" style="display:none;"><i class="fa fa-times" aria-hidden="true"></i></button>';
         html += '    </div>';
@@ -144,6 +146,8 @@
         html += '</div>';
         html += '</div>';
         html += '  </form>';
+        // Right placeholder section (empty) to reserve space in the 3-column layout
+        html += '<div id="tp-search-right" class="tp-search-right"></div>';
         html += '</div>';
         return html;
     }
@@ -1220,6 +1224,28 @@
             e.preventDefault();
             minimizeSearchBar();
         });
+
+        // Position the help icon beneath the Search button (fallback to input)
+        function positionHelpIcon() {
+            var $help = $('#tp-help-btn');
+            var $btn = $('#tp-search-btn');
+            var $input = $('#tp-search-input');
+            // Require help, the button and the input to be present
+            if (!$help.length || !$btn.length || !$input.length) return;
+            // Use the input's closest .tp-search-row as the positioning context
+            var $row = $input.closest('.tp-search-row');
+            if (!$row.length) return;
+            $row.css('position', 'relative');
+            // Compute button position relative to the row and place help 20px below
+            var btnOff = $btn.offset();
+            var rowOff = $row.offset() || { top: 0, left: 0 };
+            var left = (btnOff.left - rowOff.left) + Math.max(0, ($btn.outerWidth() - $help.outerWidth()) / 2);
+            var top = (btnOff.top - rowOff.top) + $btn.outerHeight() + 55; // 20px below button
+            $help.css({ position: 'absolute', left: left + 'px', top: top + 'px' });
+        }
+        // compute initially and on window resize (debounced)
+        positionHelpIcon();
+        $(window).on('resize', debounce(positionHelpIcon, 120));
 
         // Show help popup on hover or focus; hide on leave/blur or outside click
         // Position popup relative to the search bar so it appears beside the help icon

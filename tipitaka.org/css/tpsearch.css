@@ -24,7 +24,8 @@
 }
 
 #tp-search-input {
-    flex: 1;
+    width: 400px;
+    max-width: 100%;
     padding: 8px 12px;
     font-size: 15px;
     font-family: 'Maitree', 'Times Ext Roman', serif;
@@ -398,10 +399,12 @@
     color: #777;
 }
 
-/* ===== Limit Search (left column) ===== */
+/* ===== Limit Search (left / middle / right sections) ===== */
+/* Use a 3-column grid: left=Limit Search, middle=search form, right=empty/reserved */
 #tp-search-bar {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 25% 50% 25%;
+    align-items: start;
     gap: 16px;
 }
 
@@ -409,12 +412,13 @@
     background: #fff;
     border: 1px solid #e0dfdc;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
-    padding: 1px;
+    padding: 12px;
     border-radius: 1px;
     color: #23303b;
-    /* occupy roughly one-third of the available width */
-    flex: 0 0 35%;
-    max-width: 420px;
+    /* occupy the left grid column fully */
+    grid-column: 1;
+    width: 100%;
+    max-width: none;
     box-sizing: border-box;
 }
 
@@ -432,7 +436,7 @@
 }
 
 .tp-limit-list {
-    /* Use CSS Grid and explicitly place items into a 3x3 grid so
+    /* Use CSS Grid and explicitly place items into a 4x3 grid so
        there are no empty gaps and ordering is exact across columns. */
     display: grid;
      /* 4 columns x 4 rows grid: first row reserved for headings
@@ -517,8 +521,24 @@
 
 /* Make the search form take remaining space */
 #tp-search-form {
-    flex: 1 1 auto;
+    grid-column: 2;
     max-width: none;
+}
+
+/* Right placeholder occupies third column */
+#tp-search-right {
+    grid-column: 3;
+}
+
+/* Help icon (icon-only) positioned below left corner of the search bar */
+.tp-help-icon {
+    position: absolute; /* positioned by JS to sit beneath the input */
+    z-index: 80;
+    cursor: pointer;
+    color: #1E3461;
+}
+.tp-help-icon i {
+    font-size: 20px;
 }
 
 /* Responsive: stack limit box above search on small screens */
