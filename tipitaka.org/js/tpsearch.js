@@ -65,19 +65,21 @@
         var html = '<div id="tp-search-bar" style="display:none;">';
         html += '  <form id="tp-search-form" onsubmit="return false;">';
         html += '    <div class="tp-search-row">';
-        html += '      <button type="button" id="tp-help-btn" class="tp-help-btn" title="Help"><i class="fa fa-info-circle" aria-hidden="true"></i></button>';
+        // Note: do NOT include a title attribute here — we use aria-label for screen readers
+        // and show the full help popup on hover/focus. The native title tooltip would duplicate it.
+        html += '      <button type="button" id="tp-help-btn" class="tp-help-btn" aria-label="Help"><i class="fa fa-info-circle" aria-hidden="true"></i></button>';
         html += '      <input type="text" id="tp-search-input" placeholder="Search Tipiṭaka (Roman Pāḷi or देवनागरी)…" autocomplete="off" />';
-        html += '      <button type="submit" id="tp-search-btn" title="Search"><i class="fa fa-search"></i></button>';
-        html += '      <button type="button" id="tp-search-clear" title="Clear search &amp; close" style="display:none;"><i class="fa fa-times"></i></button>';
+        html += '      <button type="submit" id="tp-search-btn" title="Search" aria-label="Search"><i class="fa fa-search" aria-hidden="true"></i></button>';
+        html += '      <button type="button" id="tp-search-clear" title="Clear" aria-label="Clear" style="display:none;"><i class="fa fa-times" aria-hidden="true"></i></button>';
         html += '    </div>';
         // Roman Pali character row (moved below mode buttons)
 
         // Input mode switch + Devanagari palette
-        var devaChars = ['अ','आ','इ','ई','उ','ऊ','ए','ओ','क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','स','ह','ळ','अं','ा','ि','ी','ु','ू','े','ै','ो','ौ','्'];
+        var devaChars = ['अ','आ','इ','ई','उ','ऊ','ए','ओ','क','ख','ग','घ','ङ','च','छ','ज','झ','ञ','ट','ठ','ड','ढ','ण','त','थ','द','ध','न','प','फ','ब','भ','म','य','र','ल','व','स','ह','ळ','अं','ं','ा','ि','ी','ु','ू','े','ो','्'];
         html += '    <div class="tp-deva-controls">';
         html += '      <div class="tp-mode-switch">';
-        html += '        <button type="button" id="tp-mode-roman" class="tp-mode-btn">Roman</button>';
-        html += '        <button type="button" id="tp-mode-deva" class="tp-mode-btn">देव</button>';
+        html += '        <button type="button" id="tp-mode-roman" class="tp-mode-btn" aria-pressed="false">Roman</button>';
+        html += '        <button type="button" id="tp-mode-deva" class="tp-mode-btn" aria-pressed="false">देव</button>';
         html += '      </div>';
         // Exact match checkbox placed to the right of the Devanagari button
         html += '      <label class="tp-exact-label" style="margin-left:8px; font-size:13px; color:#1E3461;">';
@@ -450,7 +452,11 @@
             var noResultHtml = '<div class="tp-search-results">';
             noResultHtml += '<h3 class="tp-results-header">No results found for "' + escapeHtml(currentQuery) + '"';
             if (currentFilter) {
-                noResultHtml += ' in ' + escapeHtml(currentFilter);
+                var _pf = parseFilter(currentFilter);
+                var filterLabelMap = { 'volume': 'Collection', 'pitaka': 'Sub-collection', 'book': 'Category', 'chapter': 'Sub-category' };
+                var fLabel = filterLabelMap[_pf.field] || _pf.field || 'Filter';
+                var fVal = _pf.value || currentFilter;
+                noResultHtml += ' in ' + escapeHtml(fLabel) + ': ' + escapeHtml(fVal);
             }
             noResultHtml += '</h3>';
             noResultHtml += buildFacetsHtml(displayFacets);
@@ -470,7 +476,11 @@
         // Header
         html += '<h3 class="tp-results-header">Results for "' + escapeHtml(currentQuery) + '"';
         if (currentFilter) {
-            html += ' <span class="tp-filter-label">in ' + escapeHtml(currentFilter) + '</span>';
+            var _pfh = parseFilter(currentFilter);
+            var headerLabelMap = { 'volume': 'Collection', 'pitaka': 'Sub-collection', 'book': 'Category', 'chapter': 'Sub-category' };
+            var hLabel = headerLabelMap[_pfh.field] || _pfh.field || 'Filter';
+            var hVal = _pfh.value || currentFilter;
+            html += ' <span class="tp-filter-label">in ' + escapeHtml(hLabel) + ': ' + escapeHtml(hVal) + '</span>';
         }
         html += '</h3>';
         html += '<div class="tp-results-summary">';
@@ -739,7 +749,9 @@
         var pf = parseFilter(parent);
         var parentField = pf.field || 'volume';
         var pval = pf.value || '';
-        var nextLabelMap = { 'volume': 'Volume', 'pitaka': 'Book', 'book': 'Chapter' };
+        // Map internal field names to UI labels. Rename per request:
+        // Volume -> Sub-collection, Pitaka (book) -> Category, Book -> Sub-category
+        var nextLabelMap = { 'volume': 'Sub-collection', 'pitaka': 'Category', 'book': 'Sub-category' };
         var labelName = nextLabelMap[parentField] || 'Pitaka';
 
         html += '<span class="tp-facets-label">' + escapeHtml(labelName) + ': </span>';
@@ -1040,19 +1052,26 @@
             toggleSearchBar();
         });
 
-        // Help popup toggle and global hide
-        $(document).on('click', '#tp-help-btn', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
+        // Show help popup on hover or focus; hide on leave/blur or outside click
+        $(document).on('mouseenter focusin', '#tp-help-btn', function (e) {
             var $popup = $('#tp-help-popup');
             var $btn = $(this);
             if (!$btn.length || !$popup.length) return;
             var off = $btn.offset();
-            $popup.css({ top: (off.top + $btn.outerHeight() + 6) + 'px', left: off.left + 'px' });
-            $popup.toggle();
+            $popup.css({ top: (off.top + $btn.outerHeight() + 6) + 'px', left: off.left + 'px' }).show();
         });
 
-        // Prevent clicks inside popup from closing it
+        // Hide with a short delay to allow moving between button and popup
+        $(document).on('mouseleave focusout', '#tp-help-btn', function (e) {
+            var $popup = $('#tp-help-popup');
+            setTimeout(function () {
+                if (!$('#tp-help-btn').is(':hover') && !$popup.is(':hover') && !$popup.find(':focus').length) {
+                    $popup.hide();
+                }
+            }, 150);
+        });
+
+        // Prevent clicks inside popup from closing it immediately
         $(document).on('click', '#tp-help-popup', function (e) { e.stopPropagation(); });
 
         // Hide popup when clicking elsewhere
@@ -1066,23 +1085,23 @@
         var setInputMode = function(mode) {
             // mode: 'deva', 'roman', or falsy/other for no selection
             if (mode === 'deva') {
-                $('#tp-mode-deva').addClass('tp-mode-active');
-                $('#tp-mode-roman').removeClass('tp-mode-active');
+                $('#tp-mode-deva').addClass('tp-mode-active').attr('aria-pressed', 'true');
+                $('#tp-mode-roman').removeClass('tp-mode-active').attr('aria-pressed', 'false');
                 $('.tp-pali-chars').hide();
                 $('#tp-deva-palette').show();
                 currentIsDeva = true;
                 try { sessionStorage.setItem('tpsearch-mode', 'deva'); } catch(e){}
             } else if (mode === 'roman') {
-                $('#tp-mode-roman').addClass('tp-mode-active');
-                $('#tp-mode-deva').removeClass('tp-mode-active');
+                $('#tp-mode-roman').addClass('tp-mode-active').attr('aria-pressed', 'true');
+                $('#tp-mode-deva').removeClass('tp-mode-active').attr('aria-pressed', 'false');
                 $('.tp-pali-chars').show();
                 $('#tp-deva-palette').hide();
                 currentIsDeva = false;
                 try { sessionStorage.setItem('tpsearch-mode', 'roman'); } catch(e){}
             } else {
                 // No mode selected: clear active state and hide palettes
-                $('#tp-mode-roman').removeClass('tp-mode-active');
-                $('#tp-mode-deva').removeClass('tp-mode-active');
+                $('#tp-mode-roman').removeClass('tp-mode-active').attr('aria-pressed', 'false');
+                $('#tp-mode-deva').removeClass('tp-mode-active').attr('aria-pressed', 'false');
                 $('.tp-pali-chars').hide();
                 $('#tp-deva-palette').hide();
                 currentIsDeva = false;
@@ -1183,8 +1202,8 @@
                             $('html, body').animate({ scrollTop: top }, 300);
                         }
                     }
-                    if (!$('#tpsearch-back-btn').length) {
-                        var $btn = $('<button id="tpsearch-back-btn" class="tpsearch-back-btn">&lt;</button>');
+                    if (!$('#tp-search-back').length) {
+                        var $btn = $('<button id="tp-search-back" class="tpsearch-back-btn" title="Back" aria-label="Back">&lt;</button>');
                         $btn.on('click', function () {
                             var last = null;
                             try { last = window.sessionStorage.getItem('tpsearch-last-results'); } catch (e) {}
@@ -1193,7 +1212,7 @@
                                 var scroll = null;
                                 try { scroll = window.sessionStorage.getItem('tpsearch-scroll'); } catch (e) {}
                                 if (scroll) window.scrollTo(0, parseInt(scroll, 10));
-                                $('#tpsearch-back-btn').remove();
+                                $('#tp-search-back').remove();
                                 // no rebind needed; delegated handlers handle events
                             } else {
                                 var q = '';
@@ -1201,7 +1220,7 @@
                                 try { q = window.sessionStorage.getItem('tpsearch-query') || ''; } catch (e) {}
                                 try { f = window.sessionStorage.getItem('tpsearch-filter') || ''; } catch (e) {}
                                 doSearch(q, 0, f);
-                                $('#tpsearch-back-btn').remove();
+                                $('#tp-search-back').remove();
                             }
                         });
                         var $xbtn = $('#tp-search-clear');
@@ -1252,7 +1271,7 @@
             // hide the clear button until there's input again
             $('#tp-search-clear').hide();
             // remove the Back button since it only applies to the current search
-            $('#tpsearch-back-btn').remove();
+            $('#tp-search-back').remove();
             // keep current results and filters intact; refocus input for convenience
             $('#tp-search-input').focus();
         });
