@@ -173,7 +173,11 @@
         var $expand = $('#tp-search-expand-btn');
         $bar.stop(true,true).slideUp(200, function() {
             if ($collapse && $collapse.length) $collapse.hide();
-            if ($expand && $expand.length) $expand.show();
+            // only show the expand handle if the header icon is in selected state
+            if ($expand && $expand.length) {
+                if ($('#tp-topbar-search-icon').hasClass('tp-topbar-search-active')) $expand.show();
+                else $expand.hide();
+            }
         });
         // keep header icon active if the user had opened search earlier
         if (_tpsearchActivated) {
@@ -1171,12 +1175,14 @@
                 $('#tp-search-bar').append('<button type="button" id="tp-search-collapse-btn" class="tp-search-triangle tp-search-collapse" aria-label="Collapse search" style="display:none;"></button>');
             }
             // Set initial visibility of handles based on whether the bar is visible
+            // Default: do not show the downward (expand) triangle unless search
+            // has been activated via the header icon. Keep expand hidden by default.
             if ($('#tp-search-bar').is(':visible')) {
                 $('#tp-search-collapse-btn').show();
                 $('#tp-search-expand-btn').hide();
             } else {
                 $('#tp-search-collapse-btn').hide();
-                $('#tp-search-expand-btn').show();
+                $('#tp-search-expand-btn').hide();
             }
         }
 
@@ -1184,9 +1190,25 @@
         injectTopBarSearchIcon();
 
         // Toggle search bar when the top-bar icon is clicked
+        // If the icon is already active, treat click as a deselect: close bar
+        // and remove the downward expand triangle. Otherwise open the bar.
         $(document).on('click', '#tp-topbar-search-icon', function (e) {
             e.preventDefault();
-            toggleSearchBar();
+            var $icon = $(this);
+            var $bar = $('#tp-search-bar');
+            var $collapse = $('#tp-search-collapse-btn');
+            var $expand = $('#tp-search-expand-btn');
+            if ($icon.hasClass('tp-topbar-search-active')) {
+                // user is deselecting: close bar and hide expand triangle
+                $icon.removeClass('tp-topbar-search-active');
+                _tpsearchActivated = false;
+                $bar.stop(true,true).slideUp(200, function() {
+                    if ($collapse && $collapse.length) $collapse.hide();
+                    if ($expand && $expand.length) $expand.hide();
+                });
+            } else {
+                openSearchBar();
+            }
         });
 
         // Expand/collapse triangle handlers
@@ -1200,12 +1222,17 @@
         });
 
         // Show help popup on hover or focus; hide on leave/blur or outside click
+        // Position popup relative to the search bar so it appears beside the help icon
         $(document).on('mouseenter focusin', '#tp-help-btn', function (e) {
             var $popup = $('#tp-help-popup');
             var $btn = $(this);
-            if (!$btn.length || !$popup.length) return;
+            var $bar = $('#tp-search-bar');
+            if (!$btn.length || !$popup.length || !$bar.length) return;
             var off = $btn.offset();
-            $popup.css({ top: (off.top + $btn.outerHeight() + 6) + 'px', left: off.left + 'px' }).show();
+            var barOff = $bar.offset() || { top: 0, left: 0 };
+            var top = off.top - barOff.top + $btn.outerHeight() + 6;
+            var left = off.left - barOff.left;
+            $popup.css({ position: 'absolute', top: top + 'px', left: left + 'px' }).show();
         });
 
         // Hide with a short delay to allow moving between button and popup
