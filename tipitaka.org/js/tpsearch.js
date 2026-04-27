@@ -175,9 +175,9 @@
         html += '<div class="tp-help-content">';
         html += '<div class="tp-help-title">How to use Search</div>';
         html += '<ol class="tp-help-list">';
-        html += '<li>Typing in the proper Pāḷi characters is not necessary. Searching for vipassanā or vipassana will produce the same results.</li>';
-        html += '<li>To only search for part of a word use * to complete the search term. For example, searching for dhammacakka* will find all instances that start with dhammacakka.</li>';
-        html += '<li>For proximity search, place /n between the two terms to search, e.g. metta /2 mudita will find instances where metta and mudita are within 2 words of each other.</li>';
+        html += '<li>Typing in the proper Pāḷi characters is not necessary. Searching for <b>vipassanā</b> or <b>vipassana</b> will produce the same results.</li>';
+        html += '<li>Wildcard search is provided by the use of * in the search term. For example, searching for <b>dhammacakka*</b> will find all instances that start with dhammacakka.</li>';
+        html += '<li>For proximity search, place /n between the two terms to search, e.g. <b>metta /5 mudita</b> will find instances where metta and mudita are within 5 words of each other.</li>';
         html += '</ol>';
         html += '</div>';
         html += '</div>';

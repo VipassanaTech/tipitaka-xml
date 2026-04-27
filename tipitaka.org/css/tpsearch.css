@@ -209,8 +209,8 @@
 #tp-help-btn {
     display: inline-block;
     position: relative;
-    left: -40px; /* 50px left */
-    top: 2px;   /* 10px down */
+    left: -20px; /* 20px left */
+    top: 2px;   /* 2px down */
     margin-right: 6px;
     cursor: pointer;
     z-index: 200;
@@ -618,7 +618,8 @@
 }
 
 /* Triangle handles for collapsing/expanding the search bar */
-#tp-search-bar { position: relative; overflow: visible; z-index: 10; }
+/* Put the search bar at a low stacking level so header dropdowns can overlay it */
+#tp-search-bar { position: relative; overflow: visible; z-index: 8; }
 .tp-search-triangle {
     width: 0;
     height: 0;
