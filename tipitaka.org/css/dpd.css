@@ -66,6 +66,15 @@ div.dpd {
   touch-action: manipulation;
 }
 
+/* Remove wrapper .dpd border when it contains inner .dpd blocks (modal wrapper)
+   Use :has() which is supported in modern Chrome/Opera. Force with !important
+   so this overrides the general div.dpd rule inside the modal. */
+.pm-body > .dpd:has(.dpd) {
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
 p {
   line-height: 150%;
   margin: 0px 0px;

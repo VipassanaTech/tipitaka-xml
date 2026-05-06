@@ -182,8 +182,8 @@
                 if (parts.length > 0) {
                     bodyHtml += '<div class="pm-body"><div class="dpd">' + parts.join('\n') + '</div></div>';
                     content.innerHTML = titleHtml + creditHtml + bodyHtml;
-                    try{ showPopup(); }catch(e){}
                     enhanceModal(content);
+                    try{ showPopup(); }catch(e){}
                     return;
                 }
                 // otherwise continue — fallbacks below will handle arrays or show raw JSON
@@ -193,6 +193,7 @@
             if (!Array.isArray(json) || !json.length) {
                 bodyHtml += '<div class="pm-body"><div class="dpd"><div class="pm-section"><strong>No results</strong><div>No entries found.</div></div></div></div>';
                 content.innerHTML = titleHtml + bodyHtml;
+                enhanceModal(content);
                 try{ showPopup(); }catch(e){}
                 return;
             }
@@ -233,8 +234,8 @@
             bodyHtml += '</div></div>';
 
             content.innerHTML = titleHtml + creditHtml + bodyHtml;
-            try{ showPopup(); }catch(e){}
             enhanceModal(content);
+            try{ showPopup(); }catch(e){}
         }catch(e){ content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to render results.</div></div>'; console.error(e); }
     }
 
@@ -249,7 +250,9 @@
 
             // Remove the outer-most dpd border (the wrapper) but preserve inner dpd boxes
             try{
-                var outer = contentEl.querySelector('.dpd');
+                // Prefer a .dpd that contains other .dpd elements (wrapper),
+                // else prefer a .dpd directly under .pm-body, else fall back to first .dpd
+                var outer = dpdCandidates.find(function(d){ return d.querySelector('.dpd'); }) || contentEl.querySelector('.pm-body > .dpd') || contentEl.querySelector('.dpd');
                 if (outer) {
                     outer.style.border = 'none';
                     outer.style.boxShadow = 'none';
