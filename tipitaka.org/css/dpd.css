@@ -1,0 +1,740 @@
+:root {
+  /* Background in light mode, text in dark mode */
+  --light: hsl(198, 100%, 95%);
+  --light-shade: hsl(198, 100%, 93%);
+
+  /* Background in dark mode, text in light mode */
+  --dark: hsl(198, 100%, 5%);
+  --dark-shade: hsl(198, 100%, 7%);
+
+  /* Primary colour used for logo, buttons, etc */
+  --primary: hsl(198, 100%, 50%);
+
+  /* Primary alternative used for pressed buttons */
+  --primary-alt: hsl(205, 100%, 40%);
+
+  /* Primary colour suitable for text in light and dark mode */
+  --primary-text: hsl(205, 79%, 48%);
+
+  /* Button shadows */
+  --shadow-default: 2px 2px 4px hsla(0, 0%, 20%, 0.4);
+  --shadow-hover: 2px 2px 4px hsla(0, 0%, 20%, 0.5);
+
+  /* Various grays */
+  --gray: hsl(0, 0%, 50%);
+  --gray-light: hsl(0, 0%, 75%);
+  --gray-dark: hsl(0, 0%, 25%);
+  --gray-transparent: hsla(0, 0%, 50%, 0.25);
+
+  /* Secondary colour just for help and abbreviations */
+  --secondary: hsl(158, 100%, 35%);
+
+  /* Frequency heatmap  */
+  --freq0: hsla(198, 90%, 50%, 0.1);
+  --freq1: hsla(200, 90%, 50%, 0.2);
+  --freq2: hsla(202, 90%, 50%, 0.3);
+  --freq3: hsla(204, 90%, 50%, 0.4);
+  --freq4: hsla(206, 90%, 50%, 0.5);
+  --freq5: hsla(208, 90%, 50%, 0.6);
+  --freq6: hsla(210, 90%, 50%, 0.7);
+  --freq7: hsla(212, 90%, 50%, 0.8);
+  --freq8: hsla(214, 90%, 50%, 0.9);
+  --freq9: hsla(216, 90%, 50%, 1);
+  --freq10: hsla(218, 90%, 50%, 1);
+}
+
+body {
+  font-family: "Inter", "sans-serif";
+  touch-action: manipulation;
+}
+
+h3,
+h3.dpd {
+  font-size: 130%;
+  margin-top: 10px;
+  margin-bottom: 1px;
+}
+
+div.dpd {
+  border: 2px solid var(--primary);
+  border-radius: 7px;
+  line-height: 150%;
+  margin: 0px 0px;
+  overflow: auto;
+  padding: 3px 7px;
+  text-align: left;
+  touch-action: manipulation;
+}
+
+p {
+  line-height: 150%;
+  margin: 0px 0px;
+  vertical-align: middle;
+  text-align: left;
+}
+
+b {
+  font-weight: 700;
+}
+
+.epd {
+  color: var(--primary-text);
+}
+
+.epd:hover {
+  color: var(--primary-alt);
+  text-decoration: underline;
+}
+
+a {
+  color: var(--primary);
+}
+
+p.heading {
+  margin: 0px 0px;
+  padding: 2px 0px;
+}
+
+.underlined {
+  border-bottom: 1px solid var(--primary);
+  margin-bottom: 5px;
+}
+
+.overlined {
+  border-top: 1px solid var(--primary);
+  margin-top: 5px;
+}
+
+p.heading b {
+  font-weight: 700;
+}
+
+p.dpd-footer {
+  border-top: 1px solid var(--primary);
+  font-size: 80%;
+  padding: 5px 0px;
+  margin-top: 5px;
+}
+
+hr.dpd {
+  background-color: var(--gray-transparent);
+  width: 100%;
+  border: none;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* tables */
+
+/* sutta-info */
+
+table {
+  margin: 3px 0px;
+}
+
+table.sutta-info {
+  border: none;
+}
+
+table.sutta-info td,
+table.sutta-info th {
+  text-align: left;
+  vertical-align: top;
+  padding: 0px 0px;
+}
+
+table.sutta-info th {
+  color: var(--primary-text);
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 0px 5px 2px 0px;
+}
+
+table.sutta-info th.heading {
+  color: unset;
+  font-weight: 700;
+  white-space: nowrap;
+  background-color: var(--gray-transparent);
+}
+
+/* grammar */
+
+table.grammar {
+  border: none;
+}
+
+table.grammar td,
+table.grammar th {
+  text-align: left;
+  vertical-align: top;
+  padding: 0px 0px;
+}
+
+table.grammar th {
+  color: var(--primary-text);
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 0px 5px 2px 0px;
+}
+
+table.grammar b {
+  font-weight: 700;
+}
+
+/* sutta */
+
+p.sutta {
+  color: var(--primary-text);
+  font-style: italic;
+  padding: 0px 0px 3px 0px;
+}
+
+a.sutta_link {
+  color: var(--primary-text);
+  font-style: italic;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a.sutta_link:hover {
+  color: var(--primary-alt);
+  text-decoration: underline;
+}
+
+/* inflection tables */
+
+table.inflection {
+  width: 100%;
+  padding: 0 0 5px 0px;
+  border-radius: 7px;
+  border-collapse: separate;
+  border: none;
+  /* border-spacing: 0; */
+}
+
+table.inflection td,
+table.inflection th {
+  border-collapse: separate;
+  border-radius: 7px;
+  /* border-spacing: 0; */
+  border: 1px solid var(--gray);
+  line-height: 150%;
+  padding: 5px 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+table.inflection th {
+  border: 1px solid var(--primary);
+  color: var(--primary-text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+table.inflection tr:first-child th:first-child {
+  border-top-left-radius: 7px;
+}
+
+table.inflection tr:first-child th:last-child {
+  border-top-right-radius: 7px;
+}
+
+table.inflection tr:last-child td:first-child {
+  border-bottom-left-radius: 7px;
+}
+
+table.inflection tr:last-child td:last-child {
+  border-bottom-right-radius: 7px;
+}
+
+span.gray {
+  color: var(--gray);
+}
+
+a.jump {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* family tables */
+
+table.family {
+  border: none;
+}
+
+table.family td,
+table.family th {
+  text-align: left;
+  vertical-align: top;
+}
+
+table.family th {
+  color: var(--primary-text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+table.family td {
+  padding-right: 7px;
+}
+
+table.family b {
+  font-weight: 700;
+}
+
+/* buttons */
+
+div.button-box {
+  margin: 2px 0px 3px 0px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+a.dpd-button {
+  background-color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 7px;
+  color: var(--dark);
+  cursor: pointer;
+  display: inline-block;
+  font-size: 80%;
+  font-weight: 400;
+  margin: 1px 1px 2px 1px;
+  padding: 2px 5px;
+  text-decoration: none;
+  user-select: none;
+  box-shadow: var(--shadow-default);
+}
+
+a.dpd-button.close {
+  float: right;
+  margin: 10px;
+}
+
+a.dpd-button.active {
+  background-color: var(--primary-alt);
+  border-color: var(--primary-alt);
+  color: var(--light);
+  user-select: none;
+}
+
+a.dpd-button:hover {
+  box-shadow: var(--shadow-hover);
+  border: 1px solid var(--primary-alt);
+  background-color: var(--primary-alt);
+  color: var(--light);
+  user-select: none;
+}
+
+.dpd-link {
+  color: var(--primary-text);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.dpd-link:hover {
+  color: var(--primary-alt);
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
+
+/* freq tables */
+
+table.freq {
+  border-radius: 7px;
+  border-collapse: separate;
+  border: none;
+  /*     width:100%; */
+}
+
+table.freq thead th {
+  text-align: center;
+}
+
+table.freq tbody th {
+  border: 1px solid var(--primary);
+  border-radius: 7px;
+  padding: 5px 10px;
+  text-align: center;
+  width: 1ex;
+
+  /*     white-space: nowrap; */
+  vertical-align: middle;
+}
+
+.vertical-text {
+  text-orientation: upright;
+  inline-size: fit-content;
+  word-break: break-all;
+  max-width: 1ex;
+  white-space: break-spaces;
+  align-items: center;
+}
+
+table.freq td {
+  border-collapse: separate;
+  border-radius: 7px;
+  border: 1px solid var(--gray-transparent);
+  font-size: 0.8em;
+  min-width: 30px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 2.5em;
+}
+
+table.freq td.void {
+  border: 0px solid transparent;
+}
+
+table.freq td.gap {
+  border: 0px solid transparent;
+  width: 10px;
+}
+
+table.freq td.gr0 {
+  border: 1px solid var(--freq0);
+  border-color: var(--gray-transparent);
+  color: transparent;
+}
+
+.dark-mode table.freq td.gr0 {
+  border: 1px solid var(--freq0);
+  border-color: var(--gray-transparent);
+  color: transparent;
+}
+
+table.freq td.gr1 {
+  background-color: var(--freq1);
+  border-color: var(--freq1);
+  color: var(--dark);
+}
+
+table.freq td.gr2 {
+  background-color: var(--freq2);
+  border-color: var(--freq2);
+  color: var(--dark);
+}
+
+table.freq td.gr3 {
+  background-color: var(--freq3);
+  border-color: var(--freq3);
+  color: var(--dark);
+}
+
+table.freq td.gr4 {
+  background-color: var(--freq4);
+  border-color: var(--freq4);
+  color: var(--dark);
+}
+
+table.freq td.gr5 {
+  background-color: var(--freq5);
+  border-color: var(--freq5);
+  color: var(--dark);
+}
+
+table.freq td.gr6 {
+  background-color: var(--freq6);
+  border-color: var(--freq6);
+  color: var(--light);
+}
+
+table.freq td.gr7 {
+  background-color: var(--freq7);
+  border-color: var(--freq7);
+  color: var(--light);
+}
+
+table.freq td.gr8 {
+  background-color: var(--freq8);
+  border-color: var(--freq8);
+  color: var(--light);
+}
+
+table.freq td.gr9 {
+  background-color: var(--freq9);
+  border-color: var(--freq9);
+  color: var(--light);
+}
+
+table.freq td.gr10 {
+  background-color: var(--freq10);
+  border-color: var(--freq10);
+  color: var(--light);
+}
+
+.dark-mode table.freq td {
+  color: var(--light);
+}
+
+/* variant */
+
+table.variants,
+table.grammar_dict {
+  border-collapse: collapse;
+  border: none;
+  line-height: 150%;
+  margin: 0px;
+  max-width: 100%;
+  overflow: auto;
+  padding: 2px 0px;
+  text-align: left;
+  vertical-align: top;
+  width: auto;
+}
+
+.variants th,
+.variants td,
+.grammar_dict th,
+.grammar_dict td {
+  padding: 2px 10px 0px 0px;
+  text-align: left;
+  vertical-align: center;
+}
+
+.grammar_dict .col_empty {
+  display: none;
+}
+
+.variants td:first-child,
+.variants td:nth-child(2) {
+  white-space: nowrap;
+}
+
+/* help */
+
+div.tertiary {
+  border: 2px solid var(--secondary);
+  border-radius: 7px;
+  line-height: 150%;
+  margin: 0px 0px;
+  overflow: auto;
+  padding: 3px 5px;
+  text-align: left;
+}
+
+table.help {
+  border: none;
+  width: 100%;
+}
+
+table.help td,
+table.help th {
+  line-height: 150%;
+  padding: 0px 5px 0px 0px;
+  text-align: left;
+  vertical-align: top;
+}
+
+table.help th {
+  color: var(--secondary);
+  font-weight: 700;
+  width: 10%;
+}
+
+table.help td {
+  width: 90%;
+}
+
+table.help b {
+  font-weight: 700;
+}
+
+/* roots */
+
+table.root_info {
+  border: none;
+}
+
+table.root_info td,
+table.root_info th {
+  text-align: left;
+  vertical-align: top;
+  padding: 0px 0px;
+}
+
+table.root_info th {
+  color: var(--primary-text);
+  font-weight: 700;
+  white-space: normal;
+  padding: 0px 5px 2px 0px;
+}
+
+table.root_info b {
+  font-weight: 700;
+}
+
+table.root_family td,
+table.root_family th {
+  text-align: left;
+  vertical-align: top;
+}
+
+table.root_family th {
+  color: var(--primary-text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+table.root_family b {
+  font-weight: 700;
+}
+
+table.root_matrix {
+  width: 100%;
+}
+
+table.root_matrix th,
+table.root_matrix td {
+  border-radius: 5px;
+  line-height: 150%;
+  vertical-align: top;
+  padding: 5px 5px;
+  overflow: auto;
+}
+
+table.root_matrix th {
+  border: 1px solid var(--primary);
+  color: var(--primary-text);
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+
+table.root_matrix td {
+  border: 1px solid var(--gray-transparent);
+  text-align: left;
+}
+
+table.root_matrix td b {
+  color: var(--primary-text);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.inflection-highlight {
+  background-color: var(--primary);
+  color: var(--dark);
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+/* play button */
+
+a.dpd-button.play {
+  padding: 2px 5px;
+  /* match standard button padding */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  /* ensure height matches neighbors */
+}
+
+a.dpd-button.play:hover {
+  background-color: var(--primary-alt);
+  border-color: var(--primary-alt);
+}
+
+a.dpd-button.play:hover svg {
+  fill: var(--light);
+  stroke: var(--light);
+}
+
+a.dpd-button.play svg {
+  width: 1em;
+  height: 1em;
+  fill: var(--dark);
+  stroke: var(--dark);
+}
+
+/* small play button */
+
+a.dpd-button.play.small {
+  padding: 0px;
+  margin: 0px 2px;
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 50%;
+  background-color: var(--dark);
+  border: 1px solid var(--dark);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: none;
+}
+
+a.dpd-button.play.small svg {
+  fill: var(--light);
+  stroke: var(--light);
+  width: 0.7em;
+  height: 0.7em;
+}
+
+a.dpd-button.play.small:hover {
+  background-color: var(--primary-alt);
+  border-color: var(--primary-alt);
+}
+
+a.dpd-button.play.small:hover svg {
+  fill: var(--light);
+  stroke: var(--light);
+}
+
+.dark-mode a.dpd-button.play.small {
+  background-color: var(--light);
+  border: 1px solid var(--light);
+}
+
+.dark-mode a.dpd-button.play.small svg {
+  fill: var(--dark);
+  stroke: var(--dark);
+}
+
+.dark-mode a.dpd-button.play.small:hover {
+  background-color: var(--primary-alt);
+  border-color: var(--primary-alt);
+}
+
+.dark-mode a.dpd-button.play.small:hover svg {
+  fill: var(--light);
+  stroke: var(--light);
+}
+
+/* tooltips */
+
+[data-title] {
+  position: relative;
+  cursor: pointer;
+}
+
+.summary-link,
+.root-summary-link {
+  text-decoration: none;
+}
+
+[data-title]:hover::after {
+  content: attr(data-title);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--primary);
+  border: 1px solid var(--gray-transparent);
+  color: var(--dark);
+  padding: 2px 4px;
+  border-radius: 5px;
+  font-size: 10px;
+  white-space: nowrap;
+  z-index: 1000;
+  box-shadow: var(--shadow-default);
+  pointer-events: none;
+}
