@@ -328,6 +328,13 @@ a.dpd-button:hover {
   background-color: var(--primary-alt);
   color: var(--light);
   user-select: none;
+  text-decoration: none;
+}
+
+a.dpd-button:focus,
+a.dpd-button:active {
+  outline: none;
+  text-decoration: none;
 }
 
 .dpd-link {
