@@ -56,6 +56,66 @@
     popup.innerHTML = '<div class="pm-window"><button class="pm-close" aria-label="Close">×</button><div class="pm-content" style="padding:18px"></div></div>';
     document.body.appendChild(popup);
 
+    // normalize a selected word by trimming surrounding punctuation
+    function normalizeWord(word){
+        if (!word) return '';
+        try{ return word.replace(/^[^\p{L}]+|[^\p{L}]+$/gu,''); }catch(err){ return word.replace(/^[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+|[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+$/g,''); }
+    }
+
+    // pending-promises map for prefetching (no long-term caching)
+    var PENDING_TTL_MS = 5 * 1000; // keep resolved promise around briefly to benefit immediate lookups
+    var dpdPending = new Map();
+
+    function prefetchPali(word){
+        if (!word) return Promise.reject(new Error('empty'));
+        if (dpdPending.has(word)) return dpdPending.get(word);
+        var p = fetch('https://www.dpdict.net/search_json?q=' + encodeURIComponent(word))
+            .then(function(res){ if(!res.ok) throw new Error('Fetch failed'); return res.json(); })
+            .then(function(json){
+                // leave the resolved promise in the map for a short time, then clear it
+                try{
+                    setTimeout(function(){ try{ dpdPending.delete(word); }catch(e){} }, PENDING_TTL_MS);
+                }catch(e){}
+                return json;
+            }).catch(function(err){ dpdPending.delete(word); throw err; });
+        dpdPending.set(word, p);
+        return p;
+    }
+
+    // when the user selects text (mouseup/touchend), prefetch the likely word
+    var _prefetchTimer = null;
+    function schedulePrefetchForSelection(){
+        if (_prefetchTimer) clearTimeout(_prefetchTimer);
+        _prefetchTimer = setTimeout(function(){
+            var sel = getSelectionText();
+            if (!sel) return;
+            var w = (sel.split(/\s+/)[0] || sel);
+            w = normalizeWord(w);
+            if (!w || w.length < 2) return;
+            prefetchPali(w).catch(function(){});
+        }, 120);
+    }
+    document.addEventListener('mouseup', schedulePrefetchForSelection);
+    document.addEventListener('touchend', schedulePrefetchForSelection);
+
+    // position the close button in the top-right of the modal with padding
+    (function(){
+        var win = popup.querySelector('.pm-window');
+        var cb = popup.querySelector('.pm-close');
+        var contentEl = popup.querySelector('.pm-content');
+        if (win && win.style) win.style.position = 'relative';
+        if (cb && cb.style) {
+            cb.style.position = 'absolute';
+            cb.style.top = '8px';
+            cb.style.right = '8px';
+            cb.style.padding = '4px 8px';
+            cb.style.cursor = 'pointer';
+            cb.style.borderRadius = '4px';
+        }
+        // reduce top padding of pm-content to 4px while keeping horizontal padding
+        if (contentEl && contentEl.style) contentEl.style.padding = '4px 18px';
+    })();
+
 
     function getSelectionText(){
         var s = window.getSelection();
@@ -71,8 +131,8 @@
             try{}catch(e){}
             if (!sel) return;
             var word = sel.split(/\s+/)[0] || sel;
-            // strip surrounding punctuation
-            try{ word = word.replace(/^[^\p{L}]+|[^\p{L}]+$/gu,''); }catch(err){ word = word.replace(/^[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+|[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+$/g,''); }
+            // normalize/strip surrounding punctuation consistently
+            word = normalizeWord(word);
             if (!word) return;
             try{}catch(e){}
             lookupPali(word);
@@ -84,16 +144,19 @@
     popup.querySelector('.pm-close').addEventListener('click', hidePopup);
     overlay.addEventListener('click', hidePopup);
 
-    function lookupPali(word){
-        var content = popup.querySelector('.pm-content');
-        content.innerHTML = '<div>Looking up <strong>' + escapeHtml(word) + '</strong>…</div>';
+    function showPopup(){
         popup.style.display = 'block';
         overlay.style.display = 'block';
+    }
 
-        fetch('https://www.dpdict.net/search_json?q=' + encodeURIComponent(word))
-        .then(function(res){ if(!res.ok) throw new Error('Fetch failed'); return res.json(); })
+    function lookupPali(word){
+        var content = popup.querySelector('.pm-content');
+        // clear any previous result immediately so old content doesn't flash
+        try { content.innerHTML = ''; }catch(e){}
+        // prefetch/attach to any in-flight request, otherwise start a fetch
+        prefetchPali(word)
         .then(function(json){ renderResult(word,json); })
-        .catch(function(err){ content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to fetch meaning.</div></div>'; console.error(err); });
+        .catch(function(err){ content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to fetch meaning.</div></div>'; try{ showPopup(); }catch(e){} console.error(err); });
     }
 
     function renderResult(word, json){
@@ -102,6 +165,7 @@
             // Build a header + body layout inside pm-content so styling matches expected modal
             var titleHtml = '<div class="pm-header"><h3 class="pm-title">' + escapeHtml(word) + '</h3></div>';
             var bodyHtml = '';
+            var creditHtml = '<div class="pm-credit" style="font-family:sans-serif;font-size:10px;margin:0;">Courtesy of <a href="https://www.dpdict.net" target="_blank" rel="noopener noreferrer">Digital Pali Dictionary</a></div>';
 
             // dpdict sometimes returns an object with HTML fragments; render HTML-containing fields
             // NOTE: intentionally skip `summary_html` so the top summary listing is not shown in the modal.
@@ -117,7 +181,8 @@
                 // if we found any detailed fragments, render them
                 if (parts.length > 0) {
                     bodyHtml += '<div class="pm-body"><div class="dpd">' + parts.join('\n') + '</div></div>';
-                    content.innerHTML = titleHtml + bodyHtml;
+                    content.innerHTML = titleHtml + creditHtml + bodyHtml;
+                    try{ showPopup(); }catch(e){}
                     enhanceModal(content);
                     return;
                 }
@@ -127,7 +192,9 @@
             // fallback for array-style responses
             if (!Array.isArray(json) || !json.length) {
                 bodyHtml += '<div class="pm-body"><div class="dpd"><div class="pm-section"><strong>No results</strong><div>No entries found.</div></div></div></div>';
-                content.innerHTML = titleHtml + bodyHtml; return;
+                content.innerHTML = titleHtml + bodyHtml;
+                try{ showPopup(); }catch(e){}
+                return;
             }
 
             // show top senses / glosses
@@ -144,7 +211,7 @@
                 if (entry.compound_family) { (Array.isArray(entry.compound_family)?entry.compound_family:[entry.compound_family]).forEach(function(c){ if(c) compounds.add(c); }); }
             });
 
-            bodyHtml += '<div class="pm-body"><div class="dpd">';
+                bodyHtml += '<div class="pm-body"><div class="dpd">';
             if (senses.length) {
                 bodyHtml += '<div class="pm-section"><strong>Meanings / examples</strong><div>' + escapeHtml(senses.slice(0,6).join('; ')) + '</div></div>';
             }
@@ -165,7 +232,8 @@
             }
             bodyHtml += '</div></div>';
 
-            content.innerHTML = titleHtml + bodyHtml;
+            content.innerHTML = titleHtml + creditHtml + bodyHtml;
+            try{ showPopup(); }catch(e){}
             enhanceModal(content);
         }catch(e){ content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to render results.</div></div>'; console.error(e); }
     }
@@ -201,13 +269,13 @@
                 title.style.fontFamily = 'inherit';
                 title.style.fontWeight = '700';
                 title.style.textAlign = 'left';
+                title.style.color = '#be564d';
             }
 
                 // Add accordion behavior to dpd buttons: we'll also set a data attr to indicate binding
                 var buttons = dpd.querySelectorAll('a.dpd-button');
                 buttons.forEach(function(btn){
-                    // mark as bound for DOM inspection
-                    try{ btn.setAttribute('data-dpd-bound','1'); }catch(e){}
+                    // no-op: no DOM marker needed when using delegated listeners
                 });
             });
 
