@@ -437,6 +437,17 @@ h5,
     }
 }
 
+/* Ensure the topbar search icon is hidden on mobile viewports (safeguard)
+   Moved from tpsearch.css so the rule applies at the site level. */
+@media (max-width: 800px) {
+    #tp-topbar-search-icon,
+    #tp-topbar-search-icon-mobile,
+    .topnav a#tp-topbar-search-icon,
+    .topnav a#tp-topbar-search-icon-mobile {
+        display: none !important;
+        visibility: hidden !important;
+    }
+}
 
 /*--------- iPhone SE or smaller models ----------- */
 @media screen and (max-width: 376px) {
