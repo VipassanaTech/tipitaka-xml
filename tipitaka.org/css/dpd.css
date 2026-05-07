@@ -48,6 +48,83 @@ body {
   touch-action: manipulation;
 }
 
+/* Styles for the pali lookup modal and overlay (moved from js/pali-lookup.js) */
+#pali-meaning-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 9998;
+}
+
+#pali-meaning-popup {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 900px;
+  width: 90%;
+  max-height: 80%;
+  overflow: auto;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  border-radius: 6px;
+  padding: 0;
+  display: none;
+  z-index: 9999;
+}
+
+.pm-window {
+  position: relative;
+}
+
+.pm-header-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px 0;
+}
+
+.pm-title-holder {
+  flex: 0 0 auto;
+  text-align: left;
+  padding-right: 8px;
+}
+
+.pm-title {
+  font-family: inherit;
+  font-weight: 700;
+  text-align: left;
+  color: #be564d;
+  margin-top: 0;
+}
+
+.pm-right { display:flex; align-items:center; }
+
+.pm-credit-holder { margin-right:8px; text-align:right; }
+
+.pm-close {
+  margin-left: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pm-content { padding: 4px 18px; }
+
+.pm-spacer { flex: 1 1 auto; }
+
+.pm-raw { white-space: pre-wrap; max-height: 240px; overflow: auto; }
+
+.pm-credit {
+  padding-top: 10px;
+  font-family: sans-serif;
+  font-size: 10px;
+  margin: 0;
+}
+
 h3,
 h3.dpd {
   font-size: 130%;
@@ -753,4 +830,9 @@ a.dpd-button.play.small:hover svg {
   z-index: 1000;
   box-shadow: var(--shadow-default);
   pointer-events: none;
+}
+
+/* modal credit spacing */
+.pm-credit {
+  padding-top: 5px;
 }

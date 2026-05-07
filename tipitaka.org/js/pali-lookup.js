@@ -30,30 +30,22 @@
     // create overlay + popup (apply minimal inline styles so modal shows even if external css is missing)
     var overlay = document.createElement('div');
     overlay.id = 'pali-meaning-overlay';
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0'; overlay.style.left = '0'; overlay.style.width = '100%'; overlay.style.height = '100%';
-    overlay.style.background = 'rgba(0,0,0,0.4)';
-    overlay.style.display = 'none';
-    overlay.style.zIndex = '9998';
     document.body.appendChild(overlay);
 
     var popup = document.createElement('div');
     popup.id = 'pali-meaning-popup';
-    // basic container styles
-    popup.style.position = 'fixed';
-    popup.style.left = '50%'; popup.style.top = '50%';
-    popup.style.transform = 'translate(-50%, -50%)';
-    popup.style.maxWidth = '900px';
-    popup.style.width = '90%';
-    popup.style.maxHeight = '80%';
-    popup.style.overflow = 'auto';
-    popup.style.background = '#fff';
-    popup.style.boxShadow = '0 10px 30px rgba(0,0,0,0.25)';
-    popup.style.borderRadius = '6px';
-    popup.style.padding = '0';
-    popup.style.display = 'none';
-    popup.style.zIndex = '9999';
-    popup.innerHTML = '<div class="pm-window"><button class="pm-close" aria-label="Close">×</button><div class="pm-content" style="padding:18px"></div></div>';
+    popup.className = 'pali-meaning-popup';
+    popup.innerHTML = '<div class="pm-window">'
+        + '<div class="pm-header-row">'
+        + '<div class="pm-title-holder"></div>'
+        + '<div class="pm-spacer"></div>'
+        + '<div class="pm-right">'
+        + '<div class="pm-credit-holder"></div>'
+        + '<button class="pm-close" aria-label="Close">×</button>'
+        + '</div>'
+        + '</div>'
+        + '<div class="pm-content"></div>'
+        + '</div>';
     document.body.appendChild(popup);
 
     // normalize a selected word by trimming surrounding punctuation
@@ -103,17 +95,6 @@
         var win = popup.querySelector('.pm-window');
         var cb = popup.querySelector('.pm-close');
         var contentEl = popup.querySelector('.pm-content');
-        if (win && win.style) win.style.position = 'relative';
-        if (cb && cb.style) {
-            cb.style.position = 'absolute';
-            cb.style.top = '8px';
-            cb.style.right = '8px';
-            cb.style.padding = '4px 8px';
-            cb.style.cursor = 'pointer';
-            cb.style.borderRadius = '4px';
-        }
-        // reduce top padding of pm-content to 4px while keeping horizontal padding
-        if (contentEl && contentEl.style) contentEl.style.padding = '4px 18px';
     })();
 
 
@@ -165,7 +146,7 @@
             // Build a header + body layout inside pm-content so styling matches expected modal
             var titleHtml = '<div class="pm-header"><h3 class="pm-title">' + escapeHtml(word) + '</h3></div>';
             var bodyHtml = '';
-            var creditHtml = '<div class="pm-credit" style="font-family:sans-serif;font-size:10px;margin:0;">Courtesy of <a href="https://www.dpdict.net" target="_blank" rel="noopener noreferrer">Digital Pali Dictionary</a></div>';
+            var creditHtml = '<div class="pm-credit">Courtesy of <a href="https://www.dpdict.net" target="_blank" rel="noopener noreferrer">Digital Pali Dictionary</a></div>';
 
             // dpdict sometimes returns an object with HTML fragments; render HTML-containing fields
             // NOTE: intentionally skip `summary_html` so the top summary listing is not shown in the modal.
@@ -181,7 +162,10 @@
                 // if we found any detailed fragments, render them
                 if (parts.length > 0) {
                     bodyHtml += '<div class="pm-body"><div class="dpd">' + parts.join('\n') + '</div></div>';
-                    content.innerHTML = titleHtml + creditHtml + bodyHtml;
+                    // place the title in the header title-holder and credit in the credit-holder
+                    try{ var th = popup.querySelector('.pm-title-holder'); if (th) th.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+                    try{ var holder = popup.querySelector('.pm-credit-holder'); if (holder) holder.innerHTML = creditHtml; }catch(e){}
+                    content.innerHTML = bodyHtml;
                     enhanceModal(content);
                     try{ showPopup(); }catch(e){}
                     return;
@@ -192,7 +176,9 @@
             // fallback for array-style responses
             if (!Array.isArray(json) || !json.length) {
                 bodyHtml += '<div class="pm-body"><div class="dpd"><div class="pm-section"><strong>No results</strong><div>No entries found.</div></div></div></div>';
-                content.innerHTML = titleHtml + bodyHtml;
+                try{ var th2 = popup.querySelector('.pm-title-holder'); if (th2) th2.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+                try{ var holder2 = popup.querySelector('.pm-credit-holder'); if (holder2) holder2.innerHTML = creditHtml; }catch(e){}
+                content.innerHTML = bodyHtml;
                 enhanceModal(content);
                 try{ showPopup(); }catch(e){}
                 return;
@@ -229,11 +215,13 @@
             }
             // fallback: show raw JSON if nothing else
             if (!senses.length && !examples.length && !roots.size && !compounds.size) {
-                bodyHtml += '<div class="pm-section"><strong>Raw data</strong><pre style="white-space:pre-wrap;max-height:240px;overflow:auto">' + escapeHtml(JSON.stringify(json,null,2)) + '</pre></div>';
+                bodyHtml += '<div class="pm-section"><strong>Raw data</strong><pre class="pm-raw">' + escapeHtml(JSON.stringify(json,null,2)) + '</pre></div>';
             }
             bodyHtml += '</div></div>';
 
-            content.innerHTML = titleHtml + creditHtml + bodyHtml;
+            try{ var th3 = popup.querySelector('.pm-title-holder'); if (th3) th3.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+            try{ var holder3 = popup.querySelector('.pm-credit-holder'); if (holder3) holder3.innerHTML = creditHtml; }catch(e){}
+            content.innerHTML = bodyHtml;
             enhanceModal(content);
             try{ showPopup(); }catch(e){}
         }catch(e){ content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to render results.</div></div>'; console.error(e); }
@@ -267,13 +255,8 @@
                 }catch(e){}
 
             // Make the header/title use site font, bold and left-aligned
-            var title = contentEl.querySelector('.pm-title');
-            if (title) {
-                title.style.fontFamily = 'inherit';
-                title.style.fontWeight = '700';
-                title.style.textAlign = 'left';
-                title.style.color = '#be564d';
-            }
+            var title = contentEl.querySelector('.pm-title') || popup.querySelector('.pm-title');
+            // title styling is handled via CSS (.pm-title)
 
                 // Add accordion behavior to dpd buttons: we'll also set a data attr to indicate binding
                 var buttons = dpd.querySelectorAll('a.dpd-button');
