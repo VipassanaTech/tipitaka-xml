@@ -302,4 +302,48 @@
         }catch(e){ console.error('enhanceModal error', e); }
     }
 
+    // Mobile selection handler: debounced selectionchange + long-press fallback
+    (function(){
+        var lastMobileTrigger = '';
+        var selTimer = null;
+        var longPressTimer = null;
+
+        function readSelectionAndLookup(){
+            try {
+                var s = window.getSelection();
+                if (!s) return;
+                var text = s.toString().trim();
+                if (!text) return;
+                // same behavior as dblclick: use first token
+                var word = (text.split(/\s+/)[0] || text);
+                word = normalizeWord(word);
+                if (!word || word.length < 2) return;
+                // restrict to content area if present
+                var contentRoot = document.getElementById('t-content');
+                if (contentRoot && s.anchorNode && !contentRoot.contains(s.anchorNode)) return;
+                if (word === lastMobileTrigger) return;
+                lastMobileTrigger = word;
+                lookupPali(word);
+            } catch (e) { /* silent */ }
+        }
+
+        // Debounced selectionchange covers most mobile browsers (fires after selection handles appear)
+        document.addEventListener('selectionchange', function(){
+            if (selTimer) clearTimeout(selTimer);
+            selTimer = setTimeout(readSelectionAndLookup, 350);
+        }, false);
+
+        // Long-press fallback: start timer on touchstart, cancel on move/end
+        document.addEventListener('touchstart', function(ev){
+            if (ev.touches && ev.touches.length > 1) return;
+            longPressTimer = setTimeout(function(){
+                // allow browser to update selection first
+                setTimeout(readSelectionAndLookup, 50);
+            }, 600);
+        }, false);
+        ['touchend','touchmove','touchcancel'].forEach(function(evName){
+            document.addEventListener(evName, function(){ if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; } }, false);
+        });
+    })();
+
 })();
