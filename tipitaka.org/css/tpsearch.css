@@ -235,6 +235,22 @@
     border-color: #B78730;
 }
 
+/* Ensure result title contains right-side icons and the open-in-new-tab icon is visible */
+.tp-result-title {
+    position: relative;
+}
+.tp-open-newtab {
+    float: right;
+    margin-left: 8px;
+    color: #B78730;
+    text-decoration: none;
+    display: inline-block;
+}
+.tp-open-newtab .fa {
+    font-size: 16px;
+    vertical-align: middle;
+}
+
 /* Topbar search icon placement: ensure it sits with other left-floated links */
 .topnav a#tp-topbar-search-icon,
 .topnav a#tp-topbar-search-icon-mobile {
@@ -458,8 +474,7 @@
 }
 
 .tp-limit-search {
-    background: transparent;
-    border: 1px solid #e0dfdc;
+    background: transparent;;
     box-shadow: none;
     padding: 6px;
     color: #23303b;
@@ -485,14 +500,11 @@
     display: grid;
      /* 4 columns x 4 rows grid: first row reserved for headings
          Use min row heights so headings don't overlap checkbox labels
-         Use only 3 data rows (Vinaya/Sutta/Abdhi) to avoid the extra empty bottom row */
-      grid-template-columns: repeat(4, 1fr);
-      /* add an extra data row to accommodate the sub-limit table inserted between
-          the Sutta and Abdhi rows */
-      grid-template-rows: auto repeat(4, minmax(28px, auto));
-     grid-auto-rows: minmax(28px, auto);
+         Use only 3 data rows (Vinaya/Sutta/Abhi) to avoid the extra empty bottom row */
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(28px, auto);
     column-gap: 1px;
-     row-gap: 2px;
+    row-gap: 2px;
     /* We'll explicitly place the labels into their intended cells */
 }
 
@@ -513,29 +525,6 @@
     width: auto;
 }
 
-/* Sub-limit table: center-align cells and center inline labels */
-.tp-sub-limit-table td,
-.tp-sub-limit-table th {
-    text-align: center;
-    vertical-align: middle;
-    padding: 4px 6px;
-}
-.tp-sub-limit .limit-item-sub {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-}
-
-/* Explicit placement: map the HTML order to the desired 3-column, top-down layout
-   HTML order is: 1 Vinayapitaka, 2 Suttapitaka, 3 Abhidhammapitaka,
-                  4 Mūla, 5 Aṭṭhakathā, 6 Tīkā, 7 Añña, 8 All
-   Desire: column1 rows 1..3 = items 1,2,3; column2 rows 1..3 = items 4,5,6;
-           column3 rows 1..3 = items 7,8,(empty)
-*/
-/* remove old nth-child positioning (we rely on class-based placement below) */
-
-/* Header styles */
 .tp-limit-head {
     font-weight: 700;
     font-size: 13px;
@@ -544,27 +533,6 @@
     background: transparent;
     z-index: 2;
 }
-.tp-limit-head-1 { grid-column: 1; grid-row: 1; }
-.tp-limit-head-2 { grid-column: 2; grid-row: 1; }
-.tp-limit-head-3 { grid-column: 3; grid-row: 1; }
-
-/* Explicit placement for the labeled checkbox items using their classes */
-.tp-limit-list .item-mula-vinaya { grid-column: 1; grid-row: 2; }
-.tp-limit-list .item-mula-sutta  { grid-column: 1; grid-row: 3; }
-.tp-limit-list .item-mula-abhd   { grid-column: 1; grid-row: 4; }
-.tp-limit-list .item-atth-vinaya { grid-column: 2; grid-row: 2; }
-.tp-limit-list .item-atth-sutta  { grid-column: 2; grid-row: 3; }
-.tp-limit-list .item-atth-abhd   { grid-column: 2; grid-row: 4; }
-.tp-limit-list .item-tika-vinaya { grid-column: 3; grid-row: 2; }
-.tp-limit-list .item-tika-sutta  { grid-column: 3; grid-row: 3; }
-.tp-limit-list .item-tika-abhd   { grid-column: 3; grid-row: 4; }
-/* Keep legacy class mappings for backward compatibility */
-.tp-limit-list .item-vinaya { grid-column: 1; grid-row: 2; }
-.tp-limit-list .item-sutta  { grid-column: 1; grid-row: 3; }
-.tp-limit-list .item-abhd   { grid-column: 1; grid-row: 4; }
-/* Place Añña and All into the rightmost (4th) column */
-.tp-limit-list .item-anya   { grid-column: 4; grid-row: 2; }
-.tp-limit-list .item-all    { grid-column: 4; grid-row: 3; }
 
 .tp-limit-list input[type="checkbox"] {
     width: 18px;
@@ -572,6 +540,22 @@
     margin-right: 8px;
     transform: none;
     accent-color: #0b66c2;
+}
+
+/* Table-specific tweaks: ensure row headings and checkbox labels align vertically */
+.tp-limit-table td {
+    vertical-align: middle;
+    padding: 4px 6px;
+}
+.tp-limit-table .limit-item {
+    display: inline-flex; /* ensure label content centers with the checkbox */
+    align-items: left;
+    font-size: 13px; /* match existing .tp-limit-list label size */
+    line-height: 1;
+}
+.tp-limit-table input[type="checkbox"] {
+    vertical-align: middle;
+    margin-right: 8px;
 }
 
 /* Make the checkbox label text and checkbox align compactly on one line */

@@ -15,6 +15,7 @@
     var currentStart = 0;
     var currentTotal = 0;
     var currentFilter = '';       // active volume filter (fq), empty = all
+    var displayFilterForSubfacets = ''; // transient filter used to render subfacet UI when checkboxes applied
     var lastFacets = {};          // cached facets from the most recent unfiltered search
     var unfilteredTotal = 0;      // numFound without any filter
     var currentIsDeva = false;    // whether current query is Devanagari
@@ -64,46 +65,52 @@
 
         var html = '<div id="tp-search-bar" style="display:none;">';
         // Left column: Limit Search checkboxes
-        html += '<div id="tp-limit-search" class="tp-limit-search">';
-        // list of checkboxes; 'Anya' (Other texts) displayed as 'Añña'
+            html += '<div id="tp-limit-search" class="tp-limit-search tp-limit-search-expanded">';
+        // list container for the table-based layout
         html += '<div class="tp-limit-list">';
-        // Column headings (top row)
-        html += '<div class="tp-limit-head tp-limit-head-1">Mula</div>';
-        html += '<div class="tp-limit-head tp-limit-head-2">Attha.</div>';
-        html += '<div class="tp-limit-head tp-limit-head-3">Tika</div>';
-        // Mula column: Vinaya / Sutta / Abdhi
-        html += '<label class="limit-item item-mula-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-vinaya" data-val="Vinayapitaka" /> Vinaya</label>';
-        html += '<label class="limit-item item-mula-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-sutta" data-val="Suttapitaka" /> Sutta</label>';
-        // Small separate 3x2 table of additional collections (visually separate from main limit grid)
-        // place sub-limit as a full-width grid row between Sutta and Abdhi
-        html += '<div class="tp-sub-limit" style="grid-column:1 / -1; grid-row:4; margin:6px 0 6px 0;">';
-        html += '<table class="tp-sub-limit-table" style="width:80%; border-collapse:collapse;">';
+        // Table layout: rows = Mula / Attha. / Tika / Añña / All
+        // columns = Label | Vinaya | Sutta | Abhi
+        html += '<table class="tp-limit-table">';
+        html += '<tbody>';
+        // Mula row
         html += '<tr>';
-        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-digha" data-val="Dighanikāya" /> Digha</label></td>';
-        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-majjhima" data-val="Majjhimanikāya" /> Majjhima</label></td>';
-        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-samyutta" data-val="Samyuttanikāya" /> Samyutta</label></td>';
+        html += '<td class="limit-item">Mula</td>';
+            html += '<td><label class="limit-item item-mula-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-vinaya" data-val="pitaka:&quot;Vinayapiṭaka&quot;" /> Vinaya</label></td>';
+            html += '<td><label class="limit-item item-mula-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-sutta" data-val="pitaka:&quot;Suttapiṭaka&quot;" /> Sutta</label></td>';
+            html += '<td><label class="limit-item item-mula-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-abhd" data-val="pitaka:&quot;Abhidhammapiṭaka&quot;" /> Abhi</label></td>';
         html += '</tr>';
+        // Attha. row (aṭṭhakathā)
         html += '<tr>';
-        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-anguttara" data-val="Anguttaranikāya" /> Anguttara</label></td>';
-        html += '<td style="padding:2px;"><label class="limit-item-sub"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-khuddaka" data-val="Khuddakanikāya" /> Khuddaka</label></td>';
-        html += '<td style="padding:2px;"></td>';
+        html += '<td class="limit-item">Attha.</td>';
+            html += '<td><label class="limit-item item-atth-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-vinaya" data-val="volume:&quot;Aṭṭhakathā&quot; AND pitaka:&quot;Vinayapiṭaka (aṭṭhakathā)&quot;" /> Vinaya</label></td>';
+            html += '<td><label class="limit-item item-atth-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-sutta" data-val="volume:&quot;Aṭṭhakathā&quot; AND pitaka:&quot;Suttapiṭaka (aṭṭhakathā)&quot;" /> Sutta</label></td>';
+            html += '<td><label class="limit-item item-atth-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-abhd" data-val="volume:&quot;Aṭṭhakathā&quot; AND pitaka:&quot;Abhidhammapiṭaka (aṭṭhakathā)&quot;" /> Abhi</label></td>';
         html += '</tr>';
-        html += '</table>';
-        html += '</div>';
-        html += '<label class="limit-item item-mula-abhd" style="grid-row:5;"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-abhd" data-val="Abhidhammapitaka" /> Abdhi</label>';
-        // Attha. column: Vinaya / Sutta / Abdhi (aṭṭhakathā)
-        html += '<label class="limit-item item-atth-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-vinaya" data-val="Vinayapiṭaka (aṭṭhakathā)" /> Vinaya</label>';
-        html += '<label class="limit-item item-atth-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-sutta" data-val="Suttapiṭaka (aṭṭhakathā)" /> Sutta</label>';
-        html += '<label class="limit-item item-atth-abhd" style="grid-row:5;"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-abhd" data-val="Abhidhammapiṭaka (aṭṭhakathā)" /> Abdhi</label>';
-        // Tika column: Vinaya / Sutta / Abdhi (ṭīkā)
-        html += '<label class="limit-item item-tika-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-vinaya" data-val="Vinayapiṭaka (ṭīkā)" /> Vinaya</label>';
-        html += '<label class="limit-item item-tika-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-sutta" data-val="Suttapiṭaka (ṭīkā)" /> Sutta</label>';
-        html += '<label class="limit-item item-tika-abhd" style="grid-row:5;"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-abhd" data-val="Abhidhammapiṭaka (ṭīkā)" /> Abdhi</label>';
-        // Other options
-        html += '<label class="limit-item item-anya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-anya" data-val="Anya" /> Añña</label>';
-        html += '<label class="limit-item item-all"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-all" data-val="ALL" style="margin-top:6px;" checked /> All</label>';
+        // Tika row (ṭīkā)
+        html += '<tr>';
+        html += '<td class="limit-item">Tika</td>';
+            html += '<td><label class="limit-item item-tika-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-vinaya" data-val="volume:&quot;Tīkā&quot; AND pitaka:&quot;Vinayapiṭaka (ṭīkā)&quot;" /> Vinaya</label></td>';
+            html += '<td><label class="limit-item item-tika-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-sutta" data-val="volume:&quot;Tīkā&quot; AND pitaka:&quot;Suttapiṭaka (ṭīkā)&quot;" /> Sutta</label></td>';
+            html += '<td><label class="limit-item item-tika-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-abhd" data-val="volume:&quot;Tīkā&quot; AND pitaka:&quot;Abhidhammapiṭaka (ṭīkā)&quot;" /> Abhi</label></td>';
+        html += '</tr>';
+        // Añña row (single checkbox placed in first data column)
+        html += '<tr>';
+        html += '<td><label class="limit-item item-anya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-anya" data-val="volume:&quot;Anya&quot;" />Añña</label></td>';
+        html += '<td></td>';
+        html += '<td></td>';
+        html += '<td></td>';
+        html += '</tr>';
+        // All row (default checked)
+          html += '<tr>';
+        html += '<td><label class="limit-item item-all"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-all" data-val="ALL" checked />All</label></td>';
+        html += '<td></td>';
+        html += '<td></td>';
+        html += '<td></td>';
+        html += '</tr>';
+        html += '</tbody></table>';
         html += '</div>'; // tp-limit-list
         html += '</div>'; // tp-limit-search
+
         html += '  <form id="tp-search-form" onsubmit="return false;">';
         html += '    <div class="tp-search-row">';
         // Note: do NOT include a title attribute here — we use aria-label for screen readers
@@ -321,12 +328,33 @@
             $('#tp-topbar-search-icon').addClass('tp-topbar-search-active');
         }
 
+        // If checkboxes are used, determine an effective filter to drive
+        // which facet fields/pivot to request (we prefer the pitaka clause
+        // when present so the UI can render sub-collection and category pills).
+        var limitFq = null;
+        try { limitFq = buildLimitFq(); } catch (e) { limitFq = null; }
+        var effectiveFilter = currentFilter;
+        if (limitFq) {
+            var candidatePitaka = null;
+            var searchList = [];
+            if (Array.isArray(limitFq)) searchList = limitFq;
+            else if (limitFq.pitakaClauses) searchList = limitFq.pitakaClauses;
+            else if (limitFq.clauses) searchList = limitFq.clauses;
+            for (var ci = 0; ci < searchList.length; ci++) {
+                var m = String(searchList[ci]).match(/^pitaka\s*:\s*"([^"]+)"$/i);
+                if (m) { candidatePitaka = 'pitaka:"' + m[1] + '"'; break; }
+            }
+            if (candidatePitaka) {
+                effectiveFilter = candidatePitaka;
+            }
+        }
+
         // Determine which facet fields and pivot key to request based on the
-        // currently-applied filter so we retrieve the next hierarchical level.
+        // effective filter so we retrieve the next hierarchical level.
         var facetFields = ['volume'];
         var pivotKey = 'volume,pitaka';
-        if (currentFilter) {
-            var _pf = parseFilter(currentFilter);
+        if (effectiveFilter) {
+            var _pf = parseFilter(effectiveFilter);
             if (_pf.field === 'volume') {
                 facetFields.push('pitaka');
                 pivotKey = 'volume,pitaka';
@@ -393,21 +421,51 @@
             'facet.pivot': pivotKey
         };
 
-        // Apply limit search filters (if any)
+        // Apply limit search filters (if any). buildLimitFq() may return either
+        // an array of clauses or an object with details. Use the returned
+        // information both to add fq params and to set a transient display
+        // filter used for subfacet rendering.
+        var limitFq = null;
         try {
-            var limitFq = buildLimitFq();
+            limitFq = buildLimitFq();
             if (limitFq) {
-                // Combine with existing filter (currentFilter) if present
-                if (params.fq) params.fq = '(' + params.fq + ') AND (' + limitFq + ')';
-                else params.fq = '(' + limitFq + ')';
+                var lclauses = Array.isArray(limitFq) ? limitFq : (limitFq.clauses || limitFq);
+                params.fq = (params.fq || []).concat(lclauses);
+                // Compute a displayFilter (prefer pitaka if present)
+                var pfCand = null;
+                if (!Array.isArray(limitFq) && limitFq.pitakaClauses && limitFq.pitakaClauses.length) {
+                    pfCand = limitFq.pitakaClauses[0];
+                } else {
+                    for (var xi = 0; xi < lclauses.length; xi++) {
+                        if (/^pitaka\s*:\s*/i.test(lclauses[xi])) { pfCand = lclauses[xi]; break; }
+                    }
+                }
+                var rawDisplay = pfCand || (lclauses.length ? lclauses[0] : '');
+                // Normalize: remove wrapping quotes from values like pitaka:"Name"
+                var mdisp = String(rawDisplay).match(/^(\w+)\s*:\s*"?(.+?)"?$/);
+                if (mdisp) displayFilterForSubfacets = mdisp[1] + ':' + mdisp[2];
+                else displayFilterForSubfacets = rawDisplay;
+            } else {
+                displayFilterForSubfacets = '';
             }
-        } catch (e) { /* ignore */ }
+        } catch (e) { displayFilterForSubfacets = ''; }
+            // If any limitFq was applied (checkboxes), prefer book-level facets
+            // so we can show counts per book under the selected pitaka(s).
+            try {
+                if (limitFq) {
+                    facetFields = facetFields.indexOf('book') === -1 ? facetFields.concat(['book']) : facetFields;
+                    pivotKey = 'pitaka,book';
+                    params['facet.field'] = facetFields;
+                    params['facet.pivot'] = pivotKey;
+                }
+            } catch (e) { }
 
-        // Apply volume or field-prefixed filter if set
+        // Apply volume or field-prefixed filter if set — add as another fq entry
         if (currentFilter) {
             var pf = parseFilter(currentFilter);
             if (pf.value) {
-                params.fq = pf.field + ':"' + pf.value + '"';
+                var pfExpr = pf.field + ':"' + pf.value + '"';
+                params.fq = (params.fq || []).concat([pfExpr]);
             }
         }
 
@@ -436,6 +494,14 @@
                 if (currentFilter) {
                     fetchPivotCounts(currentFilter);
                 }
+                // If we have a transient display filter derived from checkboxes
+                // (and it's different from currentFilter), fetch pivot counts
+                // for it so the category pills can be shown.
+                try {
+                    if (displayFilterForSubfacets && displayFilterForSubfacets !== currentFilter) {
+                        fetchPivotCounts(displayFilterForSubfacets);
+                    }
+                } catch (e) { }
             },
             error: function () {
                 $content.html(
@@ -475,13 +541,67 @@
         var totalBoxes = $('.tp-limit-checkbox').length;
         var checkedBoxes = $('.tp-limit-checkbox:checked').length;
         if (checkedBoxes === totalBoxes) return null;
-        // Build OR expression on the `volume` field
-        var parts = [];
+        // The checkbox `data-val` now contains a ready-to-use filter expression
+        // (for example: volume:"Tipiṭaka (Mūla)" AND pitaka:"Suttapitaka").
+        // Wrap each selected expression in parens and join with OR.
+        // Build an array of individual fq clauses. Each checkbox `data-val`
+        // may itself contain multiple clauses joined by ' AND ' (e.g.
+        // volume:"..." AND pitaka:"..."). Split those into separate
+        // clauses so we can send them as repeated `fq` params to Solr.
+        var clauses = [];
+        // Keep track if the selection represents a single pitaka checkbox
+        // so we can request a pivoted rows=0 book-level view.
+        var pitakaOnly = false;
+        var pitakaClauses = [];
         for (var i = 0; i < vals.length; i++) {
-            parts.push('volume:"' + vals[i] + '"');
+            var raw = String(vals[i]);
+            var parts = (raw.indexOf(' AND ') > -1) ? raw.split(' AND ') : [raw];
+            for (var si = 0; si < parts.length; si++) {
+                var s = parts[si].trim();
+                if (!s) continue;
+                clauses.push(s);
+                // detect pitaka: clauses specifically
+                if (/^pitaka\s*:\s*/i.test(s)) {
+                    pitakaClauses.push(s);
+                }
+            }
         }
-        if (!parts.length) return null;
-        return parts.join(' OR ');
+        if (!clauses.length) return null;
+
+        // If exactly one checkbox is checked and that checkbox contains a
+        // pitaka clause, we usually want to request pitaka-level pivot counts.
+        // However, for entries that explicitly include a non-Mūla `volume`
+        // (for example Aṭṭhakathā or Tīkā) the fq should include both the
+        // volume and pitaka clauses. Detect the presence of a volume clause
+        // and only treat the selection as "pitaka-only" when the volume is
+        // either absent or represents the Mūla collection.
+        if (checkedBoxes === 1 && pitakaClauses.length > 0) {
+            var volumeVal = null;
+            for (var ci = 0; ci < clauses.length; ci++) {
+                var m = clauses[ci].match(/^volume\s*:\s*"([^"]+)"$/i);
+                if (m) { volumeVal = m[1]; break; }
+            }
+            var isMula = false;
+            try { isMula = !!(volumeVal && volumeVal.indexOf('Mūla') !== -1); } catch (e) { isMula = false; }
+            if (isMula || !volumeVal) {
+                if (window.console && window.console.debug) {
+                    console.debug('tpsearch: buildLimitFq -> pitakaOnly', { selectedVals: vals, clauses: clauses, pitakaClauses: pitakaClauses, volumeVal: volumeVal });
+                }
+                return { clauses: clauses, pitakaOnly: true, pitakaClauses: pitakaClauses };
+            } else {
+                // return the full clauses so the caller will send both volume
+                // and pitaka fq entries (e.g. Aṭṭhakathā / Suttapiṭaka (aṭṭhakathā)).
+                if (window.console && window.console.debug) {
+                    console.debug('tpsearch: buildLimitFq -> single non-mula checkbox', { selectedVals: vals, clauses: clauses, volumeVal: volumeVal });
+                }
+                return { clauses: clauses };
+            }
+        }
+
+        if (window.console && window.console.debug) {
+            console.debug('tpsearch: buildLimitFq ->', { selectedVals: vals, clauses: clauses });
+        }
+        return clauses;
     }
 
     // Fetch pivot-only counts when the main (paged) response doesn't include pivot data.
@@ -686,6 +806,10 @@
             html += '    <a href="javascript:void(0)" class="tp-result-link" data-path="' + escapeHtml(localPath) + '">';
             html += '      <i class="fa fa-file-text-o"></i> ' + escapeHtml(title);
             html += '    </a>';
+            // small external/open-in-new-tab icon on the right; data-href stores file path, data-id will be set when tree.json is loaded
+            html += '    <a href="#" class="tp-open-newtab" data-href="' + escapeHtml(localPath) + '" title="Open in new tab" style="float:right; margin-left:8px; color:#1E3461;">';
+            html += '      <i class="fa fa-external-link" aria-hidden="true"></i>';
+            html += '    </a>';
             html += '  </div>';
             if (breadcrumb.length > 0) {
                 // Display mapping: show 'Anya' as 'Añña' to match facet label
@@ -722,13 +846,14 @@
         // sub-facets from the response and render them under the top-level pills.
         var $sub = $('#tp-sub-facets-container');
         $sub.empty();
-        if (currentFilter) {
+        var df = (displayFilterForSubfacets && displayFilterForSubfacets.length) ? displayFilterForSubfacets : currentFilter;
+        if (df) {
             // Show a small inline loading indicator while we fetch pivot counts
             $sub.html('<div class="tp-sub-facets-loading"><i class="fa fa-spinner fa-spin"></i> Loading…</div>');
 
             // Prefer pivot facet data for hierarchical counts if present in this response
             var children = [];
-            var pf = parseFilter(currentFilter);
+            var pf = parseFilter(df);
             var childField = (pf.field === 'pitaka') ? 'book' : (pf.field === 'book') ? 'chapter' : 'pitaka';
             var pivotKey = (pf.field === 'pitaka') ? 'pitaka,book' : (pf.field === 'book') ? 'book,chapter' : 'volume,pitaka';
             var pivotData = null;
@@ -737,7 +862,7 @@
             }
             if (Array.isArray(pivotData) && pivotData.length) {
                 // Find the pivot entry matching the current parent value
-                var parentVal = pf.value || currentFilter || '';
+                var parentVal = pf.value || df || '';
                 for (var pi = 0; pi < pivotData.length; pi++) {
                     var p = pivotData[pi];
                     if ((p.value + '') === (parentVal + '')) {
@@ -799,12 +924,12 @@
                 // Only suppress rendering when the active filter itself is a
                 // chapter (i.e. we're already at the lowest level). This lets
                 // Book -> Chapter transitions render Chapter pills normally.
-                var pf = parseFilter(currentFilter);
-                if (pf.field === 'chapter') {
+                var pf2 = parseFilter(df);
+                if (pf2.field === 'chapter') {
                     $sub.empty();
                     currentExpandedFacet = '';
                 } else {
-                    renderSubfacetsHtml(currentFilter, children);
+                    renderSubfacetsHtml(df, children);
                 }
             } else {
                 // If no subcategory info available yet, keep the loading indicator
@@ -923,12 +1048,13 @@
         for (var i = 0; i < children.length; i++) {
             var c = children[i];
             var filterKey = c.field + ':' + c.key; // e.g., pitaka:Vinayapitaka
-            var active = (currentFilter === filterKey) ? ' tp-facet-active' : '';
+            var active = ((currentFilter === filterKey) || (displayFilterForSubfacets === filterKey)) ? ' tp-facet-active' : '';
             html += '<a href="javascript:void(0)" class="tp-facet-item' + active + '" data-filter="' + escapeHtml(filterKey) + '">';
             html += escapeHtml(c.key) + ' (' + c.count + ')</a>';
         }
 
         html += '</div>';
+        if (window.console && window.console.debug) console.debug('tpsearch: renderSubfacetsHtml', { parent: parent, children: children });
         $sub.html(html);
         // Bind clicks for these new sub-facet items
         bindFacetClicks($sub);
@@ -1383,6 +1509,102 @@
             } catch (e) { setInputMode(''); }
         })();
 
+        // Helper to process a pending highlight request (used by fragment parsing
+        // and by the postMessage listener). Parameters:
+        //  - pendingId: (string|null) numeric tree id
+        //  - pendingQ: (string) query to highlight
+        //  - pendingIsDeva: (bool) whether Devanagari mode
+        function processPending(pendingId, pendingQ, pendingIsDeva) {
+            if (!pendingQ) return;
+            if (window.console) console.log('tpsearch: processPending id=', pendingId, 'q=', pendingQ, 'isDeva=', pendingIsDeva);
+
+            var applyHighlight = function() {
+                if (!pendingQ) return;
+                if (window.console) console.log('tpsearch: applying highlight for', pendingQ, 'isDeva=', pendingIsDeva);
+                try { highlightLooseMatches($tContent, pendingQ, pendingIsDeva); } catch (e) {
+                    var esc = pendingQ.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+                    var flags = pendingIsDeva ? 'giu' : 'gi';
+                    var regex = new RegExp('(' + esc + ')', flags);
+                    $tContent.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
+                }
+                var $first = $tContent.find('.tpsearch-highlight').first();
+                if ($first.length) {
+                    var top = $first.offset().top - 80;
+                    $('html, body').animate({ scrollTop: top }, 300);
+                }
+                try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
+                try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
+            };
+
+            if (pendingId) {
+                var tryLoad = function(attemptsLeft) {
+                    var href = _treeIdToHref[pendingId];
+                    if (window.console) console.log('tpsearch: tryLoad, attemptsLeft=', attemptsLeft, 'mapped href=', href);
+                    try {
+                        var nodeLink = document.querySelector('a[href="#' + pendingId + '"]');
+                        if (nodeLink) {
+                            if (window.console) console.log('tpsearch: found tree node link for id=', pendingId, '- clicking it');
+                            nodeLink.click();
+                            if (window.console) console.log('tpsearch: clicked node link, waiting for content to appear');
+                            var checkContent = function(tries) {
+                                if ($tContent && $tContent.length && $.trim($tContent.html()).length) {
+                                    if (window.console) console.log('tpsearch: content appeared after node click');
+                                    applyHighlight();
+                                } else if (tries > 0) {
+                                    setTimeout(function() { checkContent(tries - 1); }, 200);
+                                } else {
+                                    if (window.console) console.log('tpsearch: node click did not produce content, falling back to href load', href);
+                                    if (href && $tContent && $tContent.length) $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href as fallback', href); applyHighlight(); });
+                                    else applyHighlight();
+                                }
+                            };
+                            checkContent(attemptsLeft);
+                            return;
+                        } else {
+                            if (window.console) console.log('tpsearch: no tree node link for id=', pendingId);
+                        }
+                    } catch (e) { if (window.console) console.log('tpsearch: error while checking for node link', e); }
+                    if (href && $tContent && $tContent.length) {
+                        if (window.console) console.log('tpsearch: loading href directly', href);
+                        $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); applyHighlight(); });
+                        return;
+                    }
+                    if (attemptsLeft > 0) {
+                        if (window.console) console.log('tpsearch: retrying tryLoad in 200ms');
+                        setTimeout(function() { tryLoad(attemptsLeft - 1); }, 200);
+                    } else {
+                        if (window.console) console.log('tpsearch: tryLoad exhausted, applying highlight fallback');
+                        applyHighlight();
+                    }
+                };
+                tryLoad(25);
+            } else {
+                // No id: just apply highlight to whatever content is present
+                applyHighlight();
+            }
+        }
+
+        // Accept postMessage from the opener to receive a search query after the page
+        // has loaded. Adjust the origin whitelist below for your dev host(s).
+        window.addEventListener('message', function(e) {
+            try {
+                var origin = (e && e.origin) ? e.origin : '';
+                // Allow same-origin messages or localhost/127.0.0.1 origins used during dev.
+                var allowed = (origin === window.location.origin) || /localhost|127\.0\.0\.1/.test(origin);
+                if (!allowed) {
+                    if (window.console) console.log('tpsearch: message ignored from origin', origin);
+                    return;
+                }
+                var data = e.data || {};
+                if (!data) return;
+                var tpq = data.tpq || data.q || '';
+                var tpd = data.tpd || data.d || '0';
+                var id = data.id || null;
+                if (!tpq) return;
+                if (window.console) console.log('tpsearch: received postMessage payload', data);
+                processPending(String(id || ''), tpq, (tpd === '1' || tpd === 1 || tpd === true));
+            } catch (err) { if (window.console) console.log('tpsearch: postMessage handler error', err); }
+        }, false);
         // Build context menu
         buildContextMenu();
 
@@ -1390,6 +1612,205 @@
         $tpSearchInput = $('#tp-search-input');
         $tContent = $('#t-content');
         $tpSearchClear = $('#tp-search-clear');
+
+        // Determine current script folder (e.g. 'romn', 'deva') from the URL
+        var _scriptRoot = (function() {
+            try {
+                var p = window.location.pathname || '/';
+                var parts = p.replace(/^\//, '').split('/');
+                return parts[0] || '';
+            } catch (e) { return ''; }
+        })();
+
+        // Map of href -> id and id -> href loaded from tree.json (if available)
+        var _treeHrefToId = {};
+        var _treeIdToHref = {};
+        function _buildTreeMap(nodes) {
+            if (!Array.isArray(nodes)) return;
+            nodes.forEach(function(n) {
+                if (!n) return;
+                if (n.a_attr && n.a_attr.href && n.id) {
+                    var href = n.a_attr.href;
+                    _treeHrefToId[href] = n.id;
+                    try { _treeHrefToId[href.split('/').pop()] = n.id; } catch (e) {}
+                    try { _treeIdToHref[n.id] = href; } catch (e) {}
+                }
+                if (n.children) _buildTreeMap(n.children);
+            });
+        }
+
+        // Load tree.json only from the known script folders: 'romn' or 'deva'.
+        // The search widget is limited to these two scripts, so no other candidates are necessary.
+        (function loadTreeForKnownScripts() {
+            var root = null;
+            try {
+                var p = window.location.pathname || '/';
+                if (p.indexOf('/romn/') !== -1 || p.indexOf('/romn') === 0) root = 'romn';
+                else if (p.indexOf('/deva/') !== -1 || p.indexOf('/deva') === 0) root = 'deva';
+                else if (_scriptRoot && (_scriptRoot === 'romn' || _scriptRoot === 'deva')) root = _scriptRoot;
+            } catch (e) {}
+            if (!root) return; // not in a supported script folder
+            // Build a tree.json URL relative to the current path so we don't hit the server root.
+            // Example: if pathname is '/tipitaka.org/romn/s0101t.tik.html' -> use '/tipitaka.org/romn/tree.json'
+            var treeUrl = null;
+            try {
+                var p = window.location.pathname || '/';
+                var m = p.match(/^(.*?\/(?:romn|deva))(?:\/|$)/);
+                if (m && m[1]) treeUrl = m[1].replace(/\/+$/, '') + '/tree.json';
+            } catch (e) {}
+            if (!treeUrl) treeUrl = '/' + root + '/tree.json';
+
+            $.getJSON(treeUrl).done(function(data) {
+                _scriptRoot = root;
+                _buildTreeMap(data);
+                $('.tp-open-newtab[data-href]').each(function() {
+                    var href = $(this).attr('data-href') || '';
+                    var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
+                    if (id) $(this).attr('data-id', id);
+                });
+            }).fail(function() {
+                // as a last resort, try the project-root-prefixed path
+                var alt = '/tipitaka.org/' + root + '/tree.json';
+                if (alt === treeUrl) return;
+                $.getJSON(alt).done(function(data) {
+                    _scriptRoot = root;
+                    _buildTreeMap(data);
+                    $('.tp-open-newtab[data-href]').each(function() {
+                        var href = $(this).attr('data-href') || '';
+                        var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
+                        if (id) $(this).attr('data-id', id);
+                    });
+                }).fail(function() {
+                    // mapping unavailable
+                });
+            });
+        })();
+
+        // If a new-tab open requested a highlight, perform it now and then clear the flag.
+        // Support two mechanisms: localStorage (same-origin) and encoded hash params (cross-origin).
+        try {
+            var _pendingQ = null;
+            var _pendingIsDeva = false;
+            // 1) localStorage-based (works when origin matches)
+            try { _pendingQ = localStorage.getItem('tpsearch-newtab-query'); } catch (e) { _pendingQ = null; }
+            if (_pendingQ && _pendingQ.length) {
+                _pendingIsDeva = (localStorage.getItem('tpsearch-newtab-isdeva') === '1');
+            } else {
+                // 2) parse hash params for tpq/tpd (format: #<id>?tpq=...&tpd=1)
+                try {
+                    var h = window.location.hash || '';
+                    var m = h.match(/^#([0-9]+)(?:[\?&;](.*))?$/);
+                    if (m && m[2]) {
+                        var qs = m[2];
+                        var pendingId = m[1] || null;
+                        var pairs = qs.split(/[&;]/);
+                        var map = {};
+                        pairs.forEach(function(p) {
+                            var kv = p.split('=');
+                            if (kv.length >= 2) map[kv[0]] = decodeURIComponent(kv.slice(1).join('='));
+                        });
+                        if (map.tpq) {
+                                _pendingQ = map.tpq;
+                                _pendingIsDeva = (map.tpd === '1');
+                                if (window.console) console.log('tpsearch: parsed fragment tpq, tpd:', _pendingQ, _pendingIsDeva);
+                                // remove the params from the URL while keeping the hash id
+                                try {
+                                    var cleanHash = '#' + (m[1] || '');
+                                    history.replaceState(null, null, window.location.pathname + cleanHash);
+                                } catch (e) {}
+                            } else {
+                                if (window.console) console.log('tpsearch: no tpq param found in fragment');
+                            }
+                        // If we have an id, try to load the corresponding file before highlighting
+                        if (pendingId) {
+                            if (window.console) console.log('tpsearch: pendingId present, will attempt to load id=', pendingId);
+                            // function to apply highlight after content is present
+                            var applyHighlight = function() {
+                                if (!_pendingQ) return;
+                                if (window.console) console.log('tpsearch: applying highlight for', _pendingQ, 'isDeva=', _pendingIsDeva);
+                                try { highlightLooseMatches($tContent, _pendingQ, _pendingIsDeva); } catch (e) {
+                                    var esc = _pendingQ.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+                                    var flags = _pendingIsDeva ? 'giu' : 'gi';
+                                    var regex = new RegExp('(' + esc + ')', flags);
+                                    $tContent.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
+                                }
+                                var $first = $tContent.find('.tpsearch-highlight').first();
+                                if ($first.length) {
+                                    var top = $first.offset().top - 80;
+                                    $('html, body').animate({ scrollTop: top }, 300);
+                                }
+                                try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
+                                try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
+                            };
+
+                            var tryLoad = function(attemptsLeft) {
+                                var href = _treeIdToHref[pendingId];
+                                if (window.console) console.log('tpsearch: tryLoad, attemptsLeft=', attemptsLeft, 'mapped href=', href);
+                                // Prefer triggering the site's own tree handler by clicking the node link if present
+                                try {
+                                    var nodeLink = document.querySelector('a[href="#' + pendingId + '"]');
+                                    if (nodeLink) {
+                                        if (window.console) console.log('tpsearch: found tree node link for id=', pendingId, '- clicking it');
+                                        // click it and then wait for content to appear
+                                        nodeLink.click();
+                                        if (window.console) console.log('tpsearch: clicked node link, waiting for content to appear');
+                                        // wait until $tContent has content
+                                        var checkContent = function(tries) {
+                                            if ($tContent && $tContent.length && $.trim($tContent.html()).length) {
+                                                if (window.console) console.log('tpsearch: content appeared after node click');
+                                                applyHighlight();
+                                            } else if (tries > 0) {
+                                                setTimeout(function() { checkContent(tries - 1); }, 200);
+                                            } else {
+                                                if (window.console) console.log('tpsearch: node click did not produce content, falling back to href load', href);
+                                                // fallback to load href if available
+                                                if (href && $tContent && $tContent.length) $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href as fallback', href); applyHighlight(); });
+                                                else applyHighlight();
+                                            }
+                                        };
+                                        checkContent(attemptsLeft);
+                                        return;
+                                    } else {
+                                        if (window.console) console.log('tpsearch: no tree node link for id=', pendingId);
+                                    }
+                                } catch (e) { if (window.console) console.log('tpsearch: error while checking for node link', e); }
+                                if (href && $tContent && $tContent.length) {
+                                    if (window.console) console.log('tpsearch: loading href directly', href);
+                                    $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); applyHighlight(); });
+                                    return;
+                                }
+                                if (attemptsLeft > 0) {
+                                    if (window.console) console.log('tpsearch: retrying tryLoad in 200ms');
+                                    setTimeout(function() { tryLoad(attemptsLeft - 1); }, 200);
+                                } else {
+                                    if (window.console) console.log('tpsearch: tryLoad exhausted, applying highlight fallback');
+                                    // as a fallback, attempt highlight on whatever content exists
+                                    applyHighlight();
+                                }
+                            };
+                            tryLoad(25); // wait up to ~5s (25 * 200ms)
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            if (_pendingQ && _pendingQ.length && $tContent && $tContent.length) {
+                try { highlightLooseMatches($tContent, _pendingQ, _pendingIsDeva); } catch (e) {
+                    var esc = _pendingQ.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
+                    var flags = _pendingIsDeva ? 'giu' : 'gi';
+                    var regex = new RegExp('(' + esc + ')', flags);
+                    $tContent.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
+                }
+                // scroll to first match if present
+                var $firstMatch = $tContent.find('.tpsearch-highlight').first();
+                if ($firstMatch.length) {
+                    var top = $firstMatch.offset().top - 80;
+                    $('html, body').animate({ scrollTop: top }, 300);
+                }
+                try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
+                try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
+            }
+        } catch (e) {}
 
         // Do not perform live searches while typing. Show/hide clear button only.
         $tpSearchInput.on('input', function () {
@@ -1450,6 +1871,56 @@
                         $xbtn.after($btn);
                     }
                 });
+            });
+
+            // Delegated handler for open-in-new-tab icon
+            $tContent.on('click', '.tp-open-newtab', function (e) {
+                e.preventDefault();
+                var $btn = $(this);
+                console.log('Open in new tab requested for', $btn);
+                var href = ($btn.attr('data-href') || '').toString();
+                console.log('Data-href is', href);
+                var id = $btn.attr('data-id') || _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
+                console.log('Mapped to id', id);
+                // tree.json should provide an id for every href; no fallback required
+                // Save query data so the opened page can highlight it.
+                // localStorage won't work across origins, so include the encoded query in the fragment.
+                var encQ = '';
+                try { encQ = encodeURIComponent(currentQuery || ''); } catch (e) { encQ = ''; }
+                var encD = currentIsDeva ? '1' : '0';
+                try { localStorage.setItem('tpsearch-newtab-query', currentQuery || ''); } catch (err) {}
+                try { localStorage.setItem('tpsearch-newtab-isdeva', currentIsDeva ? '1' : '0'); } catch (err) {}
+                var targetUrl = null;
+                if (id && _scriptRoot) {
+                    // Open production page (no tpq/tpd in fragment). We'll postMessage the
+                    // query after opening so the production page can highlight when ready.
+                    targetUrl = 'https://tipitaka.org/' + _scriptRoot + '/#' + id;
+                } else if (href) {
+                    if (_scriptRoot) targetUrl = 'https://tipitaka.org/' + _scriptRoot + '/' + href.replace(/^\//, '');
+                    else targetUrl = 'https://tipitaka.org/' + href.replace(/^\//, '');
+                }
+                console.log('Opening URL', targetUrl);
+                if (targetUrl) {
+                    var newWin = window.open(targetUrl, '_blank');
+                    // Post the query to the opened window. Use retries in case the page
+                    // hasn't attached its listener yet. Target origin is production.
+                    if (newWin && encQ) {
+                        var payload = { tpq: currentQuery || '', tpd: encD, id: id || '' };
+                        var tries = 0;
+                        var maxTries = 12; // ~3.6s of retries at 300ms
+                        var sendMsg = function() {
+                            try {
+                                newWin.postMessage(payload, 'https://tipitaka.org');
+                                if (window.console) console.log('tpsearch: postMessage sent to new window', payload);
+                            } catch (err) {
+                                if (window.console) console.log('tpsearch: postMessage error', err);
+                            }
+                            tries++;
+                            if (tries < maxTries) setTimeout(sendMsg, 300);
+                        };
+                        sendMsg();
+                    }
+                }
             });
 
             // Delegated pagination handler
