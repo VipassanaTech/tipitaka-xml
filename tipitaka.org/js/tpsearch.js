@@ -429,7 +429,10 @@
         try {
             limitFq = buildLimitFq();
             if (limitFq) {
-                var lclauses = Array.isArray(limitFq) ? limitFq : (limitFq.clauses || limitFq);
+                var lclauses = [];
+                if (Array.isArray(limitFq)) lclauses = limitFq;
+                else if (typeof limitFq === 'string') lclauses = [limitFq];
+                else lclauses = (limitFq.clauses || []);
                 params.fq = (params.fq || []).concat(lclauses);
                 // Compute a displayFilter (prefer pitaka if present)
                 var pfCand = null;
@@ -566,6 +569,24 @@
                 }
             }
         }
+
+        // If multiple checkboxes were selected, build a single OR expression
+        // joining the original checkbox expressions so Solr receives one fq
+        // that represents (expr1) OR (expr2) ... This avoids multiple fq
+        // params being ANDed together by Solr.
+        if (vals.length > 1) {
+            var orExprParts = [];
+            for (var vi = 0; vi < vals.length; vi++) {
+                var rv = String(vals[vi]).trim();
+                if (!rv) continue;
+                orExprParts.push('(' + rv + ')');
+            }
+            if (orExprParts.length) {
+                var grouped = orExprParts.join(' OR ');
+                if (window.console && window.console.debug) console.debug('tpsearch: buildLimitFq -> grouped OR', { selectedVals: vals, grouped: grouped });
+                return grouped; // return as a single fq string
+            }
+        }
         if (!clauses.length) return null;
 
         // If exactly one checkbox is checked and that checkbox contains a
@@ -609,11 +630,22 @@
     // accurate subfacet counts for the UI.
     function fetchPivotCounts(filterStr) {
         var pf = parseFilter(filterStr || currentFilter);
+        var isGroupedOr = false;
+        try {
+            var sraw = String(filterStr || '');
+            if (/\sOR\s/i.test(sraw) || /^\(/.test(sraw)) isGroupedOr = true;
+        } catch (e) { isGroupedOr = false; }
         // Choose facet fields / pivot pair that correspond to the next-level
         // children for the provided parent filter.
         var facetFields = ['volume'];
         var pivotKey = 'volume,pitaka';
-        if (pf && pf.field) {
+        if (isGroupedOr) {
+            // For grouped OR filters (multiple checkbox selection), request
+            // pitaka->book pivot so we can aggregate books across selected
+            // pitakas.
+            facetFields = ['volume', 'book'];
+            pivotKey = 'pitaka,book';
+        } else if (pf && pf.field) {
             if (pf.field === 'volume') {
                 facetFields.push('pitaka');
                 pivotKey = 'volume,pitaka';
@@ -640,7 +672,9 @@
             'facet.field': facetFields,
             'facet.pivot': pivotKey
         };
-        if (pf && pf.value) {
+        if (isGroupedOr) {
+            params.fq = filterStr;
+        } else if (pf && pf.value) {
             params.fq = pf.field + ':"' + pf.value + '"';
         }
 
@@ -667,16 +701,30 @@
 
                     var children = [];
                     if (Array.isArray(pivotData) && pivotData.length) {
-                        var parentVal = pf.value || '';
-                        for (var pi = 0; pi < pivotData.length; pi++) {
-                            var p = pivotData[pi];
-                            if ((p.value + '') === (parentVal + '')) {
+                        if (isGroupedOr) {
+                            // Aggregate book counts across all returned pitaka parents
+                            var agg = {};
+                            for (var pi = 0; pi < pivotData.length; pi++) {
+                                var p = pivotData[pi];
                                 var sub = p.pivot || p['pivot'] || [];
                                 for (var si = 0; si < sub.length; si++) {
                                     var s = sub[si];
-                                    children.push({ key: s.value, count: s.count, field: childField });
+                                    agg[s.value] = (agg[s.value] || 0) + (s.count || 0);
                                 }
-                                break;
+                            }
+                            Object.keys(agg).sort().forEach(function(k) { children.push({ key: k, count: agg[k], field: childField }); });
+                        } else {
+                            var parentVal = pf.value || '';
+                            for (var pi2 = 0; pi2 < pivotData.length; pi2++) {
+                                var p2 = pivotData[pi2];
+                                if ((p2.value + '') === (parentVal + '')) {
+                                    var sub2 = p2.pivot || p2['pivot'] || [];
+                                    for (var si2 = 0; si2 < sub2.length; si2++) {
+                                        var s2 = sub2[si2];
+                                        children.push({ key: s2.value, count: s2.count, field: childField });
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }
@@ -1035,6 +1083,16 @@
 
         // Determine parent field and label for the next level
         var pf = parseFilter(parent);
+        // If parent appears to be a grouped OR expression (e.g. contains
+        // multiple pitaka:... clauses) parseFilter will not return a useful
+        // field. Detect common field mentions and coerce to the expected
+        // parent field so the UI label and child selection behave correctly.
+        try {
+            if (!pf || !pf.field || pf.field.indexOf('pitaka') === 0 && pf.value === '') {
+                if (/\bpitaka\s*:/i.test(parent)) pf = { field: 'pitaka', value: '' };
+                else if (/\bvolume\s*:/i.test(parent)) pf = { field: 'volume', value: '' };
+            }
+        } catch (e) { /* ignore */ }
         var parentField = pf.field || 'volume';
         var pval = pf.value || '';
         // Map internal field names to UI labels. Rename per request:
