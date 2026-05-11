@@ -13,7 +13,6 @@
     var PAGE_SIZE = 20;
     var currentQuery = '';
     var currentStart = 0;
-    var currentTotal = 0;
     var currentFilter = '';       // active volume filter (fq), empty = all
     var displayFilterForSubfacets = ''; // transient filter used to render subfacet UI when checkboxes applied
     var lastFacets = {};          // cached facets from the most recent unfiltered search
@@ -26,24 +25,10 @@
     var $tpSearchClear = null;
     var __delegationBound = false;
 
-    // Simple debounce helper
-    function debounce(fn, wait) {
-        var t = null;
-        function wrapper() {
-            var ctx = this, args = arguments;
-            clearTimeout(t);
-            t = setTimeout(function () { fn.apply(ctx, args); }, wait);
-        }
-        wrapper.cancel = function() { clearTimeout(t); t = null; };
-        return wrapper;
-    }
-
     // Quick check if a string contains Devanagari characters
     function isDevanagari(s) {
         return /[\u0900-\u097F]/.test(s);
     }
-
-    // (removed unused getScriptFolder)
 
     // Insert a Pali character at the cursor position in the search input
     function insertPaliChar(ch) {
@@ -232,12 +217,7 @@
         }
     }
 
-    // Toggle wrapper that chooses open/minimize based on current visibility
-    function toggleSearchBar() {
-        var $bar = $('#tp-search-bar');
-        if ($bar.is(':visible')) minimizeSearchBar();
-        else openSearchBar();
-    }
+    // (toggleSearchBar removed - unused; handlers call open/minimize directly)
 
     // Inject a search icon into the top navigation bar
     function injectTopBarSearchIcon() {
@@ -769,7 +749,6 @@
         var docs = resp.docs || [];
         var numFound = resp.numFound || 0;
         var highlighting = data.highlighting || {};
-        currentTotal = numFound;
 
         // Use cached unfiltered facets for the top-level pill display
         var displayFacets = lastFacets || parseFacets(data);
