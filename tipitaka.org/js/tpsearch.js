@@ -886,7 +886,7 @@
             html += '      <i class="fa fa-file-text-o"></i> ' + escapeHtml(title);
             html += '    </a>';
             // small external/open-in-new-tab icon on the right; data-href stores file path, data-id will be set when tree.json is loaded
-            html += '    <a href="#" class="tp-open-newtab" data-href="' + escapeHtml(localPath) + '" title="Open in new tab" style="float:right; margin-left:8px; color:#1E3461;">';
+            html += '    <a href="#" class="tp-open-newtab" data-href="' + escapeHtml(localPath) + '" title="Open in new tab" style="margin-left:6px; color:#1E3461;">';
             html += '      <i class="fa fa-external-link" aria-hidden="true"></i>';
             html += '    </a>';
             html += '  </div>';
