@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Solr Tester — Tipitaka</title>
+  <style>
+    body { font-family: system-ui, Arial; margin: 18px; color:#111 }
+    label { display:block; margin-top:8px; font-weight:600 }
+    input[type=text], textarea, select { width:100%; padding:6px 8px; box-sizing:border-box }
+    .row { display:flex; gap:12px }
+    .col { flex:1 }
+    .controls { margin-top:12px }
+    #results { white-space:pre-wrap; background:#f7f7f9; padding:12px; border:1px solid #ddd; margin-top:12px; max-height:60vh; overflow:auto }
+    table { border-collapse:collapse; width:100%; margin-top:8px }
+    th,td { border:1px solid #ddd; padding:6px }
+    .meta { font-size:13px; color:#444 }
+  </style>
+</head>
+<body>
+  <h2>Solr Tester</h2>
+  <p class="meta">Enter parameters to build a Solr request to https://search.tipitaka.org/solr/web and view the JSON response. Use JSONP if CORS blocks fetch.</p>
+
+  <label>Solr URL</label>
+  <input type="text" id="solrUrl" value="https://search.tipitaka.org/solr/web" />
+
+  <label>q</label>
+  <input type="text" id="q" placeholder="search term (e.g. citta)" />
+
+  <div class="row">
+    <div class="col">
+      <label>facet.field (1)</label>
+      <input type="text" id="facet1" placeholder="volume" />
+    </div>
+    <div class="col">
+      <label>facet.field (2)</label>
+      <input type="text" id="facet2" placeholder="book (optional)" />
+    </div>
+  </div>
+
+  <label>facet.pivot</label>
+  <input type="text" id="pivot" placeholder="pitaka,book or volume,pitaka" />
+
+  <div class="row">
+    <div class="col">
+      <label>fq (1)</label>
+      <input type="text" id="fq1" placeholder='e.g. pitaka:"Abhidhammapiṭaka"' />
+    </div>
+    <div class="col">
+      <label>fq (2)</label>
+      <input type="text" id="fq2" placeholder='e.g. volume:"Tipiṭaka (Mūla)"' />
+    </div>
+    <div class="col">
+      <label>fq (3)</label>
+      <input type="text" id="fq3" placeholder='e.g. book:"Dīghanikāya"' />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <label>start</label>
+      <input type="text" id="start" value="0" />
+    </div>
+    <div class="col">
+      <label>rows</label>
+      <input type="text" id="rows" value="20" />
+    </div>
+  </div>
+
+  <div class="controls">
+    <label><input type="checkbox" id="useJsonp" /> Use JSONP (fallback when CORS prevents fetch)</label>
+    <button id="runBtn">Run Query</button>
+    <button id="clearBtn" style="margin-left:8px">Clear</button>
+  </div>
+
+  <h3>Request</h3>
+  <div id="requestUrl" class="meta"></div>
+
+  <h3>Response</h3>
+  <div id="results">No query yet.</div>
+
+  <script>
+    (function(){
+      var $ = function(id){return document.getElementById(id)};
+      function serializeParams(params) {
+        var parts = [];
+        Object.keys(params).forEach(function(k){
+          var v = params[k];
+          if (v === undefined || v === null) return;
+          if (Array.isArray(v)) {
+            v.forEach(function(x){ parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(String(x))); });
+          } else {
+            parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(String(v)));
+          }
+        });
+        return parts.join('&');
+      }
+
+      function show(text, isHtml){
+        var el = $('results');
+        if (isHtml) el.innerHTML = text;
+        else el.textContent = text;
+      }
+      function showRequest(u){ $('requestUrl').textContent = u }
+
+      function escapeHtml(s) {
+        if (s === undefined || s === null) return '';
+        return String(s).replace(/[&<>\"]+/g, function(ch){
+          return ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[ch]);
+        });
+      }
+
+      function buildFacetsHtml(facetFields) {
+        var html = '';
+        if (!facetFields) return html;
+        // volume pills
+        if (facetFields.volume) {
+          html += '<div style="margin:8px 0">';
+          html += '<strong>Collections:</strong> ';
+          for (var k in facetFields.volume) {
+            var cnt = facetFields.volume[k];
+            html += '<span style="display:inline-block;background:#eef; padding:4px 8px; margin:2px; border-radius:12px">' + escapeHtml(k) + ' <small>(' + cnt + ')</small></span>';
+          }
+          html += '</div>';
+        }
+        // books
+        if (facetFields.book) {
+          html += '<div style="margin:8px 0">';
+          html += '<strong>Books:</strong> ';
+          for (var bk in facetFields.book) {
+            var bc = facetFields.book[bk];
+            html += '<span style="display:inline-block;background:#efe; padding:4px 8px; margin:2px; border-radius:12px">' + escapeHtml(bk) + ' <small>(' + bc + ')</small></span>';
+          }
+          html += '</div>';
+        }
+        return html;
+      }
+
+      function renderResultsLikePage(data, url) {
+        var resp = data.response || {};
+        var docs = resp.docs || [];
+        var numFound = resp.numFound || 0;
+        var highlighting = data.highlighting || {};
+
+        var html = '';
+        html += '<div style="font-family:system-ui,Arial">';
+        html += '<h3>Results</h3>';
+        html += '<div style="margin-bottom:8px; color:#333">Found <strong>' + numFound + '</strong> results</div>';
+
+        // Facet fields
+        var ffields = (data.facet_counts && data.facet_counts.facet_fields) || {};
+        // convert Solr flat arrays to key->count maps if necessary
+        var facetMap = {};
+        if (ffields.volume && Array.isArray(ffields.volume)) {
+          facetMap.volume = {};
+          for (var i=0;i<ffields.volume.length;i+=2) facetMap.volume[ffields.volume[i]] = ffields.volume[i+1];
+        }
+        if (ffields.book && Array.isArray(ffields.book)) {
+          facetMap.book = {};
+          for (var j=0;j<ffields.book.length;j+=2) facetMap.book[ffields.book[j]] = ffields.book[j+1];
+        }
+        html += buildFacetsHtml(facetMap);
+
+        // Results list
+        html += '<div>';
+        if (!docs.length) {
+          html += '<div style="padding:12px; background:#fff8e6; border:1px solid #f0e6c2">No documents in this page (server may have returned rows=0).</div>';
+        } else {
+          html += '<table><thead><tr><th>Title</th><th>Breadcrumb</th><th>Snippet</th></tr></thead><tbody>';
+          for (var d=0; d<docs.length; d++) {
+            var doc = docs[d];
+            var docId = doc.id || '';
+            var title = doc.chapter || doc.section || doc.book || doc.path || '(untitled)';
+            var breadcrumb = [];
+            if (doc.volume) breadcrumb.push(doc.volume);
+            if (doc.pitaka) breadcrumb.push(doc.pitaka);
+            if (doc.book) breadcrumb.push(doc.book);
+            var bc = escapeHtml(breadcrumb.join(' › '));
+            var snippet = '';
+            if (highlighting[docId] && highlighting[docId].text) {
+              snippet = highlighting[docId].text.join(' … ');
+            }
+            html += '<tr><td>' + escapeHtml(title) + '</td><td>' + bc + '</td><td>' + escapeHtml(snippet) + '</td></tr>';
+          }
+          html += '</tbody></table>';
+        }
+        html += '</div>';
+        html += '<hr/><div style="font-size:12px;color:#555"><strong>Raw URL:</strong> ' + escapeHtml(url) + '</div>';
+        html += '<pre style="background:#f4f4f6;border:1px solid #e0e0e5;padding:8px;margin-top:8px">' + escapeHtml(JSON.stringify(data, null, 2)) + '</pre>';
+        html += '</div>';
+        show(html, true);
+      }
+
+      function handleResponse(data, url){
+        try {
+          renderResultsLikePage(data, url);
+        } catch (e) {
+          show('Error rendering results: ' + e + '\n\nRaw response:\n' + JSON.stringify(data, null, 2));
+        }
+      }
+
+      function runQuery() {
+        var SOLR = $('solrUrl').value.trim() || 'https://search.tipitaka.org/solr/web';
+        var params = {};
+        var q = $('q').value.trim();
+        params.q = q || '*:*';
+        params.wt = 'json';
+        params.start = $('start').value || '0';
+        params.rows = $('rows').value || '20';
+        params.hl = 'on';
+        params['hl.fl'] = 'text';
+        params['hl.simple.pre'] = '<em>';
+        params['hl.simple.post'] = '</em>';
+        params.facet = 'on';
+        var f1 = $('facet1').value.trim();
+        var f2 = $('facet2').value.trim();
+        var fields = [];
+        if (f1) fields.push(f1);
+        if (f2) fields.push(f2);
+        if (fields.length) params['facet.field'] = fields;
+        var pivot = $('pivot').value.trim();
+        if (pivot) params['facet.pivot'] = pivot;
+        var fq1 = $('fq1').value.trim();
+        var fq2 = $('fq2').value.trim();
+        var fq3 = $('fq3').value.trim();
+        var fqs = [];
+        if (fq1) fqs.push(fq1);
+        if (fq2) fqs.push(fq2);
+        if (fq3) fqs.push(fq3);
+        if (fqs.length) params.fq = fqs;
+
+        // Build URL
+        var queryString = serializeParams(params);
+        var url = SOLR + '?' + queryString;
+        showRequest(url);
+
+        if ($('useJsonp').checked) {
+          // JSONP: add json.wrf callback name
+          var cbName = 'solrTester_cb_' + Date.now() + '_' + Math.floor(Math.random()*1000);
+          window[cbName] = function(data){
+            try { handleResponse(data, url + '&json.wrf=' + cbName); }
+            finally { delete window[cbName]; var s = document.getElementById(cbName + '_s'); if (s) s.parentNode.removeChild(s); }
+          };
+          var script = document.createElement('script');
+          script.id = cbName + '_s';
+          script.src = url + '&json.wrf=' + cbName;
+          script.onerror = function(){ show('JSONP script load error. URL: ' + script.src); delete window[cbName]; script.parentNode.removeChild(script); };
+          document.body.appendChild(script);
+          show('Loading via JSONP...');
+        } else {
+          // Try fetch (CORS). If fetch fails with a network error, suggest JSONP.
+          show('Fetching via CORS...');
+          fetch(url, { mode: 'cors' }).then(function(resp){
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            return resp.json();
+          }).then(function(data){
+            handleResponse(data, url);
+          }).catch(function(err){
+            show('Fetch error: ' + String(err) + '\n\nTry checking "Use JSONP" and retry.');
+          });
+        }
+      }
+
+      $('runBtn').addEventListener('click', runQuery);
+      $('clearBtn').addEventListener('click', function(){ $('results').textContent='No query yet.'; $('requestUrl').textContent=''; });
+
+    })();
+  </script>
+</body>
+</html>
