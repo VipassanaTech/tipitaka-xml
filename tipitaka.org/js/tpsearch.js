@@ -252,6 +252,15 @@
                 } else {
                     $nav[0].insertBefore(iconHtml, $nav[0].firstChild);
                 }
+                // Inject bookmark icon immediately after the search icon
+                $('#tp-topbar-bookmark-icon').remove();
+                var bmIcon = document.createElement('a');
+                bmIcon.href = 'javascript:void(0)';
+                bmIcon.id = 'tp-topbar-bookmark-icon';
+                bmIcon.title = 'Bookmarks';
+                bmIcon.innerHTML = '<i class="fa fa-bookmark-o"></i>';
+                iconHtml.parentNode.insertBefore(bmIcon, iconHtml.nextSibling);
+                updateBookmarkIcon();
                 // For mobile: also insert after Home in collapsed menu if menu is open
                 var $hamburger = $nav.find('a.icon');
                 if ($hamburger.length && $nav.hasClass('responsive')) {
@@ -885,7 +894,11 @@
             html += '    <a href="javascript:void(0)" class="tp-result-link" data-path="' + escapeHtml(localPath) + '">';
             html += '      <i class="fa fa-file-text-o"></i> ' + escapeHtml(title);
             html += '    </a>';
-            // small external/open-in-new-tab icon on the right; data-href stores file path, data-id will be set when tree.json is loaded
+            var _isBookmarked = loadBookmarks().some(function(b) { return b.href === localPath; });
+            html += '    <a href="#" class="tp-bookmark-toggle" data-href="' + escapeHtml(localPath) + '" data-title="' + escapeHtml(title) + '" title="Bookmark this page">';
+            html += '      <i class="fa ' + (_isBookmarked ? 'fa-star tp-bm-starred' : 'fa-star-o') + '" aria-hidden="true"></i>';
+            html += '    </a>';
+            // small external/open-in-new-tab icon; data-href stores file path, data-id will be set when tree.json is loaded
             html += '    <a href="#" class="tp-open-newtab" data-href="' + escapeHtml(localPath) + '" title="Open in new tab" style="margin-left:6px; color:#1E3461;">';
             html += '      <i class="fa fa-external-link" aria-hidden="true"></i>';
             html += '    </a>';
@@ -1406,6 +1419,44 @@
         });
     }
 
+    // ───── Bookmark helpers ─────
+    var TP_BM_KEY = 'tpsearch-bookmarks';
+
+    function loadBookmarks() {
+        try { return JSON.parse(localStorage.getItem(TP_BM_KEY) || '[]'); } catch (e) { return []; }
+    }
+
+    function saveBookmarks(arr) {
+        try { localStorage.setItem(TP_BM_KEY, JSON.stringify(arr)); } catch (e) {}
+    }
+
+    function renderBookmarkDropdown() {
+        var $dd = $('#tp-bookmark-dropdown');
+        if (!$dd.length) return;
+        var bms = loadBookmarks();
+        if (!bms.length) {
+            $dd.html('<div class="tp-bm-empty">No bookmarks yet.</div>');
+            return;
+        }
+        var html = '';
+        bms.forEach(function(b) {
+            html += '<div class="tp-bm-row">';
+            html += '<a href="#" class="tp-bm-remove" data-href="' + escapeHtml(b.href) + '" title="Remove bookmark"><i class="fa fa-star tp-bm-starred"></i></a>';
+            html += '<a href="#" class="tp-bm-open" data-href="' + escapeHtml(b.href) + '" data-id="' + escapeHtml(b.id || '') + '">' + escapeHtml(b.title) + '</a>';
+            html += '</div>';
+        });
+        $dd.html(html);
+    }
+
+    function updateBookmarkIcon() {
+        if (loadBookmarks().length > 0) {
+            $('#tp-topbar-bookmark-icon').show();
+        } else {
+            $('#tp-topbar-bookmark-icon').hide();
+            $('#tp-bookmark-dropdown').hide();
+        }
+    }
+
     // ───── Initialisation ─────
     $(document).ready(function () {
         // Ensure external tpsearch stylesheet is loaded (reduces runtime CSS injection)
@@ -1752,7 +1803,7 @@
             $.getJSON(treeUrl).done(function(data) {
                 _scriptRoot = root;
                 _buildTreeMap(data);
-                $('.tp-open-newtab[data-href]').each(function() {
+                $('.tp-open-newtab[data-href], .tp-bookmark-toggle[data-href]').each(function() {
                     var href = $(this).attr('data-href') || '';
                     var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
                     if (id) $(this).attr('data-id', id);
@@ -1764,7 +1815,7 @@
                 $.getJSON(alt).done(function(data) {
                     _scriptRoot = root;
                     _buildTreeMap(data);
-                    $('.tp-open-newtab[data-href]').each(function() {
+                    $('.tp-open-newtab[data-href], .tp-bookmark-toggle[data-href]').each(function() {
                         var href = $(this).attr('data-href') || '';
                         var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
                         if (id) $(this).attr('data-id', id);
@@ -2116,6 +2167,92 @@
         // Pali character buttons
         $(document).on('click', '.tp-pali-btn', function () {
             insertPaliChar($(this).data('char'));
+        });
+
+        // ── Bookmark: star toggle on result item ──
+        $(document).on('click', '.tp-bookmark-toggle', function(e) {
+            e.preventDefault();
+            var $a = $(this);
+            var href = $a.data('href') || '';
+            var id = $a.data('id') || $a.closest('.tp-result-title').find('.tp-open-newtab').attr('data-id') || '';
+            var title = $a.data('title') || '';
+            var bms = loadBookmarks();
+            var idx = -1;
+            for (var i = 0; i < bms.length; i++) { if (bms[i].href === href) { idx = i; break; } }
+            var $icon = $a.find('i');
+            if (idx >= 0) {
+                bms.splice(idx, 1);
+                $icon.removeClass('fa-star tp-bm-starred').addClass('fa-star-o');
+            } else {
+                bms.push({ href: href, id: id, title: title });
+                $icon.removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
+            }
+            saveBookmarks(bms);
+            updateBookmarkIcon();
+            renderBookmarkDropdown();
+        });
+
+        // ── Bookmark: topnav icon toggles dropdown ──
+        $(document).on('click', '#tp-topbar-bookmark-icon', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var $icon = $(this);
+            if (!$('#tp-bookmark-dropdown').length) {
+                $('body').append('<div id="tp-bookmark-dropdown"></div>');
+            }
+            var $dd = $('#tp-bookmark-dropdown');
+            if ($dd.is(':visible')) {
+                $dd.hide();
+                return;
+            }
+            renderBookmarkDropdown();
+            var offset = $icon.offset();
+            $dd.css({
+                top: offset.top + $icon.outerHeight(),
+                right: $(window).width() - offset.left - $icon.outerWidth()
+            }).show();
+        });
+
+        // ── Bookmark: close dropdown when clicking outside ──
+        $(document).on('click.tpbookmark', function(e) {
+            if (!$(e.target).closest('#tp-bookmark-dropdown, #tp-topbar-bookmark-icon').length) {
+                $('#tp-bookmark-dropdown').hide();
+            }
+        });
+
+        // ── Bookmark: remove entry from dropdown ──
+        $(document).on('click', '.tp-bm-remove', function(e) {
+            e.preventDefault();
+            var href = $(this).data('href');
+            var bms = loadBookmarks().filter(function(b) { return b.href !== href; });
+            saveBookmarks(bms);
+            $('.tp-bookmark-toggle[data-href="' + href + '"] i').removeClass('fa-star tp-bm-starred').addClass('fa-star-o');
+            updateBookmarkIcon();
+            renderBookmarkDropdown();
+            if (!bms.length) $('#tp-bookmark-dropdown').hide();
+        });
+
+        // ── Bookmark: open title in new tab from dropdown ──
+        $(document).on('click', '.tp-bm-open', function(e) {
+            e.preventDefault();
+            $('#tp-bookmark-dropdown').hide();
+            var href = $(this).data('href') || '';
+            var id = $(this).data('id') || '';
+            var _pageBase = window.location.href.replace(/[^/]*$/, '');
+            var _pageOrigin = window.location.origin;
+            var targetUrl = id ? (_pageBase + 'index.html#' + id) : (_pageBase + href.replace(/^\//, ''));
+            if (!targetUrl) return;
+            var newWin = window.open(targetUrl, '_blank');
+            if (newWin && currentQuery) {
+                var encD = currentIsDeva ? '1' : '0';
+                var payload = { tpq: currentQuery, tpd: encD, id: id };
+                var tries = 0;
+                var sendMsg = function() {
+                    try { newWin.postMessage(payload, _pageOrigin); } catch (err) {}
+                    if (++tries < 12) setTimeout(sendMsg, 300);
+                };
+                sendMsg();
+            }
         });
     });
 
