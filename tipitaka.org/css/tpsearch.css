@@ -542,22 +542,59 @@
     accent-color: #0b66c2;
 }
 
+/* Span all 4 grid columns of .tp-limit-list so the table isn't squeezed into 1/4 width */
+.tp-limit-table {
+    grid-column: 1 / -1;
+}
+
 /* Table-specific tweaks: ensure row headings and checkbox labels align vertically */
 .tp-limit-table td {
     vertical-align: middle;
-    padding: 4px 6px;
+    padding: 1px 6px;
 }
 .tp-limit-table .limit-item {
-    display: inline-flex; /* ensure label content centers with the checkbox */
-    align-items: left;
+    display: flex; /* block-level flex so label fills the full td width */
+    align-items: center;
     font-size: 13px; /* match existing .tp-limit-list label size */
     line-height: 1;
+    width: 100%;
 }
 .tp-limit-table input[type="checkbox"] {
     vertical-align: middle;
     margin-right: 8px;
 }
 
+/* Nikaya sub-row: sits below the limit-search table, all 5 labels on one line */
+#tp-nikaya-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    margin-left: 30px;
+}
+.tp-nikaya-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    font-family: 'Monda', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    color: #23303b;
+    white-space: nowrap;
+}
+.tp-nikaya-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+    accent-color: #0b66c2;
+}
+.tp-nikaya-label {
+    font-family: 'Monda', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #23303b;
+    white-space: nowrap;
+}
 /* Make the checkbox label text and checkbox align compactly on one line */
 .tp-limit-list {
     align-items: start;

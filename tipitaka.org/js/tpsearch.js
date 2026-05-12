@@ -57,43 +57,45 @@
         // columns = Label | Vinaya | Sutta | Abhi
         html += '<table class="tp-limit-table">';
         html += '<tbody>';
-        // Mula row
+        // Mula row (add row-level checkbox to toggle the three child checkboxes)
         html += '<tr>';
-        html += '<td class="limit-item">Mula</td>';
+        html += '<td><label class="limit-item item-mula-all"><input type="checkbox" class="tp-limit-row-checkbox" id="tp-limit-row-mula" /> Mula</label></td>';
             html += '<td><label class="limit-item item-mula-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-vinaya" data-val="pitaka:&quot;Vinayapiṭaka&quot;" /> Vinaya</label></td>';
             html += '<td><label class="limit-item item-mula-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-sutta" data-val="pitaka:&quot;Suttapiṭaka&quot;" /> Sutta</label></td>';
             html += '<td><label class="limit-item item-mula-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-mula-abhd" data-val="pitaka:&quot;Abhidhammapiṭaka&quot;" /> Abhi</label></td>';
         html += '</tr>';
-        // Attha. row (aṭṭhakathā)
+        // Attha. row (aṭṭhakathā) (add row-level checkbox)
         html += '<tr>';
-        html += '<td class="limit-item">Attha.</td>';
+        html += '<td><label class="limit-item item-atth-all"><input type="checkbox" class="tp-limit-row-checkbox" id="tp-limit-row-atth" /> Attha.</label></td>';
             html += '<td><label class="limit-item item-atth-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-vinaya" data-val="volume:&quot;Aṭṭhakathā&quot; AND pitaka:&quot;Vinayapiṭaka (aṭṭhakathā)&quot;" /> Vinaya</label></td>';
             html += '<td><label class="limit-item item-atth-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-sutta" data-val="volume:&quot;Aṭṭhakathā&quot; AND pitaka:&quot;Suttapiṭaka (aṭṭhakathā)&quot;" /> Sutta</label></td>';
             html += '<td><label class="limit-item item-atth-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-atth-abhd" data-val="volume:&quot;Aṭṭhakathā&quot; AND pitaka:&quot;Abhidhammapiṭaka (aṭṭhakathā)&quot;" /> Abhi</label></td>';
         html += '</tr>';
-        // Tika row (ṭīkā)
+        // Tika row (ṭīkā) (add row-level checkbox)
         html += '<tr>';
-        html += '<td class="limit-item">Tika</td>';
+        html += '<td><label class="limit-item item-tika-all"><input type="checkbox" class="tp-limit-row-checkbox" id="tp-limit-row-tika" /> Tika</label></td>';
             html += '<td><label class="limit-item item-tika-vinaya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-vinaya" data-val="volume:&quot;Tīkā&quot; AND pitaka:&quot;Vinayapiṭaka (ṭīkā)&quot;" /> Vinaya</label></td>';
             html += '<td><label class="limit-item item-tika-sutta"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-sutta" data-val="volume:&quot;Tīkā&quot; AND pitaka:&quot;Suttapiṭaka (ṭīkā)&quot;" /> Sutta</label></td>';
             html += '<td><label class="limit-item item-tika-abhd"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-tika-abhd" data-val="volume:&quot;Tīkā&quot; AND pitaka:&quot;Abhidhammapiṭaka (ṭīkā)&quot;" /> Abhi</label></td>';
         html += '</tr>';
-        // Añña row (single checkbox placed in first data column)
+        // Añña + All row
         html += '<tr>';
-        html += '<td><label class="limit-item item-anya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-anya" data-val="volume:&quot;Anya&quot;" />Añña</label></td>';
-        html += '<td></td>';
-        html += '<td></td>';
-        html += '<td></td>';
-        html += '</tr>';
-        // All row (default checked)
-          html += '<tr>';
-        html += '<td><label class="limit-item item-all"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-all" data-val="ALL" checked />All</label></td>';
-        html += '<td></td>';
+        html += '<td><label class="limit-item item-anya"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-anya" data-val="volume:&quot;Anya&quot;" /> Añña</label></td>';
+        html += '<td><label class="limit-item item-all"><input type="checkbox" class="tp-limit-checkbox" id="tp-limit-all" data-val="ALL" checked /> All</label></td>';
         html += '<td></td>';
         html += '<td></td>';
         html += '</tr>';
         html += '</tbody></table>';
         html += '</div>'; // tp-limit-list
+        // Nikaya sub-row: shown below the table when any Sutta checkbox is checked
+        html += '<div id="tp-nikaya-row" style="display:none">';
+        html += '<span class="tp-nikaya-label">Nikāya:</span>';
+        html += '<label class="tp-nikaya-item"><input type="checkbox" class="tp-nikaya-checkbox" data-val="Dīghanikāya" /> D.N.</label>';
+        html += '<label class="tp-nikaya-item"><input type="checkbox" class="tp-nikaya-checkbox" data-val="Majjhimanikāya" /> M.N.</label>';
+        html += '<label class="tp-nikaya-item"><input type="checkbox" class="tp-nikaya-checkbox" data-val="Saṃyuttanikāya" /> S.N.</label>';
+        html += '<label class="tp-nikaya-item"><input type="checkbox" class="tp-nikaya-checkbox" data-val="Aṅguttaranikāya" /> A.N.</label>';
+        html += '<label class="tp-nikaya-item"><input type="checkbox" class="tp-nikaya-checkbox" data-val="Khuddakanikāya" /> K.N.</label>';
+        html += '</div>';
         html += '</div>'; // tp-limit-search
 
         html += '  <form id="tp-search-form" onsubmit="return false;">';
@@ -443,6 +445,16 @@
                 }
             } catch (e) { }
 
+        // Apply nikaya filter: replace any limit fq with context-aware pitaka + book clauses
+        try {
+            var nikayaResult = buildNikayaFq();
+            if (nikayaResult) {
+                params.fq = [nikayaResult.pitakaFq, nikayaResult.bookFq];
+                params['facet.field'] = ['chapter'];
+                params['facet.pivot'] = 'book,chapter';
+            }
+        } catch (e) { }
+
         // Apply volume or field-prefixed filter if set — add as another fq entry
         if (currentFilter) {
             var pf = parseFilter(currentFilter);
@@ -508,6 +520,46 @@
             }
         }
         return facets;
+    }
+
+    // Build fq values for nikaya search.
+    // Returns { pitakaFq, bookFq } when nikayas are selected, or null if none selected.
+    // pitakaFq: OR of pitaka clauses for the checked Sutta rows
+    // bookFq:   OR of book:"<nikaya><suffix>" for each checked nikaya × Sutta-row suffix
+    function buildNikayaFq() {
+        if (!window.jQuery) return null;
+        var $ = window.jQuery;
+        var nikayas = [];
+        $('.tp-nikaya-checkbox:checked').each(function () {
+            var v = $(this).data('val');
+            if (v) nikayas.push(v);
+        });
+        if (!nikayas.length) return null;
+
+        // Determine which Sutta rows are active and their pitaka/suffix values
+        var suttaRows = [];
+        if ($('#tp-limit-mula-sutta').is(':checked'))
+            suttaRows.push({ pitaka: 'Suttapiṭaka',               suffix: '' });
+        if ($('#tp-limit-atth-sutta').is(':checked'))
+            suttaRows.push({ pitaka: 'Suttapiṭaka (aṭṭhakathā)',  suffix: ' (aṭṭhakathā)' });
+        if ($('#tp-limit-tika-sutta').is(':checked'))
+            suttaRows.push({ pitaka: 'Suttapiṭaka (ṭīkā)',        suffix: ' (ṭīkā)' });
+        if (!suttaRows.length) return null;
+
+        // Build pitaka fq
+        var pitakaClauses = suttaRows.map(function (r) { return 'pitaka:"' + r.pitaka + '"'; });
+        var pitakaFq = pitakaClauses.length === 1 ? pitakaClauses[0] : '(' + pitakaClauses.join(' OR ') + ')';
+
+        // Build book fq: each nikaya × each sutta suffix
+        var bookClauses = [];
+        for (var i = 0; i < nikayas.length; i++) {
+            for (var j = 0; j < suttaRows.length; j++) {
+                bookClauses.push('book:"' + nikayas[i] + suttaRows[j].suffix + '"');
+            }
+        }
+        var bookFq = bookClauses.length === 1 ? bookClauses[0] : '(' + bookClauses.join(' OR ') + ')';
+
+        return { pitakaFq: pitakaFq, bookFq: bookFq };
     }
 
     // Build fq string for Limit Search checkboxes; return null if no limiting
@@ -1971,22 +2023,54 @@
             });
         }
 
-        // Limit Search checkbox behavior: 'All' toggles others
+        // Show/hide the nikaya sub-row based on whether any Sutta checkbox is checked
+        function updateNikayaRow() {
+            var anySutta = $('#tp-limit-mula-sutta, #tp-limit-atth-sutta, #tp-limit-tika-sutta').filter(':checked').length > 0;
+            $('#tp-nikaya-row').toggle(anySutta);
+            if (!anySutta) $('.tp-nikaya-checkbox').prop('checked', false);
+        }
+
+        // Limit Search checkbox behavior
         $(document).on('change', '.tp-limit-checkbox', function () {
             var $all = $('#tp-limit-all');
             if ($(this).attr('id') === 'tp-limit-all') {
                 if ($(this).is(':checked')) {
+                    // All: uncheck every other checkbox
                     $('.tp-limit-checkbox').not(this).prop('checked', false);
+                    $('.tp-limit-row-checkbox').prop('checked', false);
                 }
             } else {
                 if ($(this).is(':checked')) {
+                    // Child checked: uncheck the row checkbox for this row, uncheck All
+                    $(this).closest('tr').find('.tp-limit-row-checkbox').prop('checked', false);
                     $all.prop('checked', false);
                 } else {
-                    // If none selected, default back to All checked
-                    var any = $('.tp-limit-checkbox').not('#tp-limit-all').filter(':checked').length;
+                    // If nothing is checked anywhere, default back to All
+                    var any = $('.tp-limit-checkbox').not('#tp-limit-all').filter(':checked').length
+                            + $('.tp-limit-row-checkbox:checked').length;
                     if (!any) $all.prop('checked', true);
                 }
             }
+            updateNikayaRow();
+        });
+
+        // Row-level limit checkbox: checking it checks all child checkboxes in the row
+        $(document).on('change', '.tp-limit-row-checkbox', function () {
+            var $row = $(this).closest('tr');
+            var isChecked = $(this).is(':checked');
+            if (isChecked) {
+                // Row checked: check all child checkboxes in this row, uncheck All
+                $row.find('.tp-limit-checkbox').prop('checked', true);
+                $('#tp-limit-all').prop('checked', false);
+            } else {
+                // Row unchecked: uncheck child checkboxes in this row
+                $row.find('.tp-limit-checkbox').prop('checked', false);
+                // If nothing is checked anywhere, default back to All
+                var any = $('.tp-limit-checkbox').not('#tp-limit-all').filter(':checked').length
+                        + $('.tp-limit-row-checkbox:checked').length;
+                if (!any) $('#tp-limit-all').prop('checked', true);
+            }
+            updateNikayaRow();
         });
 
         // Search form submit
