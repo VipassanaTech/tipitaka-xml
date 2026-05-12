@@ -1980,26 +1980,28 @@
                 try { localStorage.setItem('tpsearch-newtab-query', currentQuery || ''); } catch (err) {}
                 try { localStorage.setItem('tpsearch-newtab-isdeva', currentIsDeva ? '1' : '0'); } catch (err) {}
                 var targetUrl = null;
-                if (id && _scriptRoot) {
-                    // Open production page (no tpq/tpd in fragment). We'll postMessage the
-                    // query after opening so the production page can highlight when ready.
-                    targetUrl = 'https://tipitaka.org/' + _scriptRoot + '/#' + id;
+                // Build URLs relative to the current host so this works on both
+                // local dev and production without hardcoding a domain.
+                var _pageBase = window.location.href.replace(/[^/]*$/, '');
+                var _pageOrigin = window.location.origin;
+                if (id) {
+                    // Open the index page on the same host with the tree node id as the hash.
+                    targetUrl = _pageBase + 'index.html#' + id;
                 } else if (href) {
-                    if (_scriptRoot) targetUrl = 'https://tipitaka.org/' + _scriptRoot + '/' + href.replace(/^\//, '');
-                    else targetUrl = 'https://tipitaka.org/' + href.replace(/^\//, '');
+                    targetUrl = _pageBase + href.replace(/^\//, '');
                 }
                 console.log('Opening URL', targetUrl);
                 if (targetUrl) {
                     var newWin = window.open(targetUrl, '_blank');
                     // Post the query to the opened window. Use retries in case the page
-                    // hasn't attached its listener yet. Target origin is production.
+                    // hasn't attached its listener yet. Use same origin as current page.
                     if (newWin && encQ) {
                         var payload = { tpq: currentQuery || '', tpd: encD, id: id || '' };
                         var tries = 0;
                         var maxTries = 12; // ~3.6s of retries at 300ms
                         var sendMsg = function() {
                             try {
-                                newWin.postMessage(payload, 'https://tipitaka.org');
+                                newWin.postMessage(payload, _pageOrigin);
                                 if (window.console) console.log('tpsearch: postMessage sent to new window', payload);
                             } catch (err) {
                                 if (window.console) console.log('tpsearch: postMessage error', err);
