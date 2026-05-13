@@ -507,3 +507,25 @@ a:hover { text-decoration: underline;
          background-color: #f0dfbf;}
 a:active { text-decoration: none; }
 
+
+/* Cross-reference floating buttons (MU / AT / TK) */
+.xref-btn {
+    display: none;
+    position: fixed;
+    right: 30px;
+    z-index: 99;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    padding: 12px 14px;
+    border-radius: 4px;
+}
+#xref-mul-btn { bottom: 185px; background-color: #2f76a8; }
+#xref-mul-btn:hover { background-color: #444; }
+#xref-att-btn { bottom: 130px; background-color: #2d8a4e; }
+#xref-att-btn:hover { background-color: #444; }
+#xref-tik-btn { bottom: 75px;  background-color: #b07d2e; }
+#xref-tik-btn:hover { background-color: #444; }

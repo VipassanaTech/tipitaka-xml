@@ -25,11 +25,7 @@
         <link href="../css/tipistyles.css" rel="stylesheet">    
 
         <title>CSCD Tipiṭaka (Myanmar)</title>  
-        <link rel="icon" type="image/x-icon" href="../favicon.ico">
-        <style>
-
-        
-        </style>
+        <link rel="icon" type="image/x-icon" href="../favicon.ico">
 
         <!-- Tree display code-->
         <script>
@@ -109,6 +105,7 @@
                         {
                             history.replaceState(null, null, cleanPath);
                             $("#t-content").load(lnk);
+                        xrefUpdate(lnk);
                             if (window.innerWidth > 768) {
                                 setTimeout(
                                   function() 
@@ -122,6 +119,7 @@
                         // toggle nodes: close if already open (and close descendants), otherwise open
                         {
                             history.replaceState(null, null, cleanPath);
+                            xrefHide();
                             var t = data.instance;
                             var nid = data.selected[0];
                             if (t.is_open(nid)) {
@@ -287,6 +285,11 @@
             <!-- Page New Content-->
             <!-- Return to Top button -->
             <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+        <!-- Cross-reference buttons: Mūla (MU), Aṭṭhakathā (AT) and Ṭīkā (TK) -->
+        <button id="xref-mul-btn" class="xref-btn" title="View Mūla (Root text)"          onclick="openXref('mul')">MU</button>
+        <button id="xref-att-btn" class="xref-btn" title="View Aṭṭhakathā (Commentary)"  onclick="openXref('att')">AT</button>
+        <button id="xref-tik-btn" class="xref-btn" title="View Ṭīkā (Sub-commentary)"    onclick="openXref('tik')">TK</button>
         
             <div class="bodycontainer" id="bodycontainer">
                 <div class="sidebar" id="tree"></div>
@@ -390,7 +393,9 @@
             });
         </script>
     
-        <script defer src="../js/topnavscript.js"></script>    
+
+    <script defer src="../js/xref.js"></script>
+    <script defer src="../js/topnavscript.js"></script>    
          
     </body>
     </html>
