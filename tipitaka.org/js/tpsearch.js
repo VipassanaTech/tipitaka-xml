@@ -1434,6 +1434,21 @@
         var $dd = $('#tp-bookmark-dropdown');
         if (!$dd.length) return;
         var bms = loadBookmarks();
+        var updated = false;
+        // If we have a tree map loaded, prefer to populate missing ids so
+        // bookmarks open by #id (index page) instead of raw href when possible.
+        try {
+            if (bms && bms.length && typeof _treeHrefToId === 'object') {
+                for (var bi = 0; bi < bms.length; bi++) {
+                    var bb = bms[bi] || {};
+                    if ((!bb.id || bb.id === '') && bb.href) {
+                        var mapped = _treeHrefToId[bb.href] || _treeHrefToId[(bb.href || '').split('/').pop()];
+                        if (mapped) { bb.id = mapped; bms[bi] = bb; updated = true; }
+                    }
+                }
+                if (updated) saveBookmarks(bms);
+            }
+        } catch (e) { /* ignore mapping errors */ }
         if (!bms.length) {
             $dd.html('<div class="tp-bm-empty">No bookmarks yet.</div>');
             return;
@@ -1808,6 +1823,20 @@
                     var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
                     if (id) $(this).attr('data-id', id);
                 });
+                // Also populate any saved bookmarks with missing ids so they
+                // open via index.html#id where possible.
+                try {
+                    var bms = loadBookmarks();
+                    var changed = false;
+                    for (var bi = 0; bi < bms.length; bi++) {
+                        var bb = bms[bi] || {};
+                        if ((!bb.id || bb.id === '') && bb.href) {
+                            var mapped = _treeHrefToId[bb.href] || _treeHrefToId[(bb.href || '').split('/').pop()];
+                            if (mapped) { bb.id = mapped; bms[bi] = bb; changed = true; }
+                        }
+                    }
+                    if (changed) saveBookmarks(bms);
+                } catch (e) { /* ignore */ }
             }).fail(function() {
                 // as a last resort, try the project-root-prefixed path
                 var alt = '/tipitaka.org/' + root + '/tree.json';
@@ -1820,6 +1849,18 @@
                         var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
                         if (id) $(this).attr('data-id', id);
                     });
+                    try {
+                        var bms2 = loadBookmarks();
+                        var changed2 = false;
+                        for (var bi2 = 0; bi2 < bms2.length; bi2++) {
+                            var bb2 = bms2[bi2] || {};
+                            if ((!bb2.id || bb2.id === '') && bb2.href) {
+                                var mapped2 = _treeHrefToId[bb2.href] || _treeHrefToId[(bb2.href || '').split('/').pop()];
+                                if (mapped2) { bb2.id = mapped2; bms2[bi2] = bb2; changed2 = true; }
+                            }
+                        }
+                        if (changed2) saveBookmarks(bms2);
+                    } catch (e) { /* ignore */ }
                 }).fail(function() {
                     // mapping unavailable
                 });
@@ -2223,13 +2264,24 @@
         // ── Bookmark: remove entry from dropdown ──
         $(document).on('click', '.tp-bm-remove', function(e) {
             e.preventDefault();
+            // Prevent the global outside-click handler from closing the dropdown
+            e.stopPropagation();
             var href = $(this).data('href');
             var bms = loadBookmarks().filter(function(b) { return b.href !== href; });
             saveBookmarks(bms);
             $('.tp-bookmark-toggle[data-href="' + href + '"] i').removeClass('fa-star tp-bm-starred').addClass('fa-star-o');
             updateBookmarkIcon();
             renderBookmarkDropdown();
-            if (!bms.length) $('#tp-bookmark-dropdown').hide();
+            // Keep the dropdown open and reposition it relative to the topbar icon
+            var $icon = $('#tp-topbar-bookmark-icon');
+            var $dd = $('#tp-bookmark-dropdown');
+            if ($dd.length && $icon.length) {
+                var offset = $icon.offset();
+                $dd.css({
+                    top: offset.top + $icon.outerHeight(),
+                    right: $(window).width() - offset.left - $icon.outerWidth()
+                }).show();
+            }
         });
 
         // ── Bookmark: open title in new tab from dropdown ──
