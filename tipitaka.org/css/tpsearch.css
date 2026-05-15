@@ -982,6 +982,12 @@
     text-overflow: ellipsis;
 }
 .tp-bm-open:hover { text-decoration: underline; }
+.tp-bm-query {
+    margin-left: 5px;
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+}
 .tp-bm-empty {
     padding: 10px 14px;
     color: #888;

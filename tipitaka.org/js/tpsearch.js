@@ -1457,7 +1457,8 @@
         bms.forEach(function(b) {
             html += '<div class="tp-bm-row">';
             html += '<a href="#" class="tp-bm-remove" data-href="' + escapeHtml(b.href) + '" title="Remove bookmark"><i class="fa fa-star tp-bm-starred"></i></a>';
-            html += '<a href="#" class="tp-bm-open" data-href="' + escapeHtml(b.href) + '" data-id="' + escapeHtml(b.id || '') + '">' + escapeHtml(b.title) + '</a>';
+            var bmLabel = escapeHtml(b.title) + (b.query ? ' <span class="tp-bm-query">[' + escapeHtml(b.query) + ']</span>' : '');
+            html += '<a href="#" class="tp-bm-open" data-href="' + escapeHtml(b.href) + '" data-id="' + escapeHtml(b.id || '') + '" data-query="' + escapeHtml(b.query || '') + '" data-isdeva="' + (b.isDeva ? '1' : '0') + '">' + bmLabel + '</a>';
             html += '</div>';
         });
         $dd.html(html);
@@ -1671,10 +1672,19 @@
         //  - pendingIsDeva: (bool) whether Devanagari mode
         function processPending(pendingId, pendingQ, pendingIsDeva) {
             if (!pendingQ) return;
+            // Ensure $tContent is initialized (in case this runs before the normal init)
+            if (typeof $tContent === 'undefined' || !$tContent) {
+                $tContent = $('#t-content');
+            }
             if (window.console) console.log('tpsearch: processPending id=', pendingId, 'q=', pendingQ, 'isDeva=', pendingIsDeva);
 
+            var clearPendingStorage = function() {
+                try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
+                try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
+            };
+
             var applyHighlight = function() {
-                if (!pendingQ) return;
+                if (!pendingQ) return 0;
                 if (window.console) console.log('tpsearch: applying highlight for', pendingQ, 'isDeva=', pendingIsDeva);
                 try { highlightLooseMatches($tContent, pendingQ, pendingIsDeva); } catch (e) {
                     var esc = pendingQ.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
@@ -1682,17 +1692,63 @@
                     var regex = new RegExp('(' + esc + ')', flags);
                     $tContent.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
                 }
-                var $first = $tContent.find('.tpsearch-highlight').first();
-                if ($first.length) {
-                    var top = $first.offset().top - 80;
-                    $('html, body').animate({ scrollTop: top }, 300);
+                var count = $tContent.find('.tpsearch-highlight').length;
+                if (count > 0) {
+                    var $first = $tContent.find('.tpsearch-highlight').first();
+                    if ($first.length) {
+                        var top = $first.offset().top - 80;
+                        $('html, body').animate({ scrollTop: top }, 300);
+                    }
                 }
-                try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
-                try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
+                return count;
+            };
+
+            var applyHighlightWithRetries = function(maxAttempts, delayMs) {
+                var attempt = 0;
+                var runner = function() {
+                    attempt++;
+                    var hitCount = applyHighlight();
+                    if (hitCount > 0) {
+                        if (window.console) console.log('tpsearch: highlight succeeded on attempt', attempt, 'hits=', hitCount);
+                        clearPendingStorage();
+                        return;
+                    }
+                    if (attempt < maxAttempts) {
+                        setTimeout(runner, delayMs);
+                    } else {
+                        if (window.console) console.log('tpsearch: highlight gave no matches after retries');
+                        clearPendingStorage();
+                    }
+                };
+                runner();
             };
 
             if (pendingId) {
+                var _highlightApplied = false;
+                var safeApplyHighlight = function() {
+                    if (_highlightApplied) return;
+                    _highlightApplied = true;
+                    applyHighlightWithRetries(50, 200);
+                };
+
+                // Watch $tContent independently — the site's tree may load content
+                // automatically via the #id hash without us needing to click anything.
+                var watchContent = function(tries) {
+                    if (_highlightApplied) return;
+                    if ($tContent && $tContent.length && $.trim($tContent.html()).length) {
+                        if (window.console) console.log('tpsearch: watchContent detected content');
+                        safeApplyHighlight();
+                    } else if (tries > 0) {
+                        setTimeout(function() { watchContent(tries - 1); }, 200);
+                    } else {
+                        if (window.console) console.log('tpsearch: watchContent timed out');
+                        safeApplyHighlight();
+                    }
+                };
+                watchContent(50); // up to 10s
+
                 var tryLoad = function(attemptsLeft) {
+                    if (_highlightApplied) return; // watchContent already handled it
                     var href = _treeIdToHref[pendingId];
                     if (window.console) console.log('tpsearch: tryLoad, attemptsLeft=', attemptsLeft, 'mapped href=', href);
                     try {
@@ -1700,20 +1756,7 @@
                         if (nodeLink) {
                             if (window.console) console.log('tpsearch: found tree node link for id=', pendingId, '- clicking it');
                             nodeLink.click();
-                            if (window.console) console.log('tpsearch: clicked node link, waiting for content to appear');
-                            var checkContent = function(tries) {
-                                if ($tContent && $tContent.length && $.trim($tContent.html()).length) {
-                                    if (window.console) console.log('tpsearch: content appeared after node click');
-                                    applyHighlight();
-                                } else if (tries > 0) {
-                                    setTimeout(function() { checkContent(tries - 1); }, 200);
-                                } else {
-                                    if (window.console) console.log('tpsearch: node click did not produce content, falling back to href load', href);
-                                    if (href && $tContent && $tContent.length) $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href as fallback', href); applyHighlight(); });
-                                    else applyHighlight();
-                                }
-                            };
-                            checkContent(attemptsLeft);
+                            // watchContent will detect when content appears and apply highlight
                             return;
                         } else {
                             if (window.console) console.log('tpsearch: no tree node link for id=', pendingId);
@@ -1721,21 +1764,18 @@
                     } catch (e) { if (window.console) console.log('tpsearch: error while checking for node link', e); }
                     if (href && $tContent && $tContent.length) {
                         if (window.console) console.log('tpsearch: loading href directly', href);
-                        $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); applyHighlight(); });
+                        $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); safeApplyHighlight(); });
                         return;
                     }
                     if (attemptsLeft > 0) {
                         if (window.console) console.log('tpsearch: retrying tryLoad in 200ms');
                         setTimeout(function() { tryLoad(attemptsLeft - 1); }, 200);
-                    } else {
-                        if (window.console) console.log('tpsearch: tryLoad exhausted, applying highlight fallback');
-                        applyHighlight();
                     }
                 };
                 tryLoad(25);
             } else {
                 // No id: just apply highlight to whatever content is present
-                applyHighlight();
+                applyHighlightWithRetries(50, 200);
             }
         }
 
@@ -1872,15 +1912,39 @@
         try {
             var _pendingQ = null;
             var _pendingIsDeva = false;
+            var _pendingIdFromHash = null;
+            var _pendingHandled = false;
+            // Extract id from the URL hash (clean format: #674)
+            try {
+                var _h = window.location.hash || '';
+                var _hm = _h.match(/^#([^\?&;\/]+)/);
+                if (_hm) _pendingIdFromHash = _hm[1];
+                if (window.console) console.log('tpsearch: extracted _pendingIdFromHash=', _pendingIdFromHash, 'from hash=', _h);
+            } catch (e) {}
+
             // 1) localStorage-based (works when origin matches)
             try { _pendingQ = localStorage.getItem('tpsearch-newtab-query'); } catch (e) { _pendingQ = null; }
             if (_pendingQ && _pendingQ.length) {
                 _pendingIsDeva = (localStorage.getItem('tpsearch-newtab-isdeva') === '1');
+                // Apply when a hash exists (new-tab node open); use parsed id when available.
+                if ((window.location.hash || '').length > 1) {
+                    // Clear localStorage immediately so it doesn't fire again on the next page load
+                    try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
+                    try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
+                    // Use processPending with the hash id so it waits for content to load first
+                    processPending(_pendingIdFromHash || '', _pendingQ, _pendingIsDeva);
+                    _pendingHandled = true;
+                } else {
+                    // No tree id: this just a normal page load, not a bookmark new-tab.
+                    // Clear localStorage immediately and don't apply highlight
+                    try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
+                    try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
+                }
             } else {
                 // 2) parse hash params for tpq/tpd (format: #<id>?tpq=...&tpd=1)
                 try {
                     var h = window.location.hash || '';
-                    var m = h.match(/^#([0-9]+)(?:[\?&;](.*))?$/);
+                    var m = h.match(/^#([^\?&;\/]+)(?:[\?&;](.*))?$/);
                     if (m && m[2]) {
                         var qs = m[2];
                         var pendingId = m[1] || null;
@@ -1935,7 +1999,8 @@
                                         // click it and then wait for content to appear
                                         nodeLink.click();
                                         if (window.console) console.log('tpsearch: clicked node link, waiting for content to appear');
-                                        // wait until $tContent has content
+                                        // Use an independent retry counter (50 × 200ms = 10s) so that
+                                        // checkContent is not starved by tryLoad having used up its attempts.
                                         var checkContent = function(tries) {
                                             if ($tContent && $tContent.length && $.trim($tContent.html()).length) {
                                                 if (window.console) console.log('tpsearch: content appeared after node click');
@@ -1949,7 +2014,7 @@
                                                 else applyHighlight();
                                             }
                                         };
-                                        checkContent(attemptsLeft);
+                                        checkContent(50);
                                         return;
                                     } else {
                                         if (window.console) console.log('tpsearch: no tree node link for id=', pendingId);
@@ -1975,7 +2040,7 @@
                 } catch (e) {}
             }
 
-            if (_pendingQ && _pendingQ.length && $tContent && $tContent.length) {
+            if (!_pendingHandled && _pendingQ && _pendingQ.length && $tContent && $tContent.length) {
                 try { highlightLooseMatches($tContent, _pendingQ, _pendingIsDeva); } catch (e) {
                     var esc = _pendingQ.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
                     var flags = _pendingIsDeva ? 'giu' : 'gi';
@@ -2216,6 +2281,10 @@
             var $a = $(this);
             var href = $a.data('href') || '';
             var id = $a.data('id') || $a.closest('.tp-result-title').find('.tp-open-newtab').attr('data-id') || '';
+            // If id still missing, look it up from the tree map in real time
+            if (!id && href) {
+                id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()] || '';
+            }
             var title = $a.data('title') || '';
             var bms = loadBookmarks();
             var idx = -1;
@@ -2225,7 +2294,7 @@
                 bms.splice(idx, 1);
                 $icon.removeClass('fa-star tp-bm-starred').addClass('fa-star-o');
             } else {
-                bms.push({ href: href, id: id, title: title });
+                bms.push({ href: href, id: id, title: title, query: currentQuery || '', isDeva: currentIsDeva ? 1 : 0 });
                 $icon.removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
             }
             saveBookmarks(bms);
@@ -2292,19 +2361,107 @@
             var id = $(this).data('id') || '';
             var _pageBase = window.location.href.replace(/[^/]*$/, '');
             var _pageOrigin = window.location.origin;
-            var targetUrl = id ? (_pageBase + 'index.html#' + id) : (_pageBase + href.replace(/^\//, ''));
-            if (!targetUrl) return;
-            var newWin = window.open(targetUrl, '_blank');
-            if (newWin && currentQuery) {
-                var encD = currentIsDeva ? '1' : '0';
-                var payload = { tpq: currentQuery, tpd: encD, id: id };
-                var tries = 0;
-                var sendMsg = function() {
-                    try { newWin.postMessage(payload, _pageOrigin); } catch (err) {}
-                    if (++tries < 12) setTimeout(sendMsg, 300);
-                };
-                sendMsg();
+            var bmQuery = $(this).data('query') || currentQuery || '';
+            var bmIsDeva = ($(this).data('isdeva') === '1' || $(this).data('isdeva') === 1) ? true : currentIsDeva;
+            var encD = bmIsDeva ? '1' : '0';
+
+            var persistBookmarkId = function(resolvedId) {
+                if (!resolvedId) return;
+                try {
+                    var bms = loadBookmarks();
+                    var changed = false;
+                    for (var bi = 0; bi < bms.length; bi++) {
+                        if (bms[bi].href === href && (!bms[bi].id || bms[bi].id === '')) {
+                            bms[bi].id = resolvedId;
+                            changed = true;
+                        }
+                    }
+                    if (changed) saveBookmarks(bms);
+                } catch (e2) {}
+            };
+
+            var resolveIdFromMap = function() {
+                if (!href) return '';
+                return _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()] || '';
+            };
+
+            var openBookmarkTarget = function(finalId) {
+                // Write query to localStorage so the new tab can pick it up immediately on load.
+                if (bmQuery) {
+                    try { localStorage.setItem('tpsearch-newtab-query', bmQuery); } catch (err) {}
+                    try { localStorage.setItem('tpsearch-newtab-isdeva', encD); } catch (err) {}
+                }
+
+                // Prefer index.html#id so tpsearch.js is loaded in the new tab.
+                var targetUrl = finalId ? (_pageBase + 'index.html#' + finalId) : (_pageBase + href.replace(/^\//, ''));
+                if (!targetUrl) return;
+
+                var newWin = window.open(targetUrl, '_blank');
+                // postMessage as an additional fallback in case localStorage is unavailable
+                if (newWin && bmQuery) {
+                    var payload = { tpq: bmQuery, tpd: encD, id: finalId || '' };
+                    var tries = 0;
+                    var sendMsg = function() {
+                        try { newWin.postMessage(payload, _pageOrigin); } catch (err) {}
+                        if (++tries < 12) setTimeout(sendMsg, 300);
+                    };
+                    sendMsg();
+                }
+            };
+
+            // First try current in-memory tree map
+            if (!id && href) {
+                id = resolveIdFromMap();
+                if (id) persistBookmarkId(id);
             }
+
+            if (id) {
+                openBookmarkTarget(id);
+                return;
+            }
+
+            // If still missing id, fetch tree.json lazily and try again before opening.
+            var root = _scriptRoot;
+            try {
+                var p = window.location.pathname || '/';
+                if (p.indexOf('/romn/') !== -1 || p.indexOf('/romn') === 0) root = 'romn';
+                else if (p.indexOf('/deva/') !== -1 || p.indexOf('/deva') === 0) root = 'deva';
+            } catch (e3) {}
+
+            if (!root) {
+                openBookmarkTarget('');
+                return;
+            }
+
+            var treeUrl = null;
+            try {
+                var p2 = window.location.pathname || '/';
+                var m2 = p2.match(/^(.*?\/(?:romn|deva))(?:\/|$)/);
+                if (m2 && m2[1]) treeUrl = m2[1].replace(/\/+$/, '') + '/tree.json';
+            } catch (e4) {}
+            if (!treeUrl) treeUrl = '/' + root + '/tree.json';
+
+            var afterTreeLoaded = function(data) {
+                try { _buildTreeMap(data); } catch (e5) {}
+                var mapped = resolveIdFromMap();
+                if (mapped) persistBookmarkId(mapped);
+                openBookmarkTarget(mapped || '');
+            };
+
+            $.getJSON(treeUrl).done(function(data) {
+                afterTreeLoaded(data);
+            }).fail(function() {
+                var alt = '/tipitaka.org/' + root + '/tree.json';
+                if (alt === treeUrl) {
+                    openBookmarkTarget('');
+                    return;
+                }
+                $.getJSON(alt).done(function(data2) {
+                    afterTreeLoaded(data2);
+                }).fail(function() {
+                    openBookmarkTarget('');
+                });
+            });
         });
     });
 
