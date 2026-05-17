@@ -16,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        android:fontFamily="@font/philosopher_regular"
         android:text="Pāḷi Tipiṭaka"
         android:textColor="#8B4513"
         android:textSize="32sp"
@@ -25,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/maitree_regular"
         android:text="Tipitaka texts from Chaṭṭha Saṅgāyana"
         android:textColor="#666666"
         android:textSize="16sp" />
@@ -33,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/monda_regular"
         android:text="Version 1.0.0"
         android:textColor="#999999"
         android:textSize="14sp" />
@@ -41,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/monda_regular"
         android:text="Vipassana Research Institute"
         android:textColor="#999999"
         android:textSize="14sp" />
@@ -49,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:fontFamily="@font/monda_regular"
         android:text="May 2026"
         android:textColor="#999999"
         android:textSize="14sp" />
