@@ -125,7 +125,7 @@
         html += '        <input type="checkbox" id="tp-exact-match" /> Exact Match';
         html += '      </label>';
         // Proximity mode radio buttons: As-is (ordered) or Any order (unordered)
-        html += '      <div class="tp-prox-mode" style="display:inline-block; margin-left:8px; font-size:13px; color:#1E3461;">';
+        html += '      <div class="tp-prox-mode" style="display:none;">';
         html += '        <span style="margin-right:6px;">Proximity:</span>';
         html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-strict" value="strict" checked /> As-is</label>';
         html += '        <label style="margin-right:6px;"><input type="radio" name="tp-prox-mode" id="tp-prox-any" value="any" /> Any</label>';
@@ -416,9 +416,7 @@
         // an array of clauses or an object with details. Use the returned
         // information both to add fq params and to set a transient display
         // filter used for subfacet rendering.
-        var limitFq = null;
         try {
-            limitFq = buildLimitFq();
             if (limitFq) {
                 var lclauses = [];
                 if (Array.isArray(limitFq)) lclauses = limitFq;
@@ -593,9 +591,6 @@
         // volume:"..." AND pitaka:"..."). Split those into separate
         // clauses so we can send them as repeated `fq` params to Solr.
         var clauses = [];
-        // Keep track if the selection represents a single pitaka checkbox
-        // so we can request a pivoted rows=0 book-level view.
-        var pitakaOnly = false;
         var pitakaClauses = [];
         for (var i = 0; i < vals.length; i++) {
             var raw = String(vals[i]);
@@ -867,6 +862,7 @@
 
         // Results list
         html += '<div class="tp-results-list">';
+        var _savedBookmarks = loadBookmarks();
         for (var d = 0; d < docs.length; d++) {
             var doc = docs[d];
             var docId = doc.id || '';
@@ -894,7 +890,7 @@
             html += '    <a href="javascript:void(0)" class="tp-result-link" data-path="' + escapeHtml(localPath) + '">';
             html += '      <i class="fa fa-file-text-o"></i> ' + escapeHtml(title);
             html += '    </a>';
-            var _isBookmarked = loadBookmarks().some(function(b) { return b.href === localPath; });
+            var _isBookmarked = _savedBookmarks.some(function(b) { return b.href === localPath; });
             html += '    <a href="#" class="tp-bookmark-toggle" data-href="' + escapeHtml(localPath) + '" data-title="' + escapeHtml(title) + '" title="Bookmark this page">';
             html += '      <i class="fa ' + (_isBookmarked ? 'fa-star tp-bm-starred' : 'fa-star-o') + '" aria-hidden="true"></i>';
             html += '    </a>';
@@ -1196,11 +1192,6 @@
         return { field: 'volume', value: raw };
     }
 
-    // Re-bind result link, facet and pagination events after dynamic content replacement
-    function rebindSearchEvents() {
-        // Delegated handlers are used; no per-element re-binding needed here.
-    }
-
     // Build pagination HTML
     function buildPagination(total, start) {
         var currentPage = Math.floor(start / PAGE_SIZE) + 1;
@@ -1271,7 +1262,7 @@
 
         // Normalize pattern: remove diacritic marks so matching is diacritic-insensitive
         var normPattern = tmp.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-        var flags = 'g' + (isDeva ? 'iu' : 'iu');
+        var flags = 'giu';
         var re = null;
         try {
             re = new RegExp(normPattern, flags);
@@ -1920,6 +1911,28 @@
             });
         }
 
+        // Called after tree.json loads: build the map, patch data-id attrs, populate bookmark ids
+        function afterTreeMapLoaded(data) {
+            _buildTreeMap(data);
+            $('.tp-open-newtab[data-href], .tp-bookmark-toggle[data-href]').each(function() {
+                var href = $(this).attr('data-href') || '';
+                var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
+                if (id) $(this).attr('data-id', id);
+            });
+            try {
+                var bms = loadBookmarks();
+                var changed = false;
+                for (var bi = 0; bi < bms.length; bi++) {
+                    var bb = bms[bi] || {};
+                    if ((!bb.id || bb.id === '') && bb.href) {
+                        var mapped = _treeHrefToId[bb.href] || _treeHrefToId[(bb.href || '').split('/').pop()];
+                        if (mapped) { bb.id = mapped; bms[bi] = bb; changed = true; }
+                    }
+                }
+                if (changed) saveBookmarks(bms);
+            } catch (e) { /* ignore */ }
+        }
+
         // Load tree.json only from the known script folders: 'romn' or 'deva'.
         // The search widget is limited to these two scripts, so no other candidates are necessary.
         (function loadTreeForKnownScripts() {
@@ -1943,50 +1956,14 @@
 
             $.getJSON(treeUrl).done(function(data) {
                 _scriptRoot = root;
-                _buildTreeMap(data);
-                $('.tp-open-newtab[data-href], .tp-bookmark-toggle[data-href]').each(function() {
-                    var href = $(this).attr('data-href') || '';
-                    var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
-                    if (id) $(this).attr('data-id', id);
-                });
-                // Also populate any saved bookmarks with missing ids so they
-                // open via index.html#id where possible.
-                try {
-                    var bms = loadBookmarks();
-                    var changed = false;
-                    for (var bi = 0; bi < bms.length; bi++) {
-                        var bb = bms[bi] || {};
-                        if ((!bb.id || bb.id === '') && bb.href) {
-                            var mapped = _treeHrefToId[bb.href] || _treeHrefToId[(bb.href || '').split('/').pop()];
-                            if (mapped) { bb.id = mapped; bms[bi] = bb; changed = true; }
-                        }
-                    }
-                    if (changed) saveBookmarks(bms);
-                } catch (e) { /* ignore */ }
+                afterTreeMapLoaded(data);
             }).fail(function() {
                 // as a last resort, try the project-root-prefixed path
                 var alt = '/tipitaka.org/' + root + '/tree.json';
                 if (alt === treeUrl) return;
                 $.getJSON(alt).done(function(data) {
                     _scriptRoot = root;
-                    _buildTreeMap(data);
-                    $('.tp-open-newtab[data-href], .tp-bookmark-toggle[data-href]').each(function() {
-                        var href = $(this).attr('data-href') || '';
-                        var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
-                        if (id) $(this).attr('data-id', id);
-                    });
-                    try {
-                        var bms2 = loadBookmarks();
-                        var changed2 = false;
-                        for (var bi2 = 0; bi2 < bms2.length; bi2++) {
-                            var bb2 = bms2[bi2] || {};
-                            if ((!bb2.id || bb2.id === '') && bb2.href) {
-                                var mapped2 = _treeHrefToId[bb2.href] || _treeHrefToId[(bb2.href || '').split('/').pop()];
-                                if (mapped2) { bb2.id = mapped2; bms2[bi2] = bb2; changed2 = true; }
-                            }
-                        }
-                        if (changed2) saveBookmarks(bms2);
-                    } catch (e) { /* ignore */ }
+                    afterTreeMapLoaded(data);
                 }).fail(function() {
                     // mapping unavailable
                 });
@@ -2053,94 +2030,9 @@
                                 if (window.console) console.log('tpsearch: no tpq param found in fragment');
                             }
                         // If we have an id, try to load the corresponding file before highlighting
-                        if (pendingId) {
-                            if (window.console) console.log('tpsearch: pendingId present, will attempt to load id=', pendingId);
-                            // function to apply highlight after content is present
-                            var applyHighlight = function() {
-                                if (!_pendingQ) return;
-                                if (window.console) console.log('tpsearch: applying highlight for', _pendingQ, 'isDeva=', _pendingIsDeva);
-                                try { highlightLooseMatches($tContent, _pendingQ, _pendingIsDeva); } catch (e) {
-                                    var esc = _pendingQ.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
-                                    var flags = _pendingIsDeva ? 'giu' : 'gi';
-                                    var regex = new RegExp('(' + esc + ')', flags);
-                                    $tContent.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
-                                }
-                                var $first = $tContent.find('.tpsearch-highlight').first();
-                                if ($first.length) {
-                                    var top = $first.offset().top - 80;
-                                    $('html, body').animate({ scrollTop: top }, 300);
-                                }
-                                try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
-                                try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
-                            };
-
-                            var tryLoad = function(attemptsLeft) {
-                                var href = _treeIdToHref[pendingId];
-                                if (window.console) console.log('tpsearch: tryLoad, attemptsLeft=', attemptsLeft, 'mapped href=', href);
-                                // Prefer triggering the site's own tree handler by clicking the node link if present
-                                try {
-                                    var nodeLink = document.querySelector('a[href="#' + pendingId + '"]');
-                                    if (nodeLink) {
-                                        if (window.console) console.log('tpsearch: found tree node link for id=', pendingId, '- clicking it');
-                                        // click it and then wait for content to appear
-                                        nodeLink.click();
-                                        if (window.console) console.log('tpsearch: clicked node link, waiting for content to appear');
-                                        // Use an independent retry counter (50 × 200ms = 10s) so that
-                                        // checkContent is not starved by tryLoad having used up its attempts.
-                                        var checkContent = function(tries) {
-                                            if ($tContent && $tContent.length && $.trim($tContent.html()).length) {
-                                                if (window.console) console.log('tpsearch: content appeared after node click');
-                                                applyHighlight();
-                                            } else if (tries > 0) {
-                                                setTimeout(function() { checkContent(tries - 1); }, 200);
-                                            } else {
-                                                if (window.console) console.log('tpsearch: node click did not produce content, falling back to href load', href);
-                                                // fallback to load href if available
-                                                if (href && $tContent && $tContent.length) $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href as fallback', href); applyHighlight(); insertSubheadBookmarkIcons(); });
-                                                else applyHighlight();
-                                            }
-                                        };
-                                        checkContent(50);
-                                        return;
-                                    } else {
-                                        if (window.console) console.log('tpsearch: no tree node link for id=', pendingId);
-                                    }
-                                } catch (e) { if (window.console) console.log('tpsearch: error while checking for node link', e); }
-                                if (href && $tContent && $tContent.length) {
-                                    if (window.console) console.log('tpsearch: loading href directly', href);
-                                    $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); applyHighlight(); insertSubheadBookmarkIcons(); });
-                                    return;
-                                }
-                                if (attemptsLeft > 0) {
-                                    if (window.console) console.log('tpsearch: retrying tryLoad in 200ms');
-                                    setTimeout(function() { tryLoad(attemptsLeft - 1); }, 200);
-                                } else {
-                                    if (window.console) console.log('tpsearch: tryLoad exhausted, applying highlight fallback');
-                                    // as a fallback, attempt highlight on whatever content exists
-                                    applyHighlight();
-                                }
-                            };
-                            tryLoad(25); // wait up to ~5s (25 * 200ms)
-                        }
+                        if (_pendingQ) processPending(pendingId, _pendingQ, _pendingIsDeva);
                     }
                 } catch (e) {}
-            }
-
-            if (!_pendingHandled && _pendingQ && _pendingQ.length && $tContent && $tContent.length) {
-                try { highlightLooseMatches($tContent, _pendingQ, _pendingIsDeva); } catch (e) {
-                    var esc = _pendingQ.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&');
-                    var flags = _pendingIsDeva ? 'giu' : 'gi';
-                    var regex = new RegExp('(' + esc + ')', flags);
-                    $tContent.html(function (_, html) { return html.replace(regex, '<span class="tpsearch-highlight">$1</span>'); });
-                }
-                // scroll to first match if present
-                var $firstMatch = $tContent.find('.tpsearch-highlight').first();
-                if ($firstMatch.length) {
-                    var top = $firstMatch.offset().top - 80;
-                    $('html, body').animate({ scrollTop: top }, 300);
-                }
-                try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
-                try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
             }
         } catch (e) {}
 
@@ -2234,11 +2126,8 @@
             $tContent.on('click', '.tp-open-newtab', function (e) {
                 e.preventDefault();
                 var $btn = $(this);
-                console.log('Open in new tab requested for', $btn);
                 var href = ($btn.attr('data-href') || '').toString();
-                console.log('Data-href is', href);
                 var id = $btn.attr('data-id') || _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
-                console.log('Mapped to id', id);
                 // tree.json should provide an id for every href; no fallback required
                 // Save query data so the opened page can highlight it.
                 // localStorage won't work across origins, so include the encoded query in the fragment.
@@ -2258,7 +2147,6 @@
                 } else if (href) {
                     targetUrl = _pageBase + href.replace(/^\//, '');
                 }
-                console.log('Opening URL', targetUrl);
                 if (targetUrl) {
                     var newWin = window.open(targetUrl, '_blank');
                     // Post the query to the opened window. Use retries in case the page
@@ -2346,14 +2234,12 @@
         // Search form submit
         $(document).on('submit', '#tp-search-form', function (e) {
             e.preventDefault();
-            if (typeof debouncedSearch !== 'undefined' && debouncedSearch.cancel) debouncedSearch.cancel();
             currentFilter = '';  // new search resets filter
             doSearch($tpSearchInput ? $tpSearchInput.val() : $('#tp-search-input').val(), 0, '');
         });
 
         // Search button click
         $(document).on('click', '#tp-search-btn', function () {
-            if (typeof debouncedSearch !== 'undefined' && debouncedSearch.cancel) debouncedSearch.cancel();
             currentFilter = '';
             doSearch($tpSearchInput ? $tpSearchInput.val() : $('#tp-search-input').val(), 0, '');
         });
@@ -2364,7 +2250,6 @@
         $(document).on('keydown', '#tp-search-input', function (e) {
             if (e.keyCode === 13) {
                 e.preventDefault();
-                if (typeof debouncedSearch !== 'undefined' && debouncedSearch.cancel) debouncedSearch.cancel();
                 currentFilter = '';
                 doSearch($tpSearchInput ? $tpSearchInput.val() : $(this).val(), 0, '');
             }
@@ -2406,7 +2291,8 @@
                 bms.splice(idx, 1);
                 $icon.removeClass('fa-star tp-bm-starred').addClass('fa-star-o');
             } else {
-                bms.push({ href: href, id: id, title: title, query: currentQuery || '', isDeva: currentIsDeva ? 1 : 0, sectionId: sectionId });
+                var bmQuery = $a.hasClass('tp-subhead-bm') ? '' : (currentQuery || '');
+                bms.push({ href: href, id: id, title: title, query: bmQuery, isDeva: currentIsDeva ? 1 : 0, sectionId: sectionId });
                 $icon.removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
             }
             saveBookmarks(bms);
