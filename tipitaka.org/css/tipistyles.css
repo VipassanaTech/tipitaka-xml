@@ -2,6 +2,17 @@
 Stylesheet for tipitaka.org website.
 */
 
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.flex-wrapper {
+    width: 100%;
+}
+
 /* Media query for print */
 @media print {
     /* Hide the top navigation bar when printing */
@@ -72,7 +83,7 @@ body {
     padding: 50px 0 0 0;
     width: 100%;
     margin-left: 0px;
-    margin-right: 10px;
+    margin-right: 0px;
     font-family: 'Maitree', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 1.1rem;
     line-height: 1.5;
@@ -201,6 +212,7 @@ h5,
     position: fixed;
     top:0;
     width: 100%;
+    z-index: 10;
 }
 
 /* Style for the dropdown menu */
@@ -435,6 +447,7 @@ h5,
         width: 100%;
     }
 }
+
 
 
 /*--------- iPhone SE or smaller models ----------- */

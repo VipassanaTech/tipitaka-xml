@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
         
     <!-- Stylesheet for showing hamburger icon in mobile mode -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Stylesheet for Tree site -->
-	<link rel="stylesheet" href="./css/tipitaka-latn.css" />
+    <link rel="stylesheet" href="./css/tipitaka-latn.css" />
 
     <!-- Stylesheet for Top Nav bar -->
     <link href="../css/tipistyles.css" rel="stylesheet">    
@@ -27,13 +27,13 @@
     </style>
 
     <!-- Tree display code-->
-	<script>
-		function scrollToTop() { 
-		   window.scrollTo(0, 0); 
-		}
-	
-		$(document).ready(function(){
-		var jtree = $('#tree').jstree({
+    <script>
+        function scrollToTop() { 
+           window.scrollTo(0, 0); 
+        }
+    
+        $(document).ready(function(){
+        var jtree = $('#tree').jstree({
             'plugins': ['types'], // Enable the types plugin
             'core' : {
                 'data' : {'url': 'tree.json'},
@@ -43,28 +43,28 @@
             'types': { 
                 'leaf': { // Leaf node type
                     'valid_children': [], // No children allowed for files
-                    'icon':  "./images/xp/file.png"
+                    'icon':  "../images/file.png"
                 },
                 'default': {
                     //'valid_children': 'all', // Allow any type of children for folders
-                    'icon': "./images/xp/folder.png",
+                    'icon': "../images/folder.png",
                     'max_depth': 5 // Limit the depth of the tree hierarchy to 2 levels
                 }
             },
             'check_callback': true, // Enable custom callbacks for modifying the tree behavior
-		}).ready(function(){
-			var nid = window.location.hash.substr(1);
-			if (nid)
-			{
-				setTimeout(
-				  function() 
-				  {
-					t = $("#tree").jstree(true); 
-					t.deselect_all();
-					t.select_node(nid);
-				  }, 1000);
-			}
-		});
+        }).ready(function(){
+            var nid = window.location.hash.substr(1);
+            if (nid)
+            {
+                setTimeout(
+                  function() 
+                  {
+                    t = $("#tree").jstree(true); 
+                    t.deselect_all();
+                    t.select_node(nid);
+                  }, 1000);
+            }
+        });
 
         // Custom callback for determining valid children for nodes
         jtree.on('check_callback', function(operation, node, node_parent, node_position, more) {
@@ -91,44 +91,178 @@
             });
             
         });
-	
-		$('#tree')
-			.on("changed.jstree", function (e, data) {
-				if(data.selected.length) {
-					var s = data.instance.get_node(data.selected[0]).id;
-                    console.log('node id=',s);
+    
+        $('#tree')
+            .on("changed.jstree", function (e, data) {
+                if(data.selected.length) {
+                    var s = data.instance.get_node(data.selected[0]).id;
                     //var lnk = $( s+"_anchor").attr('href');    
                     var lnk = $( "#"+s+"_anchor").attr('href');
-					//alert('The selected node is: ' + lnk);
-					console.log("lnk is "+lnk);
+                    //alert('The selected node is: ' + lnk);
+                    var cleanPath = window.location.pathname.replace(/\/index\.html$/i, '/') + '#' + s;
                     if (lnk != '#')  // leaf so shows the content
-					{
-						window.location.hash = s;
-						$("#t-content").load(lnk);
-						setTimeout(
-						  function() 
-						  {
-							$("html").animate({scrollTop:01}, 00);
-								return false;
-						  }, 0);
-					}
-					else
-                    // open nodes
-					{
-                        console.log("data.selected[0]", data.selected[0])
-						data.instance.open_node(data.selected[0],false, false);
-					}
-				}
-			})
-		});
-	</script>
+                    {
+                        history.replaceState(null, null, cleanPath);
+                        $("#t-content").load(lnk);
+                        if (window.innerWidth > 768) {
+                            setTimeout(
+                              function() 
+                              {
+                                $("html").animate({scrollTop:01}, 00);
+                                    return false;
+                              }, 0);
+                        }
+                    }
+                    else
+                    // toggle nodes: close if already open (and close descendants), otherwise open
+                    {
+                        history.replaceState(null, null, cleanPath);
+                        var t = data.instance;
+                        var nid = data.selected[0];
+                        if (t.is_open(nid)) {
+                            var nodeObj = t.get_node(nid);
+                            if (nodeObj.children_d && nodeObj.children_d.length) {
+                                nodeObj.children_d.forEach(function(childId){
+                                    if (t.is_open(childId)) t.close_node(childId);
+                                });
+                            }
+                            t.close_node(nid);
+                        } else {
+                            if (window.innerWidth > 768) {
+                                $("html").animate({scrollTop:-50}, 00);
+                            }
+                            t.open_node(nid,false,false);
+                        }
+                    }
+                }
+            })
+            .on("open_node.jstree", function (e, data) {
+                data.instance.set_icon(data.node, "../images/openfolder.png");
+            })
+            .on("close_node.jstree", function (e, data) {
+                data.instance.set_icon(data.node, "../images/folder.png");
+            })
+        });
+    </script>
 
 
+<style>
+/* Responsive styles for the navigation tree */
+@media (max-width: 768px) {
+    #tree {
+        position: fixed;
+        left: 0;
+        top: 130px;
+        bottom: 0;
+        width: 250px;
+        background: #fff;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #tree.visible {
+        transform: translateX(0);
+    }
+
+    #nav-toggle {
+        position: fixed;
+        left: 10px;
+        top: 60px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1100;
+        cursor: pointer;
+    }
+
+    #nav-toggle i {
+        font-size: 18px;
+        color: #333;
+    }
+
+    /* Hide the hamburger menu icon on mobile */
+    .topnav .icon {
+        display: none !important;
+    }
+}
+
+/* Hide the toggle button in desktop view */
+@media (min-width: 769px) {
+    #nav-toggle {
+        display: none !important;
+    }
+}
+</style>
+
+<script>
+$(document).ready(function () {
+    const $tree = $('#tree');
+    const $toggle = $('#nav-toggle');
+
+    $toggle.on('click', function () {
+        $tree.toggleClass('visible');
+        const icon = $tree.hasClass('visible') ? 'fa-times' : 'fa-arrow-right';
+        $toggle.find('i').attr('class', `fa ${icon}`);
+        $toggle.show();
+    });
+
+    // Hide/show toggle button based on scroll position (mobile only)
+    $(window).on('scroll', function () {
+        if (window.innerWidth <= 768 && !$tree.hasClass('visible')) {
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            if (scrollTop > 100) {
+                $toggle.hide();
+            } else {
+                $toggle.show();
+            }
+        }
+    });
+
+    // Hide the tree panel when clicking outside of it or the toggle button
+    $(document).on('click', function (e) {
+        if ($tree.hasClass('visible')) {
+            if ($(e.target).closest('#tree, #nav-toggle').length === 0) {
+                $tree.removeClass('visible');
+                $toggle.find('i').attr('class', 'fa fa-arrow-right');
+                $toggle.show();
+            }
+        }
+    });
+
+    $('#tree').on('changed.jstree', function (e, data) {
+        if (data && data.selected.length) {
+            const selectedNode = data.instance.get_node(data.selected[0]);
+            if (selectedNode && selectedNode.icon === '../images/file.png') {
+                $tree.removeClass('visible');
+                $toggle.find('i').attr('class', 'fa fa-arrow-right');
+                if (window.innerWidth <= 768) {
+                    $toggle.show();
+                }
+            }
+        }
+    });
+});
+</script>
 
 
 </head>    
 
 <body> 
+    <!-- Toggle button for navigation tree (mobile only) -->
+    <div id="nav-toggle" class="nav-toggle">
+        <i class="fa fa-arrow-right"></i>
+    </div>
+
     <div class="flex-wrapper">
         <!-- Top nav bar from topnav.html imported via JScript (see below) -->
         <div class="nav-wrapper">
@@ -252,6 +386,9 @@
     </script>
     
     <script defer src="../js/topnavscript.js"></script>    
+         
+</body>
+</html>
          
 </body>
 </html>

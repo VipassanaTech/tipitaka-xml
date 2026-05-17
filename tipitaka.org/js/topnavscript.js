@@ -3,6 +3,11 @@ fetch('topnav.html')
 .then(res=>res.text())
 .then(data=>{
     nav.innerHTML=data
+    if (typeof injectTopBarSearchIcon === 'function') {
+        injectTopBarSearchIcon();
+    } else if (window.injectTopBarSearchIcon) {
+        window.injectTopBarSearchIcon();
+    }
 })
 
 function toggleMenu() {
