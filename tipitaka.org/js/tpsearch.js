@@ -257,9 +257,9 @@
                 var bmIcon = document.createElement('a');
                 bmIcon.href = 'javascript:void(0)';
                 bmIcon.id = 'tp-topbar-bookmark-icon';
-                bmIcon.title = 'Bookmarks';
+                bmIcon.title = 'Add or remove bookmarks';
                 bmIcon.innerHTML = '<i class="fa fa-bookmark-o"></i>';
-                iconHtml.parentNode.insertBefore(bmIcon, iconHtml.nextSibling);
+                iconHtml.parentNode.insertBefore(bmIcon, iconHtml);
                 updateBookmarkIcon();
                 // For mobile: also insert after Home in collapsed menu if menu is open
                 var $hamburger = $nav.find('a.icon');
@@ -1458,17 +1458,19 @@
             html += '<div class="tp-bm-row">';
             html += '<a href="#" class="tp-bm-remove" data-href="' + escapeHtml(b.href) + '" title="Remove bookmark"><i class="fa fa-star tp-bm-starred"></i></a>';
             var bmLabel = escapeHtml(b.title) + (b.query ? ' <span class="tp-bm-query">[' + escapeHtml(b.query) + ']</span>' : '');
-            html += '<a href="#" class="tp-bm-open" data-href="' + escapeHtml(b.href) + '" data-id="' + escapeHtml(b.id || '') + '" data-query="' + escapeHtml(b.query || '') + '" data-isdeva="' + (b.isDeva ? '1' : '0') + '">' + bmLabel + '</a>';
+            html += '<a href="#" class="tp-bm-open" data-href="' + escapeHtml(b.href) + '" data-id="' + escapeHtml(b.id || '') + '" data-query="' + escapeHtml(b.query || '') + '" data-isdeva="' + (b.isDeva ? '1' : '0') + '" data-section="' + escapeHtml(b.sectionId || '') + '">' + bmLabel + '</a>';
             html += '</div>';
         });
         $dd.html(html);
     }
 
     function updateBookmarkIcon() {
+        var $icon = $('#tp-topbar-bookmark-icon');
+        $icon.show();
         if (loadBookmarks().length > 0) {
-            $('#tp-topbar-bookmark-icon').show();
+            $icon.find('i').removeClass('fa-bookmark-o').addClass('fa-bookmark');
         } else {
-            $('#tp-topbar-bookmark-icon').hide();
+            $icon.find('i').removeClass('fa-bookmark').addClass('fa-bookmark-o');
             $('#tp-bookmark-dropdown').hide();
         }
     }
@@ -1762,9 +1764,9 @@
                             if (window.console) console.log('tpsearch: no tree node link for id=', pendingId);
                         }
                     } catch (e) { if (window.console) console.log('tpsearch: error while checking for node link', e); }
-                    if (href && $tContent && $tContent.length) {
-                        if (window.console) console.log('tpsearch: loading href directly', href);
-                        $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); safeApplyHighlight(); });
+                        if (href && $tContent && $tContent.length) {
+                            if (window.console) console.log('tpsearch: loading href directly', href);
+                            $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); safeApplyHighlight(); insertSubheadBookmarkIcons(); });
                         return;
                     }
                     if (attemptsLeft > 0) {
@@ -1807,6 +1809,90 @@
         $tpSearchInput = $('#tp-search-input');
         $tContent = $('#t-content');
         $tpSearchClear = $('#tp-search-clear');
+
+        // Insert bookmark icons for subheads inside loaded content and
+        // provide a MutationObserver to re-run when content is dynamically replaced.
+        function insertSubheadBookmarkIcons() {
+            try {
+                var $cont = $tContent || $('#t-content');
+                if (!$cont || !$cont.length) return;
+                var bookmarks = loadBookmarks();
+                // Target elements marked with class="subhead" or attribute rend="subhead"
+                $cont.find('.subhead, [rend="subhead"]').each(function (idx) {
+                    var $h = $(this);
+                    // skip if we've already attached a bookmark toggle
+                    if ($h.find('.tp-subhead-bm').length) return;
+                    var hid = $h.attr('id');
+                    if (!hid) {
+                        // generate a safe id from text content
+                        var base = ($h.text() || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                        if (!base) base = 'subhead-' + idx;
+                        hid = 'tp-sub-' + base;
+                        var probe = hid, n = 1;
+                        while (document.getElementById(probe)) { probe = hid + '-' + (n++); }
+                        hid = probe;
+                        $h.attr('id', hid);
+                    }
+                    var path = (window.location.pathname || '').replace(/^\//, '');
+                    var href = path + '#' + hid;
+                    var title = ($h.text() || '').trim();
+                    var $a = $('<a href="#" class="tp-bookmark-toggle tp-subhead-bm" />');
+                    $a.attr('data-href', href);
+                    // Resolve the current page's tree node id so the bookmark opens
+                    // the logical index page (index.html#<id>) rather than the raw XML file.
+                    var _pageTreeId = '';
+                    try {
+                        var _currPath = (window.location.pathname || '').replace(/^\//, '');
+                        _pageTreeId = (_treeHrefToId && (_treeHrefToId[_currPath] || _treeHrefToId[_currPath.split('/').pop()])) || '';
+                        if (!_pageTreeId) {
+                            // Fallback: if the URL hash is already a plain tree node id (e.g. #67)
+                            var _hashMatch = (window.location.hash || '').match(/^#(\d+)$/);
+                            if (_hashMatch) _pageTreeId = _hashMatch[1];
+                        }
+                    } catch (e3) {}
+                    $a.attr('data-id', _pageTreeId);
+                    $a.attr('data-section', hid);
+                    $a.attr('data-title', title);
+                    // Add native tooltip and accessibility label
+                    $a.attr('title', 'Bookmark this section');
+                    $a.attr('aria-label', 'Bookmark this section');
+                    // Use the same star markup used elsewhere (outline by default)
+                    $a.html('<i class="fa fa-star-o" aria-hidden="true"></i>');
+                    // append a small separator then the icon
+                    // For centered headings it looks better to append a non-breaking space before the icon
+                    $h.append('\u00A0').append($a);
+                    // reflect saved state
+                    for (var bi = 0; bi < bookmarks.length; bi++) {
+                        var bb = bookmarks[bi] || {};
+                        var bh = (bb.href || '');
+                        // compare several normalized forms to match stored hrefs
+                        var bhNorm = bh.replace(/^\//, '');
+                        var hrefNorm = href.replace(/^\//, '');
+                        var bhTail = (bh || '').split('/').pop();
+                        if (bh === href || bhNorm === hrefNorm || bhTail === hrefNorm || bh === ('#' + hid) ) {
+                            $a.find('i').removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
+                            break;
+                        }
+                    }
+                });
+            } catch (e) { console.warn('insertSubheadBookmarkIcons error', e); }
+        }
+
+        // Observe changes to content so that injected icons persist after dynamic loads
+        try {
+            var contNode = ($tContent && $tContent.length) ? $tContent.get(0) : null;
+            if (contNode) {
+                var moTimer = null;
+                var mo = new MutationObserver(function(mutations) {
+                    if (moTimer) clearTimeout(moTimer);
+                    moTimer = setTimeout(function() { insertSubheadBookmarkIcons(); }, 150);
+                });
+                mo.observe(contNode, { childList: true, subtree: true });
+            }
+        } catch (e) { /* ignore observer failures */ }
+
+        // run once at init
+        insertSubheadBookmarkIcons();
 
         // Determine current script folder (e.g. 'romn', 'deva') from the URL
         var _scriptRoot = (function() {
@@ -2010,7 +2096,7 @@
                                             } else {
                                                 if (window.console) console.log('tpsearch: node click did not produce content, falling back to href load', href);
                                                 // fallback to load href if available
-                                                if (href && $tContent && $tContent.length) $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href as fallback', href); applyHighlight(); });
+                                                if (href && $tContent && $tContent.length) $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href as fallback', href); applyHighlight(); insertSubheadBookmarkIcons(); });
                                                 else applyHighlight();
                                             }
                                         };
@@ -2022,7 +2108,7 @@
                                 } catch (e) { if (window.console) console.log('tpsearch: error while checking for node link', e); }
                                 if (href && $tContent && $tContent.length) {
                                     if (window.console) console.log('tpsearch: loading href directly', href);
-                                    $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); applyHighlight(); });
+                                    $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); applyHighlight(); insertSubheadBookmarkIcons(); });
                                     return;
                                 }
                                 if (attemptsLeft > 0) {
@@ -2055,6 +2141,28 @@
                 }
                 try { localStorage.removeItem('tpsearch-newtab-query'); } catch (e) {}
                 try { localStorage.removeItem('tpsearch-newtab-isdeva'); } catch (e) {}
+            }
+        } catch (e) {}
+
+        // ── Scroll to bookmarked subheading in new tab ──
+        // When a subheading bookmark is opened, tpsearch-newtab-section holds the
+        // element id to scroll to after the page's content has loaded.
+        try {
+            var _pendingSection = null;
+            try { _pendingSection = localStorage.getItem('tpsearch-newtab-section'); } catch (e) {}
+            if (_pendingSection) {
+                try { localStorage.removeItem('tpsearch-newtab-section'); } catch (e) {}
+                var scrollToSection = function(tries) {
+                    var el = document.getElementById(_pendingSection);
+                    if (el) {
+                        var top = $(el).offset().top - 80;
+                        $('html, body').animate({ scrollTop: top }, 400);
+                    } else if (tries > 0) {
+                        setTimeout(function() { scrollToSection(tries - 1); }, 200);
+                    }
+                };
+                // Wait for content to finish loading before scrolling (up to 10s)
+                scrollToSection(50);
             }
         } catch (e) {}
 
@@ -2092,6 +2200,9 @@
                             $('html, body').animate({ scrollTop: top }, 300);
                         }
                     }
+                    // Insert subhead bookmark icons for newly loaded content
+                    try { insertSubheadBookmarkIcons(); } catch (e) {}
+
                     if (!$('#tp-search-back').length) {
                         var $btn = $('<button id="tp-search-back" class="tpsearch-back-btn" title="Back" aria-label="Back">&lt;</button>');
                         $btn.on('click', function () {
@@ -2286,6 +2397,7 @@
                 id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()] || '';
             }
             var title = $a.data('title') || '';
+            var sectionId = $a.data('section') || '';
             var bms = loadBookmarks();
             var idx = -1;
             for (var i = 0; i < bms.length; i++) { if (bms[i].href === href) { idx = i; break; } }
@@ -2294,7 +2406,7 @@
                 bms.splice(idx, 1);
                 $icon.removeClass('fa-star tp-bm-starred').addClass('fa-star-o');
             } else {
-                bms.push({ href: href, id: id, title: title, query: currentQuery || '', isDeva: currentIsDeva ? 1 : 0 });
+                bms.push({ href: href, id: id, title: title, query: currentQuery || '', isDeva: currentIsDeva ? 1 : 0, sectionId: sectionId });
                 $icon.removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
             }
             saveBookmarks(bms);
@@ -2363,6 +2475,7 @@
             var _pageOrigin = window.location.origin;
             var bmQuery = $(this).data('query') || currentQuery || '';
             var bmIsDeva = ($(this).data('isdeva') === '1' || $(this).data('isdeva') === 1) ? true : currentIsDeva;
+            var bmSectionId = $(this).data('section') || '';
             var encD = bmIsDeva ? '1' : '0';
 
             var persistBookmarkId = function(resolvedId) {
@@ -2390,6 +2503,12 @@
                 if (bmQuery) {
                     try { localStorage.setItem('tpsearch-newtab-query', bmQuery); } catch (err) {}
                     try { localStorage.setItem('tpsearch-newtab-isdeva', encD); } catch (err) {}
+                }
+                // Write section id so the new tab can scroll to the bookmarked subheading.
+                if (bmSectionId) {
+                    try { localStorage.setItem('tpsearch-newtab-section', bmSectionId); } catch (err) {}
+                } else {
+                    try { localStorage.removeItem('tpsearch-newtab-section'); } catch (err) {}
                 }
 
                 // Prefer index.html#id so tpsearch.js is loaded in the new tab.

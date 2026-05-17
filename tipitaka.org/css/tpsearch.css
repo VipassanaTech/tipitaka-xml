@@ -235,6 +235,18 @@
     border-color: #B78730;
 }
 
+/* Subhead bookmark icon (small star placed after headings) */
+.tp-subhead-bm {
+    margin-left: 8px;
+    color: #B78730;
+    text-decoration: none;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+.tp-subhead-bm .fa { /* icon spacing */
+    margin-left: 2px;
+}
+
 /* Ensure result title contains right-side icons and the open-in-new-tab icon is visible */
 .tp-result-title {
     position: relative;
