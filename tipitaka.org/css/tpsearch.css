@@ -240,8 +240,7 @@
     position: relative;
 }
 .tp-open-newtab {
-    float: right;
-    margin-left: 8px;
+    margin-left: 6px;
     color: #B78730;
     text-decoration: none;
     display: inline-block;
@@ -542,22 +541,59 @@
     accent-color: #0b66c2;
 }
 
+/* Span all 4 grid columns of .tp-limit-list so the table isn't squeezed into 1/4 width */
+.tp-limit-table {
+    grid-column: 1 / -1;
+}
+
 /* Table-specific tweaks: ensure row headings and checkbox labels align vertically */
 .tp-limit-table td {
     vertical-align: middle;
-    padding: 4px 6px;
+    padding: 1px 6px;
 }
 .tp-limit-table .limit-item {
-    display: inline-flex; /* ensure label content centers with the checkbox */
-    align-items: left;
+    display: flex; /* block-level flex so label fills the full td width */
+    align-items: center;
     font-size: 13px; /* match existing .tp-limit-list label size */
     line-height: 1;
+    width: 100%;
 }
 .tp-limit-table input[type="checkbox"] {
     vertical-align: middle;
     margin-right: 8px;
 }
 
+/* Nikaya sub-row: sits below the limit-search table, all 5 labels on one line */
+#tp-nikaya-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    margin-left: 30px;
+}
+.tp-nikaya-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    font-family: 'Monda', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    color: #23303b;
+    white-space: nowrap;
+}
+.tp-nikaya-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+    accent-color: #0b66c2;
+}
+.tp-nikaya-label {
+    font-family: 'Monda', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #23303b;
+    white-space: nowrap;
+}
 /* Make the checkbox label text and checkbox align compactly on one line */
 .tp-limit-list {
     align-items: start;
@@ -873,6 +909,92 @@
         font-size: 0.85rem;
     }
 }
+
+/* ===== Bookmarks ===== */
+.tp-bookmark-toggle {
+    margin-left: 6px;
+    color: #bbb;
+    text-decoration: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+.tp-bookmark-toggle:hover { color: #B78730; }
+.tp-bookmark-toggle .tp-bm-starred { color: #B78730; }
+
+.topnav a#tp-topbar-bookmark-icon {
+    float: left;
+    display: block;
+    padding: 10px 8px;
+    color: white;
+    text-decoration: none;
+}
+.topnav a#tp-topbar-bookmark-icon i { font-size: 16px; }
+.topnav a#tp-topbar-bookmark-icon:hover { background-color: #eee; color: #4F4D47; }
+
+#tp-topbar-bookmark-icon {
+    display: none;
+    float: right;
+    padding: 10px 14px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#tp-topbar-bookmark-icon:hover { background: #eee; color: #4F4D47; }
+
+#tp-bookmark-dropdown {
+    position: fixed;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    min-width: 260px;
+    max-width: 400px;
+    max-height: 60vh;
+    overflow-y: auto;
+    z-index: 9999;
+    padding: 6px 0;
+    display: none;
+}
+.tp-bm-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.tp-bm-row:last-child { border-bottom: none; }
+.tp-bm-remove {
+    flex-shrink: 0;
+    color: #B78730;
+    text-decoration: none;
+    font-size: 15px;
+}
+.tp-bm-remove:hover { color: #8a5e10; }
+.tp-bm-open {
+    flex: 1;
+    color: #1E3461;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'Monda', Arial, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tp-bm-open:hover { text-decoration: underline; }
+.tp-bm-query {
+    margin-left: 5px;
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+}
+.tp-bm-empty {
+    padding: 10px 14px;
+    color: #888;
+    font-size: 13px;
+    font-family: 'Monda', Arial, sans-serif;
+}
+.tp-bm-starred { color: #B78730; }
 
 /* Print: hide search bar, context menu, and topbar search icon */
 @media print {
