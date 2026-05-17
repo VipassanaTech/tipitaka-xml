@@ -260,6 +260,8 @@
                 bmIcon.title = 'Add or remove bookmarks';
                 bmIcon.innerHTML = '<i class="fa fa-bookmark-o"></i>';
                 iconHtml.parentNode.insertBefore(bmIcon, iconHtml);
+                // Ensure the search icon is visible in the topnav (including mobile responsive mode)
+                $(iconHtml).show();
                 updateBookmarkIcon();
                 // For mobile: also insert after Home in collapsed menu if menu is open
                 var $hamburger = $nav.find('a.icon');

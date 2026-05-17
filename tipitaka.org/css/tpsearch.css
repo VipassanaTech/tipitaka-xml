@@ -634,18 +634,63 @@
     font-size: 20px;
 }
 
-/* Responsive: stack limit box above search on small screens */
+/* Responsive: stack limit box below search on medium/small screens */
 @media (max-width: 900px) {
     #tp-search-bar {
-        display: block;
-        text-align: left;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        padding: 8px 12px;
     }
+    /* Form comes first visually */
+    #tp-search-form {
+        order: 1;
+        grid-column: unset;
+        max-width: 100%;
+        width: 100%;
+    }
+    /* Limit Search panel sits below the form */
     .tp-limit-search {
-        width: auto;
-        margin-bottom: 8px;
+        order: 2;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 8px;
+        margin-bottom: 0;
     }
-    .tp-pali-chars, .tp-deva-palette, .tp-deva-controls {
-        justify-content: flex-start;
+    #tp-search-right {
+        order: 3;
+    }
+    /* Center mode controls and allow wrapping */
+    .tp-deva-controls {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    /* Center Pali character row but keep it on one line */
+    .tp-pali-chars {
+        justify-content: center;
+    }
+    /* Devanagari palette: single 10-column grid; all buttons flow continuously */
+    .tp-deva-palette {
+        max-width: 100%;
+        overflow-x: hidden;
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 2px;
+    }
+    /* Row divs dissolve — their buttons become direct grid children */
+    .tp-deva-row {
+        display: contents;
+    }
+    /* Limit search: remove the 4-column CSS grid so the <table> renders naturally */
+    .tp-limit-list {
+        display: block;
+        overflow-x: auto;
+    }
+    /* Prevent site-level td { display:block } from collapsing the limit table */
+    .tp-limit-table td {
+        display: table-cell !important;
+        width: auto !important;
     }
 }
 
@@ -896,9 +941,18 @@
         padding: 6px 10px;
     }
 
+    /* Let the input expand to fill available width while leaving room for the button */
     #tp-search-input {
+        flex: 1 1 auto;
+        min-width: 0;
+        width: auto;
         font-size: 14px;
         padding: 7px 10px;
+    }
+
+    /* Keep input and search button on the same line */
+    .tp-search-row {
+        flex-wrap: nowrap;
     }
 
     #tp-search-btn,
@@ -913,12 +967,54 @@
         min-width: 28px;
     }
 
+    /* Slightly smaller Deva buttons so all rows fit without horizontal scroll */
+    .tp-deva-btn,
+    #tp-deva-palette .tp-deva-btn {
+        padding: 3px 5px;
+        font-size: 14px;
+        min-width: 30px;
+        min-height: 30px;
+        margin: 1px;
+    }
+
+    /* Mode-switch row: center and wrap if needed */
+    .tp-mode-switch {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Nikaya row: allow wrapping on narrow screens */
+    #tp-nikaya-row {
+        flex-wrap: wrap;
+        margin-left: 0;
+        justify-content: center;
+    }
+
     .tp-results-header {
         font-size: 1.15rem;
     }
 
     .tp-result-snippet {
         font-size: 0.85rem;
+    }
+
+    /* Help popup: override JS-set left position and center it */
+    #tp-help-popup {
+        left: 50% !important;
+        transform: translateX(-50%);
+        width: 80vw !important;
+        max-width: 80vw !important;
+        top: 80px !important;
+    }
+
+    /* Bookmark dropdown: override JS-set left and center it */
+    #tp-bookmark-dropdown {
+        left: 50% !important;
+        transform: translateX(-50%);
+        right: auto !important;
+        min-width: 260px;
+        max-width: 90vw;
     }
 }
 
