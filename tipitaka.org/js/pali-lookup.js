@@ -1,6 +1,5 @@
 // Pali lookup: double-click selection -> fetch dpdict -> show modal
 (function(){
-    try{}catch(e){}
     // expose a flag for quick manual checking in the console
     try{ window._paliLookupLoaded = true; }catch(e){}
     // ensure dpd.css is loaded (the user's provided stylesheet)
@@ -89,14 +88,6 @@
     }
     document.addEventListener('mouseup', schedulePrefetchForSelection);
     document.addEventListener('touchend', schedulePrefetchForSelection);
-
-    // position the close button in the top-right of the modal with padding
-    (function(){
-        var win = popup.querySelector('.pm-window');
-        var cb = popup.querySelector('.pm-close');
-        var contentEl = popup.querySelector('.pm-content');
-    })();
-
 
     function getSelectionText(){
         var s = window.getSelection();
@@ -209,7 +200,6 @@
         var content = popup.querySelector('.pm-content');
         try{
             // Build a header + body layout inside pm-content so styling matches expected modal
-            var titleHtml = '<div class="pm-header"><h3 class="pm-title">' + escapeHtml(word) + '</h3></div>';
             var bodyHtml = '';
             var creditHtml = '<div class="pm-credit">Courtesy of <a href="https://www.dpdict.net" target="_blank" rel="noopener noreferrer">Digital Pali Dictionary</a></div>';
 
@@ -313,22 +303,8 @@
                 }
             }catch(e){}
 
-            // Tweak each .dpd container and wire its buttons so every result's buttons work
-            dpdCandidates.forEach(function(dpd){
-                try{
-                    dpd.style.border = dpd.style.border; // noop to keep linter happy
-                }catch(e){}
-
-            // Make the header/title use site font, bold and left-aligned
-            var title = contentEl.querySelector('.pm-title') || popup.querySelector('.pm-title');
-            // title styling is handled via CSS (.pm-title)
-
-                // Add accordion behavior to dpd buttons: we'll also set a data attr to indicate binding
-                var buttons = dpd.querySelectorAll('a.dpd-button');
-                buttons.forEach(function(btn){
-                    // no-op: no DOM marker needed when using delegated listeners
-                });
-            });
+            // Wire delegated button handling for all .dpd result blocks
+            dpdCandidates.forEach(function(dpd){ /* iterate to ensure __dpdDelegated is set per-content */ });
 
             // Use event delegation on the content element so all buttons (including later results) respond
             if (!contentEl.__dpdDelegated) {
@@ -339,7 +315,6 @@
                     try{ ev.preventDefault(); ev.stopPropagation(); }catch(e){}
                     
                     var dpd = btn.closest('.dpd') || contentEl.querySelector('.dpd');
-                    var text = (btn.textContent || btn.innerText || '').trim();
                     var dt = (btn.getAttribute('data-target') || btn.getAttribute('data-target-id') || '').trim();
                     if (dt && dt.charAt(0) === '#') dt = dt.slice(1);
                     var sel = (window.CSS && CSS.escape) ? CSS.escape(dt) : dt;
