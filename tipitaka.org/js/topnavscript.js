@@ -24,4 +24,3 @@ function stickyNav(){
         navbar.classList.remove("sticky");
     }
 }
-// Pali lookup moved to js/pali-lookup.js
