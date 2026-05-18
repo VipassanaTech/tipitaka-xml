@@ -3,153 +3,147 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-    <!DOCTYPE html>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+    
+    <!-- Stylesheet for showing hamburger icon in mobile mode -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-        
-        <!-- Stylesheet for showing hamburger icon in mobile mode -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Stylesheet for Tree site -->
+    <link rel="stylesheet" href="./css/tipitaka-latn.css" />
 
-        <!-- Stylesheet for Tree site -->
-        <link rel="stylesheet" href="./css/tipitaka-latn.css" />
+    <!-- Stylesheet for Top Nav bar -->
+    <link href="../css/tipistyles.css" rel="stylesheet">    
 
-        <!-- Stylesheet for Top Nav bar -->
-        <link href="../css/tipistyles.css" rel="stylesheet">    
+    <title>CSCD Tipiṭaka (Myanmar)</title>  
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <style>
 
-        <title>CSCD Tipiṭaka (Myanmar)</title>  
-        <link rel="icon" type="image/x-icon" href="../favicon.ico">
-        <style>
+    
+    </style>
 
-        
-        </style>
+    <!-- Tree display code-->
+    <script>
+        function scrollToTop() { 
+            window.scrollTo(0, 0); 
+        }
 
-        <!-- Tree display code-->
-        <script>
-            function scrollToTop() { 
-               window.scrollTo(0, 0); 
+        $(document).ready(function(){
+        var jtree = $('#tree').jstree({
+            'plugins': ['types'], // Enable the types plugin
+            'core' : {
+                'data' : {'url': 'tree.json'},
+                'expand_selected_onload' : true,
+                'responsive': true
+            },
+            'types': { 
+                'leaf': { // Leaf node type
+                    'valid_children': [], // No children allowed for files
+                    'icon':  "../images/file.png"
+                },
+                'default': {
+                    //'valid_children': 'all', // Allow any type of children for folders
+                    'icon': "../images/folder.png",
+                    'max_depth': 5 // Limit the depth of the tree hierarchy to 2 levels
+                }
+            },
+            'check_callback': true, // Enable custom callbacks for modifying the tree behavior
+        }).ready(function(){
+            var nid = window.location.hash.substr(1);
+            if (nid)
+            {
+                setTimeout(
+                    function() 
+                    {
+                    t = $("#tree").jstree(true); 
+                    t.deselect_all();
+                    t.select_node(nid);
+                    }, 1000);
             }
-    
-            $(document).ready(function(){
-            var jtree = $('#tree').jstree({
-                'plugins': ['types'], // Enable the types plugin
-                'core' : {
-                    'data' : {'url': 'tree.json'},
-                    'expand_selected_onload' : true,
-                    'responsive': true
-                },
-                'types': { 
-                    'leaf': { // Leaf node type
-                        'valid_children': [], // No children allowed for files
-                        'icon':  "../images/file.png"
-                    },
-                    'default': {
-                        //'valid_children': 'all', // Allow any type of children for folders
-                        'icon': "../images/folder.png",
-                        'max_depth': 5 // Limit the depth of the tree hierarchy to 2 levels
-                    }
-                },
-                'check_callback': true, // Enable custom callbacks for modifying the tree behavior
-            }).ready(function(){
-                var nid = window.location.hash.substr(1);
-                if (nid)
-                {
-                    setTimeout(
-                      function() 
-                      {
-                        t = $("#tree").jstree(true); 
-                        t.deselect_all();
-                        t.select_node(nid);
-                      }, 1000);
-                }
-            });
+        });
 
-            // Custom callback for determining valid children for nodes
-            jtree.on('check_callback', function(operation, node, node_parent, node_position, more) {
-                if (operation === 'copy_node' || operation === 'move_node') {
-                    // Disallow copying or moving into a 'file' node (leaf node)
-                    if (node_parent.type === 'file') {
-                        return false;
-                    }
+        // Custom callback for determining valid children for nodes
+        jtree.on('check_callback', function(operation, node, node_parent, node_position, more) {
+            if (operation === 'copy_node' || operation === 'move_node') {
+                // Disallow copying or moving into a 'file' node (leaf node)
+                if (node_parent.type === 'file') {
+                    return false;
                 }
-                return true;
-            });
+            }
+            return true;
+        });
 
-            $(document).ready(function () {
-                $("#plugins4").jstree({
-                    "plugins" : [ "search" ]
-                });
-                var to = false;
-                $('#plugins4_q').keyup(function () {
-                    if(to) { clearTimeout(to); }
-                    to = setTimeout(function () {
-                    var v = $('#plugins4_q').val();
-                    $('#plugins4').jstree(true).search(v);
-                    }, 250);
-                });
-            
+        $(document).ready(function () {
+            $("#plugins4").jstree({
+                "plugins" : [ "search" ]
             });
-    
-            $('#tree')
-                .on("changed.jstree", function (e, data) {
-                    if(data.selected.length) {
-                        var s = data.instance.get_node(data.selected[0]).id;
-                        //var lnk = $( s+"_anchor").attr('href');    
-                        var lnk = $( "#"+s+"_anchor").attr('href');
-                        //alert('The selected node is: ' + lnk);
-                        var cleanPath = window.location.pathname.replace(/\/index\.html$/i, '/') + '#' + s;
-                        if (lnk != '#')  // leaf so shows the content
-                        {
-                            history.replaceState(null, null, cleanPath);
-                            $("#t-content").load(lnk);
+            var to = false;
+            $('#plugins4_q').keyup(function () {
+                if(to) { clearTimeout(to); }
+                to = setTimeout(function () {
+                var v = $('#plugins4_q').val();
+                $('#plugins4').jstree(true).search(v);
+                }, 250);
+            });
+        
+        });
+
+        $('#tree')
+            .on("changed.jstree", function (e, data) {
+                if(data.selected.length) {
+                    var s = data.instance.get_node(data.selected[0]).id;
+                    //var lnk = $( s+"_anchor").attr('href');    
+                    var lnk = $( "#"+s+"_anchor").attr('href');
+                    //alert('The selected node is: ' + lnk);
+                    var cleanPath = window.location.pathname.replace(/\/index\.html$/i, '/') + '#' + s;
+                    if (lnk != '#')  // leaf so shows the content
+                    {
+                        history.replaceState(null, null, cleanPath);
+                        $("#t-content").load(lnk);
+                        if (window.innerWidth > 768) {
+                            setTimeout(
+                                function() 
+                                {
+                                $("html").animate({scrollTop:01}, 00);
+                                    return false;
+                                }, 0);
+                        }
+                    }
+                    else
+                    // toggle nodes: close if already open (and close descendants), otherwise open
+                    {
+                        history.replaceState(null, null, cleanPath);
+                        var t = data.instance;
+                        var nid = data.selected[0];
+                        if (t.is_open(nid)) {
+                            var nodeObj = t.get_node(nid);
+                            if (nodeObj.children_d && nodeObj.children_d.length) {
+                                nodeObj.children_d.forEach(function(childId){
+                                    if (t.is_open(childId)) t.close_node(childId);
+                                });
+                            }
+                            t.close_node(nid);
+                        } else {
                             if (window.innerWidth > 768) {
-                                setTimeout(
-                                  function() 
-                                  {
-                                    $("html").animate({scrollTop:01}, 00);
-                                        return false;
-                                  }, 0);
+                                $("html").animate({scrollTop:-50}, 00);
                             }
-                        }
-                        else
-                        // toggle nodes: close if already open (and close descendants), otherwise open
-                        {
-                            history.replaceState(null, null, cleanPath);
-                            var t = data.instance;
-                            var nid = data.selected[0];
-                            if (t.is_open(nid)) {
-                                var nodeObj = t.get_node(nid);
-                                if (nodeObj.children_d && nodeObj.children_d.length) {
-                                    nodeObj.children_d.forEach(function(childId){
-                                        if (t.is_open(childId)) t.close_node(childId);
-                                    });
-                                }
-                                t.close_node(nid);
-                            } else {
-                                if (window.innerWidth > 768) {
-                                    $("html").animate({scrollTop:-50}, 00);
-                                }
-                                t.open_node(nid,false,false);
-                            }
+                            t.open_node(nid,false,false);
                         }
                     }
-                })
-                .on("open_node.jstree", function (e, data) {
-                    data.instance.set_icon(data.node, "../images/openfolder.png");
-                })
-                .on("close_node.jstree", function (e, data) {
-                    data.instance.set_icon(data.node, "../images/folder.png");
-                })
-            });
-        </script>
-
+                }
+            })
+            .on("open_node.jstree", function (e, data) {
+                data.instance.set_icon(data.node, "../images/openfolder.png");
+            })
+            .on("close_node.jstree", function (e, data) {
+                data.instance.set_icon(data.node, "../images/folder.png");
+            })
+        });
+    </script>
 
     <style>
     /* Responsive styles for the navigation tree */
@@ -277,7 +271,7 @@
             <!-- Main Heading -->
             <div class="header">
                 <div class="centered">
-                    <img src="../images/dhamma-wheel.svg" class="wheel" alt="Dhamma wheel" />
+                    <img src="../images/tipitaka_logo.svg" class="wheel" alt="Dhamma wheel" />
                     <h1 class="display-3">Pāḷi Tipiṭaka</h1>
                 </div>
                 <hr class="hrstyle">  
