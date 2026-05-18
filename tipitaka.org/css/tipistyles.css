@@ -446,10 +446,6 @@ h5,
         background-color: #B78730;
     }
 
-    th, td {
-        display: block;
-        width: 100%;
-    }
 }
 
 /* Ensure the topbar search icon is hidden on mobile viewports (safeguard)
@@ -504,10 +500,6 @@ h5,
         background-color: #B78730;
     }
 
-    th, td {
-        display: block;
-        width: 100%;
-    }
 }
 
 

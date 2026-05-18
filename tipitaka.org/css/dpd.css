@@ -62,29 +62,45 @@ body {
 
 #pali-meaning-popup {
   position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 900px;
-  width: 90%;
-  max-height: 80%;
-  overflow: auto;
+  inset: 0;
+  margin: auto;
+  width: min(90vw, 900px);
+  max-height: 80vh;
+  height: fit-content;
+  overflow: hidden;
   background: #fff;
   box-shadow: 0 10px 30px rgba(0,0,0,0.25);
   border-radius: 6px;
   padding: 0;
   display: none;
   z-index: 9999;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  #pali-meaning-popup {
+    width: calc(100vw - 16px);
+    max-height: 85vh;
+  }
 }
 
 .pm-window {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .pm-window { max-height: 85vh; }
 }
 
 .pm-header-row {
   display: flex;
   align-items: center;
   padding: 8px 12px 0;
+  flex-shrink: 0;
 }
 
 .pm-title-holder {
@@ -101,7 +117,7 @@ body {
   margin-top: 0;
 }
 
-.pm-right { display:flex; align-items:center; }
+.pm-right { display:flex; align-items:center; flex-shrink: 0; }
 
 .pm-credit-holder { margin-right:8px; text-align:right; }
 
@@ -112,7 +128,29 @@ body {
   border-radius: 4px;
 }
 
-.pm-content { padding: 4px 18px; }
+/* content scrolls independently — horizontally for wide tables, vertically for long results */
+.pm-content {
+  padding: 4px 18px;
+  overflow-y: auto;
+  overflow-x: auto;
+  flex: 1 1 auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Each .dpd box fits within the modal; content inside scrolls horizontally */
+#pali-meaning-popup .pm-body {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Inside the modal, prevent tables from collapsing to the box width —
+   they stay at natural/max-content width and the div.dpd scrolls them. */
+#pali-meaning-popup table.inflection,
+#pali-meaning-popup table.freq,
+#pali-meaning-popup table.root_matrix {
+  width: max-content;
+  min-width: max-content;
+}
 
 .pm-spacer { flex: 1 1 auto; }
 
@@ -249,6 +287,8 @@ table.sutta-info th.heading {
 
 table.grammar {
   border: none;
+  width: max-content;
+  min-width: max-content;
 }
 
 table.grammar td,
@@ -256,6 +296,7 @@ table.grammar th {
   text-align: left;
   vertical-align: top;
   padding: 0px 0px;
+  white-space: nowrap;
 }
 
 table.grammar th {
@@ -576,12 +617,11 @@ table.grammar_dict {
   border: none;
   line-height: 150%;
   margin: 0px;
-  max-width: 100%;
-  overflow: auto;
+  width: max-content;
+  min-width: max-content;
   padding: 2px 0px;
   text-align: left;
   vertical-align: top;
-  width: auto;
 }
 
 .variants th,
@@ -591,15 +631,11 @@ table.grammar_dict {
   padding: 2px 10px 0px 0px;
   text-align: left;
   vertical-align: center;
+  white-space: nowrap;
 }
 
 .grammar_dict .col_empty {
   display: none;
-}
-
-.variants td:first-child,
-.variants td:nth-child(2) {
-  white-space: nowrap;
 }
 
 /* help */
