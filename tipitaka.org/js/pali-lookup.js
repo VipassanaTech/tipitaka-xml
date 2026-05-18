@@ -103,19 +103,84 @@
         return s ? s.toString().trim() : '';
     }
 
-    // on double-click, grab selection and lookup
-    document.addEventListener('dblclick', function(e){
-        try{}catch(e){}
-        // delay reading the selection briefly so the browser has updated it
+    // Word-selection helper: set pointer cursor on content area and expand
+    // a double-click selection to the nearest surrounding space-delimited token.
+    (function(){
+        var root = document.getElementById('t-content');
+        if (!root) return;
+        try { root.style.cursor = 'pointer'; } catch(e) {}
+
+        function getTextNodes(container){
+            var walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null, false);
+            var nodes = [];
+            var n; while ((n = walker.nextNode())) nodes.push(n);
+            return nodes;
+        }
+
+        function expandSelectionToSpaces(){
+            try {
+                var sel = window.getSelection();
+                if (!sel || !sel.rangeCount) return;
+                var anchor = sel.anchorNode;
+                if (!anchor || !root.contains(anchor)) return;
+
+                var tnodes = getTextNodes(root);
+                if (!tnodes.length) return;
+
+                var total = 0, nodeIndex = -1, offsetInNode = 0;
+                for (var i = 0; i < tnodes.length; i++) {
+                    if (tnodes[i] === anchor) {
+                        nodeIndex = i;
+                        offsetInNode = sel.anchorOffset || 0;
+                        break;
+                    }
+                    total += tnodes[i].textContent.length;
+                }
+                if (nodeIndex === -1) {
+                    for (var j = 0; j < tnodes.length; j++) {
+                        if (tnodes[j].parentElement && tnodes[j].parentElement.contains(anchor)) { nodeIndex = j; break; }
+                    }
+                    if (nodeIndex === -1) return;
+                    offsetInNode = 0;
+                }
+                var globalIndex = total + offsetInNode;
+
+                var full = tnodes.map(function(nd){ return nd.textContent; }).join('');
+                globalIndex = Math.max(0, Math.min(full.length - 1, globalIndex));
+
+                var leftSpace  = full.lastIndexOf(' ', globalIndex - 1);
+                var startIdx   = (leftSpace  === -1) ? 0           : leftSpace + 1;
+                var rightSpace = full.indexOf(' ', globalIndex);
+                var endIdx     = (rightSpace === -1) ? full.length  : rightSpace;
+
+                var sNode = null, sOffset = 0, eNode = null, eOffset = 0, acc = 0;
+                for (var k = 0; k < tnodes.length; k++) {
+                    var len = tnodes[k].textContent.length;
+                    if (!sNode && acc + len > startIdx)  { sNode = tnodes[k]; sOffset = startIdx - acc; }
+                    if (!eNode && acc + len >= endIdx)   { eNode = tnodes[k]; eOffset = endIdx   - acc; break; }
+                    acc += len;
+                }
+                if (!sNode) { sNode = tnodes[0]; sOffset = 0; }
+                if (!eNode) { eNode = tnodes[tnodes.length - 1]; eOffset = eNode.textContent.length; }
+
+                var r = document.createRange();
+                r.setStart(sNode, Math.max(0, sOffset));
+                r.setEnd(eNode,   Math.max(0, eOffset));
+                sel.removeAllRanges();
+                sel.addRange(r);
+            } catch(e) { /* fail silently */ }
+        }
+
+        root.addEventListener('dblclick', function(){ expandSelectionToSpaces(); }, true);
+    })();
+
+    // on double-click, grab (possibly expanded) selection and lookup
+    document.addEventListener('dblclick', function(){
         setTimeout(function(){
             var sel = getSelectionText();
-            try{}catch(e){}
             if (!sel) return;
-            var word = sel.split(/\s+/)[0] || sel;
-            // normalize/strip surrounding punctuation consistently
-            word = normalizeWord(word);
+            var word = normalizeWord(sel.split(/\s+/)[0] || sel);
             if (!word) return;
-            try{}catch(e){}
             lookupPali(word);
         }, 0);
     });

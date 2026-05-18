@@ -129,7 +129,7 @@ h3,
 h3.dpd {
   font-size: 130%;
   margin-top: 10px;
-  margin-bottom: 1px;
+  margin-bottom: 5px;
 }
 
 div.dpd {
@@ -718,6 +718,11 @@ table.root_matrix td b {
   color: var(--dark);
   border-radius: 3px;
   padding: 0 2px;
+}
+
+/* hide play/audio buttons inside the lookup modal */
+#pali-meaning-popup a.dpd-button.play {
+  display: none !important;
 }
 
 /* play button */
