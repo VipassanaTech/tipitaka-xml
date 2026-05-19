@@ -149,6 +149,42 @@
     </div>
 
 
+    <!-- New Feature Alert Modal -->
+    <div id="feature-alert-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:#fff8e7; color:#3a2500; border:2px solid #c8860a; border-radius:10px; max-width:480px; width:90%; padding:2rem 2rem 1.5rem; box-shadow:0 8px 32px rgba(0,0,0,0.35); position:relative; font-family:inherit;">
+            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem;">
+                <span style="font-size:1.5rem;">&#x1F514;</span>
+                <strong style="font-size:1.15rem; color:#8a5a00; letter-spacing:0.02em;">NEW FEATURE ALERT</strong>
+            </div>
+            <p style="margin:0 0 1.5rem; line-height:1.65; font-size:1rem;">
+                You can now look up the meaning of a Pali word by simply <strong>double clicking</strong> on it and its meaning will be displayed in a pop-up window, courtesy of <strong>Digital Pali Dictionary</strong>.
+            </p>
+            <div style="text-align:right;">
+                <button id="feature-alert-close" style="background:#c8860a; color:#fff; border:none; border-radius:5px; padding:0.5rem 1.4rem; font-size:0.95rem; cursor:pointer; font-family:inherit;">Got it!</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    (function() {
+        /* Modal disabled for now — remove the 'return' line below to re-enable */
+        return;
+        var MODAL_KEY = 'dpd_modal_seen';
+        var EXPIRY    = new Date('2026-06-13').getTime();
+        if (Date.now() < EXPIRY && !localStorage.getItem(MODAL_KEY)) {
+            var overlay = document.getElementById('feature-alert-overlay');
+            overlay.style.display = 'flex';
+            function dismissModal() {
+                overlay.style.display = 'none';
+                localStorage.setItem(MODAL_KEY, '1');
+            }
+            document.getElementById('feature-alert-close').addEventListener('click', dismissModal);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) dismissModal();
+            });
+        }
+    })();
+    </script>
+
     <!-- body code goes here -->
     <script src="js/topnavscript.js"></script>
 

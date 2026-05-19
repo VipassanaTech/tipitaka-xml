@@ -333,59 +333,60 @@
 			}
 		</script>
 
-		<!--Resizable splitter code-->
-		<script>
-			window.addEventListener("DOMContentLoaded", function() {
-				var separator = document.getElementById("separator");
-				var sidebar = document.getElementById("tree");
-				var container = document.getElementById("bodycontainer");
-	
-				// Check screen width to determine whether to use mouse or touch events
-				var isMobile = window.innerWidth <= 768;
-	
-				if (isMobile) {
-					separator.addEventListener("touchstart", function(e) {
-						e.preventDefault();
-						var touch = e.touches[0];
-						separator.addEventListener("touchmove", resizeSidebar);
-						separator.addEventListener("touchend", stopResizeSidebar);
-					});
-				} else {
-					separator.addEventListener("mousedown", function(e) {
-						e.preventDefault();
-						document.addEventListener("mousemove", resizeSidebar);
-						document.addEventListener("mouseup", stopResizeSidebar);
-					});
-				}
-	
-				function showhideseparator() {
-					if (separator.length < 5) {
-						separator.style.display = "none";
-					} else {
-						separator.style.display = "block";
-					}
-				}
-	
-				function resizeSidebar(e) {
-					var xPosition = isMobile ? e.touches[0].clientX : e.clientX;
-					var sidebarWidth = xPosition - container.offsetLeft;
-					sidebar.style.width = sidebarWidth + "px";
-				}
-	
-				function stopResizeSidebar() {
-					if (isMobile) {
-						separator.removeEventListener("touchmove", resizeSidebar);
-						separator.removeEventListener("touchend", stopResizeSidebar);
-					} else {
-						document.removeEventListener("mousemove", resizeSidebar);
-						document.removeEventListener("mouseup", stopResizeSidebar);
-					}
-				}
-			});
-		</script>
-		
-		<script defer src="../js/pali-lookup.js"></script>  
-		<script defer src="../js/topnavscript.js"></script>    
-		 
-	</body>
-	</html>
+<!--Resizable splitter code-->
+        <script>
+            window.addEventListener("DOMContentLoaded", function() {
+                var separator = document.getElementById("separator");
+                var sidebar = document.getElementById("tree");
+                var container = document.getElementById("bodycontainer");
+    
+                // Check screen width to determine whether to use mouse or touch events
+                var isMobile = window.innerWidth <= 768;
+    
+                if (isMobile) {
+                    separator.addEventListener("touchstart", function(e) {
+                        e.preventDefault();
+                        var touch = e.touches[0];
+                        separator.addEventListener("touchmove", resizeSidebar);
+                        separator.addEventListener("touchend", stopResizeSidebar);
+                    });
+                } else {
+                    separator.addEventListener("mousedown", function(e) {
+                        e.preventDefault();
+                        document.addEventListener("mousemove", resizeSidebar);
+                        document.addEventListener("mouseup", stopResizeSidebar);
+                    });
+                }
+    
+                function showhideseparator() {
+                    if (separator.length < 5) {
+                        separator.style.display = "none";
+                    } else {
+                        separator.style.display = "block";
+                    }
+                }
+    
+                function resizeSidebar(e) {
+                    var xPosition = isMobile ? e.touches[0].clientX : e.clientX;
+                    var sidebarWidth = xPosition - container.offsetLeft;
+                    sidebar.style.width = sidebarWidth + "px";
+                }
+    
+                function stopResizeSidebar() {
+                    if (isMobile) {
+                        separator.removeEventListener("touchmove", resizeSidebar);
+                        separator.removeEventListener("touchend", stopResizeSidebar);
+                    } else {
+                        document.removeEventListener("mousemove", resizeSidebar);
+                        document.removeEventListener("mouseup", stopResizeSidebar);
+                    }
+                }
+            });
+        </script>
+    
+    <script defer src="../js/topnavscript.js"></script>
+    <script defer src="../js/feature-banner.js"></script>    
+    <script defer src="../js/pali-lookup.js"></script>    
+         
+</body>
+</html>
