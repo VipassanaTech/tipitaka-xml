@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "org.tipitaka.twa",
+    "sha256_cert_fingerprints": ["E2:77:E5:0D:8D:70:A6:91:66:56:93:09:59:BA:84:EB:C8:01:2F:B0:9E:D1:3C:7A:CE:CB:DB:52:54:CD:D0:18"]
+  }
+}]
+

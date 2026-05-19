@@ -7,20 +7,18 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "org.tipitaka.twa"
+        applicationId "org.tipitaka.twa" // Ensure this is your final package name
         minSdk 23
         targetSdk 34
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 1 // Increment this for every new release (1, 2, 3...)
+        versionName "1.0.0" // The version shown to users
 
-        // TWA configuration
-        // Replace with your actual domain
         manifestPlaceholders = [
-            hostName: "tipitaka.org",
-            defaultUrl: "https://tipitaka.org",
-            launcherName: "Tipitaka",
-            // Digital Asset Links - replace with your SHA-256 fingerprint
-            assetStatements: '[{ "relation": ["delegate_permission/common.handle_all_urls"], "target": { "namespace": "web", "site": "https://tipitaka.org" } }]'
+                hostName: "tipitaka.org",
+                defaultUrl: "https://tipitaka.org",
+                launcherName: "Pāḷi Tipiṭaka",
+                // Replace this placeholder with the actual JSON string from your assetlinks.json
+                assetStatements: '[{ "relation": ["delegate_permission/common.handle_all_urls"], "target": { "namespace": "web", "site": "https://tipitaka.org" } }]'
         ]
     }
 
