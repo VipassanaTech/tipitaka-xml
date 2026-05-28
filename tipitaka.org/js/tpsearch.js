@@ -132,6 +132,11 @@
         html += '      </div>';
         // Filter button (placed to the right of proximity controls)
         html += '      <button type="button" id="tp-filter-btn" class="tp-filter-btn" aria-label="Filter">Filter</button>';
+        html += '      <div class="tp-search-type-group">';
+        html += '        <span class="tp-search-type-label">Search Type</span>';
+        html += '        <label class="tp-search-type-opt"><input type="radio" name="tp-search-type" value="fuzzy" checked /> Fuzzy</label>';
+        html += '        <label class="tp-search-type-opt"><input type="radio" name="tp-search-type" value="exact" /> Exact</label>';
+        html += '      </div>';
         // Inline proximity syntax supported: use `termA /N termB` in the main input
         html += '    </div>';
 
@@ -390,10 +395,16 @@
                         var q2 = 'text:"' + escq(termB) + ' ' + escq(termA) + '"~' + dist;
                         qparam = '(' + q1 + ' OR ' + q2 + ')';
                     }
-            } else if (exactMatch) {
-                // Use fielded phrase query for an exact match on the `title_exact` field
-                var escq2 = query.replace(/"/g, '\\"');
-                qparam = 'field_exact:"' + escq2 + '"';
+            } else {
+                // Check Search Type radio: exact uses text_exact phrase query
+                var searchType = 'fuzzy';
+                try {
+                    searchType = (document.querySelector('input[name="tp-search-type"]:checked') || {}).value || 'fuzzy';
+                } catch (e) { searchType = 'fuzzy'; }
+                if (searchType === 'exact') {
+                    var escq2 = query.replace(/"/g, '\\"');
+                    qparam = 'text_exact:"' + escq2 + '"';
+                }
             }
         } catch (e) {
             // fallback to simple query

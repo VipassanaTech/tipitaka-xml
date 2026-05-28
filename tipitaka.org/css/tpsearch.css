@@ -24,6 +24,9 @@
     max-width: 760px;
     margin: 0 auto;
     position: relative; /* anchor for the in-form Deva palette */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center all child rows relative to the search field */
 }
 
 .tp-search-row {
@@ -31,12 +34,13 @@
     align-items: center;
     gap: 6px;
     justify-content: center; /* keep input & buttons centered in the middle column */
+    width: 100%;
 }
 
 #tp-search-input {
     /* Fixed-size input to keep identical dimensions between Roman and Deva modes */
-    width: 400px;
-    flex: 0 0 400px;
+    width: 300px;
+    flex: 0 0 300px;
     box-sizing: border-box;
     padding: 8px 12px;
     font-size: 15px;
@@ -108,6 +112,7 @@
     gap: 4px;
     /* Keep Roman characters on a single row */
     flex-wrap: nowrap;
+    width: 100%;
 }
 
 /* Devanagari palette and toggle */
@@ -116,6 +121,7 @@
     display: flex;
     justify-content: center;
     gap: 8px;
+    width: 100%;
     align-items: center;
 }
 
@@ -479,7 +485,7 @@
 /* Use a 3-column grid: left=Limit Search, middle=search form, right=empty/reserved */
 #tp-search-bar {
     display: grid;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: 30% 40% 30%;
     align-items: start;
     gap: 16px;
 }
@@ -491,7 +497,7 @@
     color: #23303b;
     /* occupy the left grid column fully */
     grid-column: 1;
-    width: 100%;
+    width: 85%;
     max-width: none;
     //box-sizing: border-box;
 }
@@ -561,7 +567,7 @@
 /* Table-specific tweaks: ensure row headings and checkbox labels align vertically */
 .tp-limit-table td {
     vertical-align: middle;
-    padding: 1px 6px;
+    padding: 1px 2px;
 }
 .tp-limit-table .limit-item {
     display: flex; /* block-level flex so label fills the full td width */
@@ -570,9 +576,16 @@
     line-height: 1;
     width: 100%;
 }
+/* Bold the row heading labels (Mula, Attha., Tika, Añña) */
+.tp-limit-table .item-mula-all,
+.tp-limit-table .item-atth-all,
+.tp-limit-table .item-tika-all,
+.tp-limit-table .item-anya {
+    font-weight: 700;
+}
 .tp-limit-table input[type="checkbox"] {
     vertical-align: middle;
-    margin-right: 8px;
+    margin-right: 3px;
 }
 
 /* Nikaya sub-row: sits below the limit-search table, all 5 labels on one line */
@@ -796,6 +809,37 @@
     transform: translateY(0);
     width: 16px;
     height: 16px;
+}
+
+/* Search Type radio group (Fuzzy / Exact) — hidden until text_exact field is available in Solr index */
+.tp-search-type-group {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin-left: 10px;
+    font-family: 'Monda', sans-serif;
+    font-size: 13px;
+    color: #4F4D47;
+}
+
+.tp-search-type-label {
+    font-weight: 600;
+    color: #1E3461;
+    white-space: nowrap;
+}
+
+.tp-search-type-opt {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: #4F4D47;
+    white-space: nowrap;
+}
+
+.tp-search-type-opt input[type="radio"] {
+    margin: 0;
+    cursor: pointer;
 }
 
 #tp-deva-palette {
