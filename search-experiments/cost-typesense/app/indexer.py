@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import typesense
 
+from roman import fold
 from translit import ALL_SCRIPTS
 from xml_parser import list_books, parse_paragraphs
 
@@ -23,6 +24,10 @@ def schema() -> dict:
         # built-in unicode handling kick in. We rely on Aksharamukha for the
         # cross-script bit, not on Typesense locales.
         fields.append({"name": f"text_{s}", "type": "string", "index": True, "optional": True, "locale": ""})
+    # Dedicated diacritic-folded search field for Roman. Typesense doesn't fold
+    # ā→a / ṃ→m reliably on its own, so we search this and display text_romn.
+    # Lets `sotaapatti`, `sotāpatti`, `sotapatti` all match. See roman.py.
+    fields.append({"name": "romn_fold", "type": "string", "index": True, "optional": True, "locale": ""})
     return {
         "name": COLLECTION,
         "fields": fields,
@@ -62,6 +67,8 @@ def _docs(limit: int | None):
                 ps = per_script[s]
                 if i < len(ps):
                     doc[f"text_{s}"] = ps[i].text
+                    if s == "romn":
+                        doc["romn_fold"] = fold(ps[i].text)
                     if not doc["rend"]:
                         doc["rend"] = ps[i].rend
             yield doc

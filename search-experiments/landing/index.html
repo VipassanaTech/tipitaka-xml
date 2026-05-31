@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tipiṭaka search bake-off</title>
+<style>
+  :root{--ink:#1a1a1a;--mut:#666;--line:#e5e5e5}
+  *{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,sans-serif;color:var(--ink);background:#fafafa;margin:0;line-height:1.55}
+  header{background:#111;color:#fff;padding:2rem 1.5rem}
+  .wrap{max-width:980px;margin:0 auto;padding:0 1.5rem}
+  header h1{margin:0 0 .3rem;font-size:1.5rem}
+  header p{margin:0;opacity:.8}
+  section{padding:1.75rem 0}
+  h2{font-size:1.1rem;margin:0 0 .8rem}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.2rem;display:flex;flex-direction:column}
+  .card h3{margin:.1rem 0 .2rem;font-size:1.1rem}
+  .card .tag{font-size:.78rem;color:var(--mut);margin-bottom:.6rem}
+  .card ul{margin:.2rem 0 1rem;padding-left:1.1rem;font-size:.88rem;color:#333}
+  .card a.btn{margin-top:auto;display:inline-block;text-align:center;text-decoration:none;color:#fff;padding:.55rem;border-radius:8px;font-weight:600}
+  .es{border-top:4px solid #2563eb} .es .btn{background:#2563eb}
+  .ts{border-top:4px solid #0d9488} .ts .btn{background:#0d9488}
+  .solr{border-top:4px solid #b45309} .solr .btn{background:#b45309}
+  table{border-collapse:collapse;width:100%;font-size:.88rem;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th,td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--line)}
+  th{background:#f3f3f3}
+  tr:last-child td{border-bottom:none}
+  code{background:#eee;padding:1px 6px;border-radius:5px;font-size:.85em}
+  .note{background:#fff8e1;border:1px solid #ffe49a;border-radius:10px;padding:.9rem 1.1rem;font-size:.88rem}
+  .q{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:20px;padding:.25rem .7rem;margin:.2rem .3rem .2rem 0;font-size:.85rem}
+  footer{color:var(--mut);font-size:.8rem;padding:2rem 0}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>Tipiṭaka multi-script search — engine bake-off</h1>
+  <p>Three self-hosted prototypes over the same 15-script corpus. Search in any script, read results in two.</p>
+</div></header>
+
+<div class="wrap">
+
+<section>
+  <h2>Try each engine</h2>
+  <div class="cards">
+    <div class="card es">
+      <h3>Elasticsearch</h3>
+      <div class="tag">"flexibility" pick · ES 8 + ICU · ~2–3 GB RAM</div>
+      <ul>
+        <li>ICU folding, per-script analyzers</li>
+        <li>exact · wildcard · fuzzy (Damerau)</li>
+        <li>clean path to semantic (dense_vector)</li>
+      </ul>
+      <a class="btn" data-port="8001" href="#">Open ES search →</a>
+    </div>
+    <div class="card ts">
+      <h3>Typesense</h3>
+      <div class="tag">"cost" pick · C++ · ~0.5 GB RAM · ~$5–10/mo</div>
+      <ul>
+        <li>built-in typo tolerance, no JVM</li>
+        <li>exact · prefix-wildcard · fuzzy</li>
+        <li>native multi-search fan-out</li>
+      </ul>
+      <a class="btn" data-port="8002" href="#">Open Typesense search →</a>
+    </div>
+    <div class="card solr">
+      <h3>Apache Solr <small>(current)</small></h3>
+      <div class="tag">production baseline · Solr 3.4 · real prod index</div>
+      <ul>
+        <li>single Roman-folded <code>text</code> field</li>
+        <li>exact · wildcard (diacritic-insensitive)</li>
+        <li>no fuzzy, no cross-script fan-out</li>
+      </ul>
+      <a class="btn" href="https://search.tipitaka.org/solr/web">Open Solr /web →</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>What's different about the new two</h2>
+  <table>
+    <tr><th>Capability</th><th>Solr (now)</th><th>ES &amp; Typesense (new)</th></tr>
+    <tr><td>Hit granularity</td><td>whole file/book</td><td>paragraph <code>&lt;p&gt;</code></td></tr>
+    <tr><td>Type query in any script</td><td>one script at a time</td><td>any of 15 → fan-out to all</td></tr>
+    <tr><td>Roman diacritics</td><td>insensitive (<code>sotāpatti</code>=<code>sotapatti</code>)</td><td>insensitive — same folding</td></tr>
+    <tr><td><code>sotaapatti*</code> = <code>sotāpatti*</code></td><td>✗ misses</td><td>✓ both match</td></tr>
+    <tr><td>Fuzzy / typo tolerance</td><td>✗</td><td>✓</td></tr>
+    <tr><td>Result shown in 2 scripts</td><td>✗</td><td>✓ (typed + UI script)</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Sample queries to compare</h2>
+  <div>
+    <span class="q">vipassana</span><span class="q">vipassanā</span><span class="q">विपस्सना</span>
+    <span class="q">ৱিপস্সনা</span><span class="q">dhammacakka*</span><span class="q">sotaapatti*</span>
+    <span class="q">sotāpatti*</span><span class="q">dhamacakka (fuzzy)</span>
+  </div>
+</section>
+
+<section>
+  <div class="note">
+    <strong>First-run indexing.</strong> The two new arms start empty — build their index once
+    (Solr is already loaded with the production index):
+    <pre style="margin:.6rem 0 0;white-space:pre-wrap"><code>curl -X POST &lt;host&gt;:8001/index   # Elasticsearch  — add ?limit=5 for a quick smoke test
+curl -X POST &lt;host&gt;:8002/index   # Typesense</code></pre>
+  </div>
+</section>
+
+<footer class="wrap">
+  Same Aksharamukha transliteration sidecar powers both new arms; engine choice is orthogonal to the language layer.
+  See <code>STRATEGY.md</code> and <code>COMPARISON.md</code> in the repo.
+</footer>
+</div>
+
+<script>
+  // Open every engine in a new tab. The local ES/Typesense buttons (data-port)
+  // resolve against whatever host this page is served from, so the same landing
+  // page works on localhost or any AWS public IP/DNS. The Solr button keeps its
+  // production URL.
+  const host = location.hostname || "localhost";
+  for (const a of document.querySelectorAll("a.btn")) {
+    a.target = "_blank";
+    a.rel = "noopener";
+    if (a.dataset.port) {
+      a.href = location.protocol + "//" + host + ":" + a.dataset.port + (a.dataset.path || "/");
+    }
+  }
+</script>
+</body>
+</html>

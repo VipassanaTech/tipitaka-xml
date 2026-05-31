@@ -10,6 +10,12 @@ from fastapi.responses import HTMLResponse
 
 from indexer import COLLECTION, reindex
 from translit import ALL_SCRIPTS, detect_script, fan_out
+from ui import _render_ui
+
+# Roman is searched against a dedicated diacritic-folded field; every other
+# script searches (and displays from) its own native field.
+def _search_field(script: str) -> str:
+    return "romn_fold" if script == "romn" else f"text_{script}"
 
 TS_HOST = os.environ.get("TYPESENSE_HOST", "typesense")
 TS_PORT = int(os.environ.get("TYPESENSE_PORT", "8108"))
@@ -39,13 +45,22 @@ def post_index(limit: int | None = Query(None, description="Index only the first
     return reindex(client, limit=limit)
 
 
+# Typesense paginates each sub-query independently, but we merge 15 of them
+# client-side, so a "global" page N can't be asked for directly. We instead
+# pull a window deep enough to cover the requested page from every sub-query,
+# merge, then slice. 250 is Typesense's per_page ceiling, so pagination is
+# exact up to 250 merged results deep — plenty for a feedback prototype.
+_TS_MAX_WINDOW = 250
+
+
 @app.get("/search")
 def search(
     q: str = Query(..., min_length=1),
     input_script: str | None = Query(None),
     ui_script: str = Query("deva"),
     mode: Literal["exact", "wildcard", "fuzzy"] = Query("fuzzy"),
-    size: int = Query(20, ge=1, le=100),
+    page: int = Query(1, ge=1, description="1-based page number"),
+    per_page: int = Query(20, ge=1, le=100, description="Results per page"),
 ) -> dict:
     if input_script and input_script not in ALL_SCRIPTS:
         raise HTTPException(400, f"Unknown input_script {input_script!r}")
@@ -55,19 +70,26 @@ def search(
     src = input_script or detect_script(q)
     expanded = fan_out(q, src=src)
 
+    window = min(page * per_page, _TS_MAX_WINDOW)
+
     # Typesense does multi-search natively: one HTTP call, N independent
-    # queries, results merged client-side. Each per-script query searches its
-    # own field with the script-specific query string.
+    # queries, merged client-side. Each per-script query searches its own field
+    # (romn searches the folded field) with the script-specific query string.
     queries: list[dict] = []
     for script, q_str in expanded.items():
+        field = _search_field(script)
         per_query = {
             "collection": COLLECTION,
             "q": q_str,
-            "query_by": f"text_{script}",
-            "include_fields": f"id,book,p_idx,rend,text_{script},text_{ui_script}",
-            "highlight_fields": f"text_{script},text_{ui_script}",
-            "highlight_full_fields": f"text_{script},text_{ui_script}",
-            "per_page": size,
+            "query_by": field,
+            # Always fetch the (input, ui) display fields, regardless of which
+            # script this sub-query searched, so the winning sub-query still
+            # carries the text we render in both rows.
+            "include_fields": f"id,book,p_idx,rend,text_{src},text_{ui_script}",
+            "highlight_fields": field,
+            "highlight_full_fields": field,
+            "per_page": window,
+            "page": 1,
         }
         if mode == "exact":
             per_query["num_typos"] = 0
@@ -84,77 +106,66 @@ def search(
     res = client.multi_search.perform({"searches": queries}, {})
 
     # Merge: dedupe by id, keep best text_match score across the per-script results.
+    # Each doc may surface in several sub-queries. Keep one entry per doc:
+    # take the best score, but accumulate the two display highlights from
+    # whichever sub-query actually searched the input / UI script. A highlight
+    # from a different script (e.g. matched via deva while we're rendering the
+    # romn row) is NOT borrowed — that row just shows its plain field text.
     merged: dict[str, dict] = {}
+    src_display = f"text_{src}"
+    ui_field = f"text_{ui_script}"
     for sub, script in zip(res["results"], expanded.keys()):
+        search_field = _search_field(script)
         for h in sub.get("hits", []):
             doc = h["document"]
             doc_id = doc["id"]
             score = h.get("text_match", 0)
-            existing = merged.get(doc_id)
-            if existing and existing["_score"] >= score:
-                continue
             hl = {item.get("field"): item for item in h.get("highlights", [])}
-            src_field = f"text_{src}"
-            ui_field = f"text_{ui_script}"
-            merged[doc_id] = {
-                "id": doc_id,
-                "_score": score,
-                "_matched_via_script": script,
-                "book": doc.get("book"),
-                "p_idx": doc.get("p_idx"),
-                "rend": doc.get("rend"),
-                "input_script_text": doc.get(src_field, ""),
-                "ui_script_text": doc.get(ui_field, ""),
-                "input_script_highlight": (hl.get(src_field) or {}).get("snippet"),
-                "ui_script_highlight": (hl.get(ui_field) or {}).get("snippet"),
-            }
+            snippet = (hl.get(search_field) or {}).get("snippet")
 
-    hits = sorted(merged.values(), key=lambda d: d["_score"], reverse=True)[:size]
+            entry = merged.get(doc_id)
+            if entry is None:
+                entry = {
+                    "id": doc_id,
+                    "_score": score,
+                    "_matched_via_script": script,
+                    "book": doc.get("book"),
+                    "p_idx": doc.get("p_idx"),
+                    "rend": doc.get("rend"),
+                    "input_script_text": doc.get(src_display, ""),
+                    "ui_script_text": doc.get(ui_field, ""),
+                    "input_script_highlight": None,
+                    "ui_script_highlight": None,
+                }
+                merged[doc_id] = entry
+            elif score > entry["_score"]:
+                entry["_score"] = score
+                entry["_matched_via_script"] = script
+
+            if snippet and script == src and not entry["input_script_highlight"]:
+                entry["input_script_highlight"] = snippet
+            if snippet and script == ui_script and not entry["ui_script_highlight"]:
+                entry["ui_script_highlight"] = snippet
+
+    ordered = sorted(merged.values(), key=lambda d: d["_score"], reverse=True)
+    total = len(ordered)                 # approximate: capped at the merge window
+    start = (page - 1) * per_page
+    hits = ordered[start:start + per_page]
     return {
         "query": q,
         "detected_script": src,
         "ui_script": ui_script,
         "mode": mode,
         "expanded_queries": expanded,
-        "total": len(hits),
+        "total": total,
+        "page": page,
+        "per_page": per_page,
+        "total_pages": (total + per_page - 1) // per_page,
+        "total_is_capped": total >= _TS_MAX_WINDOW,
         "hits": hits,
     }
 
 
 @app.get("/", response_class=HTMLResponse)
 def home() -> str:
-    options = "".join(f'<option value="{s}">{s}</option>' for s in ALL_SCRIPTS)
-    return f"""<!doctype html><html><head><meta charset="utf-8"><title>Tipitaka search</title>
-<style>
-body{{font-family:system-ui;margin:2rem;max-width:900px}}
-input,select,button{{font-size:16px;padding:6px}}
-.hit{{border-bottom:1px solid #ddd;padding:0.6rem 0}}
-mark{{background:#ffe9a8}}
-.meta{{color:#666;font-size:0.85em}}
-</style></head><body>
-<h1>Tipiṭaka multi-script search <small>(Typesense)</small></h1>
-<form onsubmit="go(event)">
-<input id="q" size="40" placeholder="vipassana / विपस्सना / ৱিপস্সনা ..." autofocus>
-<select id="ui">{options}</select>
-<select id="mode"><option>fuzzy</option><option>exact</option><option>wildcard</option></select>
-<button>Search</button>
-</form>
-<p><small>Try: <code>vipassana</code>, <code>vipassanā</code>, <code>विपस्सना</code>, <code>dhammacakka</code> + wildcard mode for prefix.</small></p>
-<div id="r"></div>
-<script>
-async function go(e){{
-  e.preventDefault();
-  const q=document.getElementById('q').value;
-  const ui=document.getElementById('ui').value;
-  const mode=document.getElementById('mode').value;
-  const r=await fetch(`/search?q=${{encodeURIComponent(q)}}&ui_script=${{ui}}&mode=${{mode}}`);
-  const j=await r.json();
-  const out=document.getElementById('r');
-  out.innerHTML=`<p class="meta">${{j.total}} hits — input=${{j.detected_script}}, ui=${{j.ui_script}}, mode=${{j.mode}}</p>`+
-    j.hits.map(h=>`<div class="hit">
-      <div class="meta">${{h.book}} · p${{h.p_idx}} · ${{h.rend}} · matched-via ${{h._matched_via_script}} · score ${{h._score}}</div>
-      <div><b>${{j.detected_script}}:</b> ${{(h.input_script_highlight||h.input_script_text||'').slice(0,400)}}</div>
-      <div><b>${{j.ui_script}}:</b> ${{(h.ui_script_highlight||h.ui_script_text||'').slice(0,400)}}</div>
-    </div>`).join('');
-}}
-</script></body></html>"""
+    return _render_ui("Typesense", "#0d9488")

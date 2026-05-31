@@ -4,6 +4,8 @@ from __future__ import annotations
 from functools import lru_cache
 from aksharamukha import transliterate
 
+from roman import fold, to_iast
+
 # VRI folder name -> Aksharamukha script name.
 # RussianCyrillic is Aksharamukha's Pali Cyrillic mapping (matches VRI cyrl).
 SCRIPTS: dict[str, str] = {
@@ -69,7 +71,25 @@ def translit(text: str, src: str, dst: str) -> str:
 
 
 def fan_out(query: str, src: str | None = None) -> dict[str, str]:
-    """Return {script_code: transliterated_query} for all 15 scripts."""
+    """Return {script_code: query_string} for all 15 scripts.
+
+    Roman is handled specially so it matches production Solr's folding (and the
+    extra doubled-vowel equivalence): the romn clause is searched diacritic-
+    *folded* (`sotaapatti`/`sotāpatti`/`sotapatti` collapse to one form), while
+    the other 14 scripts are transliterated from canonical IAST so Aksharamukha
+    sees `ā`, not `aa`. See roman.py.
+    """
     if src is None:
         src = detect_script(query)
-    return {dst: translit(query, src, dst) for dst in ALL_SCRIPTS}
+
+    if src == "romn":
+        iast = to_iast(query)
+        out = {dst: translit(iast, "romn", dst) for dst in ALL_SCRIPTS}
+        out["romn"] = fold(iast)
+        return out
+
+    out = {dst: translit(query, src, dst) for dst in ALL_SCRIPTS}
+    # The romn field is stored diacritic-folded, so fold the transliterated
+    # Roman form too (e.g. a Devanagari query → IAST → folded ASCII).
+    out["romn"] = fold(out["romn"])
+    return out

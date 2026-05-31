@@ -12,7 +12,9 @@ Two self-hosted, Dockerised prototypes for replacing the current
 - supports **exact, wildcard, and fuzzy** modes.
 
 See **[STRATEGY.md](STRATEGY.md)** for the full evaluation of seven options
-and why these two were picked.
+and why these two were picked, and **[COMPARISON.md](COMPARISON.md)** for how
+both prototypes line up against the current production Solr service (now
+vendored under [`original-solr/`](original-solr/)).
 
 ## The two prototypes
 
@@ -53,9 +55,30 @@ open http://localhost:8000
 ```
 
 Both stacks expose port 8000 for the search API and serve a small HTML
-search box at `/`. Each container mounts the repo root read-only at
-`/corpus`, so the indexer reads `deva/`, `romn/`, … directly from the
-working tree.
+search box at `/` (with **pagination** — Prev/Next, page size, "X–Y of N").
+Each container mounts the repo root read-only at `/corpus`, so the indexer
+reads `deva/`, `romn/`, … directly from the working tree.
+
+## Run all three side by side (for reviewers)
+
+To host Elasticsearch, Typesense, **and** the original Solr in parallel on one
+VM with a landing page that links to each:
+
+```bash
+cd search-experiments
+docker compose -f docker-compose.all.yml up --build -d                 # ES + Typesense + landing
+docker compose -f docker-compose.all.yml --profile solr up --build -d  # also the Solr baseline
+
+curl -X POST localhost:8001/index    # index Elasticsearch (Solr is pre-indexed)
+curl -X POST localhost:8002/index    # index Typesense
+open http://localhost:8080           # landing page → all three
+```
+
+Ports: **8080** landing · **8001** ES UI · **8002** Typesense UI ·
+**8983** Solr (`/solr/web`). The Solr arm serves the committed production
+index (`original-solr/solr/data/`, ~523 MB) with no re-indexing. On AWS, open
+those ports in the security group; the landing-page links resolve against the
+VM's own hostname automatically.
 
 ## Sample queries to try
 
@@ -67,6 +90,13 @@ working tree.
 | `ৱিপস্সনা`            | exact     | Same passages, queried in Bengali. |
 | `dhammacakka*`       | wildcard  | All forms starting with that prefix. |
 | `dhamacakka`         | fuzzy     | Should still match `dhammacakka` (1 typo). |
+| `sotaapatti*`        | wildcard  | ASCII doubled-vowel form — matches `sotāpatti…`. |
+| `sotāpatti*`         | wildcard  | Macron form — matches the **same** passages. |
+
+The last two rows are the production-Solr gap that reading the original code
+exposed: today only the macron form matches. Both prototypes now fold
+`sotaapatti` / `sotāpatti` / `sotapatti` to one form (see
+[COMPARISON.md](COMPARISON.md) and `app/roman.py`).
 
 ## Stretch: semantic search
 

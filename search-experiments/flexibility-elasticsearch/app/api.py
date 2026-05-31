@@ -10,6 +10,7 @@ from fastapi.responses import HTMLResponse
 
 from indexer import INDEX_NAME, reindex
 from translit import ALL_SCRIPTS, detect_script, fan_out
+from ui import _render_ui
 
 ES_URL = os.environ.get("ES_URL", "http://elasticsearch:9200")
 es = Elasticsearch(ES_URL, request_timeout=30)
@@ -32,7 +33,8 @@ def search(
     input_script: str | None = Query(None, description="Override script detection"),
     ui_script: str = Query("deva", description="Script for the result snippet"),
     mode: Literal["exact", "wildcard", "fuzzy"] = Query("fuzzy"),
-    size: int = Query(20, ge=1, le=100),
+    page: int = Query(1, ge=1, description="1-based page number"),
+    per_page: int = Query(20, ge=1, le=100, description="Results per page"),
 ) -> dict:
     if input_script and input_script not in ALL_SCRIPTS:
         raise HTTPException(400, f"Unknown input_script {input_script!r}")
@@ -65,7 +67,9 @@ def search(
     highlight_fields = {f"text_{src}": {}, f"text_{ui_script}": {}}
 
     body = {
-        "size": size,
+        "from": (page - 1) * per_page,
+        "size": per_page,
+        "track_total_hits": True,
         "query": {"bool": {"should": should, "minimum_should_match": 1}},
         "highlight": {
             "fields": highlight_fields,
@@ -94,51 +98,21 @@ def search(
             "input_script_highlight": hl.get(src_field, []),
             "ui_script_highlight": hl.get(ui_field, []),
         })
+    total = res["hits"]["total"]["value"]
     return {
         "query": q,
         "detected_script": src,
         "ui_script": ui_script,
         "mode": mode,
         "expanded_queries": expanded,
-        "total": res["hits"]["total"]["value"],
+        "total": total,
+        "page": page,
+        "per_page": per_page,
+        "total_pages": (total + per_page - 1) // per_page,
         "hits": hits,
     }
 
 
 @app.get("/", response_class=HTMLResponse)
 def home() -> str:
-    options = "".join(f'<option value="{s}">{s}</option>' for s in ALL_SCRIPTS)
-    return f"""<!doctype html><html><head><meta charset="utf-8"><title>Tipitaka search</title>
-<style>
-body{{font-family:system-ui;margin:2rem;max-width:900px}}
-input,select,button{{font-size:16px;padding:6px}}
-.hit{{border-bottom:1px solid #ddd;padding:0.6rem 0}}
-mark{{background:#ffe9a8}}
-.meta{{color:#666;font-size:0.85em}}
-</style></head><body>
-<h1>Tipiṭaka multi-script search</h1>
-<form onsubmit="go(event)">
-<input id="q" size="40" placeholder="vipassana / विपस्सना / ৱিপস্সনা ..." autofocus>
-<select id="ui">{options}</select>
-<select id="mode"><option>fuzzy</option><option>exact</option><option>wildcard</option></select>
-<button>Search</button>
-</form>
-<p><small>Try: <code>vipassana</code>, <code>vipassanā</code>, <code>विपस्सना</code>, <code>dhammacakka*</code> (wildcard mode).</small></p>
-<div id="r"></div>
-<script>
-async function go(e){{
-  e.preventDefault();
-  const q=document.getElementById('q').value;
-  const ui=document.getElementById('ui').value;
-  const mode=document.getElementById('mode').value;
-  const r=await fetch(`/search?q=${{encodeURIComponent(q)}}&ui_script=${{ui}}&mode=${{mode}}`);
-  const j=await r.json();
-  const out=document.getElementById('r');
-  out.innerHTML=`<p class="meta">${{j.total}} hits — detected input=${{j.detected_script}}, ui=${{j.ui_script}}, mode=${{j.mode}}</p>`+
-    j.hits.map(h=>`<div class="hit">
-      <div class="meta">${{h.book}} · p${{h.p_idx}} · ${{h.rend}} · score ${{h.score.toFixed(2)}}</div>
-      <div><b>${{j.detected_script}}:</b> ${{(h.input_script_highlight[0]||h.input_script_text||'').slice(0,400)}}</div>
-      <div><b>${{j.ui_script}}:</b> ${{(h.ui_script_highlight[0]||h.ui_script_text||'').slice(0,400)}}</div>
-    </div>`).join('');
-}}
-</script></body></html>"""
+    return _render_ui("Elasticsearch", "#2563eb")

@@ -1,0 +1,97 @@
+# Bake-off: run all three search arms side by side on one VM so reviewers can
+# compare them on the same corpus. Run from the search-experiments/ directory:
+#
+#   docker compose -f docker-compose.all.yml up --build -d            # ES + Typesense + landing
+#   docker compose -f docker-compose.all.yml --profile solr up --build -d   # + original Solr
+#
+# Then index the two new arms (Solr is pre-indexed) and open the landing page:
+#
+#   curl -X POST localhost:8001/index     # Elasticsearch  (drop ?limit=5 for all 217 books)
+#   curl -X POST localhost:8002/index     # Typesense
+#   open http://localhost:8080            # landing page → links to all three
+#
+# Ports:  8080 landing · 8001 ES UI · 8002 Typesense UI · 8983 Solr (/solr/web)
+#         9200 Elasticsearch · 8108 Typesense (raw engines, for debugging)
+name: tipitaka-search-bakeoff
+
+services:
+  # ---------------- Elasticsearch arm (flexibility) ----------------
+  elasticsearch:
+    build: ./flexibility-elasticsearch/es     # official image + analysis-icu
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+      - bootstrap.memory_lock=true
+    ulimits:
+      memlock: { soft: -1, hard: -1 }
+    ports: ["9200:9200"]
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9200/_cluster/health | grep -E 'yellow|green'"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  es-api:
+    build: ./flexibility-elasticsearch
+    depends_on:
+      elasticsearch: { condition: service_healthy }
+    environment:
+      ES_URL: http://elasticsearch:9200
+      CORPUS_ROOT: /corpus
+    volumes:
+      - ..:/corpus:ro          # repo root → /corpus/<script>/*.xml
+    ports: ["8001:8000"]
+
+  # ------------------- Typesense arm (cost) ------------------------
+  typesense:
+    image: typesense/typesense:27.1
+    command: >
+      --data-dir /data
+      --api-key=devkey
+      --listen-port 8108
+      --enable-cors
+    ports: ["8108:8108"]
+    volumes:
+      - ts_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8108/health | grep -q '\"ok\":true'"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  ts-api:
+    build: ./cost-typesense
+    depends_on:
+      typesense: { condition: service_healthy }
+    environment:
+      TYPESENSE_HOST: typesense
+      TYPESENSE_PORT: "8108"
+      TYPESENSE_API_KEY: devkey
+      CORPUS_ROOT: /corpus
+    volumes:
+      - ..:/corpus:ro
+    ports: ["8002:8000"]
+
+  # ------------- Original Solr arm (baseline reference) ------------
+  # Opt-in (heavy, old JVM stack): add `--profile solr`. Serves the real
+  # production index from original-solr/solr/data with no re-indexing.
+  solr:
+    build: ./original-solr
+    profiles: ["solr"]
+    volumes:
+      - ./original-solr/solr/data:/app/solr-home/data
+    ports: ["8983:8080"]
+
+  # ----------------------- Landing page ----------------------------
+  landing:
+    image: nginx:alpine
+    volumes:
+      - ./landing:/usr/share/nginx/html:ro
+    ports: ["8080:80"]
+
+volumes:
+  es_data:
+  ts_data:
