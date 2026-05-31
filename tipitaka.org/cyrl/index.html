@@ -113,15 +113,27 @@
 							  }, 0);
 						}
 					}
-					else
-                    // open nodes
-					{
-						history.replaceState(null, null, cleanPath);
-						if (window.innerWidth > 768) {
-                            $("html").animate({scrollTop:-50}, 00);
-						}
-						data.instance.open_node(data.selected[0],false, false);
-					}
+                    else
+                    // toggle nodes: close if already open (and close descendants), otherwise open
+                    {
+                        history.replaceState(null, null, cleanPath);
+                        var t = data.instance;
+                        var nid = data.selected[0];
+                        if (t.is_open(nid)) {
+                            var nodeObj = t.get_node(nid);
+                            if (nodeObj.children_d && nodeObj.children_d.length) {
+                                nodeObj.children_d.forEach(function(childId){
+                                    if (t.is_open(childId)) t.close_node(childId);
+                                });
+                            }
+                            t.close_node(nid);
+                        } else {
+                            if (window.innerWidth > 768) {
+                                $("html").animate({scrollTop:-50}, 00);
+                            }
+                            t.open_node(nid,false,false);
+                        }
+                    }
 				}
 			})
 			.on("open_node.jstree", function (e, data) {
@@ -199,17 +211,29 @@ $(document).ready(function () {
 
     $toggle.on('click', function () {
         $tree.toggleClass('visible');
-        const icon = $tree.hasClass('visible') ? 'fa-arrow-left' : 'fa-arrow-right';
+        const icon = $tree.hasClass('visible') ? 'fa-times' : 'fa-arrow-right';
         $toggle.find('i').attr('class', `fa ${icon}`);
-        $toggle.toggle(!$tree.hasClass('visible'));
+        $toggle.show();
     });
 
+    // Hide/show toggle button based on scroll position (mobile only)
     $(window).on('scroll', function () {
         if (window.innerWidth <= 768 && !$tree.hasClass('visible')) {
             var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
             if (scrollTop > 100) {
                 $toggle.hide();
             } else {
+                $toggle.show();
+            }
+        }
+    });
+
+    // Hide the tree panel when clicking outside of it or the toggle button
+    $(document).on('click', function (e) {
+        if ($tree.hasClass('visible')) {
+            if ($(e.target).closest('#tree, #nav-toggle').length === 0) {
+                $tree.removeClass('visible');
+                $toggle.find('i').attr('class', 'fa fa-arrow-right');
                 $toggle.show();
             }
         }
@@ -234,6 +258,7 @@ $(document).ready(function () {
 </head>    
 
 <body> 
+    <!-- Toggle button for navigation tree (mobile only) -->
     <div id="nav-toggle" class="nav-toggle">
         <i class="fa fa-arrow-right"></i>
     </div>
@@ -247,7 +272,7 @@ $(document).ready(function () {
         <!-- Main Heading -->
         <div class="header">
             <div class="centered">
-                <img src="../images/dhamma-wheel.svg" class="wheel" alt="Dhamma wheel" />
+                <img src="../images/tipitaka_logo.svg" class="wheel" alt="Dhamma wheel" />
                 <h1 class="display-3">Pāḷi Tipiṭaka</h1>
             </div>
             <hr class="hrstyle">  
@@ -360,7 +385,9 @@ $(document).ready(function () {
         });
     </script>
     
-    <script defer src="../js/topnavscript.js"></script>    
+    <script defer src="../js/topnavscript.js"></script>
+    <script defer src="../js/feature-banner.js"></script>    
+    <script defer src="../js/pali-lookup.js"></script>  
          
 </body>
 </html>
