@@ -45,6 +45,8 @@ mark{{background:#ffe9a8;padding:0 1px}}
   <label>UI&nbsp;<select id="ui">{options}</select></label>
   <label>Mode&nbsp;<select id="mode"><option>fuzzy</option><option>exact</option><option>wildcard</option></select></label>
   <label>Per&nbsp;page&nbsp;<select id="pp"><option>10</option><option selected>20</option><option>50</option><option>100</option></select></label>
+  <label title="Strict: a typed aa/ii/uu matches only itself, not also the long vowel ā/ī/ū. Off = match both (handles vowel hiatus).">
+    <input type="checkbox" id="literal"> strict vowels (aa&nbsp;≠&nbsp;ā)</label>
   <button type="submit">Search</button>
 </form>
 <p class="tips">Try <code>vipassana</code>, <code>vipassanā</code>, <code>विपस्सना</code> ·
@@ -71,16 +73,17 @@ async function go(e,page){{
   const ui=document.getElementById('ui').value;
   const mode=document.getElementById('mode').value;
   const pp=document.getElementById('pp').value;
+  const literal=document.getElementById('literal').checked;
   const out=document.getElementById('r');
   out.innerHTML='<p class="empty">Searching…</p>';
-  const url=`/search?q=${{encodeURIComponent(q)}}&ui_script=${{ui}}&mode=${{mode}}&page=${{page}}&per_page=${{pp}}`;
+  const url=`/search?q=${{encodeURIComponent(q)}}&ui_script=${{ui}}&mode=${{mode}}&literal=${{literal}}&page=${{page}}&per_page=${{pp}}`;
   let j;
   try{{ j=await (await fetch(url)).json(); }}
   catch(err){{ out.innerHTML='<p class="empty">Request failed: '+err+'</p>'; return; }}
   _state.page=j.page||page; _state.total_pages=j.total_pages||1;
   document.getElementById('bar').style.display='flex';
   document.getElementById('summary').textContent=
-    `${{j.total}} hits · input=${{j.detected_script}} · ui=${{j.ui_script}} · mode=${{j.mode}}`;
+    `${{j.total}} hits · input=${{j.detected_script}} · ui=${{j.ui_script}} · mode=${{j.mode}}${{j.literal?' · strict vowels':''}}`;
   const from=(_state.page-1)*(j.per_page||pp);
   document.getElementById('pageinfo').textContent=
     j.total? `${{from+1}}–${{Math.min(from+j.hits.length,j.total)}} of ${{j.total}}` : '0';

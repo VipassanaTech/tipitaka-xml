@@ -57,22 +57,42 @@ but does nothing with the ASCII **doubled-vowel** convention people type when
 they lack diacritics (`sotaapatti`). That query stays `sotaapatti*` and misses
 the indexed `sotapatti`.
 
-So the experiments now ship [`roman.py`](flexibility-elasticsearch/app/roman.py)
-(identical in both stacks), which reproduces the Solr folding **and** adds the
-doubled-vowel (and Velthuis `.t .d .n .m "n ~n`) equivalence:
+### Don't *substitute* `aa`→`ā` — *expand* it
 
-| Input | `to_iast()` (for transliteration) | `fold()` (the romn search term) |
-|-------|-----------------------------------|---------------------------------|
-| `sotaapatti*` | `sotāpatti*` | `sotapatti*` |
-| `sotāpatti*`  | `sotāpatti*` | `sotapatti*` |
-| `sotapatti*`  | `sotapatti*` | `sotapatti*` |
+The naive fix (rewrite every `aa` to `ā`) is **wrong**, and breaks real
+searches. A typed `aa` is genuinely ambiguous in Pali romanisation:
 
-All three collapse to one indexed form. `to_iast` feeds Aksharamukha canonical
-IAST (so `aa`→`ā`, not two `a`s, when transliterating to the other 14 scripts);
-`fold` produces the diacritic-folded ASCII the Roman field is matched on. In ES
-that fold is exactly what `icu_folding` already does to the indexed `text_romn`,
-so query and index meet in the middle; Typesense gets a dedicated `romn_fold`
-field because it doesn't fold macrons reliably on its own.
+  * usually it's the long vowel `ā` (`sotaapatti` for *sotāpatti*), but
+  * sometimes it's a true **vowel hiatus** — two separate short `a` across a
+    morpheme/word boundary — which must stay `aa`.
+
+Forcing `aa`→`ā` makes the hiatus words unfindable (a bug seen in the wild on
+tipitakapali.org: you have to switch to Devanagari to search them). So the
+prototypes **expand instead of collapse** — a query with `aa` matches *both*
+readings. [`roman.py`](flexibility-elasticsearch/app/roman.py) (identical in both
+stacks) reproduces the Solr diacritic fold and adds this expansion:
+
+| Input | romn clauses searched (OR-ed) | other 14 scripts (single, all-long) |
+|-------|-------------------------------|-------------------------------------|
+| `sotaapatti*` | `sotaapatti*` **or** `sotapatti*` | from `sotāpatti*` |
+| `sotāpatti*`  | `sotapatti*` | from `sotāpatti*` |
+| `sotapatti*`  | `sotapatti*` | from `sotapatti*` |
+| `na-aagamma`  | `na-aagamma` **or** `na-agamma` | from `na-āgamma` |
+
+So `sotaapatti` still finds `sotāpatti`, **and** a genuine `…aa…` hiatus word
+stays findable via its literal clause — nothing is forced into one reading.
+`fold()` only strips diacritics (it does **not** collapse `aa`), so the index
+keeps the `ā` vs `aa` distinction; in ES that fold is exactly what `icu_folding`
+already does to `text_romn`, while Typesense gets a dedicated `romn_fold` field
+because it doesn't fold macrons reliably on its own. The other 14 scripts get a
+single transliteration of the conventional all-long reading (to bound fan-out);
+the romn field — the one the user typed in — is where the both-readings match
+lives.
+
+Expansion is the default, but a **`literal=true`** query param (and a "strict
+vowels (aa ≠ ā)" checkbox in the UI) turns it off for power users: in strict
+mode a typed `aa` matches only `aa`, never `ā`, so you can pin an exact hiatus
+spelling without the long-vowel word bleeding in.
 
 ## Side-by-side
 
@@ -82,7 +102,7 @@ field because it doesn't fold macrons reliably on its own.
 | Searchable text | 1 field (`text`) | 15 per-script fields | 15 + `romn_fold` |
 | Type in any script | one at a time | fan-out to 15 | fan-out to 15 |
 | Roman diacritic-insensitive | ✓ (FoldToASCII + removeDiacritcals) | ✓ (icu_folding) | ✓ (`romn_fold`) |
-| `sotaapatti*` ≡ `sotāpatti*` | ✗ | ✓ | ✓ |
+| `sotaapatti` finds `sotāpatti` | ✗ | ✓ (hiatus-safe) | ✓ (hiatus-safe) |
 | Wildcard | ✓ eDismax | ✓ `wildcard` | prefix only |
 | Fuzzy / typo | ✗ | ✓ AUTO Damerau | ✓ `num_typos` |
 | Result in 2 scripts | ✗ | ✓ highlight per field | ✓ |
@@ -97,8 +117,8 @@ field because it doesn't fold macrons reliably on its own.
   see `roman.py` vs `mapping-FoldToASCII.txt`); UTF-16 TEI parsing; the
   paragraph as the natural unit (an *improvement* — Solr's file-level hits make
   highlighting almost useless).
-- **Added:** cross-script fan-out, fuzzy, dual-script output, the doubled-vowel
-  equivalence, pagination.
+- **Added:** cross-script fan-out, fuzzy, dual-script output, the ambiguous-`aa`
+  expansion (long `ā` *and* hiatus `aa`, never forced one way), pagination.
 - **Not yet ported:** the `volume/pitaka/book/chapter/section` TOC metadata and
   the `volume` facet. Production derives these from a tipitaka.org TOC visitor
   (`TipitakaOrgTocVisitor`); the prototypes only carry `book`, `p_idx`, `rend`.

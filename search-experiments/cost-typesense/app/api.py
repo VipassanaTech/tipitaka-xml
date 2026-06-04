@@ -59,6 +59,7 @@ def search(
     input_script: str | None = Query(None),
     ui_script: str = Query("deva"),
     mode: Literal["exact", "wildcard", "fuzzy"] = Query("fuzzy"),
+    literal: bool = Query(False, description="Strict vowels: match aa/ii/uu literally, don't also match ā/ī/ū"),
     page: int = Query(1, ge=1, description="1-based page number"),
     per_page: int = Query(20, ge=1, le=100, description="Results per page"),
 ) -> dict:
@@ -68,40 +69,46 @@ def search(
         raise HTTPException(400, f"Unknown ui_script {ui_script!r}")
 
     src = input_script or detect_script(q)
-    expanded = fan_out(q, src=src)
+    expanded = fan_out(q, src=src, expand=not literal)
 
     window = min(page * per_page, _TS_MAX_WINDOW)
 
     # Typesense does multi-search natively: one HTTP call, N independent
     # queries, merged client-side. Each per-script query searches its own field
     # (romn searches the folded field) with the script-specific query string.
+    # One sub-query per (script, candidate spelling); Roman contributes several
+    # (the ambiguous-aa expansion from roman.py). `query_scripts` stays aligned
+    # with `queries` so the merge knows which script each result came from.
     queries: list[dict] = []
-    for script, q_str in expanded.items():
+    query_scripts: list[str] = []
+    for script, q_strs in expanded.items():
         field = _search_field(script)
-        per_query = {
-            "collection": COLLECTION,
-            "q": q_str,
-            "query_by": field,
-            # Always fetch the (input, ui) display fields, regardless of which
-            # script this sub-query searched, so the winning sub-query still
-            # carries the text we render in both rows.
-            "include_fields": f"id,book,p_idx,rend,text_{src},text_{ui_script}",
-            "highlight_fields": field,
-            "highlight_full_fields": field,
-            "per_page": window,
-            "page": 1,
-        }
-        if mode == "exact":
-            per_query["num_typos"] = 0
-            per_query["prefix"] = False
-        elif mode == "wildcard":
-            per_query["num_typos"] = 0
-            per_query["prefix"] = True       # Typesense's idiom for trailing-wildcard
-            per_query["q"] = q_str.replace("*", "")
-        else:  # fuzzy
-            per_query["num_typos"] = 2
-            per_query["prefix"] = True
-        queries.append(per_query)
+        for q_str in q_strs:
+            per_query = {
+                "collection": COLLECTION,
+                "q": q_str,
+                "query_by": field,
+                # Always fetch the (input, ui) display fields, regardless of
+                # which script this sub-query searched, so the winning sub-query
+                # still carries the text we render in both rows.
+                "include_fields": f"id,book,p_idx,rend,text_{src},text_{ui_script}",
+                "highlight_fields": field,
+                "highlight_full_fields": field,
+                "per_page": window,
+                "page": 1,
+            }
+            if mode == "exact":
+                per_query["num_typos"] = 0
+                per_query["prefix"] = False
+            elif mode == "wildcard":
+                per_query["num_typos"] = 0
+                per_query["prefix"] = True   # Typesense's idiom for trailing-wildcard
+                per_query["q"] = q_str.replace("*", "")
+            else:  # fuzzy
+                per_query["num_typos"] = 2
+                per_query["prefix"] = True
+            queries.append(per_query)
+            query_scripts.append(script)
 
     res = client.multi_search.perform({"searches": queries}, {})
 
@@ -114,7 +121,7 @@ def search(
     merged: dict[str, dict] = {}
     src_display = f"text_{src}"
     ui_field = f"text_{ui_script}"
-    for sub, script in zip(res["results"], expanded.keys()):
+    for sub, script in zip(res["results"], query_scripts):
         search_field = _search_field(script)
         for h in sub.get("hits", []):
             doc = h["document"]
@@ -156,6 +163,7 @@ def search(
         "detected_script": src,
         "ui_script": ui_script,
         "mode": mode,
+        "literal": literal,
         "expanded_queries": expanded,
         "total": total,
         "page": page,

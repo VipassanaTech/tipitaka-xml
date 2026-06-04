@@ -4,7 +4,7 @@ from __future__ import annotations
 from functools import lru_cache
 from aksharamukha import transliterate
 
-from roman import fold, to_iast
+from roman import fold, iast_variants, literal_reading, long_reading
 
 # VRI folder name -> Aksharamukha script name.
 # RussianCyrillic is Aksharamukha's Pali Cyrillic mapping (matches VRI cyrl).
@@ -70,26 +70,40 @@ def translit(text: str, src: str, dst: str) -> str:
     return transliterate.process(SCRIPTS[src], SCRIPTS[dst], text)
 
 
-def fan_out(query: str, src: str | None = None) -> dict[str, str]:
-    """Return {script_code: query_string} for all 15 scripts.
+def fan_out(query: str, src: str | None = None, expand: bool = True) -> dict[str, list[str]]:
+    """Return {script_code: [query_strings]} for all 15 scripts.
 
-    Roman is handled specially so it matches production Solr's folding (and the
-    extra doubled-vowel equivalence): the romn clause is searched diacritic-
-    *folded* (`sotaapatti`/`sotāpatti`/`sotapatti` collapse to one form), while
-    the other 14 scripts are transliterated from canonical IAST so Aksharamukha
-    sees `ā`, not `aa`. See roman.py.
+    Each script maps to a *list* of clauses to OR together. Roman is handled
+    specially (see roman.py): a typed `aa` is ambiguous (long `ā` vs. genuine
+    vowel hiatus).
+
+    With ``expand=True`` (default) the romn clauses cover **both** folded
+    readings — `sotaapatti` finds `sotāpatti` AND a real `...aa...` hiatus word
+    stays findable. With ``expand=False`` (strict/literal toggle) doubled vowels
+    are matched literally only: `aa` means two short `a`s, never `ā`.
+
+    The other 14 scripts get a single transliteration (the conventional all-long
+    reading, or the literal reading in strict mode), to bound fan-out.
     """
     if src is None:
         src = detect_script(query)
 
     if src == "romn":
-        iast = to_iast(query)
-        out = {dst: translit(iast, "romn", dst) for dst in ALL_SCRIPTS}
-        out["romn"] = fold(iast)
+        if expand:
+            primary = long_reading(query)
+            out: dict[str, list[str]] = {
+                dst: [translit(primary, "romn", dst)] for dst in ALL_SCRIPTS
+            }
+            # The romn field is diacritic-folded; OR every candidate spelling.
+            out["romn"] = list(dict.fromkeys(fold(v) for v in iast_variants(query)))
+        else:
+            literal = literal_reading(query)
+            out = {dst: [translit(literal, "romn", dst)] for dst in ALL_SCRIPTS}
+            out["romn"] = [fold(literal)]
         return out
 
-    out = {dst: translit(query, src, dst) for dst in ALL_SCRIPTS}
+    out = {dst: [translit(query, src, dst)] for dst in ALL_SCRIPTS}
     # The romn field is stored diacritic-folded, so fold the transliterated
     # Roman form too (e.g. a Devanagari query → IAST → folded ASCII).
-    out["romn"] = fold(out["romn"])
+    out["romn"] = [fold(out["romn"][0])]
     return out

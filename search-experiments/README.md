@@ -94,9 +94,12 @@ VM's own hostname automatically.
 | `sotāpatti*`         | wildcard  | Macron form — matches the **same** passages. |
 
 The last two rows are the production-Solr gap that reading the original code
-exposed: today only the macron form matches. Both prototypes now fold
-`sotaapatti` / `sotāpatti` / `sotapatti` to one form (see
-[COMPARISON.md](COMPARISON.md) and `app/roman.py`).
+exposed: today only the macron form matches. Both prototypes now make
+`sotaapatti` find `sotāpatti` — **without** force-rewriting `aa`→`ā`, which
+would hide genuine vowel-hiatus words (two separate `a`s). A typed `aa` is
+treated as ambiguous and matches *both* readings by default; a **"strict vowels
+(aa ≠ ā)"** checkbox (API: `&literal=true`) turns expansion off when you want an
+exact hiatus spelling. See [COMPARISON.md](COMPARISON.md) and `app/roman.py`.
 
 ## Stretch: semantic search
 

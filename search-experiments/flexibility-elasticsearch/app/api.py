@@ -33,6 +33,7 @@ def search(
     input_script: str | None = Query(None, description="Override script detection"),
     ui_script: str = Query("deva", description="Script for the result snippet"),
     mode: Literal["exact", "wildcard", "fuzzy"] = Query("fuzzy"),
+    literal: bool = Query(False, description="Strict vowels: match aa/ii/uu literally, don't also match ā/ī/ū"),
     page: int = Query(1, ge=1, description="1-based page number"),
     per_page: int = Query(20, ge=1, le=100, description="Results per page"),
 ) -> dict:
@@ -42,26 +43,27 @@ def search(
         raise HTTPException(400, f"Unknown ui_script {ui_script!r}")
 
     src = input_script or detect_script(q)
-    expanded = fan_out(q, src=src)
+    expanded = fan_out(q, src=src, expand=not literal)
 
-    # Build one clause per script field so each script searches its own index
-    # field directly (no canonicalisation). multi_match is concise but doesn't
-    # let us vary the *query string* per field, so we OR explicit clauses.
+    # Build one clause per (script field, candidate spelling) and OR them all.
+    # Each script searches its own field directly (no canonicalisation); Roman
+    # contributes several clauses (the ambiguous-aa expansion from roman.py).
     should: list[dict] = []
-    for script, q_str in expanded.items():
+    for script, q_strs in expanded.items():
         field = f"text_{script}"
-        if mode == "exact":
-            should.append({"match_phrase": {field: q_str}})
-        elif mode == "wildcard":
-            # Allow either a user-supplied wildcard or auto-prefix.
-            pat = q_str if "*" in q_str or "?" in q_str else f"{q_str}*"
-            should.append({"wildcard": {field: {"value": pat, "case_insensitive": True}}})
-        else:  # fuzzy
-            should.append({
-                "match": {
-                    field: {"query": q_str, "fuzziness": "AUTO", "operator": "and"}
-                }
-            })
+        for q_str in q_strs:
+            if mode == "exact":
+                should.append({"match_phrase": {field: q_str}})
+            elif mode == "wildcard":
+                # Allow either a user-supplied wildcard or auto-prefix.
+                pat = q_str if "*" in q_str or "?" in q_str else f"{q_str}*"
+                should.append({"wildcard": {field: {"value": pat, "case_insensitive": True}}})
+            else:  # fuzzy
+                should.append({
+                    "match": {
+                        field: {"query": q_str, "fuzziness": "AUTO", "operator": "and"}
+                    }
+                })
 
     # Highlight the field the user typed in AND the field they want to read.
     highlight_fields = {f"text_{src}": {}, f"text_{ui_script}": {}}
@@ -104,6 +106,7 @@ def search(
         "detected_script": src,
         "ui_script": ui_script,
         "mode": mode,
+        "literal": literal,
         "expanded_queries": expanded,
         "total": total,
         "page": page,
