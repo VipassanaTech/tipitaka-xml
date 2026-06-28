@@ -354,6 +354,9 @@
                 if (!s) return;
                 var text = s.toString().trim();
                 if (!text) return;
+                // if the selection spans multiple words (contains a space) the user is
+                // likely selecting a sentence or paragraph — skip the dictionary lookup
+                if (text.indexOf(' ') !== -1) return;
                 // same behavior as dblclick: use first token
                 var word = (text.split(/\s+/)[0] || text);
                 word = normalizeWord(word);
