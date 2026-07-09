@@ -9,6 +9,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import HTMLResponse
 
 from indexer import INDEX_NAME, reindex
+from links import hit_url
 from translit import ALL_SCRIPTS, detect_script, fan_out
 from ui import _render_ui
 
@@ -99,16 +100,19 @@ def search(
         src_field = f"text_{src}"
         ui_field = f"text_{ui_script}"
         hl = h.get("highlight", {})
+        book = h["_source"].get("book")
         hits.append({
             "id": h["_id"],
             "score": h["_score"],
-            "book": h["_source"].get("book"),
+            "book": book,
             "p_idx": h["_source"].get("p_idx"),
             "rend": h["_source"].get("rend"),
             "input_script_text": h["_source"].get(src_field, ""),
             "ui_script_text": h["_source"].get(ui_field, ""),
             "input_script_highlight": hl.get(src_field, []),
             "ui_script_highlight": hl.get(ui_field, []),
+            "input_url": hit_url(book, src),
+            "ui_url": hit_url(book, ui_script),
         })
     total = res["hits"]["total"]["value"]
     return {

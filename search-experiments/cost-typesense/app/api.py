@@ -9,6 +9,7 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import HTMLResponse
 
 from indexer import COLLECTION, reindex
+from links import hit_url
 from translit import ALL_SCRIPTS, detect_script, fan_out
 from ui import _render_ui
 
@@ -145,17 +146,20 @@ def search(
 
             entry = merged.get(doc_id)
             if entry is None:
+                book = doc.get("book")
                 entry = {
                     "id": doc_id,
                     "_score": score,
                     "_matched_via_script": script,
-                    "book": doc.get("book"),
+                    "book": book,
                     "p_idx": doc.get("p_idx"),
                     "rend": doc.get("rend"),
                     "input_script_text": doc.get(src_display, ""),
                     "ui_script_text": doc.get(ui_field, ""),
                     "input_script_highlight": None,
                     "ui_script_highlight": None,
+                    "input_url": hit_url(book, src),
+                    "ui_url": hit_url(book, ui_script),
                 }
                 merged[doc_id] = entry
             elif score > entry["_score"]:

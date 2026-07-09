@@ -56,6 +56,10 @@ open http://localhost:8000
 
 Both stacks expose port 8000 for the search API and serve a small HTML
 search box at `/` (with **pagination** — Prev/Next, page size, "X–Y of N").
+Each result's script tags are **clickable deep links to tipitaka.org**
+(`https://tipitaka.org/<script>/#<node>`), so you can jump from a hit to the
+book on the live site; the book→node map lives in `app/links.py` (generated
+from the site's `tree.json`, ids are shared across all 15 script trees).
 Each container mounts the repo root read-only at `/corpus`, so the indexer
 reads `deva/`, `romn/`, … directly from the working tree.
 

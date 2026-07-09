@@ -33,6 +33,8 @@ button:disabled{{opacity:.4;cursor:default}}
 .hit .meta{{color:#888;font-size:.78rem;margin-bottom:.3rem}}
 .hit .line{{margin:.15rem 0;line-height:1.5}}
 .hit .tag{{display:inline-block;min-width:42px;color:var(--accent);font-weight:600;font-size:.8rem}}
+a.tag{{text-decoration:none}}
+a.tag:hover{{text-decoration:underline}}
 mark{{background:#ffe9a8;padding:0 1px}}
 .empty{{color:#888;padding:2rem 0;text-align:center}}
 </style></head><body>
@@ -65,6 +67,9 @@ mark{{background:#ffe9a8;padding:0 1px}}
 <script>
 const _state={{page:1,total_pages:1}};
 function snippet(v){{ if(Array.isArray(v)) return v[0]||''; return v||''; }}
+function tag(label,url){{ return url
+  ? `<a class="tag" href="${{url}}" target="_blank" rel="noopener" title="Open on tipitaka.org">${{label}} ↗</a>`
+  : `<span class="tag">${{label}}</span>`; }}
 async function go(e,page){{
   if(e) e.preventDefault();
   page=Math.max(1,page||1);
@@ -104,8 +109,8 @@ async function go(e,page){{
   if(!j.hits.length){{ out.innerHTML='<p class="empty">No matches.</p>'; return; }}
   out.innerHTML=j.hits.map(h=>`<div class="hit">
     <div class="meta">${{h.book}} · p${{h.p_idx}}${{h.rend?' · '+h.rend:''}} · score ${{(h.score??h._score??0).toFixed?(h.score??h._score).toFixed(2):(h.score??h._score)}}${{h._matched_via_script?' · via '+h._matched_via_script:''}}</div>
-    <div class="line"><span class="tag">${{j.detected_script}}</span> ${{snippet(h.input_script_highlight)||h.input_script_text||''}}</div>
-    <div class="line"><span class="tag">${{j.ui_script}}</span> ${{snippet(h.ui_script_highlight)||h.ui_script_text||''}}</div>
+    <div class="line">${{tag(j.detected_script,h.input_url)}} ${{snippet(h.input_script_highlight)||h.input_script_text||''}}</div>
+    <div class="line">${{tag(j.ui_script,h.ui_url)}} ${{snippet(h.ui_script_highlight)||h.ui_script_text||''}}</div>
   </div>`).join('');
   window.scrollTo(0,0);
 }}
