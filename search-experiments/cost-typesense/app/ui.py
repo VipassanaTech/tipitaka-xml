@@ -77,9 +77,21 @@ async function go(e,page){{
   const out=document.getElementById('r');
   out.innerHTML='<p class="empty">Searching…</p>';
   const url=`/search?q=${{encodeURIComponent(q)}}&ui_script=${{ui}}&mode=${{mode}}&literal=${{literal}}&page=${{page}}&per_page=${{pp}}`;
-  let j;
-  try{{ j=await (await fetch(url)).json(); }}
+  let res;
+  try{{ res=await fetch(url); }}
   catch(err){{ out.innerHTML='<p class="empty">Request failed: '+err+'</p>'; return; }}
+  const body=await res.text();
+  let j;
+  try{{ j=JSON.parse(body); }}
+  catch(_){{
+    // Non-JSON body = a server error page. Surface its actual text/status.
+    out.innerHTML='<p class="empty">Search error ('+res.status+'): '+
+      (body||res.statusText).slice(0,400)+'</p>'; return;
+  }}
+  if(!res.ok){{
+    out.innerHTML='<p class="empty">Search error ('+res.status+'): '+
+      (j.detail||body).toString().slice(0,400)+'</p>'; return;
+  }}
   _state.page=j.page||page; _state.total_pages=j.total_pages||1;
   document.getElementById('bar').style.display='flex';
   document.getElementById('summary').textContent=

@@ -67,6 +67,12 @@ def search(
         raise HTTPException(400, f"Unknown input_script {input_script!r}")
     if ui_script not in ALL_SCRIPTS:
         raise HTTPException(400, f"Unknown ui_script {ui_script!r}")
+    try:
+        client.collections[COLLECTION].retrieve()
+    except typesense.exceptions.ObjectNotFound:
+        raise HTTPException(409, "Collection not built yet — run: curl -X POST .../index")
+    except typesense.exceptions.ServiceUnavailable:
+        raise HTTPException(503, "Typesense not ready (still starting or recovering). Retry shortly.")
 
     src = input_script or detect_script(q)
     expanded = fan_out(q, src=src, expand=not literal)
@@ -79,11 +85,18 @@ def search(
     # One sub-query per (script, candidate spelling); Roman contributes several
     # (the ambiguous-aa expansion from roman.py). `query_scripts` stays aligned
     # with `queries` so the merge knows which script each result came from.
+    #
+    # EXACT is precision-first: search ONLY the input script. The 15-way OR
+    # otherwise pulls in matches via other scripts and destroys precision
+    # (e.g. `tene` surfacing `teneva`). Roman/Devanagari are space-delimited so
+    # a single-script exact-token search is a true whole-word hit. Fuzzy/
+    # wildcard keep the cross-script fan-out for recall.
+    search_scripts = [src] if mode == "exact" else list(expanded.keys())
     queries: list[dict] = []
     query_scripts: list[str] = []
-    for script, q_strs in expanded.items():
+    for script in search_scripts:
         field = _search_field(script)
-        for q_str in q_strs:
+        for q_str in expanded[script]:
             per_query = {
                 "collection": COLLECTION,
                 "q": q_str,

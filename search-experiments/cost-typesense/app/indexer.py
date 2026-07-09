@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import os
+import time
 from pathlib import Path
 import typesense
+from typesense.exceptions import ServiceUnavailable
 
 from roman import fold
 from translit import ALL_SCRIPTS
@@ -11,6 +13,25 @@ from xml_parser import list_books, parse_paragraphs
 
 COLLECTION = os.environ.get("COLLECTION", "tipitaka")
 CORPUS_ROOT = Path(os.environ.get("CORPUS_ROOT", "/corpus"))
+
+
+def wait_until_ready(client: typesense.Client, attempts: int = 30, delay: float = 2.0) -> None:
+    """Block until Typesense accepts operations.
+
+    Right after startup the node can still be replaying its write-ahead log and
+    answers writes with HTTP 503 "Not Ready or Lagging" — even while /health
+    reports ok. Poll a cheap read until it stops 503-ing (or give up).
+    """
+    last: Exception | None = None
+    for _ in range(attempts):
+        try:
+            client.collections.retrieve()   # cheap, exercises the write-path readiness
+            return
+        except ServiceUnavailable as e:
+            last = e
+            time.sleep(delay)
+    if last is not None:
+        raise last
 
 
 def schema() -> dict:
@@ -75,6 +96,7 @@ def _docs(limit: int | None):
 
 
 def reindex(client: typesense.Client, limit: int | None = None) -> dict:
+    wait_until_ready(client)            # tolerate a node still catching up at startup
     ensure_collection(client, recreate=True)
     batch: list[dict] = []
     total = 0

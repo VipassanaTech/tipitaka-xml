@@ -125,6 +125,27 @@ spelling without the long-vowel word bleeding in.
   Worth adding before launch if facets matter — it's metadata plumbing, not a
   search-engine question.
 
+## Precision: why "exact" must not fan out (the `tene` case)
+
+Searching `tene` should return the ~19 whole-word occurrences (CST 4.1 shows 8
+over its smaller book set), **not** the 2,890 `teneva`, 1,083 `tenevaha`, … —
+4,722 `tene*` tokens in all — which are *different words* (`tena`+`eva` sandhi).
+
+On the Roman field, exact-token matching (ES `match_phrase`, Typesense
+`num_typos=0, prefix=false`) already returns only the 19 — `teneva` is a
+distinct token and cannot match. The noise came entirely from the **15-way
+cross-script fan-out**: scripts with no word spaces (Thai, Khmer, Myanmar,
+Tibetan) are segmented by ICU into *syllables*, so an "exact phrase" there
+degrades into a syllable-*subsequence* match — the Thai rendering of `te-ne`
+matches inside `te-ne-va`. OR-ed across all scripts, the least-precise script
+wins and floods the results, even for a Roman query displayed in Devanagari.
+
+Fix: **exact mode searches only the input script.** Roman and Devanagari are
+space-delimited, so single-script `match_phrase` is a true whole-word hit and
+`tene` returns the 19. Fuzzy and wildcard keep the fan-out (they're recall-
+first by design). Truly spaceless input scripts can't do whole-word exact
+without a segmentation dictionary — an inherent limit, same as everywhere else.
+
 ## Running the original arm
 
 The production **Lucene index is committed** at `original-solr/solr/data/`

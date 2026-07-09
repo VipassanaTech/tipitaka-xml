@@ -41,6 +41,8 @@ def search(
         raise HTTPException(400, f"Unknown input_script {input_script!r}")
     if ui_script not in ALL_SCRIPTS:
         raise HTTPException(400, f"Unknown ui_script {ui_script!r}")
+    if not es.indices.exists(index=INDEX_NAME):
+        raise HTTPException(409, "Index not built yet — run: curl -X POST .../index")
 
     src = input_script or detect_script(q)
     expanded = fan_out(q, src=src, expand=not literal)
@@ -48,10 +50,18 @@ def search(
     # Build one clause per (script field, candidate spelling) and OR them all.
     # Each script searches its own field directly (no canonicalisation); Roman
     # contributes several clauses (the ambiguous-aa expansion from roman.py).
+    #
+    # EXACT is precision-first: it searches ONLY the input script, because the
+    # 15-way OR otherwise drags in spaceless scripts (Thai/Khmer/Myanmar/…)
+    # where the ICU tokenizer segments into syllables, degrading "exact" into a
+    # substring match (e.g. `tene` matching inside `teneva`). Roman/Devanagari
+    # are space-delimited, so single-script match_phrase is a true whole-word
+    # hit. Fuzzy/wildcard keep the cross-script fan-out for recall.
+    search_scripts = [src] if mode == "exact" else list(expanded.keys())
     should: list[dict] = []
-    for script, q_strs in expanded.items():
+    for script in search_scripts:
         field = f"text_{script}"
-        for q_str in q_strs:
+        for q_str in expanded[script]:
             if mode == "exact":
                 should.append({"match_phrase": {field: q_str}})
             elif mode == "wildcard":
