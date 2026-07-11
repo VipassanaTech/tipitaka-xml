@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/monda_regular"
-        android:text="May 2026"
+        android:text="July 2026"
         android:textColor="#999999"
         android:textSize="14sp" />
 
