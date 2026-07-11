@@ -257,17 +257,8 @@
                 } else {
                     $nav[0].insertBefore(iconHtml, $nav[0].firstChild);
                 }
-                // Inject bookmark icon immediately after the search icon
-                $('#tp-topbar-bookmark-icon').remove();
-                var bmIcon = document.createElement('a');
-                bmIcon.href = 'javascript:void(0)';
-                bmIcon.id = 'tp-topbar-bookmark-icon';
-                bmIcon.title = 'Add or remove bookmarks';
-                bmIcon.innerHTML = '<i class="fa fa-bookmark-o"></i>';
-                iconHtml.parentNode.insertBefore(bmIcon, iconHtml);
                 // Ensure the search icon is visible in the topnav (including mobile responsive mode)
                 $(iconHtml).show();
-                updateBookmarkIcon();
                 // For mobile: also insert after Home in collapsed menu if menu is open
                 var $hamburger = $nav.find('a.icon');
                 if ($hamburger.length && $nav.hasClass('responsive')) {
@@ -1434,51 +1425,6 @@
         try { localStorage.setItem(TP_BM_KEY, JSON.stringify(arr)); } catch (e) {}
     }
 
-    function renderBookmarkDropdown() {
-        var $dd = $('#tp-bookmark-dropdown');
-        if (!$dd.length) return;
-        var bms = loadBookmarks();
-        var updated = false;
-        // If we have a tree map loaded, prefer to populate missing ids so
-        // bookmarks open by #id (index page) instead of raw href when possible.
-        try {
-            if (bms && bms.length && typeof _treeHrefToId === 'object') {
-                for (var bi = 0; bi < bms.length; bi++) {
-                    var bb = bms[bi] || {};
-                    if ((!bb.id || bb.id === '') && bb.href) {
-                        var mapped = _treeHrefToId[bb.href] || _treeHrefToId[(bb.href || '').split('/').pop()];
-                        if (mapped) { bb.id = mapped; bms[bi] = bb; updated = true; }
-                    }
-                }
-                if (updated) saveBookmarks(bms);
-            }
-        } catch (e) { /* ignore mapping errors */ }
-        if (!bms.length) {
-            $dd.html('<div class="tp-bm-empty">No bookmarks yet.</div>');
-            return;
-        }
-        var html = '';
-        bms.forEach(function(b) {
-            html += '<div class="tp-bm-row">';
-            html += '<a href="#" class="tp-bm-remove" data-href="' + escapeHtml(b.href) + '" title="Remove bookmark"><i class="fa fa-star tp-bm-starred"></i></a>';
-            var bmLabel = escapeHtml(b.title) + (b.query ? ' <span class="tp-bm-query">[' + escapeHtml(b.query) + ']</span>' : '');
-            html += '<a href="#" class="tp-bm-open" data-href="' + escapeHtml(b.href) + '" data-id="' + escapeHtml(b.id || '') + '" data-query="' + escapeHtml(b.query || '') + '" data-isdeva="' + (b.isDeva ? '1' : '0') + '" data-section="' + escapeHtml(b.sectionId || '') + '">' + bmLabel + '</a>';
-            html += '</div>';
-        });
-        $dd.html(html);
-    }
-
-    function updateBookmarkIcon() {
-        var $icon = $('#tp-topbar-bookmark-icon');
-        $icon.show();
-        if (loadBookmarks().length > 0) {
-            $icon.find('i').removeClass('fa-bookmark-o').addClass('fa-bookmark');
-        } else {
-            $icon.find('i').removeClass('fa-bookmark').addClass('fa-bookmark-o');
-            $('#tp-bookmark-dropdown').hide();
-        }
-    }
-
     // ───── Initialisation ─────
     $(document).ready(function () {
         // Ensure external tpsearch stylesheet is loaded (reduces runtime CSS injection)
@@ -1770,7 +1716,7 @@
                     } catch (e) { if (window.console) console.log('tpsearch: error while checking for node link', e); }
                         if (href && $tContent && $tContent.length) {
                             if (window.console) console.log('tpsearch: loading href directly', href);
-                            $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); safeApplyHighlight(); insertSubheadBookmarkIcons(); });
+                            $tContent.load(href, function() { if (window.console) console.log('tpsearch: loaded href', href); safeApplyHighlight(); });
                         return;
                     }
                     if (attemptsLeft > 0) {
@@ -1814,90 +1760,6 @@
         $tContent = $('#t-content');
         $tpSearchClear = $('#tp-search-clear');
 
-        // Insert bookmark icons for subheads inside loaded content and
-        // provide a MutationObserver to re-run when content is dynamically replaced.
-        function insertSubheadBookmarkIcons() {
-            try {
-                var $cont = $tContent || $('#t-content');
-                if (!$cont || !$cont.length) return;
-                var bookmarks = loadBookmarks();
-                // Target elements marked with class="subhead" or attribute rend="subhead"
-                $cont.find('.subhead, [rend="subhead"]').each(function (idx) {
-                    var $h = $(this);
-                    // skip if we've already attached a bookmark toggle
-                    if ($h.find('.tp-subhead-bm').length) return;
-                    var hid = $h.attr('id');
-                    if (!hid) {
-                        // generate a safe id from text content
-                        var base = ($h.text() || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-                        if (!base) base = 'subhead-' + idx;
-                        hid = 'tp-sub-' + base;
-                        var probe = hid, n = 1;
-                        while (document.getElementById(probe)) { probe = hid + '-' + (n++); }
-                        hid = probe;
-                        $h.attr('id', hid);
-                    }
-                    var path = (window.location.pathname || '').replace(/^\//, '');
-                    var href = path + '#' + hid;
-                    var title = ($h.text() || '').trim();
-                    var $a = $('<a href="#" class="tp-bookmark-toggle tp-subhead-bm" />');
-                    $a.attr('data-href', href);
-                    // Resolve the current page's tree node id so the bookmark opens
-                    // the logical index page (index.html#<id>) rather than the raw XML file.
-                    var _pageTreeId = '';
-                    try {
-                        var _currPath = (window.location.pathname || '').replace(/^\//, '');
-                        _pageTreeId = (_treeHrefToId && (_treeHrefToId[_currPath] || _treeHrefToId[_currPath.split('/').pop()])) || '';
-                        if (!_pageTreeId) {
-                            // Fallback: if the URL hash is already a plain tree node id (e.g. #67)
-                            var _hashMatch = (window.location.hash || '').match(/^#(\d+)$/);
-                            if (_hashMatch) _pageTreeId = _hashMatch[1];
-                        }
-                    } catch (e3) {}
-                    $a.attr('data-id', _pageTreeId);
-                    $a.attr('data-section', hid);
-                    $a.attr('data-title', title);
-                    // Add native tooltip and accessibility label
-                    $a.attr('title', 'Bookmark this section');
-                    $a.attr('aria-label', 'Bookmark this section');
-                    // Use the same star markup used elsewhere (outline by default)
-                    $a.html('<i class="fa fa-star-o" aria-hidden="true"></i>');
-                    // append a small separator then the icon
-                    // For centered headings it looks better to append a non-breaking space before the icon
-                    $h.append('\u00A0').append($a);
-                    // reflect saved state
-                    for (var bi = 0; bi < bookmarks.length; bi++) {
-                        var bb = bookmarks[bi] || {};
-                        var bh = (bb.href || '');
-                        // compare several normalized forms to match stored hrefs
-                        var bhNorm = bh.replace(/^\//, '');
-                        var hrefNorm = href.replace(/^\//, '');
-                        var bhTail = (bh || '').split('/').pop();
-                        if (bh === href || bhNorm === hrefNorm || bhTail === hrefNorm || bh === ('#' + hid) ) {
-                            $a.find('i').removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
-                            break;
-                        }
-                    }
-                });
-            } catch (e) { console.warn('insertSubheadBookmarkIcons error', e); }
-        }
-
-        // Observe changes to content so that injected icons persist after dynamic loads
-        try {
-            var contNode = ($tContent && $tContent.length) ? $tContent.get(0) : null;
-            if (contNode) {
-                var moTimer = null;
-                var mo = new MutationObserver(function(mutations) {
-                    if (moTimer) clearTimeout(moTimer);
-                    moTimer = setTimeout(function() { insertSubheadBookmarkIcons(); }, 150);
-                });
-                mo.observe(contNode, { childList: true, subtree: true });
-            }
-        } catch (e) { /* ignore observer failures */ }
-
-        // run once at init
-        insertSubheadBookmarkIcons();
-
         // Determine current script folder (e.g. 'romn', 'deva') from the URL
         var _scriptRoot = (function() {
             try {
@@ -1924,7 +1786,7 @@
             });
         }
 
-        // Called after tree.json loads: build the map, patch data-id attrs, populate bookmark ids
+        // Called after tree.json loads: build the map, patch data-id attrs
         function afterTreeMapLoaded(data) {
             _buildTreeMap(data);
             $('.tp-open-newtab[data-href], .tp-bookmark-toggle[data-href]').each(function() {
@@ -1932,18 +1794,6 @@
                 var id = _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()];
                 if (id) $(this).attr('data-id', id);
             });
-            try {
-                var bms = loadBookmarks();
-                var changed = false;
-                for (var bi = 0; bi < bms.length; bi++) {
-                    var bb = bms[bi] || {};
-                    if ((!bb.id || bb.id === '') && bb.href) {
-                        var mapped = _treeHrefToId[bb.href] || _treeHrefToId[(bb.href || '').split('/').pop()];
-                        if (mapped) { bb.id = mapped; bms[bi] = bb; changed = true; }
-                    }
-                }
-                if (changed) saveBookmarks(bms);
-            } catch (e) { /* ignore */ }
         }
 
         // Load tree.json only from the known script folders: 'romn' or 'deva'.
@@ -2049,28 +1899,6 @@
             }
         } catch (e) {}
 
-        // ── Scroll to bookmarked subheading in new tab ──
-        // When a subheading bookmark is opened, tpsearch-newtab-section holds the
-        // element id to scroll to after the page's content has loaded.
-        try {
-            var _pendingSection = null;
-            try { _pendingSection = localStorage.getItem('tpsearch-newtab-section'); } catch (e) {}
-            if (_pendingSection) {
-                try { localStorage.removeItem('tpsearch-newtab-section'); } catch (e) {}
-                var scrollToSection = function(tries) {
-                    var el = document.getElementById(_pendingSection);
-                    if (el) {
-                        var top = $(el).offset().top - 80;
-                        $('html, body').animate({ scrollTop: top }, 400);
-                    } else if (tries > 0) {
-                        setTimeout(function() { scrollToSection(tries - 1); }, 200);
-                    }
-                };
-                // Wait for content to finish loading before scrolling (up to 10s)
-                scrollToSection(50);
-            }
-        } catch (e) {}
-
         // Do not perform live searches while typing. Show/hide clear button only.
         $tpSearchInput.on('input', function () {
             var v = $tpSearchInput.val();
@@ -2105,9 +1933,6 @@
                             $('html, body').animate({ scrollTop: top }, 300);
                         }
                     }
-                    // Insert subhead bookmark icons for newly loaded content
-                    try { insertSubheadBookmarkIcons(); } catch (e) {}
-
                     if (!$('#tp-search-back').length) {
                         var $btn = $('<button id="tp-search-back" class="tpsearch-back-btn" title="Back" aria-label="Back">&lt;</button>');
                         $btn.on('click', function () {
@@ -2309,178 +2134,9 @@
                 $icon.removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
             }
             saveBookmarks(bms);
-            updateBookmarkIcon();
-            renderBookmarkDropdown();
+            // updateBookmarkIcon and renderBookmarkDropdown are provided by the bookmark module (main)
         });
 
-        // ── Bookmark: topnav icon toggles dropdown ──
-        $(document).on('click', '#tp-topbar-bookmark-icon', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var $icon = $(this);
-            if (!$('#tp-bookmark-dropdown').length) {
-                $('body').append('<div id="tp-bookmark-dropdown"></div>');
-            }
-            var $dd = $('#tp-bookmark-dropdown');
-            if ($dd.is(':visible')) {
-                $dd.hide();
-                return;
-            }
-            renderBookmarkDropdown();
-            var offset = $icon.offset();
-            $dd.css({
-                top: offset.top + $icon.outerHeight(),
-                right: $(window).width() - offset.left - $icon.outerWidth()
-            }).show();
-        });
-
-        // ── Bookmark: close dropdown when clicking outside ──
-        $(document).on('click.tpbookmark', function(e) {
-            if (!$(e.target).closest('#tp-bookmark-dropdown, #tp-topbar-bookmark-icon').length) {
-                $('#tp-bookmark-dropdown').hide();
-            }
-        });
-
-        // ── Bookmark: remove entry from dropdown ──
-        $(document).on('click', '.tp-bm-remove', function(e) {
-            e.preventDefault();
-            // Prevent the global outside-click handler from closing the dropdown
-            e.stopPropagation();
-            var href = $(this).data('href');
-            var bms = loadBookmarks().filter(function(b) { return b.href !== href; });
-            saveBookmarks(bms);
-            $('.tp-bookmark-toggle[data-href="' + href + '"] i').removeClass('fa-star tp-bm-starred').addClass('fa-star-o');
-            updateBookmarkIcon();
-            renderBookmarkDropdown();
-            // Keep the dropdown open and reposition it relative to the topbar icon
-            var $icon = $('#tp-topbar-bookmark-icon');
-            var $dd = $('#tp-bookmark-dropdown');
-            if ($dd.length && $icon.length) {
-                var offset = $icon.offset();
-                $dd.css({
-                    top: offset.top + $icon.outerHeight(),
-                    right: $(window).width() - offset.left - $icon.outerWidth()
-                }).show();
-            }
-        });
-
-        // ── Bookmark: open title in new tab from dropdown ──
-        $(document).on('click', '.tp-bm-open', function(e) {
-            e.preventDefault();
-            $('#tp-bookmark-dropdown').hide();
-            var href = $(this).data('href') || '';
-            var id = $(this).data('id') || '';
-            var _pageBase = window.location.href.replace(/[^/]*$/, '');
-            var _pageOrigin = window.location.origin;
-            var bmQuery = $(this).data('query') || currentQuery || '';
-            var bmIsDeva = ($(this).data('isdeva') === '1' || $(this).data('isdeva') === 1) ? true : currentIsDeva;
-            var bmSectionId = $(this).data('section') || '';
-            var encD = bmIsDeva ? '1' : '0';
-
-            var persistBookmarkId = function(resolvedId) {
-                if (!resolvedId) return;
-                try {
-                    var bms = loadBookmarks();
-                    var changed = false;
-                    for (var bi = 0; bi < bms.length; bi++) {
-                        if (bms[bi].href === href && (!bms[bi].id || bms[bi].id === '')) {
-                            bms[bi].id = resolvedId;
-                            changed = true;
-                        }
-                    }
-                    if (changed) saveBookmarks(bms);
-                } catch (e2) {}
-            };
-
-            var resolveIdFromMap = function() {
-                if (!href) return '';
-                return _treeHrefToId[href] || _treeHrefToId[href.split('/').pop()] || '';
-            };
-
-            var openBookmarkTarget = function(finalId) {
-                // Write query to localStorage so the new tab can pick it up immediately on load.
-                if (bmQuery) {
-                    try { localStorage.setItem('tpsearch-newtab-query', bmQuery); } catch (err) {}
-                    try { localStorage.setItem('tpsearch-newtab-isdeva', encD); } catch (err) {}
-                }
-                // Write section id so the new tab can scroll to the bookmarked subheading.
-                if (bmSectionId) {
-                    try { localStorage.setItem('tpsearch-newtab-section', bmSectionId); } catch (err) {}
-                } else {
-                    try { localStorage.removeItem('tpsearch-newtab-section'); } catch (err) {}
-                }
-
-                // Prefer index.html#id so tpsearch.js is loaded in the new tab.
-                var targetUrl = finalId ? (_pageBase + 'index.html#' + finalId) : (_pageBase + href.replace(/^\//, ''));
-                if (!targetUrl) return;
-
-                var newWin = window.open(targetUrl, '_blank');
-                // postMessage as an additional fallback in case localStorage is unavailable
-                if (newWin && bmQuery) {
-                    var payload = { tpq: bmQuery, tpd: encD, id: finalId || '' };
-                    var tries = 0;
-                    var sendMsg = function() {
-                        try { newWin.postMessage(payload, _pageOrigin); } catch (err) {}
-                        if (++tries < 12) setTimeout(sendMsg, 300);
-                    };
-                    sendMsg();
-                }
-            };
-
-            // First try current in-memory tree map
-            if (!id && href) {
-                id = resolveIdFromMap();
-                if (id) persistBookmarkId(id);
-            }
-
-            if (id) {
-                openBookmarkTarget(id);
-                return;
-            }
-
-            // If still missing id, fetch tree.json lazily and try again before opening.
-            var root = _scriptRoot;
-            try {
-                var p = window.location.pathname || '/';
-                if (p.indexOf('/romn/') !== -1 || p.indexOf('/romn') === 0) root = 'romn';
-                else if (p.indexOf('/deva/') !== -1 || p.indexOf('/deva') === 0) root = 'deva';
-            } catch (e3) {}
-
-            if (!root) {
-                openBookmarkTarget('');
-                return;
-            }
-
-            var treeUrl = null;
-            try {
-                var p2 = window.location.pathname || '/';
-                var m2 = p2.match(/^(.*?\/(?:romn|deva))(?:\/|$)/);
-                if (m2 && m2[1]) treeUrl = m2[1].replace(/\/+$/, '') + '/tree.json';
-            } catch (e4) {}
-            if (!treeUrl) treeUrl = '/' + root + '/tree.json';
-
-            var afterTreeLoaded = function(data) {
-                try { _buildTreeMap(data); } catch (e5) {}
-                var mapped = resolveIdFromMap();
-                if (mapped) persistBookmarkId(mapped);
-                openBookmarkTarget(mapped || '');
-            };
-
-            $.getJSON(treeUrl).done(function(data) {
-                afterTreeLoaded(data);
-            }).fail(function() {
-                var alt = '/tipitaka.org/' + root + '/tree.json';
-                if (alt === treeUrl) {
-                    openBookmarkTarget('');
-                    return;
-                }
-                $.getJSON(alt).done(function(data2) {
-                    afterTreeLoaded(data2);
-                }).fail(function() {
-                    openBookmarkTarget('');
-                });
-            });
-        });
     });
 
 })(jQuery);

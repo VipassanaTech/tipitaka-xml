@@ -1052,14 +1052,6 @@
         top: 80px !important;
     }
 
-    /* Bookmark dropdown: override JS-set left and center it */
-    #tp-bookmark-dropdown {
-        left: 50% !important;
-        transform: translateX(-50%);
-        right: auto !important;
-        min-width: 260px;
-        max-width: 90vw;
-    }
 }
 
 /* ===== Bookmarks ===== */
@@ -1072,81 +1064,6 @@
 }
 .tp-bookmark-toggle:hover { color: #B78730; }
 .tp-bookmark-toggle .tp-bm-starred { color: #B78730; }
-
-.topnav a#tp-topbar-bookmark-icon {
-    float: left;
-    display: block;
-    padding: 10px 8px;
-    color: white;
-    text-decoration: none;
-}
-.topnav a#tp-topbar-bookmark-icon i { font-size: 16px; }
-.topnav a#tp-topbar-bookmark-icon:hover { background-color: #eee; color: #4F4D47; }
-
-#tp-topbar-bookmark-icon {
-    display: none;
-    float: right;
-    padding: 10px 14px;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-#tp-topbar-bookmark-icon:hover { background: #eee; color: #4F4D47; }
-
-#tp-bookmark-dropdown {
-    position: fixed;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    min-width: 260px;
-    max-width: 400px;
-    max-height: 60vh;
-    overflow-y: auto;
-    z-index: 9999;
-    padding: 6px 0;
-    display: none;
-}
-.tp-bm-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 7px 12px;
-    border-bottom: 1px solid #f0f0f0;
-}
-.tp-bm-row:last-child { border-bottom: none; }
-.tp-bm-remove {
-    flex-shrink: 0;
-    color: #B78730;
-    text-decoration: none;
-    font-size: 15px;
-}
-.tp-bm-remove:hover { color: #8a5e10; }
-.tp-bm-open {
-    flex: 1;
-    color: #1E3461;
-    text-decoration: none;
-    font-size: 13px;
-    font-family: 'Monda', Arial, sans-serif;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.tp-bm-open:hover { text-decoration: underline; }
-.tp-bm-query {
-    margin-left: 5px;
-    font-size: 11px;
-    color: #888;
-    font-style: italic;
-}
-.tp-bm-empty {
-    padding: 10px 14px;
-    color: #888;
-    font-size: 13px;
-    font-family: 'Monda', Arial, sans-serif;
-}
-.tp-bm-starred { color: #B78730; }
 
 /* Print: hide search bar, context menu, and topbar search icon */
 @media print {
