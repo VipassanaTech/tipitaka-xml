@@ -133,7 +133,7 @@ body {
    discover the title is editable without it looking editable at rest. */
 @media (hover: hover) and (pointer: fine) {
   .pm-title-input:hover {
-    background-color: rgba(190, 86, 77, 0.06);
+    background-color: rgba(190, 86, 77, 0.16);
     outline: 1px dashed rgba(190, 86, 77, 0.45);
     outline-offset: 2px;
   }
