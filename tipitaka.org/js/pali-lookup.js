@@ -211,7 +211,7 @@
         // prefetch/attach to any in-flight request, otherwise start a fetch
         prefetchPali(word)
         .then(function(json){ renderResult(word,json); })
-        .catch(function(err){ content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to fetch meaning.</div></div>'; try{ showPopup(); }catch(e){} console.error(err); });
+        .catch(function(err){ try{ setEditableTitle(word); }catch(e){} content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to fetch meaning.</div></div>'; try{ showPopup(); }catch(e){} console.error(err); });
     }
 
     function renderResult(word, json){
@@ -236,7 +236,7 @@
                 if (parts.length > 0) {
                     bodyHtml += '<div class="pm-body"><div class="dpd">' + parts.join('\n') + '</div></div>';
                     // place the title in the header title-holder and credit in the credit-holder
-                    try{ var th = popup.querySelector('.pm-title-holder'); if (th) th.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+                    try{ setEditableTitle(word); }catch(e){}
                     try{ var holder = popup.querySelector('.pm-credit-holder'); if (holder) holder.innerHTML = creditHtml; }catch(e){}
                     content.innerHTML = bodyHtml;
                     enhanceModal(content);
@@ -249,7 +249,7 @@
             // fallback for array-style responses
             if (!Array.isArray(json) || !json.length) {
                 bodyHtml += '<div class="pm-body"><div class="dpd"><div class="pm-section"><strong>No results</strong><div>No entries found.</div></div></div></div>';
-                try{ var th2 = popup.querySelector('.pm-title-holder'); if (th2) th2.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+                try{ setEditableTitle(word); }catch(e){}
                 try{ var holder2 = popup.querySelector('.pm-credit-holder'); if (holder2) holder2.innerHTML = creditHtml; }catch(e){}
                 content.innerHTML = bodyHtml;
                 enhanceModal(content);
@@ -292,7 +292,7 @@
             }
             bodyHtml += '</div></div>';
 
-            try{ var th3 = popup.querySelector('.pm-title-holder'); if (th3) th3.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+            try{ setEditableTitle(word); }catch(e){}
             try{ var holder3 = popup.querySelector('.pm-credit-holder'); if (holder3) holder3.innerHTML = creditHtml; }catch(e){}
             content.innerHTML = bodyHtml;
             enhanceModal(content);
@@ -301,6 +301,26 @@
     }
 
     function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    // Render the popup title as an editable text field pre-filled with `word`.
+    // Pressing Enter re-triggers a lookup for whatever the user typed, updating
+    // the same modal in place.
+    function setEditableTitle(word){
+        var th = popup.querySelector('.pm-title-holder');
+        if (!th) return;
+        th.innerHTML = '<input type="text" class="pm-title pm-title-input" value="' + escapeHtml(word) + '" spellcheck="false" autocomplete="off" autocapitalize="off" />';
+        var input = th.querySelector('.pm-title-input');
+        if (!input) return;
+        function resize(){ input.style.width = Math.max(3, input.value.length + 1) + 'ch'; }
+        resize();
+        input.addEventListener('input', resize);
+        input.addEventListener('keydown', function(ev){
+            if (ev.key !== 'Enter') return;
+            ev.preventDefault();
+            var newWord = normalizeWord(input.value.trim());
+            if (newWord) lookupPali(newWord);
+        });
+    }
 
     // Post-process the injected dpd HTML to tweak presentation
     function enhanceModal(contentEl){

@@ -112,9 +112,46 @@ body {
 .pm-title {
   font-family: inherit;
   font-weight: 700;
+  font-size: 1.17em;
   text-align: left;
   color: #be564d;
   margin-top: 0;
+}
+
+.pm-title-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  cursor: text;
+  border-radius: 4px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Desktop: reveal a faint dashed affordance only on hover, so casual users
+   discover the title is editable without it looking editable at rest. */
+@media (hover: hover) and (pointer: fine) {
+  .pm-title-input:hover {
+    background-color: rgba(190, 86, 77, 0.06);
+    outline: 1px dashed rgba(190, 86, 77, 0.45);
+    outline-offset: 2px;
+  }
+}
+
+/* Both desktop and touch: a clear focus glow once the field is active. */
+.pm-title-input:focus {
+  box-shadow: 0 0 0 3px rgba(190, 86, 77, 0.25);
+}
+
+/* Touch devices: no hover affordance (there's no hover state), but give the
+   field a 44px touch-friendly tap target so it's easy to hit accurately. */
+@media (hover: none) and (pointer: coarse) {
+  .pm-title-input {
+    min-height: 44px;
+    padding: 0 8px;
+    box-sizing: border-box;
+  }
 }
 
 .pm-right { display:flex; align-items:center; flex-shrink: 0; }
