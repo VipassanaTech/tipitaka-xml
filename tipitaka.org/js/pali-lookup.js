@@ -50,6 +50,13 @@
     // normalize a selected word by trimming surrounding punctuation
     function normalizeWord(word){
         if (!word) return '';
+        // Pali texts commonly mark the end of a quoted passage with a closing
+        // double-quote pair (e.g. ’’) immediately followed by a trailing
+        // grammatical particle such as "ti", e.g. "upapajjantī’’ti". That
+        // suffix isn't part of the word, so cut everything from the first
+        // such quote pair onward before trimming ordinary punctuation.
+        var quotePairIdx = word.search(/['’‘"“”]{2,}/);
+        if (quotePairIdx !== -1) word = word.slice(0, quotePairIdx);
         try{ return word.replace(/^[^\p{L}]+|[^\p{L}]+$/gu,''); }catch(err){ return word.replace(/^[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+|[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+$/g,''); }
     }
 
