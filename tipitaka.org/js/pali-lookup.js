@@ -108,6 +108,24 @@
             return nodes;
         }
 
+        // Search backwards from fromIndex for the nearest whitespace character
+        // (space, tab, newline, non-breaking space, etc.) rather than a literal
+        // ASCII space, so paragraph/element boundaries (which are often joined
+        // only by a newline text node) are correctly treated as word breaks.
+        function lastWhitespaceIndex(str, fromIndex){
+            for (var i = Math.min(fromIndex, str.length - 1); i >= 0; i--) {
+                if (/\s/.test(str.charAt(i))) return i;
+            }
+            return -1;
+        }
+
+        function firstWhitespaceIndex(str, fromIndex){
+            for (var i = Math.max(fromIndex, 0); i < str.length; i++) {
+                if (/\s/.test(str.charAt(i))) return i;
+            }
+            return -1;
+        }
+
         function expandSelectionToSpaces(){
             try {
                 var sel = window.getSelection();
@@ -139,9 +157,9 @@
                 var full = tnodes.map(function(nd){ return nd.textContent; }).join('');
                 globalIndex = Math.max(0, Math.min(full.length - 1, globalIndex));
 
-                var leftSpace  = full.lastIndexOf(' ', globalIndex - 1);
+                var leftSpace  = lastWhitespaceIndex(full, globalIndex - 1);
                 var startIdx   = (leftSpace  === -1) ? 0           : leftSpace + 1;
-                var rightSpace = full.indexOf(' ', globalIndex);
+                var rightSpace = firstWhitespaceIndex(full, globalIndex);
                 var endIdx     = (rightSpace === -1) ? full.length  : rightSpace;
 
                 var sNode = null, sOffset = 0, eNode = null, eOffset = 0, acc = 0;
