@@ -75,8 +75,11 @@
     height: auto;
 }
 
-/* Mobile responsive */
-@media screen and (max-width: 767px) {
+/* Mobile responsive (also covers tablets in portrait orientation, and tablets in landscape
+   via touch detection so narrow laptop/desktop windows at similar widths are not affected) */
+@media screen and (max-width: 767px),
+       screen and (orientation: portrait) and (max-width: 1024px),
+       screen and (hover: none) and (pointer: coarse) and (max-width: 1366px) {
     .buddha-img-wrapper {
         float: none;
         width: 40%;

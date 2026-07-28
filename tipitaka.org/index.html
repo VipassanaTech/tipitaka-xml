@@ -190,15 +190,22 @@
     <!-- body code goes here -->
     <script src="js/topnavscript.js"></script>
 
-    <!-- On mobile, move DWoB box to just above the footer -->
+    <!-- On mobile (and tablets in any orientation), move DWoB box to just above the footer -->
     <script>
     (function() {
+        // Matches the breakpoint used in dwob.css: phones (<=767px), any
+        // portrait-oriented device up to 1024px CSS width, or any touch
+        // device (no hover, coarse pointer) up to 1366px width (covers
+        // tablets in landscape, e.g. iPad Pro 12.9").
+        var mobileQuery = window.matchMedia(
+            '(max-width: 767px), (orientation: portrait) and (max-width: 1024px), (hover: none) and (pointer: coarse) and (max-width: 1366px)'
+        );
         function moveDwobForMobile() {
             var dwob = document.getElementById('dwob-container');
             var footer = document.querySelector('footer');
             var wrapper = document.querySelector('.buddha-img-wrapper');
             if (!dwob || !footer) return;
-            if (window.innerWidth <= 767) {
+            if (mobileQuery.matches) {
                 // Move DWoB just before the footer's parent container
                 footer.parentNode.parentNode.insertBefore(dwob, footer.parentNode);
             } else {

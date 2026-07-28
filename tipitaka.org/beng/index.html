@@ -148,7 +148,9 @@
 
 <style>
 /* Responsive styles for the navigation tree */
-@media (max-width: 768px) {
+@media (max-width: 768px),
+       (orientation: portrait) and (max-width: 1024px),
+       (hover: none) and (pointer: coarse) and (max-width: 1366px) {
     #tree {
         position: fixed;
         left: 0;
@@ -197,7 +199,7 @@
 }
 
 /* Hide the toggle button in desktop view */
-@media (min-width: 769px) {
+@media not ((max-width: 768px) or ((orientation: portrait) and (max-width: 1024px)) or ((hover: none) and (pointer: coarse) and (max-width: 1366px))) {
     #nav-toggle {
         display: none !important;
     }
@@ -342,7 +344,9 @@ $(document).ready(function () {
             var container = document.getElementById("bodycontainer");
     
             // Check screen width to determine whether to use mouse or touch events
-            var isMobile = window.innerWidth <= 768;
+            var isMobile = window.matchMedia(
+                '(max-width: 768px), (orientation: portrait) and (max-width: 1024px), (hover: none) and (pointer: coarse) and (max-width: 1366px)'
+            ).matches;
     
             if (isMobile) {
                 separator.addEventListener("touchstart", function(e) {
