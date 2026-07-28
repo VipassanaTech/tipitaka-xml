@@ -56,7 +56,11 @@
         // suffix isn't part of the word, so cut everything from the first
         // such quote pair onward before trimming ordinary punctuation.
         var quotePairIdx = word.search(/['’‘"“”]{2,}/);
-        if (quotePairIdx !== -1) word = word.slice(0, quotePairIdx);
+        // only treat this as a *trailing* closing-quote+particle if there's
+        // actual word content before it; a match at index 0 means the token
+        // begins with an *opening* quote pair (e.g. "‘‘Vipassī") which the
+        // generic leading-punctuation trim below already handles correctly.
+        if (quotePairIdx > 0) word = word.slice(0, quotePairIdx);
         try{ return word.replace(/^[^\p{L}]+|[^\p{L}]+$/gu,''); }catch(err){ return word.replace(/^[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+|[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+$/g,''); }
     }
 
