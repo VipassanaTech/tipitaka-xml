@@ -75,12 +75,19 @@ body {
   display: none;
   z-index: 9999;
   box-sizing: border-box;
+  /* User-resizable — drag the bottom-right corner to customise size */
+  resize: both;
+  min-width: 320px;
+  min-height: 200px;
 }
 
 @media (max-width: 600px) {
   #pali-meaning-popup {
     width: calc(100vw - 16px);
     max-height: 85vh;
+    resize: none;
+    min-width: unset;
+    min-height: unset;
   }
 }
 
@@ -97,23 +104,44 @@ body {
 }
 
 .pm-header-row {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 8px 12px 0;
   flex-shrink: 0;
+  cursor: grab;
 }
 
 .pm-title-holder {
-  flex: 0 0 auto;
-  text-align: left;
-  padding-right: 8px;
+  /* centred over the whole header row regardless of how wide the
+     left-hand back button or right-hand credit/close controls are */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 200px);
+  text-align: center;
 }
+
+.pm-back-holder { flex: 0 0 auto; display: flex; align-items: center; gap: 4px; }
+
+.pm-back-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #be564d;
+  font-weight: 600;
+  font-size: 0.95em;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.pm-back-btn:hover { background-color: rgba(190, 86, 77, 0.12); }
 
 .pm-title {
   font-family: inherit;
   font-weight: 700;
   font-size: 1.17em;
-  text-align: left;
+  text-align: center;
   color: #be564d;
   margin-top: 0;
 }
