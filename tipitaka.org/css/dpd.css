@@ -75,12 +75,19 @@ body {
   display: none;
   z-index: 9999;
   box-sizing: border-box;
+  /* User-resizable — drag the bottom-right corner to customise size */
+  resize: both;
+  min-width: 320px;
+  min-height: 200px;
 }
 
 @media (max-width: 600px) {
   #pali-meaning-popup {
     width: calc(100vw - 16px);
     max-height: 85vh;
+    resize: none;
+    min-width: unset;
+    min-height: unset;
   }
 }
 
