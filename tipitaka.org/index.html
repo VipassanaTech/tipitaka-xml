@@ -9,7 +9,7 @@
     <!--Meta data for SEO and Social Media sharing-->
     <meta property="og:title" content="The Pali Tipitaka">
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="./images/dhamma-wheel.svg">
+    <meta property="og:image" content="./images/tipitaka_logo.svg">
     <meta property="og:url" content="http://tipitaka.org/index.shtml">
     <meta property="og:description" content="Digital reproduction of the authenticated Tipitaka texts from the Chaṭṭha Saṅgāyana">
     <meta property="og:site_name" content="The Pali Tipitaka">
@@ -18,7 +18,7 @@
     <meta name="twitter:image:alt" content="Rotating Dhamma Wheel">
     <meta name="twitter:title" content="The Pali Tipitaka">
     <meta name="twitter:description" content="Digital reproduction of the authenticated Tipitaka texts from the Chaṭṭha Saṅgāyana">
-    <meta name="twitter:image" content="./images/dhamma-wheel.svg">
+    <meta name="twitter:image" content="./images/tipitaka_logo.svg">
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -40,7 +40,7 @@
     <!-- Main Heading -->
     <div class="header">
         <div class="centered">
-            <img src="./images/dhamma-wheel.svg" class="wheel" alt="Dhamma wheel" />
+            <img src="./images/tipitaka_logo.svg" class="wheel" alt="Dhamma wheel" />
             <h1 class="display-3">Pāḷi Tipiṭaka</h1>
         </div>
         <hr class="hrstyle">  
@@ -130,6 +130,8 @@
 
         <p>This website provides a digital reproduction of the authenticated Tipitaka texts from the <a href="chattha.html">Chaṭṭha Saṅgāyana</a> CD published by the <a href="http://www.vridhamma.org/Home.aspx" target="_blank">Vipassana Research Institute</a>. Based at&nbsp;Dhamma Giri, Igatpuri, near Mumbai, India, the Vipassana Research Institute also&nbsp;publishes literature &amp; disseminates information related to <a href="http://www.vridhamma.org/VRI-Introduction" target="_blank">Vipassana&nbsp;Meditation Technique</a>&nbsp;as taught by <a href="http://www.vridhamma.org/Teachers-4.aspx" target="_blank">S.N.Goenka</a> in the tradition of <a target="_blank" href="http://www.vridhamma.org/Teachers-3.aspx">Sayagyi U Ba Khin</a>.<br> <br> 
         Vipassana is a universal, scientific method towards purifying the mind. It is the practical essence of the teachings of the Buddha, who taught Dhamma - the Universal Law of Nature.<br> <br>
+        We encourage the use of our digital library and resources for academic, personal, and monastic research. To ensure academic integrity and help others locate the exact resources you used, please <a href="help.html#cite"  target="_blank">cite</a> this website in your references or bibliography.
+        <br> <br>
         The Pāḷi Tipiṭaka is presented in many scripts so that the words of the Buddha are easily made available for all. Although all are in Unicode fonts, you may need to install some fonts and make some changes to your system to view the site correctly. </p> 
 
         <p><strong>Please read the <a href="help.html">help</a> page carefully for more information on setting up your system and also on how to use this site.</strong></p> 
@@ -148,6 +150,42 @@
         </footer>   
     </div>
 
+
+    <!-- New Feature Alert Modal -->
+    <div id="feature-alert-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:#fff8e7; color:#3a2500; border:2px solid #c8860a; border-radius:10px; max-width:480px; width:90%; padding:2rem 2rem 1.5rem; box-shadow:0 8px 32px rgba(0,0,0,0.35); position:relative; font-family:inherit;">
+            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem;">
+                <span style="font-size:1.5rem;">&#x1F514;</span>
+                <strong style="font-size:1.15rem; color:#8a5a00; letter-spacing:0.02em;">NEW FEATURE ALERT</strong>
+            </div>
+            <p style="margin:0 0 1.5rem; line-height:1.65; font-size:1rem;">
+                You can now look up the meaning of a Pali word by simply <strong>double clicking</strong> on it and its meaning will be displayed in a pop-up window, courtesy of <strong>Digital Pali Dictionary</strong>.
+            </p>
+            <div style="text-align:right;">
+                <button id="feature-alert-close" style="background:#c8860a; color:#fff; border:none; border-radius:5px; padding:0.5rem 1.4rem; font-size:0.95rem; cursor:pointer; font-family:inherit;">Got it!</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    (function() {
+        /* Modal disabled for now — remove the 'return' line below to re-enable */
+        return;
+        var MODAL_KEY = 'dpd_modal_seen';
+        var EXPIRY    = new Date('2026-06-13').getTime();
+        if (Date.now() < EXPIRY && !localStorage.getItem(MODAL_KEY)) {
+            var overlay = document.getElementById('feature-alert-overlay');
+            overlay.style.display = 'flex';
+            function dismissModal() {
+                overlay.style.display = 'none';
+                localStorage.setItem(MODAL_KEY, '1');
+            }
+            document.getElementById('feature-alert-close').addEventListener('click', dismissModal);
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) dismissModal();
+            });
+        }
+    })();
+    </script>
 
     <!-- body code goes here -->
     <script src="js/topnavscript.js"></script>
