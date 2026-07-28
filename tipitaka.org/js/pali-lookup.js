@@ -50,6 +50,17 @@
     // normalize a selected word by trimming surrounding punctuation
     function normalizeWord(word){
         if (!word) return '';
+        // Pali texts commonly mark the end of a quoted passage with a closing
+        // double-quote pair (e.g. ’’) immediately followed by a trailing
+        // grammatical particle such as "ti", e.g. "upapajjantī’’ti". That
+        // suffix isn't part of the word, so cut everything from the first
+        // such quote pair onward before trimming ordinary punctuation.
+        var quotePairIdx = word.search(/['’‘"“”]{2,}/);
+        // only treat this as a *trailing* closing-quote+particle if there's
+        // actual word content before it; a match at index 0 means the token
+        // begins with an *opening* quote pair (e.g. "‘‘Vipassī") which the
+        // generic leading-punctuation trim below already handles correctly.
+        if (quotePairIdx > 0) word = word.slice(0, quotePairIdx);
         try{ return word.replace(/^[^\p{L}]+|[^\p{L}]+$/gu,''); }catch(err){ return word.replace(/^[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+|[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+$/g,''); }
     }
 
@@ -108,6 +119,24 @@
             return nodes;
         }
 
+        // Search backwards from fromIndex for the nearest whitespace character
+        // (space, tab, newline, non-breaking space, etc.) rather than a literal
+        // ASCII space, so paragraph/element boundaries (which are often joined
+        // only by a newline text node) are correctly treated as word breaks.
+        function lastWhitespaceIndex(str, fromIndex){
+            for (var i = Math.min(fromIndex, str.length - 1); i >= 0; i--) {
+                if (/\s/.test(str.charAt(i))) return i;
+            }
+            return -1;
+        }
+
+        function firstWhitespaceIndex(str, fromIndex){
+            for (var i = Math.max(fromIndex, 0); i < str.length; i++) {
+                if (/\s/.test(str.charAt(i))) return i;
+            }
+            return -1;
+        }
+
         function expandSelectionToSpaces(){
             try {
                 var sel = window.getSelection();
@@ -139,9 +168,9 @@
                 var full = tnodes.map(function(nd){ return nd.textContent; }).join('');
                 globalIndex = Math.max(0, Math.min(full.length - 1, globalIndex));
 
-                var leftSpace  = full.lastIndexOf(' ', globalIndex - 1);
+                var leftSpace  = lastWhitespaceIndex(full, globalIndex - 1);
                 var startIdx   = (leftSpace  === -1) ? 0           : leftSpace + 1;
-                var rightSpace = full.indexOf(' ', globalIndex);
+                var rightSpace = firstWhitespaceIndex(full, globalIndex);
                 var endIdx     = (rightSpace === -1) ? full.length  : rightSpace;
 
                 var sNode = null, sOffset = 0, eNode = null, eOffset = 0, acc = 0;
@@ -193,7 +222,7 @@
         // prefetch/attach to any in-flight request, otherwise start a fetch
         prefetchPali(word)
         .then(function(json){ renderResult(word,json); })
-        .catch(function(err){ content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to fetch meaning.</div></div>'; try{ showPopup(); }catch(e){} console.error(err); });
+        .catch(function(err){ try{ setEditableTitle(word); }catch(e){} content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to fetch meaning.</div></div>'; try{ showPopup(); }catch(e){} console.error(err); });
     }
 
     function renderResult(word, json){
@@ -218,7 +247,7 @@
                 if (parts.length > 0) {
                     bodyHtml += '<div class="pm-body"><div class="dpd">' + parts.join('\n') + '</div></div>';
                     // place the title in the header title-holder and credit in the credit-holder
-                    try{ var th = popup.querySelector('.pm-title-holder'); if (th) th.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+                    try{ setEditableTitle(word); }catch(e){}
                     try{ var holder = popup.querySelector('.pm-credit-holder'); if (holder) holder.innerHTML = creditHtml; }catch(e){}
                     content.innerHTML = bodyHtml;
                     enhanceModal(content);
@@ -231,7 +260,7 @@
             // fallback for array-style responses
             if (!Array.isArray(json) || !json.length) {
                 bodyHtml += '<div class="pm-body"><div class="dpd"><div class="pm-section"><strong>No results</strong><div>No entries found.</div></div></div></div>';
-                try{ var th2 = popup.querySelector('.pm-title-holder'); if (th2) th2.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+                try{ setEditableTitle(word); }catch(e){}
                 try{ var holder2 = popup.querySelector('.pm-credit-holder'); if (holder2) holder2.innerHTML = creditHtml; }catch(e){}
                 content.innerHTML = bodyHtml;
                 enhanceModal(content);
@@ -274,7 +303,7 @@
             }
             bodyHtml += '</div></div>';
 
-            try{ var th3 = popup.querySelector('.pm-title-holder'); if (th3) th3.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+            try{ setEditableTitle(word); }catch(e){}
             try{ var holder3 = popup.querySelector('.pm-credit-holder'); if (holder3) holder3.innerHTML = creditHtml; }catch(e){}
             content.innerHTML = bodyHtml;
             enhanceModal(content);
@@ -283,6 +312,26 @@
     }
 
     function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    // Render the popup title as an editable text field pre-filled with `word`.
+    // Pressing Enter re-triggers a lookup for whatever the user typed, updating
+    // the same modal in place.
+    function setEditableTitle(word){
+        var th = popup.querySelector('.pm-title-holder');
+        if (!th) return;
+        th.innerHTML = '<input type="text" class="pm-title pm-title-input" value="' + escapeHtml(word) + '" spellcheck="false" autocomplete="off" autocapitalize="off" />';
+        var input = th.querySelector('.pm-title-input');
+        if (!input) return;
+        function resize(){ input.style.width = Math.max(3, input.value.length + 1) + 'ch'; }
+        resize();
+        input.addEventListener('input', resize);
+        input.addEventListener('keydown', function(ev){
+            if (ev.key !== 'Enter') return;
+            ev.preventDefault();
+            var newWord = normalizeWord(input.value.trim());
+            if (newWord) lookupPali(newWord);
+        });
+    }
 
     // Post-process the injected dpd HTML to tweak presentation
     function enhanceModal(contentEl){
