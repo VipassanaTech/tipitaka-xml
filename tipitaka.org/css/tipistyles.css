@@ -307,7 +307,12 @@ h5,
 /*---- Reponsive behaviour CSS -----*/
 
 /*--------- iPad models ----------- */
-@media screen and (max-width: 767px) {
+/* Covers phones (<=767px), portrait-oriented tablets up to 1024px CSS
+   width, and touch devices (no hover, coarse pointer) up to 1366px
+   width (tablets in landscape, e.g. iPad Pro 12.9"). */
+@media screen and (max-width: 767px),
+       screen and (orientation: portrait) and (max-width: 1024px),
+       screen and (hover: none) and (pointer: coarse) and (max-width: 1366px) {
     .topnav a.icon {
     float: right;
     display: block;
@@ -327,7 +332,10 @@ h5,
         height: 80%;
         max-height: 80px;
     }
-    
+}
+
+/* Phone-specific body width — NOT applied to tablets */
+@media screen and (max-width: 767px) {
     body {
         padding: 30px 0 0 0;
         width: 70%;
@@ -338,8 +346,10 @@ h5,
     }
 }
     
-@media screen and (max-width: 767px) {
-    .topnav a:not(:first-child) {
+@media screen and (max-width: 767px),
+       screen and (orientation: portrait) and (max-width: 1024px),
+       screen and (hover: none) and (pointer: coarse) and (max-width: 1366px) {
+    .topnav a:not(:first-child):not(.icon) {
         display: none;
     }
 
