@@ -338,10 +338,10 @@
                 return;
             }
             renderBookmarkDropdown();
-            var offset = $icon.offset();
+            var rect = $icon[0].getBoundingClientRect();
             $dd.css({
-                top: offset.top + $icon.outerHeight(),
-                right: $(window).width() - offset.left - $icon.outerWidth()
+                top: rect.bottom,
+                right: $(window).width() - rect.right
             }).show();
         });
 
