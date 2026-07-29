@@ -59,7 +59,7 @@
             html += '<div class="tp-bm-row">';
             html += '<a href="#" class="tp-bm-remove" data-href="' + escapeHtml(b.href) + '" title="Remove bookmark"><i class="fa fa-star tp-bm-starred"></i></a>';
             var bmLabel = escapeHtml(b.title);
-            html += '<a href="#" class="tp-bm-open" data-href="' + escapeHtml(b.href) + '" data-id="' + escapeHtml(b.id || '') + '" data-section="' + escapeHtml(b.sectionId || '') + '">' + bmLabel + '</a>';
+            html += '<a href="#" class="tp-bm-open" data-href="' + escapeHtml(b.href) + '" data-id="' + escapeHtml(b.id || '') + '" data-section="' + escapeHtml(b.sectionId || '') + '" data-folder="' + escapeHtml(b.folder || '') + '">' + bmLabel + '</a>';
             html += '</div>';
         });
         $dd.html(html);
@@ -109,13 +109,30 @@
         }, 100);
     }
 
+    // ───── Helper: detect script folder from URL path ─────
+    function getScriptFolder() {
+        try {
+            var p = window.location.pathname || '/';
+            var folders = ['deva', 'romn', 'beng', 'cyrl', 'gujr', 'guru', 'khmr', 'knda', 'mlym', 'mymr', 'sinh', 'taml', 'telu', 'thai', 'tibt'];
+            for (var i = 0; i < folders.length; i++) {
+                var f = folders[i];
+                if (p.indexOf('/' + f + '/') !== -1 || p === '/' + f || p.indexOf('/' + f) === 0) {
+                    return f;
+                }
+            }
+            // Fallback: first path segment
+            var parts = p.replace(/^\//, '').split('/');
+            return parts[0] || '';
+        } catch (e) { return ''; }
+    }
+
     // ───── Initialisation ─────
     $(document).ready(function () {
-        // Ensure external tpsearch stylesheet is loaded
-        if (!document.querySelector('link[href*="tpsearch.css"]')) {
+        // Ensure external bookmark stylesheet is loaded
+        if (!document.querySelector('link[href*="bookmark.css"]')) {
             var link = document.createElement('link');
             link.rel = 'stylesheet';
-            link.href = '/css/tpsearch.css';
+            link.href = '/css/bookmark.css';
             document.head.appendChild(link);
         }
 
@@ -213,7 +230,7 @@
                 var $cont = $tContent || $('#t-content');
                 if (!$cont || !$cont.length) return;
                 var bookmarks = loadBookmarks();
-                $cont.find('.subhead, [rend="subhead"]').each(function (idx) {
+                $cont.find('.subhead, [rend="subhead"], .title, [rend="title"], .chapter, [rend="chapter"]').each(function (idx) {
                     var $h = $(this);
                     if ($h.find('.tp-subhead-bm').length) return;
                     var hid = $h.attr('id');
@@ -226,20 +243,17 @@
                         hid = probe;
                         $h.attr('id', hid);
                     }
-                    var path = (window.location.pathname || '').replace(/^\//, '');
-                    var href = path + '#' + hid;
+                    var path = (getScriptFolder() ? getScriptFolder() + '/' : '');
                     var title = ($h.text() || '').trim();
                     var $a = $('<a href="#" class="tp-bookmark-toggle tp-subhead-bm" />');
-                    $a.attr('data-href', href);
                     var _pageTreeId = '';
                     try {
-                        var _currPath = (window.location.pathname || '').replace(/^\//, '');
-                        _pageTreeId = (_treeHrefToId && (_treeHrefToId[_currPath] || _treeHrefToId[_currPath.split('/').pop()])) || '';
-                        if (!_pageTreeId) {
-                            var _hashMatch = (window.location.hash || '').match(/^#(\d+)$/);
-                            if (_hashMatch) _pageTreeId = _hashMatch[1];
-                        }
+                        var _hashMatch = (window.location.hash || '').match(/^#(\d+)$/);
+                        if (_hashMatch) _pageTreeId = _hashMatch[1];
                     } catch (e3) {}
+                    // Embed page ID in the href so bookmarks are inherently page-specific
+                    var href = path + '#' + (_pageTreeId ? _pageTreeId + '/' : '') + hid;
+                    $a.attr('data-href', href);
                     $a.attr('data-id', _pageTreeId);
                     $a.attr('data-section', hid);
                     $a.attr('data-title', title);
@@ -247,13 +261,17 @@
                     $a.attr('aria-label', 'Bookmark this section');
                     $a.html('<i class="fa fa-star-o" aria-hidden="true"></i>');
                     $h.append('\u00A0').append($a);
+                    // Match against saved bookmarks — href now includes page ID, so
+                    // cross-page false matches are impossible
                     for (var bi = 0; bi < bookmarks.length; bi++) {
                         var bb = bookmarks[bi] || {};
                         var bh = (bb.href || '');
-                        var bhNorm = bh.replace(/^\//, '');
-                        var hrefNorm = href.replace(/^\//, '');
-                        var bhTail = (bh || '').split('/').pop();
-                        if (bh === href || bhNorm === hrefNorm || bhTail === hrefNorm || bh === ('#' + hid)) {
+                        if (bh === href) {
+                            $a.find('i').removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
+                            break;
+                        }
+                        // Backward compat: old bookmarks used "folder/#hid" (no page ID)
+                        if (bh === path + '#' + hid) {
                             $a.find('i').removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
                             break;
                         }
@@ -274,6 +292,14 @@
                 mo.observe(contNode, { childList: true, subtree: true });
             }
         } catch (e) { /* ignore observer failures */ }
+
+        // Also re-run after the tree navigates to a new page (redundant with MO, but ensures
+        // stars are injected even if the MutationObserver has a lifecycle issue)
+        try {
+            $(document).on('changed.jstree', '#tree', function () {
+                setTimeout(function () { insertSubheadBookmarkIcons(); }, 800);
+            });
+        } catch (e) { /* ignore */ }
 
         // run once at init
         insertSubheadBookmarkIcons();
@@ -310,13 +336,18 @@
             var sectionId = $a.data('section') || '';
             var bms = loadBookmarks();
             var idx = -1;
-            for (var i = 0; i < bms.length; i++) { if (bms[i].href === href) { idx = i; break; } }
+            for (var i = 0; i < bms.length; i++) {
+                if (bms[i].href === href) {
+                    idx = i;
+                    break;
+                }
+            }
             var $icon = $a.find('i');
             if (idx >= 0) {
                 bms.splice(idx, 1);
                 $icon.removeClass('fa-star tp-bm-starred').addClass('fa-star-o');
             } else {
-                bms.push({ href: href, id: id, title: title, query: '', isDeva: 0, sectionId: sectionId });
+                bms.push({ href: href, id: id, title: title, query: '', isDeva: 0, sectionId: sectionId, folder: getScriptFolder() });
                 $icon.removeClass('fa-star-o').addClass('fa-star tp-bm-starred');
             }
             saveBookmarks(bms);
@@ -379,6 +410,7 @@
             $('#tp-bookmark-dropdown').hide();
             var href = $(this).data('href') || '';
             var id = $(this).data('id') || '';
+            var folder = $(this).data('folder') || '';
             var _pageBase = window.location.href.replace(/[^/]*$/, '');
             var bmSectionId = $(this).data('section') || '';
 
@@ -403,14 +435,155 @@
             };
 
             var openBookmarkTarget = function(finalId) {
-                // Write section id so the new tab can scroll to the bookmarked subheading.
-                if (bmSectionId) {
-                    try { localStorage.setItem('tpsearch-newtab-section', bmSectionId); } catch (err) {}
-                } else {
-                    try { localStorage.removeItem('tpsearch-newtab-section'); } catch (err) {}
+                // Remove any existing floating viewer
+                $('#tp-floating-viewer, #tp-floating-backdrop').remove();
+
+                // Determine the content URL from the tree node ID
+                var lnk = '';
+                try {
+                    if (finalId) {
+                        lnk = $('#' + finalId + '_anchor').attr('href') || '';
+                    }
+                } catch (e) {}
+
+                if (!lnk) {
+                    // Fallback: try to resolve from the bookmark href
+                    try {
+                        var fallbackUrl = _pageBase + 'index.html' + (finalId ? '#' + finalId : '');
+                        // Load index page with hash as a last resort
+                        lnk = fallbackUrl;
+                    } catch (e) {}
                 }
-                var targetUrl = finalId ? (_pageBase + 'index.html#' + finalId) : (_pageBase + href.replace(/^\//, ''));
-                if (targetUrl) window.open(targetUrl, '_blank');
+
+                if (!lnk) return;
+
+                // Floating viewer backdrop
+                $('body').append(
+                    '<div id="tp-floating-backdrop" class="tp-floating-backdrop"></div>'
+                );
+
+                // Floating viewer container
+                var $viewer = $(
+                    '<div id="tp-floating-viewer" class="tp-floating-viewer">' +
+                        '<div class="tp-floating-header">' +
+                            '<span id="tp-floating-open-link" class="tp-floating-open-link" title="Open this page in the main window">Open page directly</span>' +
+                            '<button id="tp-floating-close" class="tp-floating-close" title="Close">&times;</button>' +
+                        '</div>' +
+                        '<div id="tp-floating-content" class="tp-floating-content"></div>' +
+                        '<div class="tp-floating-resize-handle" title="Drag to resize"></div>' +
+                    '</div>'
+                );
+                $('body').append($viewer);
+
+                // Close handlers
+                $('#tp-floating-close, #tp-floating-backdrop').on('click', function () {
+                    $('#tp-floating-viewer, #tp-floating-backdrop').remove();
+                });
+
+                // "Open page directly" link — navigate main window to the bookmarked page
+                $('#tp-floating-open-link').on('click', function () {
+                    var targetUrl = '';
+                    if (folder && finalId) {
+                        // Extract the path prefix before the script folder
+                        var p = window.location.pathname || '/';
+                        var folderIdx = p.indexOf('/' + folder + '/');
+                        var basePath = folderIdx !== -1 ? p.substring(0, folderIdx) : '';
+                        // Add a cache-buster to force full page reload (not just hash update)
+                        targetUrl = window.location.origin + basePath + '/' + folder + '/?t=' + Date.now() + '#' + finalId;
+                    }
+                    if (targetUrl) {
+                        $('#tp-floating-viewer, #tp-floating-backdrop').remove();
+                        window.location.href = targetUrl;
+                    }
+                });
+
+                // ── Dragging (mouse + touch) ──
+                var $viewerElem = $('#tp-floating-viewer');
+                var $header = $viewerElem.find('.tp-floating-header');
+                var dragState = null;
+
+                function getPointerPos(e) {
+                    if (e.originalEvent && e.originalEvent.touches) {
+                        return { x: e.originalEvent.touches[0].clientX, y: e.originalEvent.touches[0].clientY };
+                    }
+                    return { x: e.clientX, y: e.clientY };
+                }
+
+                function startDrag(e) {
+                    if ($(e.target).closest('.tp-floating-close').length) return;
+                    var pos = getPointerPos(e);
+                    dragState = {
+                        startX: pos.x,
+                        startY: pos.y,
+                        startTop: $viewerElem.offset().top,
+                        startLeft: $viewerElem.offset().left
+                    };
+                    $viewerElem.css({ top: dragState.startTop, left: dragState.startLeft,
+                                      width: $viewerElem.outerWidth(), height: $viewerElem.outerHeight() });
+                    $(document).on('mousemove.drag touchmove.drag', function (ev) {
+                        if (!dragState) return;
+                        var p = getPointerPos(ev);
+                        var dx = p.x - dragState.startX;
+                        var dy = p.y - dragState.startY;
+                        $viewerElem.css({ top: dragState.startTop + dy, left: dragState.startLeft + dx });
+                    });
+                    $(document).on('mouseup.drag touchend.drag touchcancel.drag', function () {
+                        dragState = null;
+                        $(document).off('mousemove.drag touchmove.drag mouseup.drag touchend.drag touchcancel.drag');
+                    });
+                }
+
+                $header.on('mousedown touchstart', function (e) {
+                    startDrag(e);
+                });
+
+                // ── Resizing (mouse + touch) ──
+                var $resizeHandle = $viewerElem.find('.tp-floating-resize-handle');
+                var resizeState = null;
+
+                function startResize(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var pos = getPointerPos(e);
+                    resizeState = {
+                        startX: pos.x,
+                        startY: pos.y,
+                        startW: $viewerElem.outerWidth(),
+                        startH: $viewerElem.outerHeight()
+                    };
+                    $(document).on('mousemove.resize touchmove.resize', function (ev) {
+                        if (!resizeState) return;
+                        var p = getPointerPos(ev);
+                        var dx = p.x - resizeState.startX;
+                        var dy = p.y - resizeState.startY;
+                        var newW = Math.max(300, resizeState.startW + dx);
+                        var newH = Math.max(200, resizeState.startH + dy);
+                        $viewerElem.css({ width: newW, height: newH });
+                    });
+                    $(document).on('mouseup.resize touchend.resize touchcancel.resize', function () {
+                        resizeState = null;
+                        $(document).off('mousemove.resize touchmove.resize mouseup.resize touchend.resize touchcancel.resize');
+                    });
+                }
+
+                $resizeHandle.on('mousedown touchstart', function (e) {
+                    startResize(e);
+                });
+
+                // Load the content
+                $('#tp-floating-content').load(lnk, function () {
+                    // Scroll to the bookmarked section if available
+                    if (bmSectionId) {
+                        var $target = $('#' + bmSectionId);
+                        if ($target.length) {
+                            var contentTop = $('#tp-floating-content').offset().top;
+                            var targetTop = $target.offset().top;
+                            $('#tp-floating-content').animate({
+                                scrollTop: targetTop - contentTop + $('#tp-floating-content').scrollTop() - 20
+                            }, 300);
+                        }
+                    }
+                });
             };
 
             if (!id && href) {

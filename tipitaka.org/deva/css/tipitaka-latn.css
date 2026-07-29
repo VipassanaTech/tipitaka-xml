@@ -124,9 +124,9 @@ body {
 
     .nikaya { font-size: 24pt; text-align:center; font-weight: bold;}
 
-    .title { font-size: 12pt; text-align:center; font-weight: bold;}
+    .title { font-size: 12pt; text-align:center; font-weight: bold; margin-top: 0.8em;}
 
-    .subhead { font-size: 12pt; text-align:center; font-weight: bold;}
+    .subhead { font-size: 12pt; text-align:center; font-weight: bold; margin-top: 0.8em;}
 
     .subsubhead { font-size: 12pt; text-align:center; font-weight: bold;}
 
@@ -163,9 +163,9 @@ body {
 
     p[rend="bodytext"] { font-size: 12pt; text-indent: 2em;}
 
-    p[rend="title"] { font-size: 16pt; text-align:center; font-weight: bold;}
+    p[rend="title"] { font-size: 16pt; text-align:center; font-weight: bold; margin-top: 0.8em;}
 
-    p[rend="subhead"] { font-size: 16pt; text-align:center; font-weight: bold;}
+    p[rend="subhead"] { font-size: 16pt; text-align:center; font-weight: bold; margin-top: 0.8em;}
 
     p[rend="subsubhead"] { font-size: 14pt; text-align:center; font-weight: bold;}
 
