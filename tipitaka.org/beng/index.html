@@ -6,30 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
         
     <!-- Stylesheet for showing hamburger icon in mobile mode -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Stylesheet for Tree site -->
-    <link rel="stylesheet" href="./css/tipitaka-latn.css" />
+	<link rel="stylesheet" href="./css/tipitaka-latn.css" />
 
     <!-- Stylesheet for Top Nav bar -->
     <link href="../css/tipistyles.css" rel="stylesheet">    
 
     <title>CSCD Tipiṭaka (Bengali)</title>  
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
 
     <!-- Tree display code-->
-    <script>
-        function scrollToTop() { 
-           window.scrollTo(0, 0); 
-        }
-    
-        $(document).ready(function(){
-        var jtree = $('#tree').jstree({
+	<script>
+		function scrollToTop() { 
+		   window.scrollTo(0, 0); 
+		}
+	
+		$(document).ready(function(){
+		var jtree = $('#tree').jstree({
             'plugins': ['types'], // Enable the types plugin
             'core' : {
                 'data' : {'url': 'tree.json'},
@@ -48,19 +49,19 @@
                 }
             },
             'check_callback': true, // Enable custom callbacks for modifying the tree behavior
-        }).ready(function(){
-            var nid = window.location.hash.substr(1);
-            if (nid)
-            {
-                setTimeout(
-                  function() 
-                  {
-                    t = $("#tree").jstree(true); 
-                    t.deselect_all();
-                    t.select_node(nid);
-                  }, 1000);
-            }
-        });
+		}).ready(function(){
+			var nid = window.location.hash.substr(1);
+			if (nid)
+			{
+				setTimeout(
+				  function() 
+				  {
+					t = $("#tree").jstree(true); 
+					t.deselect_all();
+					t.select_node(nid);
+				  }, 1000);
+			}
+		});
 
         // Custom callback for determining valid children for nodes
         jtree.on('check_callback', function(operation, node, node_parent, node_position, more) {
@@ -87,29 +88,30 @@
             });
             
         });
-    
-        $('#tree')
-            .on("changed.jstree", function (e, data) {
-                if(data.selected.length) {
-                    var s = data.instance.get_node(data.selected[0]).id;
+	
+		$('#tree')
+			.on("changed.jstree", function (e, data) {
+				if(data.selected.length) {
+					var s = data.instance.get_node(data.selected[0]).id;
                     //var lnk = $( s+"_anchor").attr('href');    
                     var lnk = $( "#"+s+"_anchor").attr('href');
-                    //alert('The selected node is: ' + lnk);
+					//alert('The selected node is: ' + lnk);
                     var cleanPath = window.location.pathname.replace(/\/index\.html$/i, '/') + '#' + s;
                     if (lnk != '#')  // leaf so shows the content
-                    {
-                        history.replaceState(null, null, cleanPath);
-                        $("#t-content").load(lnk);
-                        xrefUpdate(lnk);
-                        if (window.innerWidth > 768) {
-                            setTimeout(
-                              function() 
-                              {
-                                $("html").animate({scrollTop:01}, 00);
-                                    return false;
-                              }, 0);
-                        }
-                    }
+					{
+						history.replaceState(null, null, cleanPath);
+						$("#t-content").load(lnk);
+					xrefUpdate(lnk);
+						$("#t-content").load(lnk, function(){ xrefUpdate(lnk); });
+						if (window.innerWidth > 768) {
+							setTimeout(
+							  function() 
+							  {
+								$("html").animate({scrollTop:01}, 00);
+									return false;
+							  }, 0);
+						}
+					}
                     else
                     // toggle nodes: close if already open (and close descendants), otherwise open
                     {
@@ -132,16 +134,16 @@
                             t.open_node(nid,false,false);
                         }
                     }
-                }
-            })
-            .on("open_node.jstree", function (e, data) {
-                data.instance.set_icon(data.node, "../images/openfolder.png");
-            })
-            .on("close_node.jstree", function (e, data) {
-                data.instance.set_icon(data.node, "../images/folder.png");
-            })
-        });
-    </script>
+				}
+			})
+			.on("open_node.jstree", function (e, data) {
+				data.instance.set_icon(data.node, "../images/openfolder.png");
+			})
+			.on("close_node.jstree", function (e, data) {
+				data.instance.set_icon(data.node, "../images/folder.png");
+			})
+		});
+	</script>
 
 
 <style>
@@ -282,9 +284,7 @@ $(document).ready(function () {
         <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
         <!-- Cross-reference buttons: Mūla (MU), Aṭṭhakathā (AT) and Ṭīkā (TK) -->
-        <button id="xref-mul-btn" class="xref-btn" title="View Mūla (Root text)"          onclick="openXref('mul')">MU</button>
-        <button id="xref-att-btn" class="xref-btn" title="View Aṭṭhakathā (Commentary)"  onclick="openXref('att')">AT</button>
-        <button id="xref-tik-btn" class="xref-btn" title="View Ṭīkā (Sub-commentary)"    onclick="openXref('tik')">TK</button>
+
         
         <div class="bodycontainer" id="bodycontainer">
             <div class="sidebar" id="tree"></div>

@@ -20,7 +20,8 @@
     <link href="../css/tipistyles.css" rel="stylesheet">    
 
     <title>CSCD Tipiṭaka (Telugu)</title>  
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+
 
     <!-- Tree display code-->
 	<script>
@@ -101,6 +102,7 @@
 						history.replaceState(null, null, cleanPath);
 						$("#t-content").load(lnk);
 					xrefUpdate(lnk);
+						$("#t-content").load(lnk, function(){ xrefUpdate(lnk); });
 						if (window.innerWidth > 768) {
 							setTimeout(
 							  function() 
@@ -214,6 +216,7 @@ $(document).ready(function () {
         $toggle.show();
     });
 
+    // Hide/show toggle button based on scroll position (mobile only)
     $(window).on('scroll', function () {
         if (window.innerWidth <= 768 && !$tree.hasClass('visible')) {
             var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
@@ -255,6 +258,7 @@ $(document).ready(function () {
 </head>    
 
 <body> 
+    <!-- Toggle button for navigation tree (mobile only) -->
     <div id="nav-toggle" class="nav-toggle">
         <i class="fa fa-arrow-right"></i>
     </div>
@@ -280,9 +284,7 @@ $(document).ready(function () {
         <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
         <!-- Cross-reference buttons: Mūla (MU), Aṭṭhakathā (AT) and Ṭīkā (TK) -->
-        <button id="xref-mul-btn" class="xref-btn" title="View Mūla (Root text)"          onclick="openXref('mul')">MU</button>
-        <button id="xref-att-btn" class="xref-btn" title="View Aṭṭhakathā (Commentary)"  onclick="openXref('att')">AT</button>
-        <button id="xref-tik-btn" class="xref-btn" title="View Ṭīkā (Sub-commentary)"    onclick="openXref('tik')">TK</button>
+
         
         <div class="bodycontainer" id="bodycontainer">
             <div class="sidebar" id="tree"></div>
