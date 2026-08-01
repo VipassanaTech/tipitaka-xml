@@ -143,6 +143,17 @@
 			})
 			.on("open_node.jstree", function (e, data) {
 				data.instance.set_icon(data.node, "../images/openfolder.png");
+				// Accordion: close sibling nodes so only one branch is open per level
+				var tree = data.instance;
+				var parentId = tree.get_parent(data.node);
+				if (parentId && parentId !== '#') {
+					var siblings = tree.get_node(parentId).children;
+					$(siblings).each(function(i, childId) {
+						if (childId !== data.node.id && tree.is_open(childId)) {
+							tree.close_node(childId);
+						}
+					});
+				}
 			})
 			.on("close_node.jstree", function (e, data) {
 				data.instance.set_icon(data.node, "../images/folder.png");
@@ -402,7 +413,7 @@ $(document).ready(function () {
     <script defer src="../js/topnavscript.js"></script>
     <script defer src="../js/feature-banner.js"></script>    
     <script defer src="../js/pali-lookup.js"></script>
-    <script src="../js/toc.js"></script>
+    <script defer src="../js/toc.js"></script>
     
     
 </body>
