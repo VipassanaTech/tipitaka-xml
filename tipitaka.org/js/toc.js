@@ -1,24 +1,37 @@
 // tipitaka.org ToC (Table of Contents) functionality
 // Shows sutta count badges on tree leaf nodes and a popup modal with sutta list
 
-// Detect script folder from URL (e.g. /romn/index.html → romn)
+// Detect script folder from URL (e.g. /deva/index.html → deva)
 var _tocScriptDir = (function() {
-    var parts = window.location.pathname.replace(/\/index\.html$/, '').split('/');
+    var path = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
+    var parts = path.split('/');
     return parts[parts.length - 1] || 'romn';
 })();
 
 // Load sutta counts data (per-script file)
 var suttaCounts = {};
+var _tocDataReady = false;
 $.getJSON('./' + _tocScriptDir + '_subheads.json', function(data) {
     suttaCounts = data;
+    _tocDataReady = true;
+    addTocToggles();
 }).fail(function() {
     console.log(_tocScriptDir + '_subheads.json not loaded');
 });
 
 // Add ToC toggle icons to all visible leaf nodes (only when count > 1)
 function addTocToggles() {
+    // Wait until data is loaded
+    if (!_tocDataReady) {
+        setTimeout(addTocToggles, 200);
+        return;
+    }
     var tree = $('#tree').jstree(true);
-    if (!tree) return;
+    // Wait until tree is initialized
+    if (!tree) {
+        setTimeout(addTocToggles, 200);
+        return;
+    }
     var allNodes = tree.get_json('#', { flat: true });
     $(allNodes).each(function(i, node) {
         if (node.type === 'leaf' && node.id && suttaCounts[node.id] !== undefined) {
@@ -53,7 +66,7 @@ function showTocModal($toggle, subheads, nodeId) {
 
     $modal.data('node-id', nodeId || '');
 
-    $title.text('Suttas (' + subheads.length + ')');
+    $title.text('Sections (' + subheads.length + ')');
     $list.empty();
 
     if (subheads.length === 0) {
@@ -67,10 +80,14 @@ function showTocModal($toggle, subheads, nodeId) {
     }
 
     var offset = $toggle.offset();
-    var toggleWidth = $toggle.outerWidth();
+    var sidebarOffset = $('#tree').offset();
+    var sidebarWidth = $('#tree').width();
+    var sidebarRight = sidebarOffset.left + sidebarWidth;
+    var modalWidth = Math.min(350, sidebarWidth - 10);
     $modal.css({
         top: (offset.top + 20) + 'px',
-        left: Math.min(offset.left + toggleWidth + 5, $(window).width() - 360) + 'px'
+        left: Math.max(5, sidebarRight - modalWidth - 5) + 'px',
+        maxWidth: modalWidth + 'px'
     });
 
     $('#toc-overlay').show();
@@ -99,13 +116,12 @@ function findSubheadByText(text) {
 // Scroll to a subhead element and highlight it
 function scrollToSubhead($el) {
     if (!$el.length) return;
-    // Ensure it has an ID for the scroll
     if (!$el.attr('id')) {
         $el.attr('id', 'subhead-' + Date.now());
     }
-    $('html, body').animate({
-        scrollTop: $el.offset().top - 80
-    }, 300);
+    var $content = $('#t-content');
+    var scrollTarget = $el.offset().top - $content.offset().top + $content.scrollTop() - 20;
+    $content.animate({ scrollTop: scrollTarget }, 300);
     $el.css({backgroundColor: '#fff3cd'});
     setTimeout(function() {
         $el.css({backgroundColor: ''});
