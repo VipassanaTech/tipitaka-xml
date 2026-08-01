@@ -270,7 +270,7 @@ $(document).ready(function () {
         <!-- Main Heading -->
         <div class="header">
             <div class="centered">
-                <img src="../images/dhamma-wheel.svg" class="wheel" alt="Dhamma wheel" />
+                <img src="../images/tipitaka_logo.svg" class="wheel" alt="Dhamma wheel" />
                 <h1 class="display-3">Pāḷi Tipiṭaka</h1>
             </div>
             <hr class="hrstyle">  
@@ -389,11 +389,103 @@ $(document).ready(function () {
     </script>
     
 
+        <!-- Page footer -->
+        <div class="container">
+            <footer>
+            </footer>   
+        </div>
+    </div>
+
+    <!-- body code goes here -->  
+    <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+            x.className += " responsive";
+            } else {
+            x.className = "topnav";
+            }
+        }
+    </script>   
+
+    <!-- Return to Top button code-->
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("myBtn");
+        
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+        
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+    <!--Resizable splitter code-->
+    <script>
+        window.addEventListener("DOMContentLoaded", function() {
+            var separator = document.getElementById("separator");
+            var sidebar = document.getElementById("tree");
+            var container = document.getElementById("bodycontainer");
+    
+            // Check screen width to determine whether to use mouse or touch events
+            var isMobile = window.innerWidth <= 768;
+    
+            if (isMobile) {
+                separator.addEventListener("touchstart", function(e) {
+                    e.preventDefault();
+                    var touch = e.touches[0];
+                    separator.addEventListener("touchmove", resizeSidebar);
+                    separator.addEventListener("touchend", stopResizeSidebar);
+                });
+            } else {
+                separator.addEventListener("mousedown", function(e) {
+                    e.preventDefault();
+                    document.addEventListener("mousemove", resizeSidebar);
+                    document.addEventListener("mouseup", stopResizeSidebar);
+                });
+            }
+    
+            function showhideseparator() {
+                if (separator.length < 5) {
+                    separator.style.display = "none";
+                } else {
+                    separator.style.display = "block";
+                }
+            }
+    
+            function resizeSidebar(e) {
+                var xPosition = isMobile ? e.touches[0].clientX : e.clientX;
+                var sidebarWidth = xPosition - container.offsetLeft;
+                sidebar.style.width = sidebarWidth + "px";
+            }
+    
+            function stopResizeSidebar() {
+                if (isMobile) {
+                    separator.removeEventListener("touchmove", resizeSidebar);
+                    separator.removeEventListener("touchend", stopResizeSidebar);
+                } else {
+                    document.removeEventListener("mousemove", resizeSidebar);
+                    document.removeEventListener("mouseup", stopResizeSidebar);
+                }
+            }
+        });
+    </script>
+    
     <script defer src="../js/xref.js"></script>
-    <script defer src="../js/topnavscript.js"></script>    
-         
-</body>
-</html>
+    <script defer src="../js/topnavscript.js"></script>
+    <script defer src="../js/feature-banner.js"></script>    
+    <script defer src="../js/pali-lookup.js"></script>
          
 </body>
 </html>
