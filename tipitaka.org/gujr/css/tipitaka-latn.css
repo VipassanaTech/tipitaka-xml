@@ -21,8 +21,9 @@ body {
     /* Style for the container */
     .bodycontainer {
         display: flex;
-
-        }
+        height: calc(100vh - 160px); /* independent scroll: sidebar + content fill viewport */
+        overflow: hidden;
+    }
 
     /* -- flex wrapper for footer so it always stays at the foot of the page regardless of content length -- */
     .flex-wrapper {
@@ -35,28 +36,31 @@ body {
     /* Style for the sidebar container */
     .sidebar {
         width: 27%; /* Default width */
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
         padding-top: 0px;
         vertical-align: top;
         resize: horizontal; /* Enable horizontal resizing */
-        
-        }
+        height: 100%;
+    }
 
     /* Style for the separator */
     .separator {
         width: 10px;
         cursor: ew-resize; /* Horizontal resize cursor */
         background-color: #ddd;
-        }
+        height: 100%;
+    }
 
     /* Style for the page content */
     .content {
         flex: 1; /* Fill remaining space */
         padding-left: 16px;
         padding-right: 16px;
-        overflow: auto;
-        align-self: stretch; /* Add this line */
-        }
+        overflow-y: auto;
+        overflow-x: auto;
+        height: 100%;
+    }
 
 
     /* Return to Top button */
@@ -96,11 +100,6 @@ body {
 
     .bld {font-weight: bold; }
     .paranum {font-weight: bold; }
-
-    .jstree-anchor{
-        padding-top: 2px;
-        padding-bottom: 0px;
-    }
 
     p {
     border-top: 0in; border-bottom: 0in;

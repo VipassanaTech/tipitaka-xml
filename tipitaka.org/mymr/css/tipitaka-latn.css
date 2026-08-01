@@ -21,8 +21,9 @@ body {
     /* Style for the container */
     .bodycontainer {
         display: flex;
-
-        }
+        height: calc(100vh - 160px); /* independent scroll: sidebar + content fill viewport */
+        overflow: hidden;
+    }
 
     /* -- flex wrapper for footer so it always stays at the foot of the page regardless of content length -- */
     .flex-wrapper {
@@ -35,28 +36,31 @@ body {
     /* Style for the sidebar container */
     .sidebar {
         width: 27%; /* Default width */
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
         padding-top: 0px;
         vertical-align: top;
         resize: horizontal; /* Enable horizontal resizing */
-        
-        }
+        height: 100%;
+    }
 
     /* Style for the separator */
     .separator {
         width: 10px;
         cursor: ew-resize; /* Horizontal resize cursor */
         background-color: #ddd;
-        }
+        height: 100%;
+    }
 
     /* Style for the page content */
     .content {
         flex: 1; /* Fill remaining space */
         padding-left: 16px;
         padding-right: 16px;
-        overflow: auto;
-        align-self: stretch; /* Add this line */
-        }
+        overflow-y: auto;
+        overflow-x: auto;
+        height: 100%;
+    }
 
 
     /* Return to Top button */
@@ -97,23 +101,17 @@ body {
     .bld {font-weight: bold; }
     .paranum {font-weight: bold; }
 
-    .jstree-anchor{
-        padding-top: 4px;
-        padding-bottom: 4px;
-    }
-
     p {
     border-top: 0in; border-bottom: 0in;
     padding-top: 0in; padding-bottom: 0in;
     margin-top: 0in; margin-bottom: 0.5cm;
-    line-height: 1.9;
     }
 
     .bold { font-weight: bold; }
 
     .indent { font-size: 12pt; text-indent: 2em; margin-left: 3em;}
 
-    .bodytext { font-size:12pt; text-indent: 2em;}
+    .bodytext { font-size: 12pt; text-indent: 2em;}
 
     .hangnum { font-size: 12pt; margin-bottom: -0.75cm; text-indent: 2em;}
 
@@ -137,16 +135,16 @@ body {
     .subsubhead { font-size: 12pt; text-align:center; font-weight: bold;}
 
     /* Gatha line 1 */
-    .gatha1 { font-size: 12pt; margin-bottom: 0em;margin-left: 4.4em;}
+    .gatha1 { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
 
     /* Gatha line 2 */
-    .gatha2 { font-size: 12pt; margin-bottom: 0em; margin-left: 4.4em;}
+    .gatha2 { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
 
     /* Gatha line 3 */
-    .gatha3 { font-size: 12pt; margin-bottom: 0em; margin-left: 4.4em;}
+    .gatha3 { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
 
     /* Gatha last line */
-    .gathalast { font-size: 12pt; margin-bottom: 0.5cm; margin-left: 4.4em;}
+    .gathalast { font-size: 12pt; margin-bottom: 0.5cm; margin-left: 4em;}
 
 
     /*------ Style substitutions ------*/
@@ -175,13 +173,13 @@ body {
 
     p[rend="subsubhead"] { font-size: 14pt; text-align:center; font-weight: bold;}
 
-    p[rend="gatha1"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4.4em;}
+    p[rend="gatha1"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
 
-    p[rend="gatha2"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4.4em;}
+    p[rend="gatha2"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
 
-    p[rend="gatha3"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4.4em;}
+    p[rend="gatha3"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
 
-    p[rend="gathalast"] { font-size: 12pt; margin-bottom: 0.5cm; margin-left: 4.4em;}
+    p[rend="gathalast"] { font-size: 12pt; margin-bottom: 0.5cm; margin-left: 4em;}
 
 /* Media query for print */
 @media print {

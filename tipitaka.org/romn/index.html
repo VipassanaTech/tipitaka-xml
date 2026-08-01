@@ -286,7 +286,7 @@ $(document).ready(function () {
 
         <!-- Page New Content-->
         <!-- Return to Top button -->
-        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+        <button id="myBtn" title="Go to top">Top</button>
         
         <div class="bodycontainer" id="bodycontainer">
             <div class="sidebar" id="tree"></div>
@@ -328,25 +328,24 @@ $(document).ready(function () {
 
     <!-- Return to Top button code-->
     <script>
-        // Get the button
-        let mybutton = document.getElementById("myBtn");
-        
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function() {scrollFunction()};
-        
-        function scrollFunction() {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                mybutton.style.display = "block";
-            } else {
-                mybutton.style.display = "none";
-            }
-        }
-        
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-        }
+        $(document).ready(function() {
+            var mybutton = document.getElementById("myBtn");
+            var $content = $('#t-content');
+
+            // Monitor content scroll to show/hide the button
+            $content.on('scroll', function() {
+                if ($content.scrollTop() > 300) {
+                    mybutton.style.display = "block";
+                } else {
+                    mybutton.style.display = "none";
+                }
+            });
+
+            // Click handler — scroll content to top
+            mybutton.addEventListener('click', function() {
+                $content.animate({ scrollTop: 0 }, 300);
+            });
+        });
     </script>
 
     <!--Resizable splitter code-->
