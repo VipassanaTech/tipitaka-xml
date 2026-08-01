@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -19,21 +19,19 @@
     <!-- Stylesheet for Top Nav bar -->
     <link href="../css/tipistyles.css" rel="stylesheet">    
 
+    <!-- Stylesheet for Sutta Table of Contents -->
+    <link rel="stylesheet" href="../css/toc.css" />
+
     <title>CSCD Tipiṭaka (Khmer)</title>  
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
-    <style>
 
-        
-    </style>
-
-    <!-- Tree display code-->
 	<script>
-		function scrollToTop() { 
-		   window.scrollTo(0, 0); 
-		}
-	
-		$(document).ready(function(){
-		var jtree = $('#tree').jstree({
+                function scrollToTop() { 
+                   window.scrollTo(0, 0); 
+                }
+
+                $(document).ready(function(){
+                var jtree = $('#tree').jstree({
             'plugins': ['types'], // Enable the types plugin
             'core' : {
                 'data' : {'url': 'tree.json'},
@@ -52,19 +50,21 @@
                 }
             },
             'check_callback': true, // Enable custom callbacks for modifying the tree behavior
-		}).ready(function(){
-			var nid = window.location.hash.substr(1);
-			if (nid)
-			{
-				setTimeout(
-				  function() 
-				  {
-					t = $("#tree").jstree(true); 
-					t.deselect_all();
-					t.select_node(nid);
-				  }, 1000);
-			}
-		});
+                }).ready(function(){
+                        var nid = window.location.hash.substr(1);
+                        if (nid)
+                        {
+                                setTimeout(
+                                  function() 
+                                  {
+                                        t = $("#tree").jstree(true); 
+                                        t.deselect_all();
+                                        t.select_node(nid);
+                                  }, 1000);
+                        }
+                        // Add ToC toggles to leaf nodes after tree is ready
+                        setTimeout(addTocToggles, 500);
+                });
 
         // Custom callback for determining valid children for nodes
         jtree.on('check_callback', function(operation, node, node_parent, node_position, more) {
@@ -91,28 +91,33 @@
             });
             
         });
-	
-		$('#tree')
-			.on("changed.jstree", function (e, data) {
-				if(data.selected.length) {
-					var s = data.instance.get_node(data.selected[0]).id;
+
+                $('#tree')
+                        .on("changed.jstree", function (e, data) {
+                                if(data.selected.length) {
+                                        var s = data.instance.get_node(data.selected[0]).id;
                     //var lnk = $( s+"_anchor").attr('href');    
                     var lnk = $( "#"+s+"_anchor").attr('href');
-					//alert('The selected node is: ' + lnk);
+                                        //alert('The selected node is: ' + lnk);
                     var cleanPath = window.location.pathname.replace(/\/index\.html$/i, '/') + '#' + s;
                     if (lnk != '#')  // leaf so shows the content
-					{
-						history.replaceState(null, null, cleanPath);
-						$("#t-content").load(lnk);
-						if (window.innerWidth > 768) {
-							setTimeout(
-							  function() 
-							  {
-								$("html").animate({scrollTop:01}, 00);
-									return false;
-							  }, 0);
+                                        {
+                                                history.replaceState(null, null, cleanPath);
+                                                $("#t-content").load(lnk, function() {
+                                                    // After content loads, add IDs to subheads
+                                                    ensureSubheadIds();
+                                                    // Refresh toc toggles (counts may need updating)
+                                                    setTimeout(addTocToggles, 300);
+                                                });
+                                                if (window.innerWidth > 768) {
+                                                        setTimeout(
+                                                          function() 
+                                                          {
+                                                                $("html").animate({scrollTop:01}, 00);
+                                                                        return false;
+                                                          }, 0);
+                                                }
 						}
-					}
                     else
                     // toggle nodes: close if already open (and close descendants), otherwise open
                     {
@@ -291,6 +296,16 @@ $(document).ready(function () {
             <div class="content " id="t-content"></div>
         </div>
 
+        <!-- ToC Modal -->
+        <div class="toc-modal-overlay" id="toc-overlay"></div>
+        <div class="toc-modal" id="toc-modal">
+            <div class="toc-header">
+                <span id="toc-title">Suttas</span>
+                <span class="toc-close" id="toc-close">&times;</span>
+            </div>
+            <ul class="toc-list" id="toc-list"></ul>
+        </div>
+
 
         <!-- Page footer -->
         <div class="container">
@@ -388,6 +403,8 @@ $(document).ready(function () {
     <script defer src="../js/topnavscript.js"></script>
     <script defer src="../js/feature-banner.js"></script>    
     <script defer src="../js/pali-lookup.js"></script>
-         
+    <script defer src="../js/toc.js"></script>
+    
+    
 </body>
 </html>
