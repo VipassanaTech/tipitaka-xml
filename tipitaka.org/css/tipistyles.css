@@ -519,24 +519,30 @@ a:hover { text-decoration: underline;
 a:active { text-decoration: none; }
 
 
-/* Cross-reference floating buttons (MU / AT / TK) */
+/* Cross-reference inline buttons (MU / AT / TK) — injected next to subheadings */
+.xref-inline-group {
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
 .xref-btn {
-    display: none;
-    position: fixed;
-    right: 30px;
-    z-index: 99;
-    font-size: 15px;
+    font-size: 11px;
     font-weight: bold;
     border: none;
     outline: none;
     color: white;
     cursor: pointer;
-    padding: 12px 14px;
-    border-radius: 4px;
+    padding: 1px 4px;
+    border-radius: 2px;
+    line-height: 1.4;
+    margin-left: 2px;
 }
-#xref-mul-btn { bottom: 185px; background-color: #2f76a8; }
-#xref-mul-btn:hover { background-color: #444; }
-#xref-att-btn { bottom: 130px; background-color: #2d8a4e; }
-#xref-att-btn:hover { background-color: #444; }
-#xref-tik-btn { bottom: 75px;  background-color: #b07d2e; }
-#xref-tik-btn:hover { background-color: #444; }
+.xref-btn:hover:not(:disabled) { background-color: #444; }
+.xref-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+.xref-mul { background-color: #2f76a8; }
+.xref-att { background-color: #2d8a4e; }
+.xref-tik { background-color: #b07d2e; }
