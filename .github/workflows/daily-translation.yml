@@ -34,7 +34,8 @@ jobs:
       DRY_RUN: ${{ (inputs.dry_run && '1') || '0' }}
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
