@@ -1,0 +1,52 @@
+name: Daily Tipitaka Translation
+
+on:
+  schedule:
+    - cron: '0 13 * * *'
+  workflow_dispatch:
+    inputs:
+      chunk_size:
+        description: 'Number of verses to translate (overrides the CHUNK_SIZE repo variable)'
+        required: false
+        type: string
+      dry_run:
+        description: 'Dry run: skip translation/email calls and just log the selected chunk'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    env:
+      SOURCE_DIR: romn
+      STATE_FILE: state/translation-progress.json
+      TRANSLATION_DIR: translation
+      CHUNK_SIZE: ${{ inputs.chunk_size || vars.CHUNK_SIZE || '20' }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || 'claude-sonnet-5' }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      EMAIL_TO: ${{ secrets.EMAIL_TO }}
+      EMAIL_FROM: ${{ vars.EMAIL_FROM }}
+      DRY_RUN: ${{ (inputs.dry_run && '1') || '0' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run daily translation
+        run: python scripts/daily_translate.py
+
+      - name: Commit updated progress state
+        if: env.DRY_RUN != '1'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state/translation-progress.json translation/
+          git diff --cached --quiet || git commit -m "Advance translation progress [skip ci]"
+          git push
