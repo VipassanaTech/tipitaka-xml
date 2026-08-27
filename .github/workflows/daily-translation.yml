@@ -33,10 +33,10 @@ jobs:
       EMAIL_FROM: ${{ vars.EMAIL_FROM }}
       DRY_RUN: ${{ (inputs.dry_run && '1') || '0' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 1
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
