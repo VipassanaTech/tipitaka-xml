@@ -1,7 +1,13 @@
 name: Build Theravada Pali Corpus
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - theravada-project
+    paths:
+      - "PROJECT_THERAVADA/**"
+      - "romn/**"
+      - ".github/workflows/build-theravada-corpus.yml"
 
 permissions:
   contents: read
@@ -11,10 +17,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out theravada-project
+      - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          ref: theravada-project
 
       - name: Set up Python
         uses: actions/setup-python@v5
