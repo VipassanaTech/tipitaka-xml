@@ -286,8 +286,8 @@ def build() -> int:
             f"FILE: {output_name}\n",
             "EDITION: Chaṭṭha Saṅgāyana Tipiṭaka (CST)\n",
             "WORKING SOURCE: VRI Roman-Pāli XML (romn/)\n",
-            f"BUILD_UTC: {build_time}\n",
-            f"GIT_SHA: {commit}\n",
+           build_time = ...
+commit = ...
             "IMPORTANT: Metadata markers are editorial; canonical text follows each source block.\n",
             "\n",
         ]
