@@ -18,11 +18,18 @@ Script: Roman Pāli
 
 ## Textual layer
 
-MŪLA — primary canonical/root text.
+`MŪLA` denotes the primary/root textual layer used by the VRI/CST repository.
 
-Canonical text must remain explicitly separated from:
+Repository-layer classification must not automatically be interpreted as
+universal canonical status across all Theravāda traditions.
+
+Canonical/root-text material must remain explicitly separated from
 Aṭṭhakathā, Ṭīkā, modern Theravāda interpretation,
 and academic reconstruction.
+
+See:
+
+`../00_INDEX/SOURCE_POLICY.md`
 
 ## Consolidated project sources
 
