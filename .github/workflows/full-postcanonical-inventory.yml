@@ -1,0 +1,46 @@
+name: Full Postcanonical Inventory
+
+on:
+  push:
+    branches:
+      - theravada-project
+    paths:
+      - "romn/**"
+      - "PROJECT_THERAVADA/00_INDEX/THERAVADA_CST_61_to_13_MAPPING.csv"
+      - "PROJECT_THERAVADA/scripts/full_postcanonical_inventory.py"
+      - ".github/workflows/full-postcanonical-inventory.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Build full post-canonical inventory
+        run: python PROJECT_THERAVADA/scripts/full_postcanonical_inventory.py
+
+      - name: Show inventory report
+        run: cat PROJECT_THERAVADA/00_INDEX/POSTCANONICAL_INVENTORY/FULL_POSTCANONICAL_INVENTORY.md
+
+      - name: Upload full post-canonical inventory
+        uses: actions/upload-artifact@v6
+        with:
+          name: full-postcanonical-inventory
+          path: |
+            PROJECT_THERAVADA/00_INDEX/POSTCANONICAL_INVENTORY/FULL_ROMN_INVENTORY.csv
+            PROJECT_THERAVADA/00_INDEX/POSTCANONICAL_INVENTORY/FULL_POSTCANONICAL_INVENTORY.csv
+            PROJECT_THERAVADA/00_INDEX/POSTCANONICAL_INVENTORY/POSTCANONICAL_REVIEW_QUEUE.csv
+            PROJECT_THERAVADA/00_INDEX/POSTCANONICAL_INVENTORY/FULL_POSTCANONICAL_INVENTORY.md
+            PROJECT_THERAVADA/00_INDEX/POSTCANONICAL_INVENTORY/INVENTORY_MANIFEST.json
+          if-no-files-found: error
+          retention-days: 30
