@@ -394,9 +394,13 @@ def build() -> int:
         "",
         "### Canonical-status note",
         "",
-        "`s0518m.nrf.xml` (Milindapañha) and `s0520m.nrf.xml` "
-        "(Peṭakopadesa) are deliberately retained as separately flagged NRF texts. "
-        "Their canonical status varies across Theravāda traditions.",
+       "`s0518m.nrf.xml` (Milindapañha) and `s0520m.nrf.xml` "
+"(Peṭakopadesa) are deliberately retained as separately flagged NRF texts. "
+"Their canonical status varies across Theravāda traditions.",
+"",
+"`s0519m.mul.xml` (Nettippakaraṇa) is classified as MŪLA in the VRI/CST "
+"repository layer, while its canonical status varies across Theravāda "
+"regional traditions.",
         "",
     ])
 
