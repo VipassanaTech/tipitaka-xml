@@ -49,6 +49,10 @@ Changes to documentation and Git commit identity did not alter the
 Output checksums are recorded in:
 
 `MANIFEST_OUTPUTS.csv`
+## Historical pre-release validation records
+
+The following records document earlier RC1/RC2 validation stages.
+They are retained for provenance and do not represent the current corpus status.
 
 Corpus: Theravāda CST Roman Pāli Corpus
 Status: RC2
