@@ -1,5 +1,5 @@
 Corpus: Theravāda CST Roman Pāli Corpus
-Status: RC1
+Status: RC2
 Inputs: 61
 Outputs: 13
 Edition: Chaṭṭha Saṅgāyana Tipiṭaka
