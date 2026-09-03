@@ -19,7 +19,7 @@
 $buildDir = '..\tipitaka-site-build'
 
 $siteFiles = '.\tipitaka.org'
-$rootText = '.\root text files'
+$devaMaster = '.\deva master'
 $conversionScripts = '.\conversion scripts'
 
 function Get-TimeStamp
@@ -61,15 +61,10 @@ Copy-Item $siteFiles\* -Recurse -Destination $buildDir
 # delete the XML files from deva\cscd that were checked in to source control
 Remove-Item -path $buildDir\deva\cscd\*.xml
 
-Write-Host "$(Get-TimeStamp) Splitting root text files and writing into deva\cscd"
+Write-Host "$(Get-TimeStamp) Splitting deva master XML files and writing into deva\cscd"
 
-# split the root text files and convert to XML, writing into deva\cscd
-foreach ($file in Get-ChildItem $rootText\*.txt )
-{
-  # in PowerShell, ampersand is how you run a command from a string, not to be
-  # confused with the ampersand in Unix shells that runs a process in the background
-  & "$conversionScripts\pitaka2xml.exe" -split $file $buildDir\deva\cscd
-}
+# split the deva master xml files, writing into deva\cscd
+& ".\split-master-xml.ps1" $devaMaster $buildDir\deva\cscd
 
 # pause here to correct any errors in the split manually
 $response = ""
