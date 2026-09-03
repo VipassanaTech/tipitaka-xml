@@ -1,0 +1,42 @@
+name: Inventory Atthakatha Corpus
+
+on:
+  push:
+    branches:
+      - theravada-project
+    paths:
+      - "PROJECT_THERAVADA/02_ATTHAKATHA/**"
+      - "PROJECT_THERAVADA/scripts/inventory_atthakatha.py"
+      - ".github/workflows/inventory-atthakatha.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Inventory Aṭṭhakathā XML files
+        run: python PROJECT_THERAVADA/scripts/inventory_atthakatha.py
+
+      - name: Show inventory summary
+        run: cat PROJECT_THERAVADA/02_ATTHAKATHA/ATTHAKATHA_INVENTORY.md
+
+      - name: Upload Aṭṭhakathā inventory
+        uses: actions/upload-artifact@v6
+        with:
+          name: atthakatha-inventory
+          path: |
+            PROJECT_THERAVADA/02_ATTHAKATHA/ATTHAKATHA_INVENTORY.csv
+            PROJECT_THERAVADA/02_ATTHAKATHA/ATTHAKATHA_INVENTORY.md
+          if-no-files-found: error
+          retention-days: 30
