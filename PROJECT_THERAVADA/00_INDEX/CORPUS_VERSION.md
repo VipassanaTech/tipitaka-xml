@@ -1,3 +1,55 @@
+## Stable release
+
+Version:
+
+**v1.0.0**
+
+Release status:
+
+**STABLE**
+
+Validation:
+
+**PASS**
+
+Mapped source records:
+
+**61**
+
+Consolidated output files:
+
+**13**
+
+Missing mapped inputs:
+
+**0**
+
+Duplicate source assignments:
+
+**0**
+
+Deterministic build:
+
+**PASS**
+
+Repeated output SHA-256:
+
+**13/13 identical**
+
+Final validation build Git SHA:
+
+`0bffb746332cadf31f6417c945fa54ebe65cc7d1`
+
+The stable corpus was validated across repeated builds with unchanged
+source XML, mapping and transformation logic.
+
+Changes to documentation and Git commit identity did not alter the
+13 consolidated Roman-Pāli TXT outputs.
+
+Output checksums are recorded in:
+
+`MANIFEST_OUTPUTS.csv`
+
 Corpus: Theravāda CST Roman Pāli Corpus
 Status: RC2
 Inputs: 61
