@@ -1,0 +1,44 @@
+name: Build Theravada Project Bridge
+
+on:
+  push:
+    branches:
+      - theravada-project
+    paths:
+      - "PROJECT_THERAVADA/00_INDEX/THERAVADA_SOURCE_REGISTRY.csv"
+      - "PROJECT_THERAVADA/scripts/build_theravada_project_bridge.py"
+      - ".github/workflows/build-theravada-project-bridge.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  bridge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Build Theravada I ↔ II bridge
+        run: python PROJECT_THERAVADA/scripts/build_theravada_project_bridge.py
+
+      - name: Show master bridge
+        run: cat PROJECT_THERAVADA/00_INDEX/BRIDGE/THERAVADA_MASTER_BRIDGE.md
+
+      - name: Upload bridge artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: theravada-project-bridge
+          path: |
+            PROJECT_THERAVADA/00_INDEX/BRIDGE/THERAVADA_MASTER_BRIDGE.md
+            PROJECT_THERAVADA/00_INDEX/BRIDGE/THERAVADA_I_BRIDGE.md
+            PROJECT_THERAVADA/00_INDEX/BRIDGE/THERAVADA_II_BRIDGE.md
+            PROJECT_THERAVADA/00_INDEX/BRIDGE/THERAVADA_BRIDGE_MANIFEST.json
+          if-no-files-found: error
+          retention-days: 30
