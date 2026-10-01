@@ -1,0 +1,44 @@
+name: Build Theravada Pali Corpus
+
+on:
+  push:
+    branches:
+      - theravada-project
+    paths:
+      - "PROJECT_THERAVADA/**"
+      - "romn/**"
+      - ".github/workflows/build-theravada-corpus.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Build and validate 61 -> 13 corpus
+        run: python PROJECT_THERAVADA/scripts/build_pali_corpus.py
+
+      - name: Show build report
+        run: cat PROJECT_THERAVADA/01_PALI_CANON/BUILD_REPORT.md
+
+      - name: Upload consolidated Pali corpus
+        uses: actions/upload-artifact@v6
+        with:
+          name: theravada-pali-corpus-13
+          path: |
+            PROJECT_THERAVADA/01_PALI_CANON/*.txt
+            PROJECT_THERAVADA/01_PALI_CANON/BUILD_REPORT.md
+            PROJECT_THERAVADA/01_PALI_CANON/MANIFEST_SOURCES.csv
+            PROJECT_THERAVADA/01_PALI_CANON/MANIFEST_OUTPUTS.csv
+          if-no-files-found: error
+          retention-days: 30
