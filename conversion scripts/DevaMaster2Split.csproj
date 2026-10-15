@@ -1,16 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project>
 
   <!--
-    Builds DevaMaster2Split.exe, which site-build.ps1 runs. The exe is a 32-bit
-    x86 build for .NET Framework 4.8, like the Deva2* converters in this directory.
+    Builds DevaMaster2Split.exe, which site-build.ps1 runs to split the books in
+    "deva master" into the chapter files of the site.
+    The exe is a 32-bit x86 build for .NET Framework 4.8, like the Deva2* converters in
+    this directory.
 
       dotnet build -c Release DevaMaster2Split.csproj
-      copy bin\Release\net48\DevaMaster2Split.exe .
+      copy bin\DevaMaster2Split\Release\net48\DevaMaster2Split.exe .
 
     The reference assemblies package lets the net48 build run on any OS with the
     .NET SDK. The net8.0 build is only for running the tool where .NET Framework
     is not available.
+
+    DevaMaster2Split.csproj and DevaNormalize.csproj are in the same directory, so each
+    has its own obj and bin directory. That has to be set before the SDK is imported.
   -->
+
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>obj\DevaMaster2Split\</BaseIntermediateOutputPath>
+    <BaseOutputPath>bin\DevaMaster2Split\</BaseOutputPath>
+  </PropertyGroup>
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -30,10 +42,13 @@
 
   <ItemGroup>
     <Compile Include="DevaMaster2Split.cs" />
+    <Compile Include="DevaNormalization.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net48'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
   </ItemGroup>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
 
 </Project>

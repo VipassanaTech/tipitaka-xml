@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Cst;
 
 /*
   DevaMaster2Split
@@ -32,9 +33,10 @@ using System.Xml;
   (VipassanaTech/tipitaka-xml#2093).
 
   It also applies Pitaka2Xml's text normalization (en dash, double danda,
-  ellipsis, abbreviation sign, ZWJ in some conjuncts) to the text of each
-  paragraph, and reports each book where that changed anything. The master
-  should already have it, but corrections are sometimes typed without it.
+  ellipsis, abbreviation sign, ZWJ in some conjuncts; see DevaNormalization.cs)
+  to the text of each paragraph, and reports each book where that changed
+  anything. DevaNormalize.exe should already have been run on the master, but
+  the site is built correctly even where it has not.
 
   syntax:
     DevaMaster2Split input [output_directory]
@@ -44,7 +46,7 @@ using System.Xml;
   any book could not be split. The other books are still written.
 
   Build: dotnet build -c Release "DevaMaster2Split.csproj", then copy
-  bin\Release\net48\DevaMaster2Split.exe into this directory.
+  bin\DevaMaster2Split\Release\net48\DevaMaster2Split.exe into this directory.
 */
 
 namespace DevaMaster2Split
@@ -66,7 +68,9 @@ namespace DevaMaster2Split
             {
                 foreach (string path in Directory.GetFiles(input, "*.xml"))
                 {
-                    if (!path.EndsWith(".toc.xml", StringComparison.OrdinalIgnoreCase))
+                    // GetFiles also matches extensions that only start with "xml" on .NET Framework
+                    if (path.EndsWith(".xml", StringComparison.OrdinalIgnoreCase) &&
+                        !path.EndsWith(".toc.xml", StringComparison.OrdinalIgnoreCase))
                         books.Add(path);
                 }
                 books.Sort(StringComparer.Ordinal);
@@ -129,8 +133,7 @@ namespace DevaMaster2Split
         // "namo tass": matches "namo tassa bhagavato..." in all its spellings
         private const string Namo = "\u0928\u092E\u094B \u0924\u0938\u094D\u0938";
 
-        private static readonly Regex paraRegex = new Regex(
-            "<(p|head|trailer)(\\s[^>]*)?>(.*?)</\\1>", RegexOptions.Singleline);
+        private static readonly Regex paraRegex = DevaNormalization.ParagraphRegex;
         private static readonly Regex attrRegex = new Regex("([\\w:.-]+)\\s*=\\s*\"([^\"]*)\"");
         private static readonly Regex divRegex = new Regex("</?div(\\s[^>]*)?>");
 
@@ -251,7 +254,7 @@ namespace DevaMaster2Split
                 if (para.rend == null)
                     throw new Exception("<" + m.Groups[1].Value + "> with no rend: " + Excerpt(m.Value));
 
-                para.text = Normalize(m.Groups[3].Value);
+                para.text = DevaNormalization.Normalize(m.Groups[3].Value);
                 if (para.text != m.Groups[3].Value)
                     normalizedCount++;
                 if (titleRends.Contains(para.rend))
@@ -274,44 +277,6 @@ namespace DevaMaster2Split
 
         private int normalizedCount;
 
-        // Applies the text normalization that Pitaka2Xml did to the text files, so that the
-        // site gets it even where a correction was typed into deva master without it.
-        // Only the text between tags is changed, never the markup. Every rule is idempotent:
-        // text that is already normalized does not match it.
-        private static string Normalize(string xml)
-        {
-            return Regex.Replace(xml, "(<[^>]*>)|([^<]+)",
-                m => (m.Groups[1].Success ? m.Value : NormalizeText(m.Value)));
-        }
-
-        private static string NormalizeText(string s)
-        {
-            // two hyphens to an en dash
-            s = s.Replace("--", "–");
-
-            // two dandas to the Devanagari double danda character
-            s = s.Replace("।।", "॥");
-
-            // three dots to an ellipsis
-            s = s.Replace("...", "…");
-
-            // a zero after a Devanagari letter to the Devanagari abbreviation sign
-            s = Regex.Replace(s, "([ँ-ॣ])०", "$1॰");
-
-            // ZWJ after the virama in these conjuncts, so they are written with a half form
-            s = s.Replace("क्क", "क्‍क"); // ka + ka
-            s = s.Replace("क्ल", "क्‍ल"); // ka + la
-            s = s.Replace("क्व", "क्‍व"); // ka + va
-            s = s.Replace("च्च", "च्‍च"); // ca + ca
-            s = s.Replace("ज्ज", "ज्‍ज"); // ja + ja
-            s = s.Replace("ञ्च", "ञ्‍च"); // nya + ca
-            s = s.Replace("ञ्ज", "ञ्‍ज"); // nya + ja
-            s = s.Replace("ञ्ञ", "ञ्‍ञ"); // nya + nya
-            s = s.Replace("न्न", "न्‍न"); // na + na
-            s = s.Replace("प्ल", "प्‍ल"); // pa + la
-            s = s.Replace("ल्ल", "ल्‍ल"); // la + la
-            return s;
-        }
 
         // The title of a heading for the navigation tree: its text without notes,
         // page breaks or other markup, as Pitaka2Xml made it from the text files.
