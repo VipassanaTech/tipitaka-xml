@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Builds DevaMaster2Split.exe, which site-build.ps1 runs. The exe is a 32-bit
+    x86 build for .NET Framework 4.8, like the Deva2* converters in this directory.
+
+      dotnet build -c Release DevaMaster2Split.csproj
+      copy bin\Release\net48\DevaMaster2Split.exe .
+
+    The reference assemblies package lets the net48 build run on any OS with the
+    .NET SDK. The net8.0 build is only for running the tool where .NET Framework
+    is not available.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net48;net8.0</TargetFrameworks>
+    <AssemblyName>DevaMaster2Split</AssemblyName>
+    <RootNamespace>DevaMaster2Split</RootNamespace>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net48'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="DevaMaster2Split.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net48'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

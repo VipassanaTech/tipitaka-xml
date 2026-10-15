@@ -9,7 +9,12 @@
   git working directory.
 
   It will create a directory peer to the git directory called tipitaka-site-build.
-  The script will only put up one prompt, if that directory exists. If so, delete it first.
+  If that directory already exists, it is deleted first. The script does not prompt,
+  so it can run unattended. It exits with code 1 if any book cannot be split.
+
+  The Devanagari XML is split from the books in "deva master" by DevaMaster2Split.exe
+  (VipassanaTech/tipitaka-xml#2679). The text files in "root text files" are no longer
+  used.
 
 
 
@@ -19,7 +24,7 @@
 $buildDir = '..\tipitaka-site-build'
 
 $siteFiles = '.\tipitaka.org'
-$rootText = '.\root text files'
+$devaMaster = '.\deva master'
 $conversionScripts = '.\conversion scripts'
 
 function Get-TimeStamp
@@ -30,17 +35,10 @@ function Get-TimeStamp
 # test if the build directory exists
 $dirExists = Test-Path $buildDir -PathType Any
 
-# if the directory already exists, prompt to delete it or exit
+# if the directory already exists, delete it. It holds only the output of the last build.
 if ($dirExists) {
-  $response = Read-Host -Prompt "$buildDir already exists. Press Y to delete directory and all its contents or any other key to exit"
-  if ($response -ieq "y") {
-    Write-Host "$(Get-TimeStamp) Deleting existing build directory"
-    Remove-Item -path $buildDir -recurse
-  }
-  else {
-    Write-Host "$(Get-TimeStamp) Exiting"
-    Exit
-  }
+  Write-Host "$(Get-TimeStamp) Deleting existing build directory"
+  Remove-Item -path $buildDir -recurse
 }
 
 # to prevent intermittent errors from creating the directory too soon after deleting it,
@@ -61,22 +59,19 @@ Copy-Item $siteFiles\* -Recurse -Destination $buildDir
 # delete the XML files from deva\cscd that were checked in to source control
 Remove-Item -path $buildDir\deva\cscd\*.xml
 
-Write-Host "$(Get-TimeStamp) Splitting root text files and writing into deva\cscd"
+Write-Host "$(Get-TimeStamp) Splitting deva master books and writing into deva\cscd"
 
-# split the root text files and convert to XML, writing into deva\cscd
-foreach ($file in Get-ChildItem $rootText\*.txt )
-{
-  # in PowerShell, ampersand is how you run a command from a string, not to be
-  # confused with the ampersand in Unix shells that runs a process in the background
-  & "$conversionScripts\pitaka2xml.exe" -split $file $buildDir\deva\cscd
-}
+# split every book in deva master into its chapter files and .toc.xml, writing into deva\cscd.
+# in PowerShell, ampersand is how you run a command from a string, not to be
+# confused with the ampersand in Unix shells that runs a process in the background
+& "$conversionScripts\DevaMaster2Split.exe" $devaMaster $buildDir\deva\cscd
 
-# pause here to correct any errors in the split manually
-$response = ""
-do {
-  $response = Read-Host -Prompt "Fix XML split issues manually in $buildDir\deva\cscd then press C to continue"
+# stop rather than publish a site with books missing. The splitter has already
+# printed which books failed and why.
+if ($LASTEXITCODE -ne 0) {
+  Write-Host "$(Get-TimeStamp) Splitting failed. Exiting"
+  Exit 1
 }
-until ($response -ieq "c")
 
 # count the split deva XML files
 $splitCount = (Get-ChildItem $buildDir\deva\cscd\*.xml | Measure-Object).Count
@@ -112,7 +107,8 @@ foreach ($file in Get-ChildItem $buildDir\deva\cscd\*.xml )
 
 Write-Host "$(Get-TimeStamp) Creating zip file"
 
-Compress-Archive -Path $buildDir\* -DestinationPath .\tipitaka-site-build
+# -Force overwrites the zip from the previous build
+Compress-Archive -Path $buildDir\* -DestinationPath .\tipitaka-site-build -Force
 
 Write-Host "$(Get-TimeStamp) Finished. Zip file tipitaka-site-build.zip should be in same directory as this script."
 
