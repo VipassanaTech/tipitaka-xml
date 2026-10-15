@@ -31,6 +31,11 @@ using System.Xml;
   was the error that had to be fixed by hand at every rollout
   (VipassanaTech/tipitaka-xml#2093).
 
+  It also applies Pitaka2Xml's text normalization (en dash, double danda,
+  ellipsis, abbreviation sign, ZWJ in some conjuncts) to the text of each
+  paragraph, and reports each book where that changed anything. The master
+  should already have it, but corrections are sometimes typed without it.
+
   syntax:
     DevaMaster2Split input [output_directory]
 
@@ -246,7 +251,9 @@ namespace DevaMaster2Split
                 if (para.rend == null)
                     throw new Exception("<" + m.Groups[1].Value + "> with no rend: " + Excerpt(m.Value));
 
-                para.text = m.Groups[3].Value;
+                para.text = Normalize(m.Groups[3].Value);
+                if (para.text != m.Groups[3].Value)
+                    normalizedCount++;
                 if (titleRends.Contains(para.rend))
                     para.title = MakeTitle(para.text);
                 paragraphs.Add(para);
@@ -259,6 +266,51 @@ namespace DevaMaster2Split
             string rest = divRegex.Replace(paraRegex.Replace(bodyXml, ""), "").Trim();
             if (rest.Length > 0)
                 throw new Exception("text outside any paragraph: " + Excerpt(rest));
+
+            if (normalizedCount > 0)
+                Console.WriteLine(Path.GetFileName(inputPath) + ": normalized the text of " + normalizedCount +
+                    (normalizedCount == 1 ? " paragraph" : " paragraphs") + ". The same correction is needed in deva master.");
+        }
+
+        private int normalizedCount;
+
+        // Applies the text normalization that Pitaka2Xml did to the text files, so that the
+        // site gets it even where a correction was typed into deva master without it.
+        // Only the text between tags is changed, never the markup. Every rule is idempotent:
+        // text that is already normalized does not match it.
+        private static string Normalize(string xml)
+        {
+            return Regex.Replace(xml, "(<[^>]*>)|([^<]+)",
+                m => (m.Groups[1].Success ? m.Value : NormalizeText(m.Value)));
+        }
+
+        private static string NormalizeText(string s)
+        {
+            // two hyphens to an en dash
+            s = s.Replace("--", "–");
+
+            // two dandas to the Devanagari double danda character
+            s = s.Replace("।।", "॥");
+
+            // three dots to an ellipsis
+            s = s.Replace("...", "…");
+
+            // a zero after a Devanagari letter to the Devanagari abbreviation sign
+            s = Regex.Replace(s, "([ँ-ॣ])०", "$1॰");
+
+            // ZWJ after the virama in these conjuncts, so they are written with a half form
+            s = s.Replace("क्क", "क्‍क"); // ka + ka
+            s = s.Replace("क्ल", "क्‍ल"); // ka + la
+            s = s.Replace("क्व", "क्‍व"); // ka + va
+            s = s.Replace("च्च", "च्‍च"); // ca + ca
+            s = s.Replace("ज्ज", "ज्‍ज"); // ja + ja
+            s = s.Replace("ञ्च", "ञ्‍च"); // nya + ca
+            s = s.Replace("ञ्ज", "ञ्‍ज"); // nya + ja
+            s = s.Replace("ञ्ञ", "ञ्‍ञ"); // nya + nya
+            s = s.Replace("न्न", "न्‍न"); // na + na
+            s = s.Replace("प्ल", "प्‍ल"); // pa + la
+            s = s.Replace("ल्ल", "ल्‍ल"); // la + la
+            return s;
         }
 
         // The title of a heading for the navigation tree: its text without notes,
