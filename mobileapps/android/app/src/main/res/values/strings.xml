@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Pāḷi Tipiṭaka</string>
     <string name="fallback_custom_tabs">customtabs</string>
+    <string name="release_date">October 2026</string>
 </resources>
