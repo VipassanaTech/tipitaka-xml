@@ -36,6 +36,7 @@
     popup.className = 'pali-meaning-popup';
     popup.innerHTML = '<div class="pm-window">'
         + '<div class="pm-header-row">'
+        + '<div class="pm-back-holder"></div>'
         + '<div class="pm-title-holder"></div>'
         + '<div class="pm-spacer"></div>'
         + '<div class="pm-right">'
@@ -47,9 +48,74 @@
         + '</div>';
     document.body.appendChild(popup);
 
+    // Make the modal draggable by its header row, so it's no longer stuck
+    // in its default fixed/centred position. Dragging is ignored when it
+    // starts on an interactive child (title input, nav buttons, close
+    // button) so those keep working normally.
+    (function(){
+        var headerRow = popup.querySelector('.pm-header-row');
+        if (!headerRow) return;
+        var drag = null;
+
+        function isInteractive(el){
+            return !!(el && el.closest && el.closest('button, input, a'));
+        }
+
+        function onPointerMove(ev){
+            if (!drag) return;
+            var point = (ev.touches && ev.touches[0]) || ev;
+            if (ev.touches) ev.preventDefault();
+            var newLeft = drag.startLeft + (point.clientX - drag.startX);
+            var newTop  = drag.startTop  + (point.clientY - drag.startY);
+            var maxLeft = Math.max(0, window.innerWidth  - popup.offsetWidth);
+            var maxTop  = Math.max(0, window.innerHeight - popup.offsetHeight);
+            popup.style.left = Math.min(Math.max(0, newLeft), maxLeft) + 'px';
+            popup.style.top  = Math.min(Math.max(0, newTop),  maxTop)  + 'px';
+        }
+
+        function onPointerUp(){
+            drag = null;
+            headerRow.style.cursor = '';
+            document.removeEventListener('mousemove', onPointerMove);
+            document.removeEventListener('touchmove', onPointerMove);
+            document.removeEventListener('mouseup', onPointerUp);
+            document.removeEventListener('touchend', onPointerUp);
+        }
+
+        function onPointerDown(ev){
+            if (isInteractive(ev.target)) return;
+            var point = (ev.touches && ev.touches[0]) || ev;
+            var rect = popup.getBoundingClientRect();
+            // switch from the centred inset/margin:auto layout to explicit
+            // top/left positioning, anchored at the current on-screen spot
+            popup.style.margin = '0';
+            popup.style.right = 'auto';
+            popup.style.bottom = 'auto';
+            popup.style.left = rect.left + 'px';
+            popup.style.top  = rect.top  + 'px';
+            drag = { startX: point.clientX, startY: point.clientY, startLeft: rect.left, startTop: rect.top };
+            headerRow.style.cursor = 'grabbing';
+            document.addEventListener('mousemove', onPointerMove);
+            document.addEventListener('touchmove', onPointerMove, { passive: false });
+            document.addEventListener('mouseup', onPointerUp);
+            document.addEventListener('touchend', onPointerUp);
+        }
+
+        headerRow.addEventListener('mousedown', onPointerDown);
+        headerRow.addEventListener('touchstart', onPointerDown, { passive: true });
+    })();
+
     // normalize a selected word by trimming surrounding punctuation
     function normalizeWord(word){
         if (!word) return '';
+        // Pali texts routinely wrap quoted speech with single/double/triple
+        // curly-quote marks sitting directly against the surrounding letters
+        // (e.g. "upapajjantī’’ti" -> "upapajjantīti", "mamassā’’’ti" ->
+        // "mamassāti", "passāmī’ti" -> "passāmīti"). These marks are never
+        // part of the actual headword, so strip them out wherever they
+        // occur (start, middle, or end) and join the remaining letters back
+        // together, rather than truncating the word at that point.
+        word = word.replace(/['’‘"“”]+/g, '');
         try{ return word.replace(/^[^\p{L}]+|[^\p{L}]+$/gu,''); }catch(err){ return word.replace(/^[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+|[^A-Za-zĀāĪīŪūḌḍṆṇṚṛŚśṢṣṬṭḶḷḸḸ]+$/g,''); }
     }
 
@@ -108,6 +174,24 @@
             return nodes;
         }
 
+        // Search backwards from fromIndex for the nearest whitespace character
+        // (space, tab, newline, non-breaking space, etc.) rather than a literal
+        // ASCII space, so paragraph/element boundaries (which are often joined
+        // only by a newline text node) are correctly treated as word breaks.
+        function lastWhitespaceIndex(str, fromIndex){
+            for (var i = Math.min(fromIndex, str.length - 1); i >= 0; i--) {
+                if (/\s/.test(str.charAt(i))) return i;
+            }
+            return -1;
+        }
+
+        function firstWhitespaceIndex(str, fromIndex){
+            for (var i = Math.max(fromIndex, 0); i < str.length; i++) {
+                if (/\s/.test(str.charAt(i))) return i;
+            }
+            return -1;
+        }
+
         function expandSelectionToSpaces(){
             try {
                 var sel = window.getSelection();
@@ -139,9 +223,9 @@
                 var full = tnodes.map(function(nd){ return nd.textContent; }).join('');
                 globalIndex = Math.max(0, Math.min(full.length - 1, globalIndex));
 
-                var leftSpace  = full.lastIndexOf(' ', globalIndex - 1);
+                var leftSpace  = lastWhitespaceIndex(full, globalIndex - 1);
                 var startIdx   = (leftSpace  === -1) ? 0           : leftSpace + 1;
-                var rightSpace = full.indexOf(' ', globalIndex);
+                var rightSpace = firstWhitespaceIndex(full, globalIndex);
                 var endIdx     = (rightSpace === -1) ? full.length  : rightSpace;
 
                 var sNode = null, sOffset = 0, eNode = null, eOffset = 0, acc = 0;
@@ -176,8 +260,41 @@
         }, 0);
     });
 
+    // Search history: a per-session (while the modal stays open) chronological
+    // list of searched words plus a pointer to the currently shown entry, so
+    // the user can step back and forth through a chain of lookups (editing
+    // the title, or double-clicking a word in the results).
+    // Cleared whenever the modal is closed.
+    var historyList = [];
+    var historyIndex = -1;
+
+    function updateNavButtons(){
+        var holder = popup.querySelector('.pm-back-holder');
+        if (!holder) return;
+        var html = '';
+        if (historyIndex > 0) html += '<button type="button" class="pm-back-btn pm-prev-btn">&lt; Prev</button>';
+        if (historyIndex >= 0 && historyIndex < historyList.length - 1) html += '<button type="button" class="pm-back-btn pm-next-btn">Next &gt;</button>';
+        holder.innerHTML = html;
+        var prevBtn = holder.querySelector('.pm-prev-btn');
+        if (prevBtn) prevBtn.addEventListener('click', function(ev){ ev.preventDefault(); goPrev(); });
+        var nextBtn = holder.querySelector('.pm-next-btn');
+        if (nextBtn) nextBtn.addEventListener('click', function(ev){ ev.preventDefault(); goNext(); });
+    }
+
     // close popup
-    function hidePopup(){ popup.style.display='none'; overlay.style.display='none'; }
+    function hidePopup(){
+        popup.style.display='none';
+        overlay.style.display='none';
+        historyList = [];
+        historyIndex = -1;
+        updateNavButtons();
+        // clear any drag-repositioning so the modal reopens centred next time
+        popup.style.top = '';
+        popup.style.left = '';
+        popup.style.right = '';
+        popup.style.bottom = '';
+        popup.style.margin = '';
+    }
     popup.querySelector('.pm-close').addEventListener('click', hidePopup);
     overlay.addEventListener('click', hidePopup);
 
@@ -186,14 +303,44 @@
         overlay.style.display = 'block';
     }
 
-    function lookupPali(word){
+    // Fetch + render `word` without touching history bookkeeping. Shared by
+    // forward navigation (lookupPali), Prev and Next.
+    function performLookup(word){
+        updateNavButtons();
         var content = popup.querySelector('.pm-content');
         // clear any previous result immediately so old content doesn't flash
         try { content.innerHTML = ''; }catch(e){}
         // prefetch/attach to any in-flight request, otherwise start a fetch
         prefetchPali(word)
         .then(function(json){ renderResult(word,json); })
-        .catch(function(err){ content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to fetch meaning.</div></div>'; try{ showPopup(); }catch(e){} console.error(err); });
+        .catch(function(err){ try{ setEditableTitle(word); }catch(e){} content.innerHTML = '<div class="pm-section"><strong>Error</strong><div>Unable to fetch meaning.</div></div>'; try{ showPopup(); }catch(e){} console.error(err); });
+    }
+
+    // Navigate to a new word (double-click on the page or in the results,
+    // or editing the title). Appends it as the newest history entry,
+    // discarding any "forward" entries from a previous Prev navigation.
+    function lookupPali(word){
+        var current = (historyIndex >= 0) ? historyList[historyIndex] : null;
+        if (current !== word) {
+            historyList = historyList.slice(0, historyIndex + 1);
+            historyList.push(word);
+            historyIndex = historyList.length - 1;
+        }
+        performLookup(word);
+    }
+
+    // Step back to the previous word in this modal session's history.
+    function goPrev(){
+        if (historyIndex <= 0) return;
+        historyIndex--;
+        performLookup(historyList[historyIndex]);
+    }
+
+    // Step forward again after having gone back with goPrev().
+    function goNext(){
+        if (historyIndex < 0 || historyIndex >= historyList.length - 1) return;
+        historyIndex++;
+        performLookup(historyList[historyIndex]);
     }
 
     function renderResult(word, json){
@@ -218,7 +365,7 @@
                 if (parts.length > 0) {
                     bodyHtml += '<div class="pm-body"><div class="dpd">' + parts.join('\n') + '</div></div>';
                     // place the title in the header title-holder and credit in the credit-holder
-                    try{ var th = popup.querySelector('.pm-title-holder'); if (th) th.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+                    try{ setEditableTitle(word); }catch(e){}
                     try{ var holder = popup.querySelector('.pm-credit-holder'); if (holder) holder.innerHTML = creditHtml; }catch(e){}
                     content.innerHTML = bodyHtml;
                     enhanceModal(content);
@@ -231,7 +378,7 @@
             // fallback for array-style responses
             if (!Array.isArray(json) || !json.length) {
                 bodyHtml += '<div class="pm-body"><div class="dpd"><div class="pm-section"><strong>No results</strong><div>No entries found.</div></div></div></div>';
-                try{ var th2 = popup.querySelector('.pm-title-holder'); if (th2) th2.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+                try{ setEditableTitle(word); }catch(e){}
                 try{ var holder2 = popup.querySelector('.pm-credit-holder'); if (holder2) holder2.innerHTML = creditHtml; }catch(e){}
                 content.innerHTML = bodyHtml;
                 enhanceModal(content);
@@ -274,7 +421,7 @@
             }
             bodyHtml += '</div></div>';
 
-            try{ var th3 = popup.querySelector('.pm-title-holder'); if (th3) th3.innerHTML = '<h3 class="pm-title">' + escapeHtml(word) + '</h3>'; }catch(e){}
+            try{ setEditableTitle(word); }catch(e){}
             try{ var holder3 = popup.querySelector('.pm-credit-holder'); if (holder3) holder3.innerHTML = creditHtml; }catch(e){}
             content.innerHTML = bodyHtml;
             enhanceModal(content);
@@ -283,6 +430,26 @@
     }
 
     function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    // Render the popup title as an editable text field pre-filled with `word`.
+    // Pressing Enter re-triggers a lookup for whatever the user typed, updating
+    // the same modal in place.
+    function setEditableTitle(word){
+        var th = popup.querySelector('.pm-title-holder');
+        if (!th) return;
+        th.innerHTML = '<input type="text" class="pm-title pm-title-input" value="' + escapeHtml(word) + '" spellcheck="false" autocomplete="off" autocapitalize="off" />';
+        var input = th.querySelector('.pm-title-input');
+        if (!input) return;
+        function resize(){ input.style.width = Math.max(3, input.value.length + 1) + 'ch'; }
+        resize();
+        input.addEventListener('input', resize);
+        input.addEventListener('keydown', function(ev){
+            if (ev.key !== 'Enter') return;
+            ev.preventDefault();
+            var newWord = normalizeWord(input.value.trim());
+            if (newWord) lookupPali(newWord);
+        });
+    }
 
     // Post-process the injected dpd HTML to tweak presentation
     function enhanceModal(contentEl){
@@ -354,6 +521,9 @@
                 if (!s) return;
                 var text = s.toString().trim();
                 if (!text) return;
+                // if the selection spans multiple words (contains a space) the user is
+                // likely selecting a sentence or paragraph — skip the dictionary lookup
+                if (text.indexOf(' ') !== -1) return;
                 // same behavior as dblclick: use first token
                 var word = (text.split(/\s+/)[0] || text);
                 word = normalizeWord(word);
