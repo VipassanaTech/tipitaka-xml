@@ -133,6 +133,17 @@ namespace VRI.CSCD.Conversion
 
             dev2Khmer['\x094D'] = '\x17D2'; // virama
 
+            // Sanskrit letters, as in CST Reader (fsnow/cst #1049)
+            dev2Khmer['\x0903'] = '\x17C7'; // visarga
+            dev2Khmer['\x090B'] = '\x17AB'; // vocalic r
+            dev2Khmer['\x0910'] = '\x17B0'; // ai
+            dev2Khmer['\x0914'] = '\x17B3'; // au
+            dev2Khmer['\x0936'] = '\x179D'; // sha (palatal)
+            dev2Khmer['\x0937'] = '\x179E'; // ssa (retroflex)
+            dev2Khmer['\x0943'] = "\x17D2\x17AB"; // vocalic r sign
+            dev2Khmer['\x0948'] = '\x17C3'; // ai sign
+            dev2Khmer['\x094C'] = '\x17C5'; // au sign
+
             // let Devanagari danda (U+0964) and double danda (U+0965) 
             // pass through unmodified
 
@@ -192,6 +203,10 @@ namespace VRI.CSCD.Conversion
         // no stylesheet modifications, capitalization, etc.
         public string Convert(string devStr)
         {
+            // A visible halant (a virama with no consonant after it, skipping joiners) is the viriam,
+            // not the subscript-forming coeng. (fsnow/cst #1048)
+            devStr = Regex.Replace(devStr, "\x094D(?![\x200C\x200D]*[\x0915-\x0939])", "\x17D1");
+
             StringBuilder sb = new StringBuilder();
             foreach (char c in devStr.ToCharArray())
             {
@@ -208,11 +223,11 @@ namespace VRI.CSCD.Conversion
         {
             // in gathas, single dandas convert to semicolon, double to period
             // Regex note: the +? is the lazy quantifier which finds the shortest match
-            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\".+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"centre\".+?</p>",
                 new MatchEvaluator(this.ConvertNamoTassaDandas));
 
             // convert all others to KHAN
@@ -239,6 +254,9 @@ namespace VRI.CSCD.Conversion
         // punctuation marks. 
         public string CleanupPunctuation(string str)
         {
+            // two spaces to one
+            str = str.Replace("  ", " ");
+
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
             str = str.Replace(" !", "!");

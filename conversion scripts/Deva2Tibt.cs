@@ -134,6 +134,17 @@ namespace VRI.CSCD.Conversion
             deva2Tibt['\x094B'] = '\x0F7C'; // o
 
             deva2Tibt['\x094D'] = '\x0F84'; // virama
+
+            // Sanskrit letters, as in CST Reader (fsnow/cst #1049)
+            deva2Tibt['\x0903'] = '\x0F7F'; // visarga
+            deva2Tibt['\x090B'] = "\x0F62\x0F80"; // vocalic r
+            deva2Tibt['\x0910'] = "\x0F68\x0F7B"; // ai
+            deva2Tibt['\x0914'] = "\x0F68\x0F7D"; // au
+            deva2Tibt['\x0936'] = '\x0F64'; // sha (palatal)
+            deva2Tibt['\x0937'] = '\x0F65'; // ssa (retroflex)
+            deva2Tibt['\x0943'] = "\x0FB2\x0F80"; // vocalic r sign
+            deva2Tibt['\x0948'] = '\x0F7B'; // ai sign
+            deva2Tibt['\x094C'] = '\x0F7D'; // au sign
             deva2Tibt['\x0964'] = '\x0F0D'; // danda
             deva2Tibt['\x0965'] = '\x0F0E'; // double danda
 
