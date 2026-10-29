@@ -103,7 +103,6 @@ foreach ($file in Get-ChildItem $buildDir\deva\cscd\*.xml )
   # Deva2Latn is the converter but it is the romn directory on site
   & "$conversionScripts\deva2latn.exe" $file $buildDir\romn\cscd
   & "$conversionScripts\deva2sinh.exe" $file $buildDir\sinh\cscd
-  & "$conversionScripts\deva2taml.exe" $file $buildDir\taml\cscd
   & "$conversionScripts\deva2telu.exe" $file $buildDir\telu\cscd
   & "$conversionScripts\deva2thai.exe" $file $buildDir\thai\cscd
   & "$conversionScripts\deva2tibt.exe" $file $buildDir\tibt\cscd

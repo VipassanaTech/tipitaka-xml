@@ -138,6 +138,15 @@ namespace VRI.CSCD.Conversion
             // various signs
             deva2Gujarati['\x094D'] = '\x0ACD'; // virama
 
+            // Sanskrit letters, as in CST Reader (fsnow/cst #1049)
+            deva2Gujarati['\x0903'] = '\x0A83'; // visarga
+            deva2Gujarati['\x090B'] = '\x0A8B'; // vocalic r
+            deva2Gujarati['\x0910'] = '\x0A90'; // ai
+            deva2Gujarati['\x0914'] = '\x0A94'; // au
+            deva2Gujarati['\x0943'] = '\x0AC3'; // vocalic r sign
+            deva2Gujarati['\x0948'] = '\x0AC8'; // ai sign
+            deva2Gujarati['\x094C'] = '\x0ACC'; // au sign
+
             // we let dandas (U+0964) and double dandas (U+0965) pass through 
             // and handle them in ConvertDandas()
 
@@ -213,11 +222,11 @@ namespace VRI.CSCD.Conversion
         {
             // in gathas, single dandas convert to semicolon, double to period
             // Regex note: the +? is the lazy quantifier which finds the shortest match
-            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\".+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"centre\".+?</p>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period
@@ -244,6 +253,9 @@ namespace VRI.CSCD.Conversion
         // punctuation marks. 
         public string CleanupPunctuation(string str)
         {
+            // two spaces to one
+            str = str.Replace("  ", " ");
+
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
             str = str.Replace(" !", "!");

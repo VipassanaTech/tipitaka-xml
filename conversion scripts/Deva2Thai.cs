@@ -133,6 +133,16 @@ namespace VRI.CSCD.Conversion
 
             dev2Thai['\x094D'] = '\x0E3A'; // virama
 
+            // Sanskrit letters, as in CST Reader (fsnow/cst #1049)
+            dev2Thai['\x0903'] = '\x0E30'; // visarga
+            dev2Thai['\x090B'] = '\x0E24'; // vocalic r
+            dev2Thai['\x0910'] = "\x0E44\x0E2D"; // ai
+            dev2Thai['\x0914'] = "\x0E40\x0E2D\x0E32"; // au
+            dev2Thai['\x0936'] = '\x0E28'; // sha (palatal)
+            dev2Thai['\x0937'] = '\x0E29'; // ssa (retroflex)
+            dev2Thai['\x0943'] = "\x0E3A\x0E24"; // vocalic r sign
+            dev2Thai['\x0948'] = '\x0E44'; // ai sign
+
             // numerals
             dev2Thai['\x0966'] = '\x0E50';
             dev2Thai['\x0967'] = '\x0E51';
@@ -205,6 +215,12 @@ namespace VRI.CSCD.Conversion
             //devStr = Regex.Replace(devStr, "([\x0915-\x0939]\x094D[\x0915-\x0939])\x094B", "\x0E42$1");
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])\x094B", "\x0E42$1");
 
+            // the same for the ai vowel (fsnow/cst #1049)
+            devStr = Regex.Replace(devStr, "([\x0915-\x0939])\x0948", "\x0E44$1");
+
+            // au frames its consonant: e before it, aa after it (fsnow/cst #1049)
+            devStr = Regex.Replace(devStr, "([\x0915-\x0939])\x094C", "\x0E40$1\x0E32");
+
             StringBuilder sb = new StringBuilder();
             foreach (char c in devStr.ToCharArray())
             {
@@ -214,18 +230,23 @@ namespace VRI.CSCD.Conversion
                     sb.Append(c);
             }
 
-            return sb.ToString();
+            string thai = sb.ToString();
+
+            // combine i + niggahita into the single Thai character
+            thai = thai.Replace("\x0E34\x0E4D", "\x0E36");
+
+            return thai;
         }
 
         public string ConvertDandas(string str)
         {
             // in gathas, single dandas convert to semicolon, double to period
             // Regex note: the +? is the lazy quantifier which finds the shortest match
-            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\".+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"centre\".+?</p>",
                 new MatchEvaluator(this.ConvertNamoTassaDandas));
 
             // convert all others to Thai paiyannoi
@@ -252,6 +273,9 @@ namespace VRI.CSCD.Conversion
         // punctuation marks. 
         public string CleanupPunctuation(string str)
         {
+            // two spaces to one
+            str = str.Replace("  ", " ");
+
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
             str = str.Replace(" !", "!");
