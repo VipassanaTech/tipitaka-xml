@@ -144,6 +144,18 @@ namespace VRI.CSCD.Conversion
             // other
             deva2Mymr['\x0902'] = '\x1036'; // niggahita
             deva2Mymr['\x094D'] = '\x1039'; // virama
+
+            // Sanskrit letters, as in CST Reader (fsnow/cst #1049)
+            deva2Mymr['\x0903'] = '\x1038'; // visarga
+            deva2Mymr['\x090B'] = '\x1052'; // vocalic r
+            deva2Mymr['\x0910'] = "\x1021\x1032"; // ai
+            deva2Mymr['\x0914'] = '\x102A'; // au
+            deva2Mymr['\x0936'] = '\x1050'; // sha (palatal)
+            deva2Mymr['\x0937'] = '\x1051'; // ssa (retroflex)
+            deva2Mymr['\x0943'] = '\x1056'; // vocalic r sign
+            deva2Mymr['\x0948'] = '\x1032'; // ai sign
+            deva2Mymr['\x094C'] = "\x1031\x102C\x103A"; // au sign
+
             // we let dandas and double dandas pass through and handle
             // them in ConvertDandas()
             //deva2Mymr['\x0964'] = '\x104B';
@@ -196,6 +208,10 @@ namespace VRI.CSCD.Conversion
         // no stylesheet modifications, capitalization, etc.
         public string Convert(string devStr)
         {
+            // A visible halant (a virama with no consonant after it, skipping joiners) is the asat,
+            // not the subscript-forming stacking virama. (fsnow/cst #1048)
+            devStr = Regex.Replace(devStr, "\x094D(?![\x200C\x200D]*[\x0915-\x0939])", "\x103A");
+
             StringBuilder sb = new StringBuilder();
             foreach (char c in devStr.ToCharArray())
             {
@@ -249,7 +265,7 @@ namespace VRI.CSCD.Conversion
         {
             // in gathas, single dandas convert to semicolon, double to period
             // Regex note: the +? is the lazy quantifier which finds the shortest match
-            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\".+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // convert all others to double line
@@ -278,6 +294,9 @@ namespace VRI.CSCD.Conversion
         // punctuation marks. 
         public string CleanupPunctuation(string str)
         {
+            // two spaces to one
+            str = str.Replace("  ", " ");
+
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
             str = str.Replace(" !", "!");
