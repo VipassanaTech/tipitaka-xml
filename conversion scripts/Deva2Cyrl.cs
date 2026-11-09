@@ -126,7 +126,7 @@ namespace VRI.CSCD.Conversion
             deva2Cyrl['\x0908'] = "\x0438\x0439"; // ii
             deva2Cyrl['\x0909'] = '\x0443'; // u
             deva2Cyrl['\x090A'] = "\x0443\x0443"; // uu
-            deva2Cyrl['\x090F'] = '\x0437'; // e
+            deva2Cyrl['\x090F'] = '\x044D'; // e: e (U+044D), not ze (U+0437) (fsnow/cst#1059)
             deva2Cyrl['\x0913'] = '\x043E'; // o
 
             // dependent vowel signs
@@ -135,11 +135,23 @@ namespace VRI.CSCD.Conversion
             deva2Cyrl['\x0940'] = "\x0438\x0439"; // ii
             deva2Cyrl['\x0941'] = '\x0443'; // u
             deva2Cyrl['\x0942'] = "\x0443\x0443"; // uu
-            deva2Cyrl['\x0947'] = '\x0437'; // e
+            deva2Cyrl['\x0947'] = '\x044D'; // e (fsnow/cst#1059)
             deva2Cyrl['\x094B'] = '\x043E'; // o
 
             // various signs
             deva2Cyrl['\x094D'] = ""; // virama
+
+            // Sanskrit letters, as in CST Reader (fsnow/cst#1049): vocalic r and visarga with a dot below,
+            // sha / ssa as sh with and without acute, ai / au as a + short i / short u
+            deva2Cyrl['\x090B'] = "\x0440\x0323"; // vocalic r
+            deva2Cyrl['\x0943'] = "\x0440\x0323"; // vocalic r sign
+            deva2Cyrl['\x0910'] = "\x0430\x0439"; // ai
+            deva2Cyrl['\x0948'] = "\x0430\x0439"; // ai sign
+            deva2Cyrl['\x0914'] = "\x0430\x045E"; // au
+            deva2Cyrl['\x094C'] = "\x0430\x045E"; // au sign
+            deva2Cyrl['\x0903'] = "\x0445\x0323"; // visarga
+            deva2Cyrl['\x0936'] = "\x0448\x0301"; // sha (palatal)
+            deva2Cyrl['\x0937'] = '\x0448'; // ssa (retroflex)
 
             // let Devanagari danda (U+0964) and double danda (U+0965) 
             // pass through unmodified
@@ -235,6 +247,9 @@ namespace VRI.CSCD.Conversion
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])([^\x093E-\x094D\x0430])", "$1\x0430$2");
             // TODO: figure out how to backtrack so this replace doesn't have to be done twice
 
+            // insert a after a consonant at the end of the string (not met in the Tipitaka files)
+            devStr = Regex.Replace(devStr, "([\x0915-\x0939])$", "$1\x0430");
+
             StringBuilder sb = new StringBuilder();
             foreach (char c in devStr.ToCharArray())
             {
@@ -251,11 +266,11 @@ namespace VRI.CSCD.Conversion
         {
             // in gathas, single dandas convert to semicolon, double to period
             // Regex note: the +? is the lazy quantifier which finds the shortest match
-            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\".+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"centre\".+?</p>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period
@@ -282,6 +297,9 @@ namespace VRI.CSCD.Conversion
         // punctuation marks. 
         public string CleanupPunctuation(string str)
         {
+            // two spaces to one
+            str = str.Replace("  ", " ");
+
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
             str = str.Replace(" !", "!");

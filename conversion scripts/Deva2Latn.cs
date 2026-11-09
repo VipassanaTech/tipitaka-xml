@@ -147,6 +147,17 @@ namespace CST.Conversion
 
             deva2Latn['\x094D'] = ""; // virama
 
+            // Sanskrit letters, as in CST Reader (fsnow/cst #1049)
+            deva2Latn['\x0903'] = '\x1E25'; // visarga
+            deva2Latn['\x090B'] = '\x1E5B'; // vocalic r
+            deva2Latn['\x0910'] = "ai"; // ai
+            deva2Latn['\x0914'] = "au"; // au
+            deva2Latn['\x0936'] = '\x015B'; // sha (palatal)
+            deva2Latn['\x0937'] = '\x1E63'; // ssa (retroflex)
+            deva2Latn['\x0943'] = '\x1E5B'; // vocalic r sign
+            deva2Latn['\x0948'] = "ai"; // ai sign
+            deva2Latn['\x094C'] = "au"; // au sign
+
             // numerals
             deva2Latn['\x0966'] = '0';
             deva2Latn['\x0967'] = '1';
@@ -245,6 +256,9 @@ namespace CST.Conversion
             devStr = Regex.Replace(devStr, "([\x0915-\x0939])([^\x093E-\x094Da])", "$1a$2");
             // TODO: figure out how to backtrack so this replace doesn't have to be done twice
 
+            // insert a after a consonant at the end of the string (not met in the Tipitaka files)
+            devStr = Regex.Replace(devStr, "([\x0915-\x0939])$", "$1a");
+
             StringBuilder sb = new StringBuilder();
             foreach (char c in devStr.ToCharArray())
             {
@@ -261,11 +275,11 @@ namespace CST.Conversion
         {
             // in gathas, single dandas convert to semicolon, double to period
             // Regex note: the +? is the lazy quantifier which finds the shortest match
-            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\".+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"centre\".+?</p>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period
@@ -293,7 +307,7 @@ namespace CST.Conversion
         public string CleanupPunctuation(string str)
         {
 			// two spaces to one
-			//str = str.Replace("  ", " ");
+			str = str.Replace("  ", " ");
 
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
