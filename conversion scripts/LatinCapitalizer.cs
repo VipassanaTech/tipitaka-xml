@@ -135,7 +135,7 @@ namespace CST.Conversion
 
         public string Capitalize(string latin)
         {
-            string latinPaliLowercase = "[a-zñ\x1E45\x1E6D\x1E0D\x1E47\x1E37\x0101\x012B\x016B\x1E43]";
+            string latinPaliLowercase = "[a-zñ\x1E45\x1E6D\x1E0D\x1E47\x1E37\x0101\x012B\x016B\x1E43\x015B\x1E63\x1E5B]"; // s acute, s underdot, r underdot: fsnow/cst #1049
             latin = Regex.Replace(latin, this.capitalMarker + latinPaliLowercase, new MatchEvaluator(this.CapitalReplacer));
             latin = latin.Replace(this.capitalMarker, "");
             return latin;
@@ -143,7 +143,7 @@ namespace CST.Conversion
 
         public string CapitalReplacer(Match m)
         {
-            return m.Value.Substring(1).ToUpper();
+            return m.Value.Substring(1).ToUpperInvariant(); // not ToUpper: tr/az map i to dotted I
         }
 
         public string DebugRegex(Match m)
