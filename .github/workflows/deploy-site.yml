@@ -2,7 +2,9 @@
 # See site-deploy.ps1 for what is built, uploaded and deleted.
 #
 # Setup (Settings > Environments > production, deployment branches: main):
-#   secrets   SFTP_HOST, SFTP_USER, SFTP_KEY (private key), SFTP_KNOWN_HOSTS (ssh-keyscan output)
+#   secrets   SFTP_HOST, SFTP_USER, SFTP_KEY (private key), SFTP_KNOWN_HOSTS (ssh-keyscan output),
+#             SFTP_KEY_PASSPHRASE (only if the key has a passphrase; a key just for this
+#             workflow is better made without one)
 #   variables SITE_ROOT (site root path on the server), SFTP_PORT (optional, default 22)
 # Repository variable DEPLOY_ENABLED=true turns on uploads for pushes to main. Until then,
 # pushes only build and report what they would deploy.
@@ -96,7 +98,14 @@ jobs:
           FULL: ${{ inputs.full }}
           DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || github.event_name == 'push' && vars.DEPLOY_ENABLED != 'true' }}
           BEFORE: ${{ github.event.before }}
+          SFTP_KEY_PASSPHRASE: ${{ secrets.SFTP_KEY_PASSPHRASE }}
         run: |
+          if ($env:SFTP_KEY_PASSPHRASE) {
+            # rclone takes the passphrase only in its obscured form
+            $env:RCLONE_CONFIG_SITE_KEY_FILE_PASS = (& rclone obscure $env:SFTP_KEY_PASSPHRASE)
+            Write-Host "::add-mask::$env:RCLONE_CONFIG_SITE_KEY_FILE_PASS"
+            Remove-Item Env:SFTP_KEY_PASSPHRASE
+          }
           $p = @{ Head = $env:GITHUB_SHA; OutDir = "$env:RUNNER_TEMP\deploy" }
           $canReach = $env:RCLONE_CONFIG_SITE_HOST -and $env:SITE_ROOT -and (Test-Path "$env:RUNNER_TEMP\deploy_key")
           if ($canReach) { $p.Remote = "site:$env:SITE_ROOT" }
