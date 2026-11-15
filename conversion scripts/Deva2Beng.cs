@@ -141,6 +141,9 @@ namespace VRI.CSCD.Conversion
 
             deva2Beng['\x094D'] = '\x09CD'; // virama
 
+            // Sanskrit letters, as in CST Reader (fsnow/cst #1049)
+            deva2Beng['\x0903'] = '\x0983'; // visarga
+
             // numerals
             deva2Beng['\x0966'] = '\x09E6';
             deva2Beng['\x0967'] = '\x09E7';

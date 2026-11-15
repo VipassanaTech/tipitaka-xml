@@ -145,6 +145,17 @@ namespace VRI.CSCD.Conversion
             //dev2Sinhala['\x0964'] = '.'; // danda -> period
             dev2Sinhala['\x0902'] = '\x0D82'; // niggahita
             dev2Sinhala['\x094D'] = "\x0DCA\x200C"; // virama -> Sinhala virama + ZWNJ
+
+            // Sanskrit letters, as in CST Reader (fsnow/cst #1049)
+            dev2Sinhala['\x0903'] = '\x0D83'; // visarga
+            dev2Sinhala['\x090B'] = '\x0D8D'; // vocalic r
+            dev2Sinhala['\x0910'] = '\x0D93'; // ai
+            dev2Sinhala['\x0914'] = '\x0D96'; // au
+            dev2Sinhala['\x0936'] = '\x0DC1'; // sha (palatal)
+            dev2Sinhala['\x0937'] = '\x0DC2'; // ssa (retroflex)
+            dev2Sinhala['\x0943'] = '\x0DD8'; // vocalic r sign
+            dev2Sinhala['\x0948'] = '\x0DDB'; // ai sign
+            dev2Sinhala['\x094C'] = '\x0DDE'; // au sign
             dev2Sinhala['\x0970'] = '.'; // Dev. abbreviation sign
             dev2Sinhala['\x200C'] = ""; // ZWNJ (ignore)
             dev2Sinhala['\x200D'] = ""; // ZWJ (ignore)
@@ -208,6 +219,9 @@ namespace VRI.CSCD.Conversion
             // change joiners before U+0DBB Rayanna to Virama + ZWJ
             str = str.Replace("\x0DCA\x200C\x0DBB", "\x0DCA\x200D\x0DBB");
 
+            // change joiners between "kk"
+            str = str.Replace("\x0D9A\x0DCA\x200C\x0D9A", "\x0D9A\x0DCA\x200D\x0D9A");
+
             return str;
         }
 
@@ -215,11 +229,11 @@ namespace VRI.CSCD.Conversion
         {
             // in gathas, single dandas convert to semicolon, double to period
             // Regex note: the +? is the lazy quantifier which finds the shortest match
-            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"gatha[a-z0-9]*\".+?</p>",
                 new MatchEvaluator(this.ConvertGathaDandas));
 
             // remove double dandas around namo tassa
-            str = Regex.Replace(str, "<p rend=\"centre\">.+?</p>",
+            str = Regex.Replace(str, "<p rend=\"centre\".+?</p>",
                 new MatchEvaluator(this.RemoveNamoTassaDandas));
 
             // convert all others to period
@@ -246,6 +260,9 @@ namespace VRI.CSCD.Conversion
         // punctuation marks. 
         public string CleanupPunctuation(string str)
         {
+            // two spaces to one
+            str = str.Replace("  ", " ");
+
             str = str.Replace(" ,", ",");
             str = str.Replace(" ?", "?");
             str = str.Replace(" !", "!");

@@ -50,7 +50,7 @@ Remove-Item -path $pubDeva\*.toc.xml
 # count the deva XML files
 $xmlCount = (Get-ChildItem $pubDeva\*.xml | Measure-Object).Count
 
-Write-Host "$(Get-TimeStamp) Converting $xmlCount Deva source files into 14 scripts"
+Write-Host "$(Get-TimeStamp) Converting $xmlCount Deva source files into 13 scripts"
 
 $counter = 0
 
@@ -72,7 +72,6 @@ foreach ($file in Get-ChildItem $pubDeva\*.xml )
   # Deva2Latn is the converter but it is the romn directory on site
   & "$conversionScripts\deva2latn.exe" $file $publicXmlDir\romn
   & "$conversionScripts\deva2sinh.exe" $file $publicXmlDir\sinh
-  & "$conversionScripts\deva2taml.exe" $file $publicXmlDir\taml
   & "$conversionScripts\deva2telu.exe" $file $publicXmlDir\telu
   & "$conversionScripts\deva2thai.exe" $file $publicXmlDir\thai
   & "$conversionScripts\deva2tibt.exe" $file $publicXmlDir\tibt

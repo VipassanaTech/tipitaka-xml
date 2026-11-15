@@ -122,7 +122,7 @@ namespace VRI.CSCD.Conversion
             deva2Guru['\x0930'] = '\x0A30'; // ra
             deva2Guru['\x0932'] = '\x0A32'; // la
             deva2Guru['\x0933'] = '\x0A33'; // l underdot a
-            deva2Guru['\x0935'] = '\x0AB5'; // va
+            deva2Guru['\x0935'] = '\x0A35'; // va (Gurmukhi, not the Gujarati U+0AB5; fsnow/cst #1025)
             deva2Guru['\x0936'] = '\x0A36'; // sha (palatal)
             deva2Guru['\x0938'] = '\x0A38'; // sa
             deva2Guru['\x0939'] = '\x0A39'; // ha
