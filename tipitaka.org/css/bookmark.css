@@ -190,6 +190,13 @@
     padding: 20px;
 }
 
+.tp-floating-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
 /* Resize handle (bottom-right corner) */
 .tp-floating-resize-handle {
     position: absolute;

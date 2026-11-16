@@ -440,18 +440,37 @@
 
                 // Determine the content URL from the tree node ID
                 var lnk = '';
+                var isFullPage = false;
                 try {
                     if (finalId) {
-                        lnk = $('#' + finalId + '_anchor').attr('href') || '';
+                        // Prefer the tree map so we can resolve the content URL
+                        // even when the tree node is not rendered/expanded yet.
+                        lnk = _treeIdToHref[finalId] || '';
+                        if (!lnk) {
+                            lnk = $('#' + finalId + '_anchor').attr('href') || '';
+                        }
                     }
                 } catch (e) {}
 
                 if (!lnk) {
-                    // Fallback: try to resolve from the bookmark href
+                    // Fallback: load the script folder's index page. This is a
+                    // full HTML page with its own inline scripts, so it must be
+                    // shown in an iframe (see below) instead of being injected
+                    // with .load(), which would re-declare `let mybutton` in
+                    // this document and throw a SyntaxError.
                     try {
-                        var fallbackUrl = _pageBase + 'index.html' + (finalId ? '#' + finalId : '');
-                        // Load index page with hash as a last resort
+                        var fallbackUrl = '';
+                        if (folder && finalId) {
+                            var p = window.location.pathname || '/';
+                            var folderIdx = p.indexOf('/' + folder + '/');
+                            var basePath = folderIdx !== -1 ? p.substring(0, folderIdx) : '';
+                            fallbackUrl = window.location.origin + basePath + '/' + folder + '/index.html#' + finalId;
+                        }
+                        if (!fallbackUrl) {
+                            fallbackUrl = _pageBase + 'index.html' + (finalId ? '#' + finalId : '');
+                        }
                         lnk = fallbackUrl;
+                        isFullPage = true;
                     } catch (e) {}
                 }
 
@@ -492,6 +511,13 @@
                         targetUrl = window.location.origin + basePath + '/' + folder + '/?t=' + Date.now() + '#' + finalId;
                     }
                     if (targetUrl) {
+                        // Remember the bookmarked section so the target page
+                        // scrolls to it after the tree loads the content.
+                        try {
+                            if (bmSectionId) {
+                                localStorage.setItem('tpsearch-newtab-section', bmSectionId);
+                            }
+                        } catch (e) {}
                         $('#tp-floating-viewer, #tp-floating-backdrop').remove();
                         window.location.href = targetUrl;
                     }
@@ -571,19 +597,32 @@
                 });
 
                 // Load the content
-                $('#tp-floating-content').load(lnk, function () {
-                    // Scroll to the bookmarked section if available
-                    if (bmSectionId) {
-                        var $target = $('#' + bmSectionId);
-                        if ($target.length) {
-                            var contentTop = $('#tp-floating-content').offset().top;
-                            var targetTop = $target.offset().top;
-                            $('#tp-floating-content').animate({
-                                scrollTop: targetTop - contentTop + $('#tp-floating-content').scrollTop() - 20
-                            }, 300);
+                if (isFullPage) {
+                    // Full pages carry their own scripts, so render them in an
+                    // isolated document to avoid "already declared" errors.
+                    var $iframe = $('<iframe class="tp-floating-frame" title="Bookmarked page"></iframe>');
+                    $('#tp-floating-content').append($iframe);
+                    try {
+                        if (bmSectionId) {
+                            localStorage.setItem('tpsearch-newtab-section', bmSectionId);
                         }
-                    }
-                });
+                    } catch (e) {}
+                    $iframe.attr('src', lnk);
+                } else {
+                    $('#tp-floating-content').load(lnk, function () {
+                        // Scroll to the bookmarked section if available
+                        if (bmSectionId) {
+                            var $target = $('#' + bmSectionId);
+                            if ($target.length) {
+                                var contentTop = $('#tp-floating-content').offset().top;
+                                var targetTop = $target.offset().top;
+                                $('#tp-floating-content').animate({
+                                    scrollTop: targetTop - contentTop + $('#tp-floating-content').scrollTop() - 20
+                                }, 300);
+                            }
+                        }
+                    });
+                }
             };
 
             if (!id && href) {
