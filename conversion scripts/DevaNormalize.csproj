@@ -1,0 +1,54 @@
+<Project>
+
+  <!--
+    Builds DevaNormalize.exe, which normalizes the text of the books in
+    "deva master" after they are corrected (see DevaNormalize.bat).
+    The exe is a 32-bit x86 build for .NET Framework 4.8, like the Deva2* converters in
+    this directory.
+
+      dotnet build -c Release DevaNormalize.csproj
+      copy bin\DevaNormalize\Release\net48\DevaNormalize.exe .
+
+    The reference assemblies package lets the net48 build run on any OS with the
+    .NET SDK. The net8.0 build is only for running the tool where .NET Framework
+    is not available.
+
+    DevaMaster2Split.csproj and DevaNormalize.csproj are in the same directory, so each
+    has its own obj and bin directory. That has to be set before the SDK is imported.
+  -->
+
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>obj\DevaNormalize\</BaseIntermediateOutputPath>
+    <BaseOutputPath>bin\DevaNormalize\</BaseOutputPath>
+  </PropertyGroup>
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net48;net8.0</TargetFrameworks>
+    <AssemblyName>DevaNormalize</AssemblyName>
+    <RootNamespace>DevaNormalize</RootNamespace>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net48'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="DevaNormalize.cs" />
+    <Compile Include="DevaNormalization.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net48'">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+</Project>
