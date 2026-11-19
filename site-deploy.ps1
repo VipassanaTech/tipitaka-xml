@@ -244,7 +244,7 @@ if ($fullScripts.Count -gt 0 -and -not ($Full -or $splitterChanged)) {
 
 $newBooks = @($changedBooks | Where-Object { $headBooks -contains $_ })
 $oldBooks = @($changedBooks | Where-Object { $baseBooks -contains $_ })
-$splitBooks = if ($fullScripts.Count -gt 0) { $headBooks } else { $newBooks }
+$splitBooks = @(if ($fullScripts.Count -gt 0) { $headBooks } else { $newBooks })
 
 Write-Step ("Changed: {0} books, {1} scripts with every book, {2} static files to upload, {3} to delete" -f `
   $changedBooks.Count, $fullScripts.Count, $staticUpload.Count, $staticDelete.Count)
@@ -407,17 +407,12 @@ if ($uploadList.Count -gt 0) {
     '--retries', '5', '--stats', '30s', '--stats-one-line', '-v') | ForEach-Object { Write-Host "  $_" }
 }
 
-foreach ($rel in $deleteList) {
-  Write-Step "Deleting $rel"
-  $saved = $ErrorActionPreference
-  $ErrorActionPreference = 'Continue'
-  $out = & rclone deletefile "$Remote/$rel" 2>&1 | ForEach-Object { "$_" }
-  $code = $LASTEXITCODE
-  $ErrorActionPreference = $saved
-  if ($code -ne 0) {
-    if (($out -join ' ') -match 'not found') { Write-Host "  already gone" }
-    else { throw "rclone deletefile $rel failed:`n$($out -join "`n")" }
-  }
+if ($deleteList.Count -gt 0) {
+  # one rclone run over a few connections; each listed path is looked up directly, nothing
+  # else on the server is listed or touched, and a file that is already gone is skipped
+  Write-Step "Deleting $($deleteList.Count) files"
+  Invoke-Native 'rclone' @('delete', $Remote, '--files-from-raw', (Join-Path $OutDir 'deletes.txt'),
+    '--checkers', '8', '--retries', '5', '-v') | ForEach-Object { Write-Host "  $_" }
 }
 
 Write-Step 'Uploading version.txt'
