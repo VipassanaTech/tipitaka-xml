@@ -13,7 +13,11 @@
     from splitting the old version of the book with the old commit's splitter, so they are the
     names that were actually deployed. Changes to "deva master/*.toc.xml" are ignored: the
     site's tables of contents are tree.json, and the splitter writes its own .toc.xml.
-  - Tools: if a splitter or converter .exe (or .exe.config) changed, every book is rebuilt.
+  - Tools: if DevaMaster2Split.exe changed, every book is rebuilt in every script. If a
+    converter's .exe (or .exe.config) changed or was added, every book is rebuilt in that
+    script only; a new script such as orya is deployed in full this way. A script is built
+    only at commits where its converter exists. Other tools in "conversion scripts" do not
+    affect the site.
   - version.txt (commit and date) is uploaded last. If a run fails partway, the next run
     starts again from the old commit and redoes the whole difference.
 
@@ -51,18 +55,14 @@ Set-StrictMode -Version 2
 
 $repo = $PSScriptRoot
 
-# site directory => converter. deva is the splitter's own output.
-$converters = [ordered]@{
+# site directory => converter. deva is the splitter's own output. A script is built only
+# at commits where its converter exists, so a converter can be added in its own commit.
+$allConverters = [ordered]@{
   beng = 'deva2beng'; cyrl = 'deva2cyrl'; gujr = 'deva2gujr'; guru = 'deva2guru'
   khmr = 'deva2khmr'; knda = 'deva2knda'; mlym = 'deva2mlym'; mymr = 'deva2mymr'
-  romn = 'deva2latn'; sinh = 'deva2sinh'; telu = 'deva2telu'; thai = 'deva2thai'
-  tibt = 'deva2tibt'
+  orya = 'deva2orya'; romn = 'deva2latn'; sinh = 'deva2sinh'; telu = 'deva2telu'
+  thai = 'deva2thai'; tibt = 'deva2tibt'
 }
-$scriptDirs = @('deva') + @($converters.Keys)
-
-$toolFiles = @('DevaMaster2Split.exe') +
-  @($converters.Values | ForEach-Object { "$_.exe" }) +
-  @('deva2latn.exe.config', 'deva2cyrl.exe.config')
 
 function Write-Step([string]$message) {
   Write-Host ("[{0:HH:mm:ss}] {1}" -f (Get-Date), $message)
@@ -125,14 +125,34 @@ function Get-Books([string]$rev) {
     Where-Object { $_ -like '*.xml' -and $_ -notlike '*.toc.xml' }
 }
 
-# Extracts the tools at a commit into $dir
-function Save-Tools([string]$rev, [string]$dir) {
-  foreach ($f in $toolFiles) {
-    if (-not (Test-GitPath $rev "conversion scripts/$f")) {
-      throw "conversion scripts/$f does not exist at $rev"
-    }
-    Save-GitFile $rev "conversion scripts/$f" (Join-Path $dir $f)
+# The converters (site directory => converter) whose exe exists at a commit
+function Get-Converters([string]$rev) {
+  $c = [ordered]@{}
+  foreach ($s in $allConverters.Keys) {
+    if (Test-GitPath $rev "conversion scripts/$($allConverters[$s]).exe") { $c[$s] = $allConverters[$s] }
   }
+  return $c
+}
+
+# Extracts the splitter, and the converters with any .exe.config they have, at a commit into $dir
+function Save-Tools([string]$rev, $converters, [string]$dir) {
+  if (-not (Test-GitPath $rev 'conversion scripts/DevaMaster2Split.exe')) {
+    throw "conversion scripts/DevaMaster2Split.exe does not exist at $rev"
+  }
+  Save-GitFile $rev 'conversion scripts/DevaMaster2Split.exe' (Join-Path $dir 'DevaMaster2Split.exe')
+  foreach ($name in $converters.Values) {
+    Save-GitFile $rev "conversion scripts/$name.exe" (Join-Path $dir "$name.exe")
+    if (Test-GitPath $rev "conversion scripts/$name.exe.config") {
+      Save-GitFile $rev "conversion scripts/$name.exe.config" (Join-Path $dir "$name.exe.config")
+    }
+  }
+}
+
+# The book a split file belongs to: s0101m.mul12.xml and s0101m.mul.toc.xml => s0101m.mul.xml
+function Get-BookOf([string]$fileName) {
+  if ($fileName -match '^(.+)\.toc\.xml$') { return "$($Matches[1]).xml" }
+  if ($fileName -match '^(.+\.[a-z]+)\d*\.xml$') { return "$($Matches[1]).xml" }
+  throw "Cannot tell which book $fileName belongs to"
 }
 
 # Splits the given books as of $rev with the splitter in $toolDir. Returns the output lines.
@@ -177,7 +197,8 @@ $fields = @($raw.Split([char]0) | ForEach-Object { $_.Trim("`n") } | Where-Objec
 $staticUpload = New-Object System.Collections.Generic.List[string]
 $staticDelete = New-Object System.Collections.Generic.List[string]
 $changedBooks = New-Object System.Collections.Generic.SortedSet[string]
-$toolsChanged = New-Object System.Collections.Generic.List[string]
+$splitterChanged = $false
+$changedConverters = New-Object System.Collections.Generic.SortedSet[string]   # site directories
 
 for ($i = 0; $i -lt $fields.Count; $i += 2) {
   $status = $fields[$i].Substring(0, 1)
@@ -186,8 +207,13 @@ for ($i = 0; $i -lt $fields.Count; $i += 2) {
   if ($path -match '^deva master/([^/]+\.xml)$' -and $path -notlike '*.toc.xml') {
     [void]$changedBooks.Add($Matches[1])
   }
-  elseif ($path -match '^conversion scripts/[^/]+\.exe(\.config)?$') {
-    $toolsChanged.Add($path)
+  elseif ($path -eq 'conversion scripts/DevaMaster2Split.exe') {
+    $splitterChanged = $true
+  }
+  elseif ($path -match '^conversion scripts/([^/]+)\.exe(\.config)?$') {
+    # only the site's converters; other tools (DevaNormalize.exe, ...) do not affect the site
+    $name = $Matches[1]
+    foreach ($s in $allConverters.Keys) { if ($allConverters[$s] -eq $name) { [void]$changedConverters.Add($s) } }
   }
   elseif ($path -match '^tipitaka\.org/(.+)$') {
     $rel = $Matches[1]
@@ -198,17 +224,30 @@ for ($i = 0; $i -lt $fields.Count; $i += 2) {
 
 $headBooks = @(Get-Books $headSha)
 $baseBooks = @(Get-Books $baseSha)
+$converters = Get-Converters $headSha
+$scriptDirs = @('deva') + @($converters.Keys)
 
-if ($Full -or $toolsChanged.Count -gt 0) {
-  if ($toolsChanged.Count -gt 0) { Write-Step "Tools changed, rebuilding every book: $($toolsChanged -join ', ')" }
+# Scripts that get every book: all of them if the splitter changed, else those whose
+# converter changed (or was added). Changed books are rebuilt in every script.
+$fullScripts = New-Object System.Collections.Generic.SortedSet[string]
+if ($Full -or $splitterChanged) {
+  Write-Step $(if ($Full) { 'Rebuilding every book (-Full)' } else { 'The splitter changed: rebuilding every book' })
   foreach ($b in $headBooks + $baseBooks) { [void]$changedBooks.Add($b) }
+  foreach ($s in $scriptDirs) { [void]$fullScripts.Add($s) }
+}
+foreach ($s in $changedConverters) {
+  if ($converters.Contains($s)) { [void]$fullScripts.Add($s) }
+}
+if ($fullScripts.Count -gt 0 -and -not ($Full -or $splitterChanged)) {
+  Write-Step "Converter changed: rebuilding every book in $(@($fullScripts) -join ', ')"
 }
 
 $newBooks = @($changedBooks | Where-Object { $headBooks -contains $_ })
 $oldBooks = @($changedBooks | Where-Object { $baseBooks -contains $_ })
+$splitBooks = if ($fullScripts.Count -gt 0) { $headBooks } else { $newBooks }
 
-Write-Step ("Changed: {0} books, {1} static files to upload, {2} static files to delete" -f `
-  $changedBooks.Count, $staticUpload.Count, $staticDelete.Count)
+Write-Step ("Changed: {0} books, {1} scripts with every book, {2} static files to upload, {3} to delete" -f `
+  $changedBooks.Count, $fullScripts.Count, $staticUpload.Count, $staticDelete.Count)
 
 # ---------------------------------------------------------------------------------------
 # build
@@ -227,43 +266,62 @@ Set-Content (Join-Path $OutDir '.site-deploy') 'working directory of site-deploy
 $bookDelete = New-Object System.Collections.Generic.List[string]
 $splitLog = @()
 
-if ($changedBooks.Count -gt 0) {
+if ($splitBooks.Count -gt 0 -or $oldBooks.Count -gt 0) {
   $headTools = Join-Path $work 'tools-head'
-  Save-Tools $headSha $headTools
+  Save-Tools $headSha $converters $headTools
 
-  # new files
-  $devaOut = Join-Path $upload 'deva\cscd'
-  Write-Step "Splitting $($newBooks.Count) books"
-  $splitLog = @(Split-Books $headSha $newBooks $headTools (Join-Path $work 'head') $devaOut)
+  # split
+  $splitDir = Join-Path $work 'split'
+  Write-Step "Splitting $($splitBooks.Count) books"
+  $splitLog = @(Split-Books $headSha $splitBooks $headTools (Join-Path $work 'head') $splitDir)
   $splitLog | ForEach-Object { Write-Host "  $_" }
-  $newFiles = @(Get-ChildItem $devaOut -Filter *.xml -ErrorAction SilentlyContinue |
+  $splitFiles = @(Get-ChildItem $splitDir -Filter *.xml -ErrorAction SilentlyContinue |
     Where-Object { $_.Extension -eq '.xml' } | Sort-Object Name)
+
+  # the files each script gets: every file in $fullScripts, else the changed books' files
+  $newBookSet = [Collections.Generic.HashSet[string]]::new([string[]]$newBooks)
+  $changedFiles = @($splitFiles | Where-Object { $newBookSet.Contains((Get-BookOf $_.Name)) })
+  $filesFor = @{}
+  foreach ($s in $scriptDirs) {
+    $filesFor[$s] = @(if ($fullScripts.Contains($s)) { $splitFiles } else { $changedFiles })
+  }
+
+  $devaOut = Join-Path $upload 'deva\cscd'
+  New-Item -ItemType Directory -Force $devaOut | Out-Null
+  foreach ($f in $filesFor['deva']) { Copy-Item -LiteralPath $f.FullName $devaOut }
 
   # file names the old versions produced
   $oldNames = @()
   if ($oldBooks.Count -gt 0) {
     $baseTools = Join-Path $work 'tools-base'
-    Save-Tools $baseSha $baseTools
+    Save-Tools $baseSha ([ordered]@{}) $baseTools
     $oldOut = Join-Path $work 'base-split'
     Write-Step "Splitting the $($oldBooks.Count) old versions for their file names"
     Split-Books $baseSha $oldBooks $baseTools (Join-Path $work 'base') $oldOut | Out-Null
     $oldNames = @(Get-ChildItem $oldOut -Filter *.xml | Where-Object { $_.Extension -eq '.xml' } | ForEach-Object Name)
   }
-  $newNames = [Collections.Generic.HashSet[string]]::new([string[]]@($newFiles | ForEach-Object Name))
+  $newNames = [Collections.Generic.HashSet[string]]::new([string[]]@($splitFiles | ForEach-Object Name))
   foreach ($n in $oldNames) {
     if (-not $newNames.Contains($n)) {
       foreach ($s in $scriptDirs) { $bookDelete.Add("$s/cscd/$n") }
     }
   }
 
-  # convert: one background job per script, so the 13 converters run in parallel.
+  # convert: one background job per script, so the converters run in parallel.
   # Each converter handles one file per run, so the time is mostly process start-up.
-  Write-Step "Converting $($newFiles.Count) files into $($converters.Count) scripts"
-  $paths = [string[]]@($newFiles | ForEach-Object FullName)
-  $jobs = foreach ($s in $converters.Keys) {
+  # At most two jobs per CPU: 13 at once ran Merlin (2 CPUs, 4 GB) out of memory.
+  $toConvert = @($converters.Keys | Where-Object { $filesFor[$_].Count -gt 0 })
+  $maxJobs = [Math]::Max(2, 2 * [Environment]::ProcessorCount)
+  Write-Step ("Converting into {0} scripts, {1} at a time: {2}" -f $toConvert.Count, $maxJobs,
+    (($toConvert | ForEach-Object { "$_ $($filesFor[$_].Count)" }) -join ', '))
+  $jobs = foreach ($s in $toConvert) {
+    while (@(Get-Job | Where-Object { $_.State -eq 'Running' }).Count -ge $maxJobs) {
+      Wait-Job -Any (Get-Job | Where-Object { $_.State -eq 'Running' }) | Out-Null
+    }
     $exe = Join-Path $headTools "$($converters[$s]).exe"
     $outDirS = Join-Path $upload "$s\cscd"
     New-Item -ItemType Directory -Force $outDirS | Out-Null
+    $paths = [string[]]@($filesFor[$s] | ForEach-Object FullName)
     Start-Job -Name $s -ArgumentList @($exe, $outDirS, $paths) -ScriptBlock {
       param($exe, $outDir, $files)
       $ErrorActionPreference = 'Continue'
@@ -278,18 +336,24 @@ if ($changedBooks.Count -gt 0) {
       }
     }
   }
-  $jobs | Wait-Job | Out-Null
-  $failures = @($jobs | ForEach-Object {
-    if ($_.State -ne 'Completed') { "job $($_.Name) ended $($_.State): $($_.ChildJobs[0].JobStateInfo.Reason)" }
-    Receive-Job $_
-  } | Where-Object { $_ })
-  $jobs | Remove-Job
-  if ($failures.Count -gt 0) { throw "Conversion failed:`n$($failures -join "`n")" }
+  $jobs = @($jobs | Where-Object { $_ })
+  if ($jobs.Count -gt 0) {
+    $jobs | Wait-Job | Out-Null
+    $failures = @($jobs | ForEach-Object {
+      if ($_.State -ne 'Completed') { "job $($_.Name) ended $($_.State): $($_.ChildJobs[0].JobStateInfo.Reason)" }
+      Receive-Job $_
+    } | Where-Object { $_ })
+    $jobs | Remove-Job
+    if ($failures.Count -gt 0) { throw "Conversion failed:`n$($failures -join "`n")" }
+  }
 
-  # every script has the same files
+  # every script has exactly the files it should
   foreach ($s in $scriptDirs) {
-    $n = @(Get-ChildItem (Join-Path $upload "$s\cscd") -Filter *.xml | Where-Object { $_.Extension -eq '.xml' }).Count
-    if ($n -ne $newFiles.Count) { throw "$s has $n files, deva has $($newFiles.Count)" }
+    $dir = Join-Path $upload "$s\cscd"
+    $have = @(Get-ChildItem $dir -Filter *.xml -ErrorAction SilentlyContinue | Where-Object { $_.Extension -eq '.xml' } |
+      ForEach-Object Name | Sort-Object)
+    $want = @($filesFor[$s] | ForEach-Object Name | Sort-Object)
+    if (($have -join '|') -ne ($want -join '|')) { throw "$s has $($have.Count) files, it should have $($want.Count)" }
   }
 }
 
