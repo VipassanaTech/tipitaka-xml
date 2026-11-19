@@ -1,0 +1,199 @@
+/* 
+  Tipitaka stylesheet for Unicode Latin encoding. 
+*/
+
+body { 
+    font-family: "Times Ext Roman", "Indic Times", "Doulos SIL", Tahoma, "Arial Unicode MS", Gentium;
+    background: white;
+    }
+  
+    note {color: blue}
+    note::before {
+        content: "[";
+        color: blue;
+    }
+
+    note::after{
+        content: "]";
+        color: blue;
+    }
+
+    /* Style for the container */
+    .bodycontainer {
+        display: flex;
+
+        }
+
+    /* -- flex wrapper for footer so it always stays at the foot of the page regardless of content length -- */
+    .flex-wrapper {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+      
+    /* Style for the sidebar container */
+    .sidebar {
+        width: 27%; /* Default width */
+        overflow: hidden;
+        padding-top: 0px;
+        vertical-align: top;
+        resize: horizontal; /* Enable horizontal resizing */
+        
+        }
+
+    /* Style for the separator */
+    .separator {
+        width: 10px;
+        cursor: ew-resize; /* Horizontal resize cursor */
+        background-color: #ddd;
+        }
+
+    /* Style for the page content */
+    .content {
+        flex: 1; /* Fill remaining space */
+        padding-left: 16px;
+        padding-right: 16px;
+        overflow: auto;
+        align-self: stretch; /* Add this line */
+        }
+
+
+    /* Return to Top button */
+    #myBtn {
+        display: none; 
+        position: fixed;
+        bottom: 20px;
+        right: 30px;
+        z-index: 99;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: #2f76a8;
+        color: white;
+        cursor: pointer;
+        padding: 15px;
+        border-radius: 4px;
+        margin: 0 auto;
+    }
+
+    #myBtn:hover {
+        background-color: #444;
+    }
+  
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;
+    }
+  
+    .fixed{
+    position: sticky;
+    top: 0;
+
+    }
+
+    .bld {font-weight: bold; }
+    .paranum {font-weight: bold; }
+
+    p {
+    border-top: 0in; border-bottom: 0in;
+    padding-top: 0in; padding-bottom: 0in;
+    margin-top: 0in; margin-bottom: 0.5cm;
+    }
+
+    .bold { font-weight: bold; }
+
+    .indent { font-size: 12pt; text-indent: 2em; margin-left: 3em;}
+
+    .bodytext { font-size: 12pt; text-indent: 2em;}
+
+    .hangnum { font-size: 12pt; margin-bottom: -0.75cm; text-indent: 2em;}
+
+    /* Namo tassa, and nitthita -- no unique structural distinction */
+    .centered { font-size: 12pt; text-align:center;}
+
+    .centre {font-size: 12pt; text-align:center;}
+
+    .unindented { font-size: 12pt;}
+
+    .book { font-size: 21pt; text-align:center; font-weight: bold;}
+
+    .chapter { font-size: 18pt; text-align:center; font-weight: bold;}
+
+    .nikaya { font-size: 24pt; text-align:center; font-weight: bold;}
+
+    .title { font-size: 12pt; text-align:center; font-weight: bold;}
+
+    .subhead { font-size: 12pt; text-align:center; font-weight: bold;}
+
+    .subsubhead { font-size: 12pt; text-align:center; font-weight: bold;}
+
+    /* Gatha line 1 */
+    .gatha1 { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
+
+    /* Gatha line 2 */
+    .gatha2 { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
+
+    /* Gatha line 3 */
+    .gatha3 { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
+
+    /* Gatha last line */
+    .gathalast { font-size: 12pt; margin-bottom: 0.5cm; margin-left: 4em;}
+
+
+    /*------ Style substitutions ------*/
+
+
+    p[rend="bld"] {font-weight: bold; }
+    hi[rend="paranum"] { font-weight: bold; font-size: 14pt; }
+    hi[rend="dot"] { font-weight: bold; font-size: 14pt; }
+    hi[rend="bold"] { font-weight: bold; }
+
+    p[rend="hangnum"] { font-size: 12pt; margin-bottom: -0.75cm; text-indent: 2em;}
+    
+    p[rend="nikaya"] { font-size: 24pt; text-align:center; font-weight: bold;}
+
+    p[rend="book"]  { font-size: 21pt; text-align:center; font-weight: bold;}
+
+    p[rend="chapter"] { font-size: 18pt; text-align:center; font-weight: bold;}
+
+    p[rend="centre"] { font-size: 12pt; text-align:center;}
+
+    p[rend="bodytext"] { font-size: 12pt; text-indent: 2em;}
+
+    p[rend="title"] { font-size: 16pt; text-align:center; font-weight: bold;}
+
+    p[rend="subhead"] { font-size: 16pt; text-align:center; font-weight: bold;}
+
+    p[rend="subsubhead"] { font-size: 14pt; text-align:center; font-weight: bold;}
+
+    p[rend="gatha1"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
+
+    p[rend="gatha2"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
+
+    p[rend="gatha3"] { font-size: 12pt; margin-bottom: 0em; margin-left: 4em;}
+
+    p[rend="gathalast"] { font-size: 12pt; margin-bottom: 0.5cm; margin-left: 4em;}
+
+/* Media query for print */
+@media print {
+    /* Hide the Top button when printing */
+    #mybtn {
+        display: none !important; /* Override default display property */
+    }
+    
+    .sidebar {
+        width: 0%;
+    }
+    
+    .content {
+        flex: 1; /* Fill remaining space */
+        padding: 32px;
+        width: 95%;
+        overflow: auto;
+        align-self: stretch; /* Add this line */
+        }
+
+}
