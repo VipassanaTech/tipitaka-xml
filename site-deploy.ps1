@@ -312,6 +312,10 @@ $deleteList = @(@($bookDelete) + @($staticDelete) | Sort-Object -Unique)
 $utf8 = New-Object Text.UTF8Encoding $false
 [IO.File]::WriteAllLines((Join-Path $OutDir 'uploads.txt'), [string[]]$uploadList, $utf8)
 [IO.File]::WriteAllLines((Join-Path $OutDir 'deletes.txt'), [string[]]$deleteList, $utf8)
+# a record of exactly what this deploy uploaded
+$hashes = @($uploadList | ForEach-Object {
+  "{0}`t{1}" -f (Get-FileHash -LiteralPath (Join-Path $upload ($_ -replace '/', '\')) -Algorithm SHA256).Hash, $_ })
+[IO.File]::WriteAllLines((Join-Path $OutDir 'upload-hashes.tsv'), [string[]]$hashes, $utf8)
 
 $summary = @(
   "### tipitaka.org deploy $($headSha.Substring(0,7)) over $($baseSha.Substring(0,7))"

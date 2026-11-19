@@ -126,5 +126,6 @@ jobs:
           path: |
             ${{ runner.temp }}\deploy\uploads.txt
             ${{ runner.temp }}\deploy\deletes.txt
+            ${{ runner.temp }}\deploy\upload-hashes.tsv
             ${{ runner.temp }}\deploy\version.txt
           if-no-files-found: ignore
