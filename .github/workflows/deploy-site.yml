@@ -1,0 +1,131 @@
+# Deploys tipitaka.org from main: only what changed since the commit in the site's version.txt.
+# See site-deploy.ps1 for what is built, uploaded and deleted.
+#
+# Setup (Settings > Environments > production, deployment branches: main):
+#   secrets   SFTP_HOST, SFTP_USER, SFTP_KEY (private key), SFTP_KNOWN_HOSTS (ssh-keyscan output),
+#             SFTP_KEY_PASSPHRASE (only if the key has a passphrase; a key just for this
+#             workflow is better made without one)
+#   variables SITE_ROOT (site root path on the server), SFTP_PORT (optional, default 22)
+# Repository variable DEPLOY_ENABLED=true turns on uploads for pushes to main. Until then,
+# pushes only build and report what they would deploy.
+
+name: Deploy tipitaka.org
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'deva master/**'
+      - 'tipitaka.org/**'
+      - 'conversion scripts/**'
+      - 'site-deploy.ps1'
+      - '.github/workflows/deploy-site.yml'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run: build and report, upload nothing'
+        type: boolean
+        default: true
+      base:
+        description: 'Commit to compare against (default: version.txt on the server)'
+        type: string
+        default: ''
+      full:
+        description: 'Rebuild every book (takes hours)'
+        type: boolean
+        default: false
+      site_root:
+        description: 'Site root on the server (default: the SITE_ROOT variable), e.g. a staging path'
+        type: string
+        default: ''
+
+# one deploy at a time; a newer push waits, and replaces any push already waiting
+concurrency:
+  group: deploy-tipitaka-org
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: github.repository == 'VipassanaTech/tipitaka-xml'
+    runs-on: windows-latest
+    environment: production
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # site-deploy.ps1 reads books, static files and tools from git objects, so it needs
+          # history but only the root files in the working tree
+          fetch-depth: 0
+          filter: blob:none
+          sparse-checkout: .github
+
+      - name: Install rclone
+        shell: pwsh
+        run: |
+          $v = 'v1.68.2'
+          Invoke-WebRequest "https://downloads.rclone.org/$v/rclone-$v-windows-amd64.zip" -OutFile "$env:RUNNER_TEMP\rclone.zip"
+          Expand-Archive "$env:RUNNER_TEMP\rclone.zip" $env:RUNNER_TEMP
+          "$env:RUNNER_TEMP\rclone-$v-windows-amd64" | Out-File -Append -Encoding utf8 $env:GITHUB_PATH
+
+      - name: Configure SFTP
+        shell: pwsh
+        env:
+          SFTP_KEY: ${{ secrets.SFTP_KEY }}
+          SFTP_KNOWN_HOSTS: ${{ secrets.SFTP_KNOWN_HOSTS }}
+        run: |
+          if (-not $env:SFTP_KEY) { Write-Host 'No SFTP_KEY secret: the server cannot be reached'; exit 0 }
+          if (-not $env:SFTP_KNOWN_HOSTS) { throw 'SFTP_KEY is set but SFTP_KNOWN_HOSTS is not: add the ssh-keyscan output so the server can be verified' }
+          [IO.File]::WriteAllText("$env:RUNNER_TEMP\deploy_key", $env:SFTP_KEY.Trim() + "`n")
+          [IO.File]::WriteAllText("$env:RUNNER_TEMP\known_hosts", $env:SFTP_KNOWN_HOSTS.Trim() + "`n")
+
+      - name: Build and deploy
+        shell: powershell
+        env:
+          RCLONE_CONFIG_SITE_TYPE: sftp
+          RCLONE_CONFIG_SITE_HOST: ${{ secrets.SFTP_HOST }}
+          RCLONE_CONFIG_SITE_USER: ${{ secrets.SFTP_USER }}
+          RCLONE_CONFIG_SITE_PORT: ${{ vars.SFTP_PORT || '22' }}
+          RCLONE_CONFIG_SITE_KEY_FILE: ${{ runner.temp }}\deploy_key
+          RCLONE_CONFIG_SITE_KNOWN_HOSTS_FILE: ${{ runner.temp }}\known_hosts
+          # the account is SFTP only: no shell commands, so no server-side checksums
+          RCLONE_CONFIG_SITE_SHELL_TYPE: none
+          RCLONE_CONFIG_SITE_DISABLE_HASHCHECK: 'true'
+          SITE_ROOT: ${{ inputs.site_root || vars.SITE_ROOT }}
+          BASE: ${{ inputs.base }}
+          FULL: ${{ inputs.full }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || github.event_name == 'push' && vars.DEPLOY_ENABLED != 'true' }}
+          BEFORE: ${{ github.event.before }}
+          SFTP_KEY_PASSPHRASE: ${{ secrets.SFTP_KEY_PASSPHRASE }}
+        run: |
+          if ($env:SFTP_KEY_PASSPHRASE) {
+            # rclone takes the passphrase only in its obscured form
+            $env:RCLONE_CONFIG_SITE_KEY_FILE_PASS = (& rclone obscure $env:SFTP_KEY_PASSPHRASE)
+            Write-Host "::add-mask::$env:RCLONE_CONFIG_SITE_KEY_FILE_PASS"
+            Remove-Item Env:SFTP_KEY_PASSPHRASE
+          }
+          $p = @{ Head = $env:GITHUB_SHA; OutDir = "$env:RUNNER_TEMP\deploy" }
+          $canReach = $env:RCLONE_CONFIG_SITE_HOST -and $env:SITE_ROOT -and (Test-Path "$env:RUNNER_TEMP\deploy_key")
+          if ($canReach) { $p.Remote = "site:$env:SITE_ROOT" }
+          if ($env:BASE) { $p.Base = $env:BASE }
+          elseif (-not $canReach -and $env:BEFORE -and $env:BEFORE -notmatch '^0+$') {
+            # no server to read version.txt from: report what this push changed
+            $p.Base = $env:BEFORE
+          }
+          if ($env:FULL -eq 'true') { $p.Full = $true }
+          if ($env:DRY_RUN -eq 'true') { $p.DryRun = $true }
+          & .\site-deploy.ps1 @p
+
+      - name: Keep the plan
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-plan
+          path: |
+            ${{ runner.temp }}\deploy\uploads.txt
+            ${{ runner.temp }}\deploy\deletes.txt
+            ${{ runner.temp }}\deploy\upload-hashes.tsv
+            ${{ runner.temp }}\deploy\version.txt
+          if-no-files-found: ignore
