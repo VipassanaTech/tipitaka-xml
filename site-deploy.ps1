@@ -173,15 +173,23 @@ $headSha = (Invoke-Git @('rev-parse', "$Head^{commit}")) | Select-Object -First 
 
 if (-not $Base) {
   if (-not $Remote) { throw 'Give -Base, or -Remote to read version.txt from the server' }
+  # rclone's messages go to stderr (on a runner it notes that it has no config file), so
+  # keep them apart from the file's contents, and take only a line that is a commit id
+  $messages = Join-Path ([IO.Path]::GetTempPath()) "site-deploy-rclone-$PID.txt"
   $saved = $ErrorActionPreference
   $ErrorActionPreference = 'Continue'
-  $version = & rclone cat "$Remote/version.txt" 2>&1 | ForEach-Object { "$_" }
+  $version = @(& rclone cat "$Remote/version.txt" 2> $messages | ForEach-Object { "$_" })
   $code = $LASTEXITCODE
   $ErrorActionPreference = $saved
+  $rcloneSaid = if (Test-Path $messages) { (Get-Content $messages | ForEach-Object { "$_" }) -join "`n" } else { '' }
+  Remove-Item $messages -ErrorAction SilentlyContinue
   if ($code -ne 0) {
-    throw "Could not read $Remote/version.txt (give -Base for the first deploy):`n$($version -join "`n")"
+    throw "Could not read $Remote/version.txt (give -Base for the first deploy):`n$rcloneSaid"
   }
-  $Base = ($version | Select-Object -First 1).Trim()
+  $Base = $version | ForEach-Object { $_.Trim() } | Where-Object { $_ -match '^[0-9a-f]{40}$' } | Select-Object -First 1
+  if (-not $Base) {
+    throw "$Remote/version.txt does not start with a commit id:`n$($version -join "`n")"
+  }
   Write-Step "Server version.txt: $Base"
 }
 $baseSha = (Invoke-Git @('rev-parse', "$Base^{commit}")) | Select-Object -First 1
