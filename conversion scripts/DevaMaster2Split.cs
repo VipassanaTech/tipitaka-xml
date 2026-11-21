@@ -32,6 +32,13 @@ using Cst;
   was the error that had to be fixed by hand at every rollout
   (VipassanaTech/tipitaka-xml#2093).
 
+  A chapter heading followed directly by another chapter heading would make a
+  file with no text, only headings, which shows as a blank page on the site.
+  Such a file is merged into the file after it, so that its headings are at
+  the top of the next chapter's file. The merged file keeps both titles in the
+  .toc.xml, as two entries with the same file, so that the navigation tree can
+  keep a node for each.
+
   It also applies Pitaka2Xml's text normalization (en dash, double danda,
   ellipsis, abbreviation sign, ZWJ in some conjuncts; see DevaNormalization.cs)
   to the text of each paragraph, and reports each book where that changed
@@ -130,6 +137,11 @@ namespace DevaMaster2Split
         private static readonly HashSet<string> leadInRends =
             new HashSet<string> { "nikaya", "book", "title", "subhead", "subsubhead" };
 
+        // Paragraph styles that are headings and not text, for finding files that
+        // would hold only headings. "centre" is the Namo line and similar lines.
+        private static readonly HashSet<string> headingRends =
+            new HashSet<string> { "chapter", "nikaya", "book", "title", "subhead", "subsubhead", "centre" };
+
         // "namo tass": matches "namo tassa bhagavato..." in all its spellings
         private const string Namo = "\u0928\u092E\u094B \u0924\u0938\u094D\u0938";
 
@@ -154,7 +166,7 @@ namespace DevaMaster2Split
 
             List<XmlFragment> xmlFragments = new List<XmlFragment>();
             XmlFragment frag = new XmlFragment();
-            frag.title = paragraphs[titleIndex].title;
+            frag.titles.Add(paragraphs[titleIndex].title);
             frag.startIndex = 0;
 
             // the previous chapter heading, which must stay in the previous file
@@ -173,16 +185,54 @@ namespace DevaMaster2Split
 
                 frag = new XmlFragment();
                 frag.startIndex = start;
-                frag.title = paragraphs[i].title;
+                frag.titles.Add(paragraphs[i].title);
                 lastChapter = i;
             }
             frag.endIndex = paragraphs.Count - 1;
             xmlFragments.Add(frag);
 
+            MergeHeadingOnlyFragments(xmlFragments);
+
             string outputPathStem = Path.Combine(outputDir, fileStem);
             WriteTocFile(outputPathStem, xmlFragments);
             for (int i = 0; i < xmlFragments.Count; i++)
                 WriteXmlFile(outputPathStem, (xmlFragments.Count > 1 ? i : -1), xmlFragments[i]);
+        }
+
+        // A file that would hold only headings is merged into the file after it: it starts
+        // where the heading-only file started, and has the titles of both, in order.
+        // A heading-only last file has nothing after it, and is kept and reported.
+        private void MergeHeadingOnlyFragments(List<XmlFragment> xmlFragments)
+        {
+            for (int i = 0; i < xmlFragments.Count; i++)
+            {
+                if (HasText(xmlFragments[i]))
+                    continue;
+                if (i == xmlFragments.Count - 1)
+                {
+                    Console.WriteLine(fileStem + ": the last file holds only headings and is kept as it is.");
+                    break;
+                }
+                XmlFragment next = xmlFragments[i + 1];
+                next.startIndex = xmlFragments[i].startIndex;
+                next.titles.InsertRange(0, xmlFragments[i].titles);
+                xmlFragments.RemoveAt(i);
+                i--;
+            }
+        }
+
+        // Whether a file has a paragraph that is not a heading and not empty.
+        private bool HasText(XmlFragment xmlFragment)
+        {
+            for (int i = xmlFragment.startIndex; i <= xmlFragment.endIndex; i++)
+            {
+                if (headingRends.Contains(paragraphs[i].rend))
+                    continue;
+                string text = Regex.Replace(paragraphs[i].text, "<[^>]*>", "").Replace("\u200D", "").Trim();
+                if (text.Length > 0)
+                    return true;
+            }
+            return false;
         }
 
         // A heading, or the "Namo tassa" line, that belongs with the chapter heading below it.
@@ -303,8 +353,11 @@ namespace DevaMaster2Split
                 for (int i = 0; i < xmlFragments.Count; i++)
                 {
                     string fileName = fileStem + (xmlFragments.Count > 1 ? i.ToString() : "") + ".xml";
-                    sw.Write("<tree text=\"" + xmlFragments[i].title + "\" action=\"cscd/");
-                    sw.WriteLine(fileName + "\" target=\"text\"/>");
+                    foreach (string title in xmlFragments[i].titles)
+                    {
+                        sw.Write("<tree text=\"" + title + "\" action=\"cscd/");
+                        sw.WriteLine(fileName + "\" target=\"text\"/>");
+                    }
                 }
                 sw.WriteLine("</tree>");
             }
@@ -359,7 +412,8 @@ namespace DevaMaster2Split
 
     public class XmlFragment
     {
-        public string title;
+        // more than one when heading-only files were merged into this one
+        public List<string> titles = new List<string>();
         public int startIndex;
         public int endIndex;
     }
