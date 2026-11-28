@@ -13,6 +13,10 @@ html {
     width: 100%;
 }
 
+.content {
+    min-width: 0;
+}
+
 /* Media query for print */
 @media print {
     /* Hide the top navigation bar when printing */
