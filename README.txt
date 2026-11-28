@@ -7,6 +7,8 @@ Folders and descriptions
 
 DevaMaster2Split.exe - splits the books in /deva master/ into the chapter files of the site, in /tipitaka.org/deva/cscd/. site-build.ps1 runs it.
 
+DevaTree.exe - updates the navigation trees, /tipitaka.org/<script>/tree.json, to match the chapter files that DevaMaster2Split.exe writes. Every node keeps its id, since the ids are in the site's URLs; chapters missing from the tree get new ids. The other scripts' trees are made from the Devanagari tree with each script's deva2*.exe. Run tree-build.ps1, which does all of this, by hand after a change that adds, removes, merges or renames chapters, and commit the tree.json files with that change. It prints every leaf that now opens a different file or has a new title, and every new leaf.
+
 DevaNormalize.exe - normalizes the text of the books in /deva master/ after they are corrected: en dash, double danda, ellipsis, abbreviation sign, and the ZWJ in conjuncts such as kka and nna. Double-click DevaNormalize.bat to run it on every book. DevaMaster2Split.exe applies the same normalization.
 
 3) deva2*.exe - converts from Devanagari XML to XML of various other scripts 
