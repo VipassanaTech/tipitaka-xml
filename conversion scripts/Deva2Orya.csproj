@@ -1,0 +1,49 @@
+<Project>
+
+  <!--
+    Builds deva2orya.exe, which site-build.ps1 runs to convert the split Devanagari
+    files into Odia for tipitaka.org/orya.
+    The exe is a 32-bit x86 build for .NET Framework 4.8, like the other Deva2* converters
+    in this directory.
+
+      dotnet build -c Release Deva2Orya.csproj
+      copy bin\Deva2Orya\Release\net48\deva2orya.exe .
+
+    The reference assemblies package lets the net48 build run on any OS with the
+    .NET SDK.
+
+    Several projects share this directory, so each has its own obj and bin directory.
+    That has to be set before the SDK is imported.
+  -->
+
+  <PropertyGroup>
+    <BaseIntermediateOutputPath>obj\Deva2Orya\</BaseIntermediateOutputPath>
+    <BaseOutputPath>bin\Deva2Orya\</BaseOutputPath>
+  </PropertyGroup>
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <PlatformTarget>x86</PlatformTarget>
+    <AssemblyName>deva2orya</AssemblyName>
+    <RootNamespace>VRI.CSCD.Conversion</RootNamespace>
+    <LangVersion>7.3</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Deva2Orya.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
+</Project>
